@@ -1,0 +1,21 @@
+{
+  "metadata": {
+    "version": "1.0",
+    "generated_at": "2025-07-31T07:22:26.183744",
+    "tool": "text2sql_ollama"
+  },
+  "scenario_id": "RES-L1-05",
+  "category": "Lookup / Filter",
+  "database": "resep",
+  "question_id": "Tampilkan bahan yang memiliki satuan bukan 'gram' atau 'ml'; sertakan id, nama bahan, dan satuannya.",
+  "model": "gemma-3n-e2b",
+  "sql_query": "SELECT\n  b.id_bahan AS id_bahan,\n  b.nama_bahan AS nama_bahan,\n  b.satuan_default AS satuan\nFROM BAHAN AS b\nWHERE\n  b.satuan_default NOT IN ('gram', 'ml')",
+  "timestamp": "2025-07-31T07:22:26.183589",
+  "response_time_ms": 125643.349,
+  "token_usage": {
+    "prompt_tokens": 1221,
+    "completion_tokens": 69,
+    "total_tokens": 1290
+  },
+  "raw_response": "```sql\nSELECT\n  b.id_bahan AS id_bahan,\n  b.nama_bahan AS nama_bahan,\n  b.satuan_default AS satuan\nFROM BAHAN AS b\nWHERE\n  b.satuan_default NOT IN ('gram', 'ml');\n```"
+}

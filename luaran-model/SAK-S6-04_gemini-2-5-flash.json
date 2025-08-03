@@ -1,0 +1,35 @@
+{
+  "scenario_id": "SAK-S6-04",
+  "model_info": {
+    "name": "gemini-2.5-flash",
+    "temperature": 0.0,
+    "timestamp": "2025-07-22T12:22:07.874429"
+  },
+  "input": {
+    "question_id": "Siapa pelanggan yang paling sering menyewa film? Sertakan nama depan, nama belakang, dan jumlah sewanya.",
+    "database": "sakila",
+    "category": "Superlative"
+  },
+  "prompt_info": {
+    "prompt_length": 9587,
+    "prompt_lines": 300
+  },
+  "model_response": {
+    "sql_query": "SELECT c.first_name, c.last_name, COUNT(r.rental_id) AS jumlah_sewa FROM customer c JOIN rental r ON c.customer_id = r.customer_id GROUP BY c.customer_id, c.first_name, c.last_name ORDER BY jumlah_sewa DESC LIMIT 1",
+    "explanation": "Mengambil nama depan dan nama belakang pelanggan, menghitung jumlah total sewa untuk setiap pelanggan, kemudian mengurutkan hasilnya secara menurun berdasarkan jumlah sewa dan mengambil satu pelanggan teratas.",
+    "confidence": 0.98,
+    "assumptions": [
+      "Pelanggan yang paling sering menyewa diartikan sebagai pelanggan dengan jumlah transaksi sewa (rental) terbanyak."
+    ],
+    "potential_issues": [],
+    "response_time_ms": 3579.29,
+    "model_name": "gemini-2.5-flash",
+    "timestamp": "2025-07-22T12:22:07.874429",
+    "raw_response": "```json\n{\n  \"sql_query\": \"SELECT c.first_name, c.last_name, COUNT(r.rental_id) AS jumlah_sewa FROM customer c JOIN rental r ON c.customer_id = r.customer_id GROUP BY c.customer_id, c.first_name, c.last_name ORDER BY jumlah_sewa DESC LIMIT 1\",\n  \"confidence\": 0.98,\n  \"explanation\": \"Mengambil nama depan dan nama belakang pelanggan, menghitung jumlah total sewa untuk setiap pelanggan, kemudian mengurutkan hasilnya secara menurun berdasarkan jumlah sewa dan mengambil satu pelanggan teratas.\",\n  \"assumptions\": [\n    \"Pelanggan yang paling sering menyewa diartikan sebagai pelanggan dengan jumlah transaksi sewa (rental) terbanyak.\"\n  ],\n  \"potential_issues\": []\n}\n```",
+    "token_usage": {
+      "prompt_tokens": 3029,
+      "completion_tokens": 189,
+      "total_tokens": 3648
+    }
+  }
+}

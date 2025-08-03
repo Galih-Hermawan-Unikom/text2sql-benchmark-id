@@ -1,0 +1,38 @@
+{
+  "scenario_id": "SAK-N4-01",
+  "model_info": {
+    "name": "gemini-2.5-flash",
+    "temperature": 0.0,
+    "timestamp": "2025-07-22T10:55:01.891204"
+  },
+  "input": {
+    "question_id": "Tampilkan **nama lengkap** (gabungan nama depan dan belakang) aktor serta jumlah filmnya yang membintangi film lebih banyak daripada Matthew Carrey, lalu urutkan dari jumlah film terbanyak.",
+    "database": "sakila",
+    "category": "Nested / Subquery"
+  },
+  "prompt_info": {
+    "prompt_length": 9345,
+    "prompt_lines": 299
+  },
+  "model_response": {
+    "sql_query": "SELECT CONCAT(a.first_name, ' ', a.last_name) AS nama_lengkap_aktor, COUNT(fa.film_id) AS jumlah_film FROM actor a JOIN film_actor fa ON a.actor_id = fa.actor_id GROUP BY a.actor_id, a.first_name, a.last_name HAVING COUNT(fa.film_id) > ( SELECT COUNT(fa2.film_id) FROM actor a2 JOIN film_actor fa2 ON a2.actor_id = fa2.actor_id WHERE a2.first_name = 'MATTHEW' AND a2.last_name = 'CARREY' ) ORDER BY jumlah_film DESC",
+    "explanation": "Query ini pertama-tama menghitung jumlah film yang dibintangi oleh setiap aktor. Kemudian, menggunakan subkueri, query ini mendapatkan jumlah film yang dibintangi oleh aktor 'Matthew Carrey'. Akhirnya, hanya aktor dengan jumlah film lebih banyak dari Matthew Carrey yang ditampilkan, diurutkan dari jumlah film terbanyak.",
+    "confidence": 0.98,
+    "assumptions": [
+      "Nama 'Matthew Carrey' tersedia di tabel aktor dengan nama depan 'MATTHEW' dan nama belakang 'CARREY' (Sakila sering menyimpan nama dalam huruf kapital).",
+      "Jumlah film yang dibintangi dihitung dari entri di tabel film_actor."
+    ],
+    "potential_issues": [
+      "Jika Matthew Carrey tidak ada di database, subkueri akan mengembalikan 0, dan tidak ada aktor yang akan memenuhi kriteria 'lebih banyak dari 0' jika tidak ada aktor yang membintangi film."
+    ],
+    "response_time_ms": 8837.287,
+    "model_name": "gemini-2.5-flash",
+    "timestamp": "2025-07-22T10:55:01.891204",
+    "raw_response": "```json\n{\n  \"sql_query\": \"SELECT CONCAT(a.first_name, ' ', a.last_name) AS nama_lengkap_aktor, COUNT(fa.film_id) AS jumlah_film FROM actor a JOIN film_actor fa ON a.actor_id = fa.actor_id GROUP BY a.actor_id, a.first_name, a.last_name HAVING COUNT(fa.film_id) > ( SELECT COUNT(fa2.film_id) FROM actor a2 JOIN film_actor fa2 ON a2.actor_id = fa2.actor_id WHERE a2.first_name = 'MATTHEW' AND a2.last_name = 'CARREY' ) ORDER BY jumlah_film DESC\",\n  \"confidence\": 0.98,\n  \"explanation\": \"Query ini pertama-tama menghitung jumlah film yang dibintangi oleh setiap aktor. Kemudian, menggunakan subkueri, query ini mendapatkan jumlah film yang dibintangi oleh aktor 'Matthew Carrey'. Akhirnya, hanya aktor dengan jumlah film lebih banyak dari Matthew Carrey yang ditampilkan, diurutkan dari jumlah film terbanyak.\",\n  \"assumptions\": [\n    \"Nama 'Matthew Carrey' tersedia di tabel aktor dengan nama depan 'MATTHEW' dan nama belakang 'CARREY' (Sakila sering menyimpan nama dalam huruf kapital).\",\n    \"Jumlah film yang dibintangi dihitung dari entri di tabel film_actor.\"\n  ],\n  \"potential_issues\": [\n    \"Jika Matthew Carrey tidak ada di database, subkueri akan mengembalikan 0, dan tidak ada aktor yang akan memenuhi kriteria 'lebih banyak dari 0' jika tidak ada aktor yang membintangi film.\"\n  ]\n}\n```",
+    "token_usage": {
+      "prompt_tokens": 2975,
+      "completion_tokens": 381,
+      "total_tokens": 4778
+    }
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "scenario_id": "RES-N4-05",
+  "model_info": {
+    "name": "gemini-2.5-flash",
+    "temperature": 0.0,
+    "timestamp": "2025-07-22T10:54:53.041944"
+  },
+  "input": {
+    "question_id": "Berapa banyak resep yang tidak menggunakan bahan apa pun yang mengandung kata 'Cabe'? Tampilkan jumlahnya saja.",
+    "database": "resep",
+    "category": "Nested / Subquery"
+  },
+  "prompt_info": {
+    "prompt_length": 7084,
+    "prompt_lines": 167
+  },
+  "model_response": {
+    "sql_query": "SELECT COUNT(r.id_resep) AS jumlah_resep_non_cabe FROM resep r WHERE r.id_resep NOT IN (SELECT DISTINCT rb.id_resep FROM resep_bahan rb JOIN bahan b ON rb.id_bahan = b.id_bahan WHERE b.nama_bahan LIKE '%Cabe%')",
+    "explanation": "Pertama, query ini mengidentifikasi semua ID resep yang menggunakan bahan yang nama bahannya mengandung kata 'Cabe' (menggunakan subkueri dengan operator LIKE dan wildcard). Kemudian, query utama menghitung jumlah resep dari tabel `resep` yang `id_resep`-nya TIDAK termasuk dalam daftar ID resep yang telah diidentifikasi sebelumnya.",
+    "confidence": 0.98,
+    "assumptions": [
+      "Pencarian kata 'Cabe' pada nama bahan dilakukan secara case-insensitive (tergantung konfigurasi database dan collation) dan mencakup semua variasi (misal: 'Cabe Merah', 'Cabai Rawit').",
+      "Sebuah resep dianggap 'tidak menggunakan bahan apa pun yang mengandung kata Cabe' jika tidak ada satupun bahan yang terhubung ke resep tersebut mengandung kata 'Cabe' dalam namanya."
+    ],
+    "potential_issues": [
+      "Performa query mungkin berkurang jika tabel `resep_bahan` dan `bahan` sangat besar, terutama pada subkueri `NOT IN`. Alternatifnya bisa menggunakan `LEFT JOIN` dan `WHERE IS NULL` atau `NOT EXISTS` untuk kasus tertentu, namun `NOT IN` sudah cukup jelas untuk kebutuhan ini."
+    ],
+    "response_time_ms": 7956.546,
+    "model_name": "gemini-2.5-flash",
+    "timestamp": "2025-07-22T10:54:53.041944",
+    "raw_response": "```json\n{\n  \"sql_query\": \"SELECT COUNT(r.id_resep) AS jumlah_resep_non_cabe FROM resep r WHERE r.id_resep NOT IN (SELECT DISTINCT rb.id_resep FROM resep_bahan rb JOIN bahan b ON rb.id_bahan = b.id_bahan WHERE b.nama_bahan LIKE '%Cabe%')\",\n  \"confidence\": 0.98,\n  \"explanation\": \"Pertama, query ini mengidentifikasi semua ID resep yang menggunakan bahan yang nama bahannya mengandung kata 'Cabe' (menggunakan subkueri dengan operator LIKE dan wildcard). Kemudian, query utama menghitung jumlah resep dari tabel `resep` yang `id_resep`-nya TIDAK termasuk dalam daftar ID resep yang telah diidentifikasi sebelumnya.\",\n  \"assumptions\": [\n    \"Pencarian kata 'Cabe' pada nama bahan dilakukan secara case-insensitive (tergantung konfigurasi database dan collation) dan mencakup semua variasi (misal: 'Cabe Merah', 'Cabai Rawit').\",\n    \"Sebuah resep dianggap 'tidak menggunakan bahan apa pun yang mengandung kata Cabe' jika tidak ada satupun bahan yang terhubung ke resep tersebut mengandung kata 'Cabe' dalam namanya.\"\n  ],\n  \"potential_issues\": [\n    \"Performa query mungkin berkurang jika tabel `resep_bahan` dan `bahan` sangat besar, terutama pada subkueri `NOT IN`. Alternatifnya bisa menggunakan `LEFT JOIN` dan `WHERE IS NULL` atau `NOT EXISTS` untuk kasus tertentu, namun `NOT IN` sudah cukup jelas untuk kebutuhan ini.\"\n  ]\n}\n```",
+    "token_usage": {
+      "prompt_tokens": 2169,
+      "completion_tokens": 362,
+      "total_tokens": 3597
+    }
+  }
+}

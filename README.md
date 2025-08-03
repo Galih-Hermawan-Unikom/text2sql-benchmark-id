@@ -14,6 +14,10 @@ A lightweight, fully reproducible benchmark to evaluate large language models (L
   ORCID: [https://orcid.org/0000-0002-8476-5996](https://orcid.org/0000-0002-8476-5996) </br>
   GitHub: [@Galih-Hermawan-Unikom](https://github.com/Galih-Hermawan-Unikom)
 
+### 👥 Contributors
+
+* **Ednawati Rainarli** — Lecturer & Researcher, Informatics Department, Universitas Komputer Indonesia (UNIKOM)
+
 ### 🤝 Contributing
 
 * **Submit issues** for bugs or feature ideas

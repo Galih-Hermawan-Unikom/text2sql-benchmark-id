@@ -1,0 +1,37 @@
+{
+  "scenario_id": "RES-A3-03",
+  "model_info": {
+    "name": "gemma-3-27b-it",
+    "temperature": 0.0,
+    "timestamp": "2025-07-24T08:53:18.886963"
+  },
+  "input": {
+    "question_id": "Tampilkan lima bahan yang paling sering dipakai di semua resep\u2014urutkan dari yang terbanyak. Sertakan nama bahan dan berapa kali dipakai.",
+    "database": "resep",
+    "category": "Aggregation"
+  },
+  "prompt_info": {
+    "prompt_length": 7264,
+    "prompt_lines": 165
+  },
+  "model_response": {
+    "sql_query": "SELECT b.nama_bahan, COUNT(rb.id_bahan) AS jumlah_penggunaan FROM resep_bahan rb JOIN bahan b ON rb.id_bahan = b.id_bahan GROUP BY b.nama_bahan ORDER BY jumlah_penggunaan DESC LIMIT 5",
+    "explanation": "Query ini menghitung jumlah penggunaan setiap bahan di semua resep.  Kemudian, hasilnya diurutkan berdasarkan jumlah penggunaan secara menurun dan hanya menampilkan 5 bahan teratas.",
+    "confidence": 0.98,
+    "assumptions": [
+      "Tabel `resep_bahan` menghubungkan resep dengan bahan yang digunakan.",
+      "Nama bahan disimpan di kolom `nama_bahan` pada tabel `bahan`."
+    ],
+    "potential_issues": [
+      "Jika ada kesalahan data di tabel `resep_bahan` (misalnya, `id_bahan` tidak valid), query mungkin menghasilkan hasil yang tidak akurat."
+    ],
+    "response_time_ms": 5178.053199999795,
+    "model_name": "gemma-3-27b-it",
+    "timestamp": "2025-07-24T08:53:18.886963",
+    "token_usage": {
+      "prompt_tokens": 2200,
+      "completion_tokens": null,
+      "total_tokens": 2200
+    }
+  }
+}

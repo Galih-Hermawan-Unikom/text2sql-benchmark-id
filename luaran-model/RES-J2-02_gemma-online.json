@@ -1,0 +1,36 @@
+{
+  "scenario_id": "RES-J2-02",
+  "model_info": {
+    "name": "gemma-3-27b-it",
+    "temperature": 0.0,
+    "timestamp": "2025-07-24T08:54:19.112958"
+  },
+  "input": {
+    "question_id": "Resep apa saja yang memakai bahan daun? Cantumkan judul resep dan nama bahannya.",
+    "database": "resep",
+    "category": "Join + Filter"
+  },
+  "prompt_info": {
+    "prompt_length": 7208,
+    "prompt_lines": 165
+  },
+  "model_response": {
+    "sql_query": "SELECT r.judul_resep, b.nama_bahan FROM resep r JOIN resep_bahan rb ON r.id_resep = rb.id_resep JOIN bahan b ON rb.id_bahan = b.id_bahan WHERE b.nama_bahan LIKE '%daun%'",
+    "explanation": "Query ini mengambil judul resep dan nama bahan dari tabel resep, resep_bahan, dan bahan.  Query ini menggabungkan ketiga tabel tersebut berdasarkan kunci asing yang sesuai.  Klausa WHERE memfilter hasil untuk hanya menyertakan resep yang menggunakan bahan yang namanya mengandung kata 'daun'.",
+    "confidence": 0.97,
+    "assumptions": [
+      "Nama bahan yang mengandung kata 'daun' dianggap sebagai bahan yang dimaksud dalam pertanyaan."
+    ],
+    "potential_issues": [
+      "Pencarian 'daun' bersifat case-insensitive. Jika pencarian case-sensitive diperlukan, gunakan fungsi LOWER() atau UPPER() untuk membandingkan string."
+    ],
+    "response_time_ms": 5387.424699999883,
+    "model_name": "gemma-3-27b-it",
+    "timestamp": "2025-07-24T08:54:19.112958",
+    "token_usage": {
+      "prompt_tokens": 2191,
+      "completion_tokens": null,
+      "total_tokens": 2191
+    }
+  }
+}

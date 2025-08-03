@@ -1,0 +1,35 @@
+{
+  "scenario_id": "RES-C5-01",
+  "model_info": {
+    "name": "gemini-2.5-flash",
+    "temperature": 0.0,
+    "timestamp": "2025-07-22T11:59:58.816435"
+  },
+  "input": {
+    "question_id": "Resep apa saja yang durasi memasaknya lebih lama daripada rata-rata durasi semua resep? Tampilkan judul resep dan lamanya memasak.",
+    "database": "resep",
+    "category": "Comparative"
+  },
+  "prompt_info": {
+    "prompt_length": 7430,
+    "prompt_lines": 168
+  },
+  "model_response": {
+    "sql_query": "SELECT judul_resep, waktu_masak FROM resep WHERE waktu_masak > (SELECT AVG(waktu_masak) FROM resep)",
+    "explanation": "Mengambil judul resep dan waktu memasak dari semua resep yang memiliki durasi memasak lebih lama dari rata-rata durasi memasak dari seluruh resep yang ada di database.",
+    "confidence": 0.98,
+    "assumptions": [
+      "Durasi memasak diwakili oleh kolom waktu_masak di tabel resep."
+    ],
+    "potential_issues": [],
+    "response_time_ms": 2348.5969999999998,
+    "model_name": "gemini-2.5-flash",
+    "timestamp": "2025-07-22T11:59:58.816435",
+    "raw_response": "```json\n{\n  \"sql_query\": \"SELECT judul_resep, waktu_masak FROM resep WHERE waktu_masak > (SELECT AVG(waktu_masak) FROM resep)\",\n  \"confidence\": 0.98,\n  \"explanation\": \"Mengambil judul resep dan waktu memasak dari semua resep yang memiliki durasi memasak lebih lama dari rata-rata durasi memasak dari seluruh resep yang ada di database.\",\n  \"assumptions\": [\n    \"Durasi memasak diwakili oleh kolom waktu_masak di tabel resep.\"\n  ],\n  \"potential_issues\": []\n}\n```",
+    "token_usage": {
+      "prompt_tokens": 2250,
+      "completion_tokens": 143,
+      "total_tokens": 2571
+    }
+  }
+}

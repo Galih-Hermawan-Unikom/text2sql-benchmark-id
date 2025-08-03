@@ -1,0 +1,35 @@
+{
+  "scenario_id": "RES-L1-01",
+  "model_info": {
+    "name": "gemini-2.5-flash",
+    "temperature": 0.0,
+    "timestamp": "2025-07-22T10:14:06.984898"
+  },
+  "input": {
+    "question_id": "Tampilkan semua bahan pada kategori Rempah, sertakan id dan nama bahannya.",
+    "database": "resep",
+    "category": "Lookup / Filter"
+  },
+  "prompt_info": {
+    "prompt_length": 6707,
+    "prompt_lines": 165
+  },
+  "model_response": {
+    "sql_query": "SELECT id_bahan, nama_bahan FROM bahan WHERE kategori_bahan = 'Rempah'",
+    "explanation": "Mengambil ID dan nama bahan dari tabel 'bahan' yang memiliki kategori 'Rempah'.",
+    "confidence": 0.98,
+    "assumptions": [
+      "Kategori 'Rempah' sudah ada di kolom kategori_bahan dan ditulis dengan kapitalisasi yang sama."
+    ],
+    "potential_issues": [],
+    "response_time_ms": 1676.4289999999999,
+    "model_name": "gemini-2.5-flash",
+    "timestamp": "2025-07-22T10:14:06.984898",
+    "raw_response": "```json\n{\n  \"sql_query\": \"SELECT id_bahan, nama_bahan FROM bahan WHERE kategori_bahan = 'Rempah'\",\n  \"confidence\": 0.98,\n  \"explanation\": \"Mengambil ID dan nama bahan dari tabel 'bahan' yang memiliki kategori 'Rempah'.\",\n  \"assumptions\": [\n    \"Kategori 'Rempah' sudah ada di kolom kategori_bahan dan ditulis dengan kapitalisasi yang sama.\"\n  ],\n  \"potential_issues\": []\n}\n```",
+    "token_usage": {
+      "prompt_tokens": 2071,
+      "completion_tokens": 116,
+      "total_tokens": 2295
+    }
+  }
+}

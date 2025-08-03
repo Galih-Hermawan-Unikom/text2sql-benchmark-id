@@ -1,0 +1,37 @@
+{
+  "scenario_id": "SAK-L1-01",
+  "model_info": {
+    "name": "gemma-3-27b-it",
+    "temperature": 0.0,
+    "timestamp": "2025-07-24T08:58:11.140267"
+  },
+  "input": {
+    "question_id": "Daftar film berdurasi lebih dari 180 menit dengan rating 'R'; sertakan judul dan durasi setiap film.",
+    "database": "sakila",
+    "category": "Lookup / Filter"
+  },
+  "prompt_info": {
+    "prompt_length": 9751,
+    "prompt_lines": 299
+  },
+  "model_response": {
+    "sql_query": "SELECT title, length FROM film WHERE length > 180 AND rating = 'R'",
+    "explanation": "Query ini memilih judul dan durasi film dari tabel 'film' di mana durasi film lebih dari 180 menit dan rating film adalah 'R'.",
+    "confidence": 0.98,
+    "assumptions": [
+      "Kolom 'length' merepresentasikan durasi film dalam menit.",
+      "Rating film disimpan dalam kolom 'rating' dengan nilai 'R' untuk film dengan rating 'R'."
+    ],
+    "potential_issues": [
+      "Jika kolom 'length' memiliki unit yang berbeda (misalnya, detik), query perlu disesuaikan untuk mengonversi unit tersebut menjadi menit."
+    ],
+    "response_time_ms": 4225.519099999929,
+    "model_name": "gemma-3-27b-it",
+    "timestamp": "2025-07-24T08:58:11.140267",
+    "token_usage": {
+      "prompt_tokens": 3077,
+      "completion_tokens": null,
+      "total_tokens": 3077
+    }
+  }
+}

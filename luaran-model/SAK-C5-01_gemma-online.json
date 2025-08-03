@@ -1,0 +1,38 @@
+{
+  "scenario_id": "SAK-C5-01",
+  "model_info": {
+    "name": "gemma-3-27b-it",
+    "temperature": 0.0,
+    "timestamp": "2025-07-24T08:56:53.809901"
+  },
+  "input": {
+    "question_id": "Tampilkan film ber-rating 'R' yang dirilis pada 2006 dengan durasi di atas rata-rata durasi semua film 'R' tahun 2006; sertakan judul, tahun rilis, dan durasinya.",
+    "database": "sakila",
+    "category": "Comparative"
+  },
+  "prompt_info": {
+    "prompt_length": 9813,
+    "prompt_lines": 299
+  },
+  "model_response": {
+    "sql_query": "SELECT f.title, f.release_year, f.length FROM film f WHERE f.rating = 'R' AND f.release_year = 2006 AND f.length > (SELECT AVG(length) FROM film WHERE rating = 'R' AND release_year = 2006)",
+    "explanation": "Query ini memilih judul, tahun rilis, dan durasi film yang ber-rating 'R' dan dirilis pada tahun 2006, dengan durasi lebih panjang dari rata-rata durasi semua film ber-rating 'R' yang dirilis pada tahun 2006. Subquery digunakan untuk menghitung rata-rata durasi film 'R' tahun 2006.",
+    "confidence": 0.97,
+    "assumptions": [
+      "Rating film disimpan dalam kolom 'rating' dengan nilai 'R' untuk film dengan rating 'R'.",
+      "Tahun rilis film disimpan dalam kolom 'release_year' dengan format YEAR.",
+      "Durasi film disimpan dalam kolom 'length' dengan satuan menit."
+    ],
+    "potential_issues": [
+      "Jika tidak ada film dengan rating 'R' yang dirilis pada tahun 2006, subquery akan mengembalikan NULL, dan query utama mungkin tidak mengembalikan hasil yang diharapkan.  Dalam kasus ini, perbandingan `f.length > NULL` akan menghasilkan NULL, sehingga tidak ada film yang akan terpilih."
+    ],
+    "response_time_ms": 7299.650699999802,
+    "model_name": "gemma-3-27b-it",
+    "timestamp": "2025-07-24T08:56:53.809901",
+    "token_usage": {
+      "prompt_tokens": 3103,
+      "completion_tokens": null,
+      "total_tokens": 3103
+    }
+  }
+}

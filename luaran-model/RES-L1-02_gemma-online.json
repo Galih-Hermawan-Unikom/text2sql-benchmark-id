@@ -1,0 +1,36 @@
+{
+  "scenario_id": "RES-L1-02",
+  "model_info": {
+    "name": "gemma-3-27b-it",
+    "temperature": 0.0,
+    "timestamp": "2025-07-24T08:54:51.624454"
+  },
+  "input": {
+    "question_id": "Daftar masakan asal kota Padang dengan tingkatan pedas lebih besar atau sama dengan 3; sertakan kode dan nama masakan, serta tingkatan pedasnya.",
+    "database": "resep",
+    "category": "Lookup / Filter"
+  },
+  "prompt_info": {
+    "prompt_length": 7272,
+    "prompt_lines": 165
+  },
+  "model_response": {
+    "sql_query": "SELECT kode_masakan, nama_masakan, level_pedas FROM masakan WHERE asal_daerah = 'Padang' AND level_pedas >= 3",
+    "explanation": "Query ini memilih kode masakan, nama masakan, dan level pedas dari tabel 'masakan' di mana asal daerahnya adalah 'Padang' dan level pedasnya lebih besar atau sama dengan 3.",
+    "confidence": 0.98,
+    "assumptions": [
+      "Asal daerah disimpan sebagai string yang tepat di kolom 'asal_daerah'."
+    ],
+    "potential_issues": [
+      "Sensitivitas huruf besar/kecil pada kolom 'asal_daerah'. Jika data tidak konsisten, pertimbangkan menggunakan LOWER() untuk perbandingan yang tidak sensitif huruf besar/kecil."
+    ],
+    "response_time_ms": 4690.659200000027,
+    "model_name": "gemma-3-27b-it",
+    "timestamp": "2025-07-24T08:54:51.624454",
+    "token_usage": {
+      "prompt_tokens": 2206,
+      "completion_tokens": null,
+      "total_tokens": 2206
+    }
+  }
+}

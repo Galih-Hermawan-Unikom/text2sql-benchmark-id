@@ -1,0 +1,35 @@
+{
+  "scenario_id": "RES-J2-01",
+  "model_info": {
+    "name": "gemini-2.5-flash-lite",
+    "temperature": 0.0,
+    "timestamp": "2025-07-23T13:53:22.449802"
+  },
+  "input": {
+    "question_id": "Tampilkan daftar resep dessert yang masih aktif\u2014sertakan ID resep, judul resep, dan nama masakan.",
+    "database": "resep",
+    "category": "Join + Filter"
+  },
+  "prompt_info": {
+    "prompt_length": 7225,
+    "prompt_lines": 165
+  },
+  "model_response": {
+    "sql_query": "SELECT r.id_resep, r.judul_resep, m.nama_masakan FROM resep r JOIN masakan m ON r.kode_masakan = m.kode_masakan WHERE m.kategori = 'Dessert' AND r.status_aktif = TRUE;",
+    "explanation": "Query ini mengambil ID resep, judul resep, dan nama masakan dari tabel 'resep' dan 'masakan'. Query menggabungkan kedua tabel berdasarkan 'kode_masakan' dan memfilter hasilnya untuk hanya menyertakan resep yang merupakan 'Dessert' dan memiliki status aktif.",
+    "confidence": 0.98,
+    "assumptions": [
+      "Kategori 'Dessert' ada dalam kolom 'kategori' pada tabel 'masakan'.",
+      "Status aktif resep direpresentasikan oleh nilai TRUE pada kolom 'status_aktif' di tabel 'resep'."
+    ],
+    "potential_issues": [],
+    "response_time_ms": 1073.18419999865,
+    "model_name": "gemini-2.5-flash-lite",
+    "timestamp": "2025-07-23T13:53:22.449802",
+    "token_usage": {
+      "prompt_tokens": 2197,
+      "completion_tokens": 222,
+      "total_tokens": 2419
+    }
+  }
+}

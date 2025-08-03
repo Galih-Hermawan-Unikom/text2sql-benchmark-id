@@ -1,0 +1,37 @@
+{
+  "scenario_id": "RES-S6-05",
+  "model_info": {
+    "name": "gemini-2.5-flash",
+    "temperature": 0.0,
+    "timestamp": "2025-07-22T12:21:57.089279"
+  },
+  "input": {
+    "question_id": "Masakan apa saja yang memiliki tingkat kepedasan tertinggi? Tampilkan kode masakan, nama masakan, dan level pedasnya.",
+    "database": "resep",
+    "category": "Superlative"
+  },
+  "prompt_info": {
+    "prompt_length": 7417,
+    "prompt_lines": 168
+  },
+  "model_response": {
+    "sql_query": "SELECT kode_masakan, nama_masakan, level_pedas FROM masakan WHERE level_pedas = (SELECT MAX(level_pedas) FROM masakan)",
+    "explanation": "Mengambil kode masakan, nama masakan, dan level pedas dari tabel 'masakan' di mana level pedasnya sama dengan nilai maksimum level pedas yang ada di seluruh tabel.",
+    "confidence": 0.98,
+    "assumptions": [
+      "'Tingkat kepedasan tertinggi' mengacu pada nilai maksimum dari kolom level_pedas."
+    ],
+    "potential_issues": [
+      "Jika ada lebih dari satu masakan dengan level pedas tertinggi yang sama, semua masakan tersebut akan ditampilkan."
+    ],
+    "response_time_ms": 2131.531,
+    "model_name": "gemini-2.5-flash",
+    "timestamp": "2025-07-22T12:21:57.089279",
+    "raw_response": "```json\n{\n  \"sql_query\": \"SELECT kode_masakan, nama_masakan, level_pedas FROM masakan WHERE level_pedas = (SELECT MAX(level_pedas) FROM masakan)\",\n  \"confidence\": 0.98,\n  \"explanation\": \"Mengambil kode masakan, nama masakan, dan level pedas dari tabel 'masakan' di mana level pedasnya sama dengan nilai maksimum level pedas yang ada di seluruh tabel.\",\n  \"assumptions\": [\"'Tingkat kepedasan tertinggi' mengacu pada nilai maksimum dari kolom level_pedas.\"],\n  \"potential_issues\": [\"Jika ada lebih dari satu masakan dengan level pedas tertinggi yang sama, semua masakan tersebut akan ditampilkan.\"]\n}\n```",
+    "token_usage": {
+      "prompt_tokens": 2246,
+      "completion_tokens": 167,
+      "total_tokens": 2607
+    }
+  }
+}

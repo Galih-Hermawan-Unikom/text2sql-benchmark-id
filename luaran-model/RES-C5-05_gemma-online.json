@@ -1,0 +1,37 @@
+{
+  "scenario_id": "RES-C5-05",
+  "model_info": {
+    "name": "gemma-3-27b-it",
+    "temperature": 0.0,
+    "timestamp": "2025-07-24T08:54:05.604636"
+  },
+  "input": {
+    "question_id": "Resep mana yang durasi memasaknya lebih singkat daripada resep 'Rendang'? Tampilkan judul resep dan durasinya.",
+    "database": "resep",
+    "category": "Comparative"
+  },
+  "prompt_info": {
+    "prompt_length": 7238,
+    "prompt_lines": 165
+  },
+  "model_response": {
+    "sql_query": "SELECT r.judul_resep, r.waktu_masak FROM resep r JOIN masakan m ON r.kode_masakan = m.kode_masakan WHERE r.waktu_masak < (SELECT r2.waktu_masak FROM resep r2 JOIN masakan m2 ON r2.kode_masakan = m2.kode_masakan WHERE m2.nama_masakan = 'Rendang')",
+    "explanation": "Query ini mencari resep-resep yang memiliki durasi memasak lebih pendek daripada durasi memasak resep 'Rendang'.  Query menggunakan subquery untuk mendapatkan durasi memasak resep 'Rendang' terlebih dahulu, kemudian membandingkan durasi memasak setiap resep dengan nilai tersebut.",
+    "confidence": 0.95,
+    "assumptions": [
+      "Nama masakan 'Rendang' ada di tabel `masakan` dan terhubung ke tabel `resep` melalui `kode_masakan`.",
+      "Durasi memasak diukur dalam menit dan disimpan di kolom `waktu_masak` pada tabel `resep`."
+    ],
+    "potential_issues": [
+      "Jika tidak ada resep dengan nama 'Rendang', subquery akan mengembalikan NULL, dan query utama mungkin tidak menghasilkan hasil yang diharapkan.  Perlu ditangani kasus jika nama masakan tidak ditemukan."
+    ],
+    "response_time_ms": 6941.417999999885,
+    "model_name": "gemma-3-27b-it",
+    "timestamp": "2025-07-24T08:54:05.604636",
+    "token_usage": {
+      "prompt_tokens": 2198,
+      "completion_tokens": null,
+      "total_tokens": 2198
+    }
+  }
+}

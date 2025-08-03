@@ -1,0 +1,21 @@
+{
+  "metadata": {
+    "version": "1.0",
+    "generated_at": "2025-07-31T10:04:45.797448",
+    "tool": "text2sql_ollama"
+  },
+  "scenario_id": "RES-J2-05",
+  "category": "Join + Filter",
+  "database": "resep",
+  "question_id": "Masakan apa saja secara unik yang menggunakan santan sebagai salah satu bahannya? Tampilkan nama masakan dan nama bahannya.",
+  "model": "gemma-3n-e2b",
+  "sql_query": "SELECT\n  m.nama_masakan AS nama_masakan,\n  b.nama_bahan AS nama_bahan\nFROM masakan AS m\nJOIN resep_bahan AS rb\n  ON m.kode_masakan = rb.id_resep\nJOIN bahan AS b\n  ON rb.id_bahan = b.id_bahan\nWHERE\n  b.nama_bahan LIKE '%Santaan%'",
+  "timestamp": "2025-07-31T10:04:45.796448",
+  "response_time_ms": 156899.40999999997,
+  "token_usage": {
+    "prompt_tokens": 1225,
+    "completion_tokens": 95,
+    "total_tokens": 1320
+  },
+  "raw_response": "```sql\nSELECT\n  m.nama_masakan AS nama_masakan,\n  b.nama_bahan AS nama_bahan\nFROM masakan AS m\nJOIN resep_bahan AS rb\n  ON m.kode_masakan = rb.id_resep\nJOIN bahan AS b\n  ON rb.id_bahan = b.id_bahan\nWHERE\n  b.nama_bahan LIKE '%Santaan%';\n```"
+}

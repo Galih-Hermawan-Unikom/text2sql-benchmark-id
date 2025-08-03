@@ -1,0 +1,38 @@
+{
+  "scenario_id": "RES-A3-04",
+  "model_info": {
+    "name": "gemini-2.5-flash",
+    "temperature": 0.0,
+    "timestamp": "2025-07-22T10:33:28.529822"
+  },
+  "input": {
+    "question_id": "Untuk setiap daerah asal, berapa banyak bahan unik yang digunakan di seluruh masakan daerah tersebut? Tampilkan nama daerah dan jumlah bahan uniknya.",
+    "database": "resep",
+    "category": "Aggregation"
+  },
+  "prompt_info": {
+    "prompt_length": 7122,
+    "prompt_lines": 167
+  },
+  "model_response": {
+    "sql_query": "SELECT m.asal_daerah, COUNT(DISTINCT rb.id_bahan) AS jumlah_bahan_unik FROM masakan m JOIN resep r ON m.kode_masakan = r.kode_masakan JOIN resep_bahan rb ON r.id_resep = rb.id_resep GROUP BY m.asal_daerah",
+    "explanation": "Mengambil setiap daerah asal dari tabel masakan, kemudian menggabungkannya dengan resep dan resep_bahan untuk mendapatkan semua bahan yang terkait dengan masakan di daerah tersebut. Terakhir, menghitung jumlah bahan unik (DISTINCT id_bahan) untuk setiap daerah menggunakan GROUP BY.",
+    "confidence": 0.98,
+    "assumptions": [
+      "'Bahan unik' dihitung berdasarkan ID bahan (id_bahan) yang berbeda.",
+      "Semua masakan yang relevan memiliki resep dan bahan terkait."
+    ],
+    "potential_issues": [
+      "Jika ada masakan tanpa resep atau resep tanpa bahan, mereka tidak akan dihitung, yang merupakan perilaku JOIN default."
+    ],
+    "response_time_ms": 4490.608,
+    "model_name": "gemini-2.5-flash",
+    "timestamp": "2025-07-22T10:33:28.529822",
+    "raw_response": "```json\n{\n  \"sql_query\": \"SELECT m.asal_daerah, COUNT(DISTINCT rb.id_bahan) AS jumlah_bahan_unik FROM masakan m JOIN resep r ON m.kode_masakan = r.kode_masakan JOIN resep_bahan rb ON r.id_resep = rb.id_resep GROUP BY m.asal_daerah\",\n  \"confidence\": 0.98,\n  \"explanation\": \"Mengambil setiap daerah asal dari tabel masakan, kemudian menggabungkannya dengan resep dan resep_bahan untuk mendapatkan semua bahan yang terkait dengan masakan di daerah tersebut. Terakhir, menghitung jumlah bahan unik (DISTINCT id_bahan) untuk setiap daerah menggunakan GROUP BY.\",\n  \"assumptions\": [\"'Bahan unik' dihitung berdasarkan ID bahan (id_bahan) yang berbeda.\", \"Semua masakan yang relevan memiliki resep dan bahan terkait.\"],\n  \"potential_issues\": [\"Jika ada masakan tanpa resep atau resep tanpa bahan, mereka tidak akan dihitung, yang merupakan perilaku JOIN default.\"]\n}\n```",
+    "token_usage": {
+      "prompt_tokens": 2174,
+      "completion_tokens": 239,
+      "total_tokens": 3030
+    }
+  }
+}

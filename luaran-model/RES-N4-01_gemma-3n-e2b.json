@@ -1,0 +1,21 @@
+{
+  "metadata": {
+    "version": "1.0",
+    "generated_at": "2025-07-31T07:24:34.806819",
+    "tool": "text2sql_ollama"
+  },
+  "scenario_id": "RES-N4-01",
+  "category": "Nested / Subquery",
+  "database": "resep",
+  "question_id": "Sebutkan nama masakan yang memakai lebih banyak bahan daripada rata-rata jumlah bahan semua masakan.",
+  "model": "gemma-3n-e2b",
+  "sql_query": "SELECT m.nama_masakan AS nama_masakan\nFROM masakan m\nJOIN resep_bahan rb ON m.kode_masakan = rb.id_resep\nJOIN resep r ON rb.id_bahan = r.id_resep\nGROUP BY m.nama_masakan\nHAVING COUNT(DISTINCT rb.id_bahan) > (SELECT AVG(jumlah) FROM resep_bahan)",
+  "timestamp": "2025-07-31T07:24:34.806819",
+  "response_time_ms": 128621.55999999998,
+  "token_usage": {
+    "prompt_tokens": 1219,
+    "completion_tokens": 97,
+    "total_tokens": 1316
+  },
+  "raw_response": "```sql\nSELECT m.nama_masakan AS nama_masakan\nFROM masakan m\nJOIN resep_bahan rb ON m.kode_masakan = rb.id_resep\nJOIN resep r ON rb.id_bahan = r.id_resep\nGROUP BY m.nama_masakan\nHAVING COUNT(DISTINCT rb.id_bahan) > (SELECT AVG(jumlah) FROM resep_bahan);\n```"
+}

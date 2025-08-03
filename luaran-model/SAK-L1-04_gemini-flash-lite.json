@@ -1,0 +1,35 @@
+{
+  "scenario_id": "SAK-L1-04",
+  "model_info": {
+    "name": "gemini-2.5-flash-lite",
+    "temperature": 0.0,
+    "timestamp": "2025-07-23T13:54:49.583095"
+  },
+  "input": {
+    "question_id": "Tampilkan ID dan nama kategori film yang diperbarui pada atau setelah 15 Februari 2006.",
+    "database": "sakila",
+    "category": "Lookup / Filter"
+  },
+  "prompt_info": {
+    "prompt_length": 9738,
+    "prompt_lines": 299
+  },
+  "model_response": {
+    "sql_query": "SELECT c.category_id, c.name FROM category c WHERE c.last_update >= '2006-02-15 00:00:00'",
+    "explanation": "Query ini mengambil ID dan nama dari tabel 'category' di mana kolom 'last_update' lebih besar dari atau sama dengan tanggal '2006-02-15 00:00:00'. Ini secara langsung menjawab permintaan untuk menampilkan kategori yang diperbarui pada atau setelah tanggal tersebut.",
+    "confidence": 0.98,
+    "assumptions": [
+      "Kolom 'last_update' di tabel 'category' menyimpan informasi tanggal dan waktu pembaruan terakhir.",
+      "Format tanggal yang digunakan dalam perbandingan ('YYYY-MM-DD HH:MM:SS') sesuai dengan format yang disimpan di database."
+    ],
+    "potential_issues": [],
+    "response_time_ms": 1194.398399999045,
+    "model_name": "gemini-2.5-flash-lite",
+    "timestamp": "2025-07-23T13:54:49.583095",
+    "token_usage": {
+      "prompt_tokens": 3074,
+      "completion_tokens": 211,
+      "total_tokens": 3285
+    }
+  }
+}

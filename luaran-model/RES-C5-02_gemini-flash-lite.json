@@ -1,0 +1,35 @@
+{
+  "scenario_id": "RES-C5-02",
+  "model_info": {
+    "name": "gemini-2.5-flash-lite",
+    "temperature": 0.0,
+    "timestamp": "2025-07-23T13:53:12.582919"
+  },
+  "input": {
+    "question_id": "Masakan mana saja yang tingkat kepedasannya di atas rata-rata semua masakan? Sertakan kode masakan, nama masakan, dan level pedasnya.",
+    "database": "resep",
+    "category": "Comparative"
+  },
+  "prompt_info": {
+    "prompt_length": 7261,
+    "prompt_lines": 165
+  },
+  "model_response": {
+    "sql_query": "SELECT kode_masakan, nama_masakan, level_pedas FROM masakan WHERE level_pedas > (SELECT AVG(level_pedas) FROM masakan)",
+    "explanation": "Query ini mengambil kode masakan, nama masakan, dan level pedas dari tabel 'masakan'. Kondisi WHERE memfilter masakan yang level pedasnya lebih tinggi dari rata-rata level pedas semua masakan. Rata-rata level pedas dihitung menggunakan subkueri.",
+    "confidence": 0.98,
+    "assumptions": [
+      "Tabel 'masakan' memiliki kolom 'kode_masakan', 'nama_masakan', dan 'level_pedas'.",
+      "Kolom 'level_pedas' berisi nilai numerik yang dapat dihitung rata-ratanya."
+    ],
+    "potential_issues": [],
+    "response_time_ms": 874.9933999988571,
+    "model_name": "gemini-2.5-flash-lite",
+    "timestamp": "2025-07-23T13:53:12.582919",
+    "token_usage": {
+      "prompt_tokens": 2205,
+      "completion_tokens": 203,
+      "total_tokens": 2408
+    }
+  }
+}

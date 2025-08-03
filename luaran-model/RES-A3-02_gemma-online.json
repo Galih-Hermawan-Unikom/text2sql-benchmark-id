@@ -1,0 +1,36 @@
+{
+  "scenario_id": "RES-A3-02",
+  "model_info": {
+    "name": "gemma-3-27b-it",
+    "temperature": 0.0,
+    "timestamp": "2025-07-24T08:53:12.696490"
+  },
+  "input": {
+    "question_id": "Hitung rata-rata waktu memasak untuk setiap tingkat kesulitan resep. Tampilkan tingkat kesulitan dan rata-ratanya (dalam menit).",
+    "database": "resep",
+    "category": "Aggregation"
+  },
+  "prompt_info": {
+    "prompt_length": 7256,
+    "prompt_lines": 165
+  },
+  "model_response": {
+    "sql_query": "SELECT tingkat_kesulitan, AVG(waktu_masak) AS rata_rata_waktu_masak FROM resep GROUP BY tingkat_kesulitan",
+    "explanation": "Query ini menghitung rata-rata waktu memasak untuk setiap tingkat kesulitan resep.  `AVG(waktu_masak)` menghitung rata-rata waktu memasak, dan `GROUP BY tingkat_kesulitan` mengelompokkan hasil berdasarkan tingkat kesulitan sehingga kita mendapatkan rata-rata untuk setiap tingkat kesulitan yang berbeda.",
+    "confidence": 0.98,
+    "assumptions": [
+      "Kolom `waktu_masak` dalam tabel `resep` berisi waktu memasak dalam menit."
+    ],
+    "potential_issues": [
+      "Jika ada nilai NULL di kolom `waktu_masak`, nilai tersebut tidak akan dihitung dalam rata-rata.  Jika diperlukan, penanganan nilai NULL dapat ditambahkan menggunakan fungsi `COALESCE`."
+    ],
+    "response_time_ms": 5771.494699999948,
+    "model_name": "gemma-3-27b-it",
+    "timestamp": "2025-07-24T08:53:12.696490",
+    "token_usage": {
+      "prompt_tokens": 2199,
+      "completion_tokens": null,
+      "total_tokens": 2199
+    }
+  }
+}

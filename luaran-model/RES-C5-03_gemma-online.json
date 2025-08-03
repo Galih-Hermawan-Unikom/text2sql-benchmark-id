@@ -1,0 +1,37 @@
+{
+  "scenario_id": "RES-C5-03",
+  "model_info": {
+    "name": "gemma-3-27b-it",
+    "temperature": 0.0,
+    "timestamp": "2025-07-24T08:53:50.508757"
+  },
+  "input": {
+    "question_id": "Bahan apa saja yang muncul lebih sering dibanding rata-rata frekuensi kemunculan semua bahan? Tampilkan nama bahan dan jumlah kemunculannya.",
+    "database": "resep",
+    "category": "Comparative"
+  },
+  "prompt_info": {
+    "prompt_length": 7268,
+    "prompt_lines": 165
+  },
+  "model_response": {
+    "sql_query": "SELECT b.nama_bahan, COUNT(rb.id_bahan) AS jumlah_kemunculan FROM bahan b JOIN resep_bahan rb ON b.id_bahan = rb.id_bahan GROUP BY b.id_bahan HAVING COUNT(rb.id_bahan) > (SELECT AVG(jumlah) FROM (SELECT COUNT(id_bahan) AS jumlah FROM resep_bahan GROUP BY id_bahan) AS subquery)",
+    "explanation": "Query ini menghitung jumlah kemunculan setiap bahan dalam resep, kemudian membandingkannya dengan rata-rata jumlah kemunculan semua bahan. Hanya bahan yang jumlah kemunculannya lebih besar dari rata-rata yang ditampilkan.",
+    "confidence": 0.92,
+    "assumptions": [
+      "Tabel `resep_bahan` mencatat setiap penggunaan bahan dalam resep.",
+      "Rata-rata frekuensi kemunculan dihitung berdasarkan semua bahan yang pernah digunakan dalam resep."
+    ],
+    "potential_issues": [
+      "Performa query mungkin lambat jika tabel `resep_bahan` sangat besar. Pertimbangkan untuk menambahkan indeks pada kolom `id_bahan` jika diperlukan."
+    ],
+    "response_time_ms": 5967.5072,
+    "model_name": "gemma-3-27b-it",
+    "timestamp": "2025-07-24T08:53:50.508757",
+    "token_usage": {
+      "prompt_tokens": 2200,
+      "completion_tokens": null,
+      "total_tokens": 2200
+    }
+  }
+}

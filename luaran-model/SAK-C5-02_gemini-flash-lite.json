@@ -1,0 +1,38 @@
+{
+  "scenario_id": "SAK-C5-02",
+  "model_info": {
+    "name": "gemini-2.5-flash-lite",
+    "temperature": 0.0,
+    "timestamp": "2025-07-23T13:54:20.695285"
+  },
+  "input": {
+    "question_id": "Tampilkan pelanggan yang jumlah sewanya berada di bawah (rata-rata jumlah sewa per pelanggan minus satu simpangan baku); sertakan nama dan total sewanya.",
+    "database": "sakila",
+    "category": "Comparative"
+  },
+  "prompt_info": {
+    "prompt_length": 9804,
+    "prompt_lines": 299
+  },
+  "model_response": {
+    "sql_query": "SELECT c.first_name, c.last_name, COUNT(r.rental_id) AS total_rentals FROM customer c JOIN rental r ON c.customer_id = r.customer_id GROUP BY c.customer_id, c.first_name, c.last_name HAVING total_rentals < (SELECT AVG(rental_counts.num_rentals) - STDDEV(rental_counts.num_rentals) FROM (SELECT COUNT(rental_id) AS num_rentals FROM rental GROUP BY customer_id) AS rental_counts);",
+    "explanation": "Query ini pertama-tama menghitung jumlah total rental untuk setiap pelanggan. Kemudian, ia menghitung rata-rata dan simpangan baku dari jumlah rental per pelanggan. Terakhir, ia menampilkan pelanggan yang jumlah sewanya kurang dari (rata-rata jumlah sewa dikurangi satu simpangan baku), beserta nama depan, nama belakang, dan total sewanya.",
+    "confidence": 0.96,
+    "assumptions": [
+      "Pelanggan yang tidak memiliki rental tidak akan muncul dalam hasil karena JOIN.",
+      "Simpangan baku dihitung berdasarkan jumlah rental per pelanggan."
+    ],
+    "potential_issues": [
+      "Jika tidak ada pelanggan yang memenuhi kriteria, query tidak akan mengembalikan baris apa pun.",
+      "Perhitungan simpangan baku mungkin sensitif terhadap distribusi data rental."
+    ],
+    "response_time_ms": 1675.8721999995032,
+    "model_name": "gemini-2.5-flash-lite",
+    "timestamp": "2025-07-23T13:54:20.695285",
+    "token_usage": {
+      "prompt_tokens": 3084,
+      "completion_tokens": 318,
+      "total_tokens": 3402
+    }
+  }
+}

@@ -1,0 +1,385 @@
+scenario_mappings:
+  RES-A3-01:
+    model_specific_aliases:
+      gemini-2.5-flash:
+        kategori: kategori
+        jumlah_resep: total_resep
+      gemma-3n-e2b:
+        kategori_masakan: kategori
+        jumlah_resep: total_resep
+      gemini-flash-lite:
+        kategori: kategori
+        total_resep: total_resep
+      gemini-flash-lite-v2:
+        kategori: kategori
+        total_resep: total_resep
+  RES-A3-02:
+    model_specific_aliases:
+      gemini-2.5-flash:
+        tingkat_kesulitan: tingkat_kesulitan
+        rata_rata_waktu_masak: rata_waktu
+      gemma-3n-e2b:
+        tingkat_kesulitan: tingkat_kesulitan
+        rata_rata_waktu_masak: rata_waktu
+      gemini-flash-lite:
+        tingkat_kesulitan: tingkat_kesulitan
+        rata_rata_waktu_masak: rata_waktu
+      gemma-online:
+        rata_rata_waktu_masak: rata_waktu
+      gemini-flash-lite-v2:
+        rata_rata_waktu_masak_menit: rata_waktu
+  RES-A3-03:
+    model_specific_aliases:
+      gemini-2.5-flash:
+        jumlah_pemakaian: frekuensi
+      gemma-3n-e2b:
+        jumlah_penggunaan: frekuensi
+        total_jumlah: frekuensi
+      gemini-flash-lite:
+        jumlah_penggunaan: frekuensi
+      gemma-online:
+        jumlah_penggunaan: frekuensi
+      gemini-flash-lite-v2:
+        jumlah_penggunaan: frekuensi
+  RES-A3-04:
+    model_specific_aliases:
+      gemini-2.5-flash:
+        jumlah_bahan_unik: jumlah_bahan
+      gemma-3n-e2b:
+        jumlah_bahan_unik: jumlah_bahan
+      gemini-flash-lite:
+        jumlah_bahan_unik: jumlah_bahan
+      gemma-online:
+        jumlah_bahan_unik: jumlah_bahan
+      gemini-flash-lite-v2:
+        jumlah_bahan_unik: jumlah_bahan
+  RES-A3-05:
+    model_specific_aliases:
+      gemini-2.5-flash:
+        jumlah_resep: total_resep
+      gemma-3n-e2b:
+        jumlah_masakan_aktif: status_aktif
+        jumlah_masakan_tidak_aktif: total_masakan
+      gemini-flash-lite:
+        jumlah_resep: total_resep
+  RES-N4-05:
+    model_specific_aliases:
+      gemini-2.5-flash:
+        jumlah_resep_non_cabe: resep_tanpa_cabe
+      gemma-3n-e2b:
+        COUNT(r.id_resep): resep_tanpa_cabe
+      gemini-flash-lite:
+        COUNT(DISTINCT r.id_resep): resep_tanpa_cabe
+      gemma-online:
+        jumlah_resep: resep_tanpa_cabe
+      gemini-flash-lite-v2:
+        COUNT(DISTINCT T1.id_resep): resep_tanpa_cabe
+  RES-C5-01:
+    model_specific_aliases:
+      gemini-2.5-flash: {}
+      gemma-3n-e2b:
+        durasi_memasak: waktu_masak
+  RES-C5-03:
+    model_specific_aliases:
+      gemini-2.5-flash:
+        nama_bahan: nama_bahan
+        jumlah_kemunculan: frekuensi
+      gemma-3n-e2b:
+        total_jumlah: frekuensi
+      gemini-flash-lite:
+        jumlah_kemunculan: frekuensi
+      gemma-online:
+        jumlah_kemunculan: frekuensi
+      gemini-flash-lite-v2:
+        jumlah_kemunculan: frekuensi
+  RES-S6-01:
+    model_specific_aliases:
+      gemini-2.5-flash: {}
+      gemma-3n-e2b:
+        durasi_memasak: waktu_masak
+        lama_memasak: waktu_masak
+  RES-S6-02:
+    model_specific_aliases:
+      gemini-2.5-flash:
+        total_kemunculan: frekuensi
+      gemma-3n-e2b:
+        total_kemunculan: frekuensi
+      gemini-flash-lite:
+        total_kemunculan: frekuensi
+      gemma-online:
+        total_kemunculan: frekuensi
+      gemini-flash-lite-v2:
+        total_kemunculan: frekuensi
+  RES-S6-04:
+    model_specific_aliases:
+      gemini-2.5-flash: {}
+      gemma-3n-e2b:
+        total_jumlah_bahan: jumlah_bahan
+      gemini-flash-lite:
+        total_jumlah_bahan: jumlah_bahan
+  RES-C5-04:
+    model_specific_aliases:
+      gemini-2.5-flash:
+        category_name: category
+        average_duration: avg_length
+      gemma-3n-e2b: {}
+      gemini-flash-lite:
+        category_name: category
+        average_duration: avg_length
+        asal_daerah: asal_daerah
+        jumlah_masakan: total_masakan
+  SAK-L1-01:
+    model_specific_aliases:
+      gemini-2.5-flash: {}
+      gemma-3n-e2b:
+        judul_film: title
+        durasi_film: length
+  SAK-J2-02:
+    model_specific_aliases:
+      gemini-2.5-flash:
+        language_name: language
+      gemma-3n-e2b:
+        judul_film: title
+        nama_bahasa: language
+      gemini-flash-lite:
+        language_name: language
+      gemma-online:
+        bahasa: language
+      gemini-flash-lite-v2:
+        language_name: language
+  SAK-J2-05:
+    model_specific_aliases:
+      gemini-2.5-flash:
+        title: film_title
+        category_name: category_name
+        renter_full_name: customer_name
+      gemma-3n-e2b: {}
+      gemini-flash-lite:
+        judul_film: film_title
+        kategori_film: category_name
+        nama_penyewa: customer_name
+      gemini-flash-lite-v2:
+        customer_full_name: customer_name
+  SAK-A3-01:
+    model_specific_aliases:
+      gemini-2.5-flash:
+        jumlah_film: film_count
+      gemma-3n-e2b: {}
+      gemini-flash-lite:
+        jumlah_film: film_count
+      gemma-online:
+        jumlah_film: film_count
+  SAK-A3-02:
+    model_specific_aliases:
+      gemini-2.5-flash:
+        category_name: category
+        average_film_duration: avg_length
+      gemma-3n-e2b:
+        kategori_film: category
+        rata_rata_durasi: avg_length
+      gemini-flash-lite:
+        category_name: category
+        average_film_duration: avg_length
+        average_film_length: avg_length
+      gemma-online:
+        nama_kategori: category
+        rata_rata_durasi: avg_length
+      gemini-flash-lite-v2:
+        category_name: category
+        average_duration: avg_length
+  SAK-A3-04:
+    model_specific_aliases:
+      gemini-2.5-flash:
+        total_pembayaran: total_sales_2006
+      gemma-3n-e2b:
+        total_pembayaran: total_sales_2006
+      gemini-flash-lite:
+        total_pembayaran_2006: total_sales_2006
+  SAK-A3-05:
+    model_specific_aliases:
+      gemini-2.5-flash:
+        jumlah_film: film_count
+      gemma-3n-e2b:
+        jumlah_film: film_count
+      gemini-flash-lite:
+        total_films: film_count
+      gemma-online:
+        jumlah_film: film_count
+  SAK-N4-01:
+    model_specific_aliases:
+      gemini-2.5-flash:
+        jumlah_film: number_of_films
+        nama_lengkap_aktor: full_name
+      gemma-3n-e2b: {}
+      gemini-flash-lite:
+        actor_name: full_name
+        film_count: number_of_films
+      gemini-flash-lite-v2:
+        actor_name: full_name
+        film_count: number_of_films
+  SAK-N4-02:
+    model_specific_aliases:
+      gemini-2.5-flash:
+        name: language
+      gemma-3n-e2b:
+        name: language
+      gemini-flash-lite:
+        name: language
+      gemma-online:
+        name: language
+      gemini-flash-lite-v2:
+        name: language
+  SAK-N4-03:
+    model_specific_aliases:
+      gemini-2.5-flash:
+        total_amount_paid: total_sales
+      gemma-3n-e2b:
+        nama_staf: last_name
+        total_pembayaran: total_sales
+      gemini-flash-lite:
+        total_payment: total_sales
+      gemma-online:
+        total_pembayaran: total_sales
+      gemini-flash-lite-v2:
+        total_payment: total_sales
+  SAK-C5-01:
+    model_specific_aliases:
+      gemini-2.5-flash: {}
+      gemma-3n-e2b:
+        judul_film: title
+        tahun_rilis: release_year
+        durasi_film: length
+  SAK-C5-02:
+    model_specific_aliases:
+      gemini-2.5-flash:
+        total_rentals: rental_count
+      gemma-3n-e2b: {}
+      gemini-flash-lite:
+        total_rentals: rental_count
+      gemma-online:
+        total_sewa: rental_count
+      gemini-flash-lite-v2:
+        total_rent: rental_count
+  SAK-C5-03:
+    model_specific_aliases:
+      gemini-2.5-flash:
+        category_name: category
+        rental_rate: rental_rate
+      gemma-3n-e2b:
+        judul_film: title
+        nama_kategori: category
+        biaya_sewa: rental_rate
+      gemini-flash-lite:
+        category_name: category
+      gemma-online:
+        category_name: category
+  SAK-C5-04:
+    model_specific_aliases:
+      gemini-2.5-flash:
+        category_name: category
+        average_duration: avg_length
+      gemma-3n-e2b:
+        kategori_film: category
+        rata_rata_durasi: avg_length
+      gemini-flash-lite:
+        nama_kategori: category
+        rata_rata_durasi: avg_length
+      gemma-online:
+        nama_kategori: category
+        rata_rata_durasi: avg_length
+      gemini-flash-lite-v2:
+        category_name: category
+        average_duration: avg_length
+  SAK-C5-05:
+    model_specific_aliases:
+      gemini-2.5-flash:
+        jumlah_transaksi: payment_count
+      gemma-3n-e2b:
+        jumlah_transaksi: payment_count
+      gemini-flash-lite:
+        total_transactions: payment_count
+      gemma-online:
+        jumlah_transaksi: payment_count
+      gemini-flash-lite-v2:
+        transaction_count: payment_count
+  SAK-S6-01:
+    model_specific_aliases:
+      gemini-2.5-flash:
+        total_payments: total_payment
+      gemma-3n-e2b:
+        total_pembayaran: total_payment
+        nama_depan: first_name
+        nama_belakang: last_name
+      gemma-online:
+        total_pembayaran: total_payment
+  SAK-S6-02:
+    model_specific_aliases:
+      gemini-2.5-flash: {}
+      gemma-3n-e2b:
+        judul_film: title
+        durasi_film: length
+  SAK-S6-03:
+    model_specific_aliases:
+      gemini-2.5-flash:
+        jumlah_pelanggan: customer_count
+      gemma-3n-e2b: {}
+      gemini-flash-lite:
+        jumlah_pelanggan: customer_count
+      gemma-online:
+        jumlah_pelanggan: customer_count
+  SAK-S6-04:
+    model_specific_aliases:
+      gemini-2.5-flash:
+        jumlah_sewa: rental_count
+      gemma-3n-e2b:
+        jumlah_sewa: rental_count
+        nama_depan: first_name
+        nama_belakang: last_name
+      gemini-flash-lite:
+        jumlah_sewa: rental_count
+      gemma-online:
+        jumlah_sewa: rental_count
+      gemini-flash-lite-v2:
+        rental_count: rental_count
+  SAK-S6-05:
+    model_specific_aliases:
+      gemini-2.5-flash:
+        bulan: month_num
+        total_pembayaran: total_payment
+      gemma-3n-e2b:
+        bulan: month_num
+        total_pembayaran: total_payment
+      gemini-flash-lite:
+        bulan: month_num
+        total_pembayaran: total_payment
+      gemma-online:
+        bulan: month_num
+        total_pembayaran: total_payment
+      gemini-flash-lite-v2:
+        month_number: month_num
+  RES-L1-05:
+    model_specific_aliases:
+      gemini-flash-lite:
+        satuan_override: satuan_default
+      gemma-3n-e2b:
+        satuan: satuan_default
+  SAK-A3-03:
+    model_specific_aliases:
+      gemini-flash-lite:
+        bulan_pembayaran: bulan
+      gemini-flash-lite-v2:
+        payment_month: bulan
+        total_payment_value: total_pembayaran
+  RES-J2-03:
+    model_specific_aliases:
+      gemma-3n-e2b:
+        lama_memasak: waktu_masak
+  SAK-L1-04:
+    model_specific_aliases:
+      gemma-3n-e2b:
+        film_id: category_id
+        kategori_nama: name
+  SAK-L1-05:
+    model_specific_aliases:
+      gemma-3n-e2b:
+        nama_bahasa: name

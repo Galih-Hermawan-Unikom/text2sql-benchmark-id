@@ -1,0 +1,35 @@
+{
+  "scenario_id": "SAK-L1-03",
+  "model_info": {
+    "name": "gemini-2.5-flash",
+    "temperature": 0.0,
+    "timestamp": "2025-07-22T10:14:22.534076"
+  },
+  "input": {
+    "question_id": "Tampilkan transaksi pembayaran bernilai antara 11 hingga 12 dolar, sertakan ID pembayaran, jumlah, dan tanggal pembayarannya.",
+    "database": "sakila",
+    "category": "Lookup / Filter"
+  },
+  "prompt_info": {
+    "prompt_length": 9281,
+    "prompt_lines": 299
+  },
+  "model_response": {
+    "sql_query": "SELECT payment_id, amount, payment_date FROM payment WHERE amount BETWEEN 11.00 AND 12.00",
+    "explanation": "Mengambil ID pembayaran, jumlah, dan tanggal pembayaran dari tabel 'payment' di mana nilai pembayaran berada dalam rentang 11 hingga 12 dolar.",
+    "confidence": 0.99,
+    "assumptions": [
+      "'dolar' merujuk pada unit mata uang default di kolom 'amount' dan rentang 11 hingga 12 dolar adalah inklusif (antara 11 dan 12, termasuk 11 dan 12)."
+    ],
+    "potential_issues": [],
+    "response_time_ms": 2015.305,
+    "model_name": "gemini-2.5-flash",
+    "timestamp": "2025-07-22T10:14:22.534076",
+    "raw_response": "```json\n{\n  \"sql_query\": \"SELECT payment_id, amount, payment_date FROM payment WHERE amount BETWEEN 11.00 AND 12.00\",\n  \"confidence\": 0.99,\n  \"explanation\": \"Mengambil ID pembayaran, jumlah, dan tanggal pembayaran dari tabel 'payment' di mana nilai pembayaran berada dalam rentang 11 hingga 12 dolar.\",\n  \"assumptions\": [\"'dolar' merujuk pada unit mata uang default di kolom 'amount' dan rentang 11 hingga 12 dolar adalah inklusif (antara 11 dan 12, termasuk 11 dan 12).\"],\n  \"potential_issues\": []\n}\n```",
+    "token_usage": {
+      "prompt_tokens": 2963,
+      "completion_tokens": 161,
+      "total_tokens": 3290
+    }
+  }
+}

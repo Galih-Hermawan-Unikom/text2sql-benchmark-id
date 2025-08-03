@@ -1,0 +1,35 @@
+{
+  "scenario_id": "SAK-N4-04",
+  "model_info": {
+    "name": "gemini-2.5-flash",
+    "temperature": 0.0,
+    "timestamp": "2025-07-22T10:55:18.003173"
+  },
+  "input": {
+    "question_id": "Tampilkan film yang belum pernah disewa oleh pelanggan mana pun.",
+    "database": "sakila",
+    "category": "Nested / Subquery"
+  },
+  "prompt_info": {
+    "prompt_length": 9220,
+    "prompt_lines": 299
+  },
+  "model_response": {
+    "sql_query": "SELECT f.title FROM film f WHERE NOT EXISTS (SELECT 1 FROM inventory i JOIN rental r ON i.inventory_id = r.inventory_id WHERE i.film_id = f.film_id)",
+    "explanation": "Mengambil judul film dari tabel `film` yang tidak memiliki entri terkait di tabel `inventory` dan `rental`, yang berarti film tersebut belum pernah disewa sama sekali.",
+    "confidence": 0.98,
+    "assumptions": [
+      "Film dianggap 'belum pernah disewa' jika tidak ada satupun salinan (inventory) dari film tersebut yang tercatat dalam tabel `rental`."
+    ],
+    "potential_issues": [],
+    "response_time_ms": 5465.492,
+    "model_name": "gemini-2.5-flash",
+    "timestamp": "2025-07-22T10:55:18.003173",
+    "raw_response": "```json\n{\n  \"sql_query\": \"SELECT f.title FROM film f WHERE NOT EXISTS (SELECT 1 FROM inventory i JOIN rental r ON i.inventory_id = r.inventory_id WHERE i.film_id = f.film_id)\",\n  \"confidence\": 0.98,\n  \"explanation\": \"Mengambil judul film dari tabel `film` yang tidak memiliki entri terkait di tabel `inventory` dan `rental`, yang berarti film tersebut belum pernah disewa sama sekali.\",\n  \"assumptions\": [\n    \"Film dianggap 'belum pernah disewa' jika tidak ada satupun salinan (inventory) dari film tersebut yang tercatat dalam tabel `rental`.\"\n  ],\n  \"potential_issues\": []\n}\n```",
+    "token_usage": {
+      "prompt_tokens": 2947,
+      "completion_tokens": 165,
+      "total_tokens": 3959
+    }
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "metadata": {
+    "version": "1.0",
+    "generated_at": "2025-07-31T09:10:47.695704",
+    "tool": "text2sql_ollama"
+  },
+  "scenario_id": "SAK-S6-02",
+  "category": "Superlative",
+  "database": "sakila",
+  "question_id": "Film apa yang memiliki durasi terlama? Sertakan judul dan durasinya.",
+  "model": "gemma-3n-e2b",
+  "sql_query": "SELECT\n    f.title AS judul_film,\n    f.length AS durasi_film\nFROM\n    film f\nJOIN\n    film_actor fa ON f.film_id = fa.film_id\nJOIN\n    actor a ON fa.actor_id = a.actor_id\nORDER BY\n    f.length DESC",
+  "timestamp": "2025-07-31T09:10:47.695176",
+  "response_time_ms": 209287.135,
+  "token_usage": {
+    "prompt_tokens": 1667,
+    "completion_tokens": 81,
+    "total_tokens": 1748
+  },
+  "raw_response": "```sql\nSELECT\n    f.title AS judul_film,\n    f.length AS durasi_film\nFROM\n    film f\nJOIN\n    film_actor fa ON f.film_id = fa.film_id\nJOIN\n    actor a ON fa.actor_id = a.actor_id\nORDER BY\n    f.length DESC;\n```"
+}

@@ -1,0 +1,34 @@
+{
+  "scenario_id": "SAK-L1-02",
+  "model_info": {
+    "name": "gemini-2.5-flash-lite",
+    "temperature": 0.0,
+    "timestamp": "2025-07-23T13:54:44.999703"
+  },
+  "input": {
+    "question_id": "Tampilkan daftar aktor yang nama belakangnya diawali huruf 'A'.",
+    "database": "sakila",
+    "category": "Lookup / Filter"
+  },
+  "prompt_info": {
+    "prompt_length": 9714,
+    "prompt_lines": 299
+  },
+  "model_response": {
+    "sql_query": "SELECT first_name, last_name FROM actor WHERE last_name LIKE 'A%'",
+    "explanation": "Query ini memilih nama depan dan nama belakang dari tabel 'actor' di mana nama belakang dimulai dengan huruf 'A'.",
+    "confidence": 0.99,
+    "assumptions": [
+      "Nama belakang aktor disimpan dalam kolom 'last_name' di tabel 'actor'."
+    ],
+    "potential_issues": [],
+    "response_time_ms": 900.5402999991929,
+    "model_name": "gemini-2.5-flash-lite",
+    "timestamp": "2025-07-23T13:54:44.999703",
+    "token_usage": {
+      "prompt_tokens": 3065,
+      "completion_tokens": 113,
+      "total_tokens": 3178
+    }
+  }
+}

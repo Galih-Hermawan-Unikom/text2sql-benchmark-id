@@ -1,0 +1,39 @@
+{
+  "scenario_id": "SAK-N4-01",
+  "model_info": {
+    "name": "gemma-3-27b-it",
+    "temperature": 0.0,
+    "timestamp": "2025-07-24T08:58:41.070502"
+  },
+  "input": {
+    "question_id": "Tampilkan **nama lengkap** (gabungan nama depan dan belakang) aktor serta jumlah filmnya yang membintangi film lebih banyak daripada Matthew Carrey, lalu urutkan dari jumlah film terbanyak.",
+    "database": "sakila",
+    "category": "Nested / Subquery"
+  },
+  "prompt_info": {
+    "prompt_length": 9840,
+    "prompt_lines": 299
+  },
+  "model_response": {
+    "sql_query": "SELECT a.first_name, a.last_name, COUNT(fa.film_id) AS jumlah_film FROM actor a JOIN film_actor fa ON a.actor_id = fa.actor_id GROUP BY a.actor_id, a.first_name, a.last_name HAVING COUNT(fa.film_id) > (SELECT COUNT(fa2.film_id) FROM actor a2 JOIN film_actor fa2 ON a2.actor_id = fa2.actor_id WHERE a2.first_name = 'Matthew' AND a2.last_name = 'Carrey') ORDER BY jumlah_film DESC",
+    "explanation": "Query ini mencari nama lengkap aktor dan jumlah film yang mereka bintangi, tetapi hanya menampilkan aktor yang jumlah filmnya lebih banyak dari aktor bernama Matthew Carrey. Hasilnya diurutkan berdasarkan jumlah film secara menurun.",
+    "confidence": 0.97,
+    "assumptions": [
+      "Nama lengkap aktor terdiri dari first_name dan last_name.",
+      "Aktor bernama 'Matthew Carrey' ada dalam database.",
+      "Jumlah film dihitung berdasarkan entri dalam tabel film_actor."
+    ],
+    "potential_issues": [
+      "Jika tidak ada aktor bernama 'Matthew Carrey', subquery akan mengembalikan NULL, yang dapat menyebabkan hasil yang tidak terduga.  Perlu ditangani kasus di mana subquery mengembalikan NULL jika diperlukan.",
+      "Jika ada beberapa aktor dengan nama 'Matthew Carrey', subquery akan mengembalikan jumlah film dari salah satu dari mereka (tergantung pada implementasi database)."
+    ],
+    "response_time_ms": 7645.644000000175,
+    "model_name": "gemma-3-27b-it",
+    "timestamp": "2025-07-24T08:58:41.070502",
+    "token_usage": {
+      "prompt_tokens": 3092,
+      "completion_tokens": null,
+      "total_tokens": 3092
+    }
+  }
+}

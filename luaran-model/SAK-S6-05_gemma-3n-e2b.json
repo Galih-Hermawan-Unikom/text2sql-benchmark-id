@@ -1,0 +1,21 @@
+{
+  "metadata": {
+    "version": "1.0",
+    "generated_at": "2025-07-31T09:20:14.204974",
+    "tool": "text2sql_ollama"
+  },
+  "scenario_id": "SAK-S6-05",
+  "category": "Superlative",
+  "database": "sakila",
+  "question_id": "Pada tahun 2005, bulan apa yang mencatat total pembayaran terbesar? Sertakan nomor bulan (1\u201312) dan total pembayarannya.",
+  "model": "gemma-3n-e2b",
+  "sql_query": "SELECT\n    substring(month(r.rental_date) FROM 1 LENGTH 2) AS bulan,\n    SUM(p.amount) AS total_pembayaran\nFROM\n    rental r\nJOIN\n    payment p ON r.rental_id = p.rental_id\nWHERE\n    YEAR(r.rental_date) = 2005\nGROUP BY\n    bulan\nORDER BY\n    total_pembayaran DESC\nLIMIT 1",
+  "timestamp": "2025-07-31T09:20:14.204974",
+  "response_time_ms": 185749.52099999998,
+  "token_usage": {
+    "prompt_tokens": 1688,
+    "completion_tokens": 107,
+    "total_tokens": 1795
+  },
+  "raw_response": "```sql\nSELECT\n    substring(month(r.rental_date) FROM 1 LENGTH 2) AS bulan,\n    SUM(p.amount) AS total_pembayaran\nFROM\n    rental r\nJOIN\n    payment p ON r.rental_id = p.rental_id\nWHERE\n    YEAR(r.rental_date) = 2005\nGROUP BY\n    bulan\nORDER BY\n    total_pembayaran DESC\nLIMIT 1;\n```"
+}

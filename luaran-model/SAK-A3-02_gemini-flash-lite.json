@@ -1,0 +1,36 @@
+{
+  "scenario_id": "SAK-A3-02",
+  "model_info": {
+    "name": "gemini-2.5-flash-lite",
+    "temperature": 0.0,
+    "timestamp": "2025-07-23T13:54:08.456524"
+  },
+  "input": {
+    "question_id": "Tampilkan rata-rata durasi film untuk setiap kategori film.",
+    "database": "sakila",
+    "category": "Aggregation"
+  },
+  "prompt_info": {
+    "prompt_length": 9710,
+    "prompt_lines": 299
+  },
+  "model_response": {
+    "sql_query": "SELECT c.name AS category_name, AVG(f.length) AS average_film_length FROM category c JOIN film_category fc ON c.category_id = fc.category_id JOIN film f ON fc.film_id = f.film_id GROUP BY c.name;",
+    "explanation": "Query ini menghitung rata-rata durasi film untuk setiap kategori. Ini dilakukan dengan menggabungkan tabel 'category', 'film_category', dan 'film'. Tabel 'category' berisi nama-nama kategori, 'film_category' menghubungkan film dengan kategori, dan 'film' berisi informasi durasi film. Rata-rata durasi dihitung untuk setiap nama kategori.",
+    "confidence": 0.98,
+    "assumptions": [
+      "Durasi film disimpan dalam kolom 'length' pada tabel 'film'.",
+      "Hubungan antara kategori dan film dikelola melalui tabel 'film_category'.",
+      "Nama kategori disimpan dalam kolom 'name' pada tabel 'category'."
+    ],
+    "potential_issues": [],
+    "response_time_ms": 1165.6337999993411,
+    "model_name": "gemini-2.5-flash-lite",
+    "timestamp": "2025-07-23T13:54:08.456524",
+    "token_usage": {
+      "prompt_tokens": 3064,
+      "completion_tokens": 243,
+      "total_tokens": 3307
+    }
+  }
+}

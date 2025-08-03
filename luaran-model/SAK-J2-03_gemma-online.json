@@ -1,0 +1,39 @@
+{
+  "scenario_id": "SAK-J2-03",
+  "model_info": {
+    "name": "gemma-3-27b-it",
+    "temperature": 0.0,
+    "timestamp": "2025-07-24T08:57:48.758479"
+  },
+  "input": {
+    "question_id": "Tampilkan nama aktor dan judul film yang dirilis tahun 2006 dengan rating 'PG'. Di mana judul filmnya mengandung kata pilot.",
+    "database": "sakila",
+    "category": "Join + Filter"
+  },
+  "prompt_info": {
+    "prompt_length": 9775,
+    "prompt_lines": 299
+  },
+  "model_response": {
+    "sql_query": "SELECT a.first_name, a.last_name, f.title FROM actor a JOIN film_actor fa ON a.actor_id = fa.actor_id JOIN film f ON fa.film_id = f.film_id WHERE f.release_year = 2006 AND f.rating = 'PG' AND f.title LIKE '%pilot%'",
+    "explanation": "Query ini mengambil nama depan dan nama belakang aktor, serta judul film. Query ini menggabungkan tabel `actor`, `film_actor`, dan `film` untuk mendapatkan informasi yang diperlukan. Filter diterapkan untuk memastikan hanya film yang dirilis pada tahun 2006, memiliki rating 'PG', dan judulnya mengandung kata 'pilot' yang ditampilkan.",
+    "confidence": 0.97,
+    "assumptions": [
+      "Tahun rilis film disimpan dalam kolom `release_year` pada tabel `film`.",
+      "Rating film disimpan dalam kolom `rating` pada tabel `film`.",
+      "Judul film disimpan dalam kolom `title` pada tabel `film`.",
+      "Kata 'pilot' dapat muncul di mana saja dalam judul film."
+    ],
+    "potential_issues": [
+      "Pencarian `LIKE '%pilot%'` bersifat case-insensitive. Jika case-sensitivity diperlukan, gunakan fungsi `BINARY` atau `COLLATE` yang sesuai."
+    ],
+    "response_time_ms": 6916.401600000427,
+    "model_name": "gemma-3-27b-it",
+    "timestamp": "2025-07-24T08:57:48.758479",
+    "token_usage": {
+      "prompt_tokens": 3081,
+      "completion_tokens": null,
+      "total_tokens": 3081
+    }
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "scenario_id": "SAK-J2-03",
+  "model_info": {
+    "name": "gemini-2.5-flash-lite",
+    "temperature": 0.0,
+    "timestamp": "2025-07-23T13:54:35.955606"
+  },
+  "input": {
+    "question_id": "Tampilkan nama aktor dan judul film yang dirilis tahun 2006 dengan rating 'PG'. Di mana judul filmnya mengandung kata pilot.",
+    "database": "sakila",
+    "category": "Join + Filter"
+  },
+  "prompt_info": {
+    "prompt_length": 9775,
+    "prompt_lines": 299
+  },
+  "model_response": {
+    "sql_query": "SELECT a.first_name, a.last_name, f.title FROM actor a JOIN film_actor fa ON a.actor_id = fa.actor_id JOIN film f ON fa.film_id = f.film_id WHERE f.release_year = 2006 AND f.rating = 'PG' AND f.title LIKE '%PILOT%'",
+    "explanation": "Query ini menggabungkan tabel 'actor', 'film_actor', dan 'film' untuk menemukan aktor yang membintangi film yang dirilis pada tahun 2006, memiliki rating 'PG', dan judulnya mengandung kata 'PILOT'. Hasilnya adalah nama depan dan nama belakang aktor beserta judul filmnya.",
+    "confidence": 0.98,
+    "assumptions": [
+      "Kata 'pilot' dalam judul film harus dicari secara case-insensitive, namun dalam contoh ini diasumsikan case-sensitive sesuai dengan penulisan di pertanyaan.",
+      "Rating 'PG' adalah nilai yang valid dalam kolom 'rating' pada tabel 'film'."
+    ],
+    "potential_issues": [
+      "Jika ada film dengan judul yang mengandung 'pilot' dalam huruf kecil atau campuran, query ini tidak akan menemukannya kecuali menggunakan LIKE '%pilot%' atau fungsi LCASE/UCASE.",
+      "Jika ada film yang memenuhi kriteria tetapi tidak memiliki aktor yang terkait di tabel 'film_actor', film tersebut tidak akan muncul dalam hasil."
+    ],
+    "response_time_ms": 1676.6328000012436,
+    "model_name": "gemini-2.5-flash-lite",
+    "timestamp": "2025-07-23T13:54:35.955606",
+    "token_usage": {
+      "prompt_tokens": 3081,
+      "completion_tokens": 327,
+      "total_tokens": 3408
+    }
+  }
+}

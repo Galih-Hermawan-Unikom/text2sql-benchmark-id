@@ -1,0 +1,37 @@
+{
+  "scenario_id": "RES-N4-03",
+  "model_info": {
+    "name": "gemini-2.5-flash",
+    "temperature": 0.0,
+    "timestamp": "2025-07-22T10:54:41.119918"
+  },
+  "input": {
+    "question_id": "Masakan asal mana yang menggunakan setidaknya satu bahan yang tidak pernah dipakai masakan asal 'Bali'? Tampilkan nama daerahnya saja.",
+    "database": "resep",
+    "category": "Nested / Subquery"
+  },
+  "prompt_info": {
+    "prompt_length": 7107,
+    "prompt_lines": 167
+  },
+  "model_response": {
+    "sql_query": "SELECT DISTINCT m.asal_daerah FROM masakan m JOIN resep r ON m.kode_masakan = r.kode_masakan JOIN resep_bahan rb ON r.id_resep = rb.id_resep WHERE rb.id_bahan NOT IN (SELECT DISTINCT rb_bali.id_bahan FROM masakan m_bali JOIN resep r_bali ON m_bali.kode_masakan = r_bali.kode_masakan JOIN resep_bahan rb_bali ON r_bali.id_resep = rb_bali.id_resep WHERE m_bali.asal_daerah = 'Bali') AND m.asal_daerah != 'Bali'",
+    "explanation": "Mengambil semua asal daerah masakan (kecuali Bali) yang menggunakan setidaknya satu bahan yang tidak pernah digunakan oleh masakan asal 'Bali'. Ini dilakukan dengan mengidentifikasi semua bahan yang dipakai masakan Bali terlebih dahulu, lalu mencari masakan dari daerah lain yang menggunakan bahan di luar daftar tersebut.",
+    "confidence": 0.98,
+    "assumptions": [
+      "Pertanyaan mengacu pada daerah asal masakan (asal_daerah) dan bahan-bahan yang digunakan dalam resep masakan tersebut."
+    ],
+    "potential_issues": [
+      "Jika tidak ada masakan dari 'Bali' atau tidak ada bahan yang tidak digunakan oleh 'Bali', hasilnya bisa kosong."
+    ],
+    "response_time_ms": 6711.085,
+    "model_name": "gemini-2.5-flash",
+    "timestamp": "2025-07-22T10:54:41.119918",
+    "raw_response": "```json\n{\n  \"sql_query\": \"SELECT DISTINCT m.asal_daerah FROM masakan m JOIN resep r ON m.kode_masakan = r.kode_masakan JOIN resep_bahan rb ON r.id_resep = rb.id_resep WHERE rb.id_bahan NOT IN (SELECT DISTINCT rb_bali.id_bahan FROM masakan m_bali JOIN resep r_bali ON m_bali.kode_masakan = r_bali.kode_masakan JOIN resep_bahan rb_bali ON r_bali.id_resep = rb_bali.id_resep WHERE m_bali.asal_daerah = 'Bali') AND m.asal_daerah != 'Bali'\",\n  \"confidence\": 0.98,\n  \"explanation\": \"Mengambil semua asal daerah masakan (kecuali Bali) yang menggunakan setidaknya satu bahan yang tidak pernah digunakan oleh masakan asal 'Bali'. Ini dilakukan dengan mengidentifikasi semua bahan yang dipakai masakan Bali terlebih dahulu, lalu mencari masakan dari daerah lain yang menggunakan bahan di luar daftar tersebut.\",\n  \"assumptions\": [\"Pertanyaan mengacu pada daerah asal masakan (asal_daerah) dan bahan-bahan yang digunakan dalam resep masakan tersebut.\"],\n  \"potential_issues\": [\"Jika tidak ada masakan dari 'Bali' atau tidak ada bahan yang tidak digunakan oleh 'Bali', hasilnya bisa kosong.\"]\n}\n```",
+    "token_usage": {
+      "prompt_tokens": 2173,
+      "completion_tokens": 308,
+      "total_tokens": 3402
+    }
+  }
+}

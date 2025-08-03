@@ -1,0 +1,37 @@
+{
+  "scenario_id": "RES-S6-01",
+  "model_info": {
+    "name": "gemini-2.5-flash",
+    "temperature": 0.0,
+    "timestamp": "2025-07-22T12:21:37.239183"
+  },
+  "input": {
+    "question_id": "Daftar semua resep yang membutuhkan waktu memasak paling lama\u2014sertakan judul resep dan lamanya memasak.",
+    "database": "resep",
+    "category": "Superlative"
+  },
+  "prompt_info": {
+    "prompt_length": 7403,
+    "prompt_lines": 168
+  },
+  "model_response": {
+    "sql_query": "SELECT judul_resep, waktu_masak FROM resep WHERE waktu_masak = (SELECT MAX(waktu_masak) FROM resep)",
+    "explanation": "Mengambil judul resep dan waktu masak dari tabel 'resep' di mana waktu memasak sama dengan waktu memasak maksimum yang ditemukan di seluruh tabel resep. Ini memastikan bahwa semua resep yang memiliki waktu memasak terpanjang akan ditampilkan.",
+    "confidence": 0.98,
+    "assumptions": [
+      "Waktu memasak terlama berarti nilai maksimum dari kolom 'waktu_masak'."
+    ],
+    "potential_issues": [
+      "Jika ada beberapa resep dengan waktu memasak terlama yang sama, semuanya akan ditampilkan. Jika hanya diinginkan satu saja, perlu ditambahkan 'LIMIT 1' dan 'ORDER BY' lebih lanjut."
+    ],
+    "response_time_ms": 2573.554,
+    "model_name": "gemini-2.5-flash",
+    "timestamp": "2025-07-22T12:21:37.239183",
+    "raw_response": "```json\n{\n  \"sql_query\": \"SELECT judul_resep, waktu_masak FROM resep WHERE waktu_masak = (SELECT MAX(waktu_masak) FROM resep)\",\n  \"confidence\": 0.98,\n  \"explanation\": \"Mengambil judul resep dan waktu masak dari tabel 'resep' di mana waktu memasak sama dengan waktu memasak maksimum yang ditemukan di seluruh tabel resep. Ini memastikan bahwa semua resep yang memiliki waktu memasak terpanjang akan ditampilkan.\",\n  \"assumptions\": [\n    \"Waktu memasak terlama berarti nilai maksimum dari kolom 'waktu_masak'.\"\n  ],\n  \"potential_issues\": [\n    \"Jika ada beberapa resep dengan waktu memasak terlama yang sama, semuanya akan ditampilkan. Jika hanya diinginkan satu saja, perlu ditambahkan 'LIMIT 1' dan 'ORDER BY' lebih lanjut.\"\n  ]\n}\n```",
+    "token_usage": {
+      "prompt_tokens": 2242,
+      "completion_tokens": 202,
+      "total_tokens": 2648
+    }
+  }
+}

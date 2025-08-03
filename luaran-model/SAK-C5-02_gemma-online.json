@@ -1,0 +1,38 @@
+{
+  "scenario_id": "SAK-C5-02",
+  "model_info": {
+    "name": "gemma-3-27b-it",
+    "temperature": 0.0,
+    "timestamp": "2025-07-24T08:57:01.749511"
+  },
+  "input": {
+    "question_id": "Tampilkan pelanggan yang jumlah sewanya berada di bawah (rata-rata jumlah sewa per pelanggan minus satu simpangan baku); sertakan nama dan total sewanya.",
+    "database": "sakila",
+    "category": "Comparative"
+  },
+  "prompt_info": {
+    "prompt_length": 9804,
+    "prompt_lines": 299
+  },
+  "model_response": {
+    "sql_query": "SELECT c.first_name, c.last_name, COUNT(r.rental_id) AS total_sewa FROM customer c JOIN rental r ON c.customer_id = r.customer_id GROUP BY c.customer_id, c.first_name, c.last_name HAVING COUNT(r.rental_id) < (SELECT AVG(rental_count) - STDDEV(rental_count) FROM (SELECT COUNT(rental_id) AS rental_count FROM rental GROUP BY customer_id) AS rental_counts)",
+    "explanation": "Query ini menampilkan nama depan, nama belakang, dan total sewa pelanggan yang jumlah sewanya di bawah rata-rata jumlah sewa per pelanggan dikurangi satu simpangan baku.  Subquery pertama menghitung jumlah sewa untuk setiap pelanggan. Subquery kedua menghitung rata-rata dan simpangan baku dari jumlah sewa tersebut.  Kemudian, query utama memfilter pelanggan berdasarkan kondisi tersebut.",
+    "confidence": 0.9,
+    "assumptions": [
+      "Jumlah sewa dihitung berdasarkan jumlah rental yang dilakukan oleh setiap pelanggan.",
+      "Simpangan baku dihitung dari jumlah sewa setiap pelanggan."
+    ],
+    "potential_issues": [
+      "Perhitungan simpangan baku mungkin tidak akurat jika jumlah pelanggan sangat sedikit.",
+      "Jika tidak ada data rental, subquery akan menghasilkan NULL, yang dapat menyebabkan hasil yang tidak terduga."
+    ],
+    "response_time_ms": 6927.26840000023,
+    "model_name": "gemma-3-27b-it",
+    "timestamp": "2025-07-24T08:57:01.749511",
+    "token_usage": {
+      "prompt_tokens": 3084,
+      "completion_tokens": null,
+      "total_tokens": 3084
+    }
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "scenario_id": "RES-J2-02",
+  "model_info": {
+    "name": "gemini-2.5-flash",
+    "temperature": 0.0,
+    "timestamp": "2025-07-22T10:18:18.325263"
+  },
+  "input": {
+    "question_id": "Resep apa saja yang memakai bahan daun? Cantumkan judul resep dan nama bahannya.",
+    "database": "resep",
+    "category": "Join + Filter"
+  },
+  "prompt_info": {
+    "prompt_length": 6713,
+    "prompt_lines": 165
+  },
+  "model_response": {
+    "sql_query": "SELECT r.judul_resep, b.nama_bahan FROM resep r JOIN resep_bahan rb ON r.id_resep = rb.id_resep JOIN bahan b ON rb.id_bahan = b.id_bahan WHERE b.nama_bahan LIKE '%daun%'",
+    "explanation": "Mengambil judul resep dan nama bahan dengan menggabungkan tabel `resep`, `resep_bahan`, dan `bahan`, kemudian memfilter bahan yang nama_bahannya mengandung kata 'daun'.",
+    "confidence": 0.98,
+    "assumptions": [
+      "Kata 'daun' dalam pertanyaan merujuk pada bahan yang mengandung kata tersebut di kolom `nama_bahan` (contoh: 'Daun Salam', 'Daun Jeruk')."
+    ],
+    "potential_issues": [
+      "Pencarian menggunakan `LIKE '%daun%'` mungkin mengambil bahan yang tidak secara spesifik merujuk pada 'daun' sebagai daun-daunan (misalnya, jika ada bahan bernama 'daun-tulang'). Namun, ini adalah interpretasi terbaik berdasarkan pertanyaan yang diberikan."
+    ],
+    "response_time_ms": 3598.005,
+    "model_name": "gemini-2.5-flash",
+    "timestamp": "2025-07-22T10:18:18.325263",
+    "raw_response": "```json\n{\n  \"sql_query\": \"SELECT r.judul_resep, b.nama_bahan FROM resep r JOIN resep_bahan rb ON r.id_resep = rb.id_resep JOIN bahan b ON rb.id_bahan = b.id_bahan WHERE b.nama_bahan LIKE '%daun%'\",\n  \"confidence\": 0.98,\n  \"explanation\": \"Mengambil judul resep dan nama bahan dengan menggabungkan tabel `resep`, `resep_bahan`, dan `bahan`, kemudian memfilter bahan yang nama_bahannya mengandung kata 'daun'.\",\n  \"assumptions\": [\"Kata 'daun' dalam pertanyaan merujuk pada bahan yang mengandung kata tersebut di kolom `nama_bahan` (contoh: 'Daun Salam', 'Daun Jeruk').\"],\n  \"potential_issues\": [\"Pencarian menggunakan `LIKE '%daun%'` mungkin mengambil bahan yang tidak secara spesifik merujuk pada 'daun' sebagai daun-daunan (misalnya, jika ada bahan bernama 'daun-tulang'). Namun, ini adalah interpretasi terbaik berdasarkan pertanyaan yang diberikan.\"]\n}\n```",
+    "token_usage": {
+      "prompt_tokens": 2074,
+      "completion_tokens": 253,
+      "total_tokens": 2695
+    }
+  }
+}

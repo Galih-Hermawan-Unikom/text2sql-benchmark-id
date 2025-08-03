@@ -1,0 +1,35 @@
+{
+  "scenario_id": "SAK-J2-02",
+  "model_info": {
+    "name": "gemini-2.5-flash",
+    "temperature": 0.0,
+    "timestamp": "2025-07-22T10:24:29.080498"
+  },
+  "input": {
+    "question_id": "Daftar judul film beserta nama bahasa untuk semua film berdurasi lebih dari 184 menit.",
+    "database": "sakila",
+    "category": "Join + Filter"
+  },
+  "prompt_info": {
+    "prompt_length": 9242,
+    "prompt_lines": 299
+  },
+  "model_response": {
+    "sql_query": "SELECT f.title, l.name AS language_name FROM film f JOIN language l ON f.language_id = l.language_id WHERE f.length > 184",
+    "explanation": "Mengambil judul film dan nama bahasa dari tabel `film` dan `language`, lalu memfilter hasilnya untuk film-film yang memiliki durasi (length) lebih dari 184 menit.",
+    "confidence": 0.98,
+    "assumptions": [
+      "Durasi film mengacu pada kolom `length` di tabel `film`."
+    ],
+    "potential_issues": [],
+    "response_time_ms": 2211.642,
+    "model_name": "gemini-2.5-flash",
+    "timestamp": "2025-07-22T10:24:29.080498",
+    "raw_response": "```json\n{\n  \"sql_query\": \"SELECT f.title, l.name AS language_name FROM film f JOIN language l ON f.language_id = l.language_id WHERE f.length > 184\",\n  \"confidence\": 0.98,\n  \"explanation\": \"Mengambil judul film dan nama bahasa dari tabel `film` dan `language`, lalu memfilter hasilnya untuk film-film yang memiliki durasi (length) lebih dari 184 menit.\",\n  \"assumptions\": [\"Durasi film mengacu pada kolom `length` di tabel `film`.\"],\n  \"potential_issues\": []\n}\n```",
+    "token_usage": {
+      "prompt_tokens": 2954,
+      "completion_tokens": 143,
+      "total_tokens": 3287
+    }
+  }
+}

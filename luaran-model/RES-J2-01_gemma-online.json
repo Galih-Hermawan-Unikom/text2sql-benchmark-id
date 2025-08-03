@@ -1,0 +1,37 @@
+{
+  "scenario_id": "RES-J2-01",
+  "model_info": {
+    "name": "gemma-3-27b-it",
+    "temperature": 0.0,
+    "timestamp": "2025-07-24T08:54:12.708588"
+  },
+  "input": {
+    "question_id": "Tampilkan daftar resep dessert yang masih aktif\u2014sertakan ID resep, judul resep, dan nama masakan.",
+    "database": "resep",
+    "category": "Join + Filter"
+  },
+  "prompt_info": {
+    "prompt_length": 7225,
+    "prompt_lines": 165
+  },
+  "model_response": {
+    "sql_query": "SELECT r.id_resep, r.judul_resep, m.nama_masakan FROM resep r JOIN masakan m ON r.kode_masakan = m.kode_masakan WHERE m.kategori = 'Dessert' AND r.status_aktif = TRUE",
+    "explanation": "Query ini mengambil ID resep, judul resep, dan nama masakan dari tabel `resep` dan `masakan`.  Query ini menggabungkan kedua tabel berdasarkan `kode_masakan`.  Filter diterapkan untuk hanya memilih resep dengan kategori 'Dessert' dari tabel `masakan` dan resep yang status aktifnya TRUE dari tabel `resep`.",
+    "confidence": 0.98,
+    "assumptions": [
+      "Kategori dessert diwakili oleh string 'Dessert' di kolom `masakan.kategori`.",
+      "Status aktif diwakili oleh nilai boolean TRUE di kolom `resep.status_aktif`."
+    ],
+    "potential_issues": [
+      "Jika ada kesalahan pengetikan pada string 'Dessert' di database, query tidak akan mengembalikan hasil yang benar."
+    ],
+    "response_time_ms": 6088.2760000004055,
+    "model_name": "gemma-3-27b-it",
+    "timestamp": "2025-07-24T08:54:12.708588",
+    "token_usage": {
+      "prompt_tokens": 2197,
+      "completion_tokens": null,
+      "total_tokens": 2197
+    }
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "scenario_id": "SAK-N4-02",
+  "model_info": {
+    "name": "gemma-3-27b-it",
+    "temperature": 0.0,
+    "timestamp": "2025-07-24T08:58:47.756508"
+  },
+  "input": {
+    "question_id": "Tampilkan bahasa yang tidak memiliki satu pun film berating 'R'.",
+    "database": "sakila",
+    "category": "Nested / Subquery"
+  },
+  "prompt_info": {
+    "prompt_length": 9715,
+    "prompt_lines": 299
+  },
+  "model_response": {
+    "sql_query": "SELECT l.name FROM language l WHERE NOT EXISTS (SELECT 1 FROM film f JOIN film_category fc ON f.film_id = fc.film_id WHERE f.rating = 'R' AND f.language_id = l.language_id)",
+    "explanation": "Query ini mencari semua bahasa yang tidak memiliki film dengan rating 'R'.  Ini dilakukan dengan menggunakan subquery `NOT EXISTS` yang memeriksa apakah ada film dengan rating 'R' yang menggunakan bahasa tersebut. Jika tidak ada, nama bahasa tersebut akan ditampilkan.",
+    "confidence": 0.95,
+    "assumptions": [
+      "Rating film disimpan dalam kolom 'rating' pada tabel 'film'.",
+      "Bahasa film disimpan dalam kolom 'language_id' pada tabel 'film' dan dihubungkan ke tabel 'language' melalui 'language_id'."
+    ],
+    "potential_issues": [
+      "Jika tabel 'film' sangat besar, subquery `NOT EXISTS` mungkin kurang efisien. Pertimbangkan menggunakan `LEFT JOIN` dan `WHERE` untuk performa yang lebih baik jika diperlukan."
+    ],
+    "response_time_ms": 5661.062399999992,
+    "model_name": "gemma-3-27b-it",
+    "timestamp": "2025-07-24T08:58:47.756508",
+    "token_usage": {
+      "prompt_tokens": 3065,
+      "completion_tokens": null,
+      "total_tokens": 3065
+    }
+  }
+}

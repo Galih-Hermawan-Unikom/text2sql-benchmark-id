@@ -1,0 +1,36 @@
+{
+  "scenario_id": "SAK-C5-01",
+  "model_info": {
+    "name": "gemini-2.5-flash",
+    "temperature": 0.0,
+    "timestamp": "2025-07-22T12:00:41.877414"
+  },
+  "input": {
+    "question_id": "Tampilkan film ber-rating 'R' yang dirilis pada 2006 dengan durasi di atas rata-rata durasi semua film 'R' tahun 2006; sertakan judul, tahun rilis, dan durasinya.",
+    "database": "sakila",
+    "category": "Comparative"
+  },
+  "prompt_info": {
+    "prompt_length": 9645,
+    "prompt_lines": 300
+  },
+  "model_response": {
+    "sql_query": "SELECT f.title, f.release_year, f.length FROM film f WHERE f.rating = 'R' AND f.release_year = 2006 AND f.length > (SELECT AVG(f2.length) FROM film f2 WHERE f2.rating = 'R' AND f2.release_year = 2006)",
+    "explanation": "Mengambil judul, tahun rilis, dan durasi film yang berating 'R' dan dirilis pada tahun 2006, dengan durasi yang lebih panjang dari rata-rata durasi film berating 'R' yang juga dirilis pada tahun 2006.",
+    "confidence": 0.98,
+    "assumptions": [
+      "Durasi film mengacu pada kolom 'length' di tabel film.",
+      "Rata-rata durasi yang dimaksud adalah rata-rata dari semua film yang memenuhi kriteria rating 'R' dan tahun rilis 2006."
+    ],
+    "potential_issues": [],
+    "response_time_ms": 3992.644,
+    "model_name": "gemini-2.5-flash",
+    "timestamp": "2025-07-22T12:00:41.877414",
+    "raw_response": "```json\n{\n  \"sql_query\": \"SELECT f.title, f.release_year, f.length FROM film f WHERE f.rating = 'R' AND f.release_year = 2006 AND f.length > (SELECT AVG(f2.length) FROM film f2 WHERE f2.rating = 'R' AND f2.release_year = 2006)\",\n  \"confidence\": 0.98,\n  \"explanation\": \"Mengambil judul, tahun rilis, dan durasi film yang berating 'R' dan dirilis pada tahun 2006, dengan durasi yang lebih panjang dari rata-rata durasi film berating 'R' yang juga dirilis pada tahun 2006.\",\n  \"assumptions\": [\n    \"Durasi film mengacu pada kolom 'length' di tabel film.\",\n    \"Rata-rata durasi yang dimaksud adalah rata-rata dari semua film yang memenuhi kriteria rating 'R' dan tahun rilis 2006.\"\n  ],\n  \"potential_issues\": []\n}\n```",
+    "token_usage": {
+      "prompt_tokens": 3058,
+      "completion_tokens": 241,
+      "total_tokens": 3839
+    }
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "metadata": {
+    "version": "1.0",
+    "generated_at": "2025-07-31T08:53:08.673993",
+    "tool": "text2sql_ollama"
+  },
+  "scenario_id": "SAK-N4-01",
+  "category": "Nested / Subquery",
+  "database": "sakila",
+  "question_id": "Tampilkan **nama lengkap** (gabungan nama depan dan belakang) aktor serta jumlah filmnya yang membintangi film lebih banyak daripada Matthew Carrey, lalu urutkan dari jumlah film terbanyak.",
+  "model": "gemma-3n-e2b",
+  "sql_query": "SELECT\n    a.first_name,\n    a.last_name,\n    COUNT(f.film_id) AS jumlah_film\nFROM\n    actor AS a\nJOIN\n    film_actor AS fa ON a.actor_id = fa.actor_id\nJOIN\n    film AS f ON fa.film_id = f.film_id\nWHERE\n    a.actor_id IN (SELECT actor_id FROM film_actor WHERE film_id IN (SELECT film_id FROM film WHERE rating = 'G' OR rating = 'PG' OR rating = 'PG-13' OR rating = 'R' OR rating = 'NC-17'))\nGROUP BY\n    a.actor_id, a.first_name, a.last_name\nHAVING\n    COUNT(f.film_id) > (SELECT COUNT(film_id) FROM film WHERE film_id IN (SELECT actor_id FROM film_actor WHERE actor_id = (SELECT actor_id FROM actor WHERE first_name = 'Matthew' AND last_name = 'Carrey')));\nORDER BY\n    jumlah_film DESC",
+  "timestamp": "2025-07-31T08:53:08.673993",
+  "response_time_ms": 176284.926,
+  "token_usage": {
+    "prompt_tokens": 1699,
+    "completion_tokens": 250,
+    "total_tokens": 1949
+  },
+  "raw_response": "```sql\nSELECT\n    a.first_name,\n    a.last_name,\n    COUNT(f.film_id) AS jumlah_film\nFROM\n    actor AS a\nJOIN\n    film_actor AS fa ON a.actor_id = fa.actor_id\nJOIN\n    film AS f ON fa.film_id = f.film_id\nWHERE\n    a.actor_id IN (SELECT actor_id FROM film_actor WHERE film_id IN (SELECT film_id FROM film WHERE rating = 'G' OR rating = 'PG' OR rating = 'PG-13' OR rating = 'R' OR rating = 'NC-17'))\nGROUP BY\n    a.actor_id, a.first_name, a.last_name\nHAVING\n    COUNT(f.film_id) > (SELECT COUNT(film_id) FROM film WHERE film_id IN (SELECT actor_id FROM film_actor WHERE actor_id = (SELECT actor_id FROM actor WHERE first_name = 'Matthew' AND last_name = 'Carrey')));\nORDER BY\n    jumlah_film DESC;\n```"
+}

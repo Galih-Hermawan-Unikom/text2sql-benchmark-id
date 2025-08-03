@@ -1,0 +1,34 @@
+{
+  "scenario_id": "SAK-A3-01",
+  "model_info": {
+    "name": "gemma-3-27b-it",
+    "temperature": 0.0,
+    "timestamp": "2025-07-24T08:56:18.062193"
+  },
+  "input": {
+    "question_id": "Hitung berapa banyak film pada setiap rating.",
+    "database": "sakila",
+    "category": "Aggregation"
+  },
+  "prompt_info": {
+    "prompt_length": 9696,
+    "prompt_lines": 299
+  },
+  "model_response": {
+    "sql_query": "SELECT rating, COUNT(*) AS jumlah_film FROM film GROUP BY rating",
+    "explanation": "Query ini menghitung jumlah film untuk setiap rating yang berbeda.  Kita menggunakan `GROUP BY rating` untuk mengelompokkan film berdasarkan rating mereka, dan `COUNT(*)` untuk menghitung jumlah film dalam setiap grup.",
+    "confidence": 0.98,
+    "assumptions": [
+      "Kolom 'rating' dalam tabel 'film' berisi nilai rating film."
+    ],
+    "potential_issues": [],
+    "response_time_ms": 3586.326099999951,
+    "model_name": "gemma-3-27b-it",
+    "timestamp": "2025-07-24T08:56:18.062193",
+    "token_usage": {
+      "prompt_tokens": 3060,
+      "completion_tokens": null,
+      "total_tokens": 3060
+    }
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "scenario_id": "SAK-N4-05",
+  "model_info": {
+    "name": "gemma-3-27b-it",
+    "temperature": 0.0,
+    "timestamp": "2025-07-24T08:59:12.455688"
+  },
+  "input": {
+    "question_id": "Tampilkan pelanggan dari Indonesia yang pernah menyewa film kategori 'Action' tetapi belum pernah menyewa film kategori 'Animation'; sertakan nama depan dan nama belakang mereka.",
+    "database": "sakila",
+    "category": "Nested / Subquery"
+  },
+  "prompt_info": {
+    "prompt_length": 9829,
+    "prompt_lines": 299
+  },
+  "model_response": {
+    "sql_query": "SELECT DISTINCT c.first_name, c.last_name FROM customer c JOIN rental r ON c.customer_id = r.customer_id JOIN inventory i ON r.inventory_id = i.inventory_id JOIN film_category fc ON i.film_id = fc.film_id JOIN category cat ON fc.category_id = cat.category_id JOIN address a ON c.address_id = a.address_id JOIN city ci ON a.city_id = ci.city_id JOIN country co ON ci.country_id = co.country_id WHERE co.country = 'Indonesia' AND cat.name = 'Action' AND NOT EXISTS (SELECT 1 FROM rental r2 JOIN inventory i2 ON r2.inventory_id = i2.inventory_id JOIN film_category fc2 ON i2.film_id = fc2.film_id JOIN category cat2 ON fc2.category_id = cat2.category_id WHERE r2.customer_id = c.customer_id AND cat2.name = 'Animation')",
+    "explanation": "Query ini mencari pelanggan dari Indonesia yang pernah menyewa film dari kategori 'Action' tetapi tidak pernah menyewa film dari kategori 'Animation'.  Query menggunakan JOIN untuk menghubungkan tabel-tabel yang relevan (customer, rental, inventory, film_category, category, address, city, country).  Klausa WHERE memfilter pelanggan berdasarkan negara 'Indonesia' dan kategori film 'Action'.  Klausa NOT EXISTS memastikan bahwa pelanggan tersebut tidak pernah menyewa film dari kategori 'Animation'.",
+    "confidence": 0.9,
+    "assumptions": [
+      "Nama negara 'Indonesia' disimpan sebagai 'Indonesia' di tabel country.",
+      "Nama kategori 'Action' dan 'Animation' disimpan dengan tepat di tabel category."
+    ],
+    "potential_issues": [
+      "Performa query dapat menjadi masalah jika tabel-tabel yang terlibat sangat besar.  Penggunaan indeks yang tepat dapat membantu meningkatkan performa.",
+      "Sensitivitas terhadap huruf besar/kecil pada nama negara dan kategori.  Jika data tidak konsisten, query mungkin tidak mengembalikan hasil yang diharapkan."
+    ],
+    "response_time_ms": 9962.531099999978,
+    "model_name": "gemma-3-27b-it",
+    "timestamp": "2025-07-24T08:59:12.455688",
+    "token_usage": {
+      "prompt_tokens": 3084,
+      "completion_tokens": null,
+      "total_tokens": 3084
+    }
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "metadata": {
+    "version": "1.0",
+    "generated_at": "2025-07-31T07:37:04.703966",
+    "tool": "text2sql_ollama"
+  },
+  "scenario_id": "RES-S6-02",
+  "category": "Superlative",
+  "database": "resep",
+  "question_id": "Bahan apa saja yang paling sering muncul di seluruh resep? Tampilkan nama bahan dan total kemunculannya.",
+  "model": "gemma-3n-e2b",
+  "sql_query": "SELECT\n  b.nama_bahan,\n  SUM(r.jumlah) AS total_kemunculan\nFROM Bahan AS b\nJOIN RESEP_BAHAN AS r ON b.id_bahan = r.id_bahan\nGROUP BY\n  b.nama_bahan\nORDER BY\n  total_kemunculan DESC",
+  "timestamp": "2025-07-31T07:37:04.702951",
+  "response_time_ms": 117487.069,
+  "token_usage": {
+    "prompt_tokens": 1220,
+    "completion_tokens": 77,
+    "total_tokens": 1297
+  },
+  "raw_response": "```sql\nSELECT\n  b.nama_bahan,\n  SUM(r.jumlah) AS total_kemunculan\nFROM Bahan AS b\nJOIN RESEP_BAHAN AS r ON b.id_bahan = r.id_bahan\nGROUP BY\n  b.nama_bahan\nORDER BY\n  total_kemunculan DESC;\n```"
+}

@@ -1,0 +1,35 @@
+{
+  "scenario_id": "RES-J2-05",
+  "model_info": {
+    "name": "gemini-2.5-flash",
+    "temperature": 0.0,
+    "timestamp": "2025-07-22T10:24:17.537645"
+  },
+  "input": {
+    "question_id": "Masakan apa saja secara unik yang menggunakan santan sebagai salah satu bahannya? Tampilkan nama masakan dan nama bahannya.",
+    "database": "resep",
+    "category": "Join + Filter"
+  },
+  "prompt_info": {
+    "prompt_length": 7096,
+    "prompt_lines": 167
+  },
+  "model_response": {
+    "sql_query": "SELECT DISTINCT M.nama_masakan, B.nama_bahan FROM masakan M JOIN resep R ON M.kode_masakan = R.kode_masakan JOIN resep_bahan RB ON R.id_resep = RB.id_resep JOIN bahan B ON RB.id_bahan = B.id_bahan WHERE B.nama_bahan LIKE '%santan%'",
+    "explanation": "Menggabungkan tabel `masakan`, `resep`, `resep_bahan`, dan `bahan` untuk menemukan masakan yang menggunakan bahan dengan nama yang mengandung 'santan'. `DISTINCT` digunakan untuk memastikan setiap pasangan nama masakan dan nama bahan unik.",
+    "confidence": 0.98,
+    "assumptions": [
+      "Pencarian bahan 'santan' harus menggunakan operator LIKE dengan wildcard untuk mencakup variasi nama."
+    ],
+    "potential_issues": [],
+    "response_time_ms": 4079.4759999999997,
+    "model_name": "gemini-2.5-flash",
+    "timestamp": "2025-07-22T10:24:17.536647",
+    "raw_response": "```json\n{\n  \"sql_query\": \"SELECT DISTINCT M.nama_masakan, B.nama_bahan FROM masakan M JOIN resep R ON M.kode_masakan = R.kode_masakan JOIN resep_bahan RB ON R.id_resep = RB.id_resep JOIN bahan B ON RB.id_bahan = B.id_bahan WHERE B.nama_bahan LIKE '%santan%'\",\n  \"confidence\": 0.98,\n  \"explanation\": \"Menggabungkan tabel `masakan`, `resep`, `resep_bahan`, dan `bahan` untuk menemukan masakan yang menggunakan bahan dengan nama yang mengandung 'santan'. `DISTINCT` digunakan untuk memastikan setiap pasangan nama masakan dan nama bahan unik.\",\n  \"assumptions\": [\n    \"Pencarian bahan 'santan' harus menggunakan operator LIKE dengan wildcard untuk mencakup variasi nama.\"\n  ],\n  \"potential_issues\": []\n}\n```",
+    "token_usage": {
+      "prompt_tokens": 2172,
+      "completion_tokens": 212,
+      "total_tokens": 2937
+    }
+  }
+}

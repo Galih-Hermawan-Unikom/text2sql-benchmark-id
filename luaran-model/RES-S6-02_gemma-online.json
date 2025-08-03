@@ -1,0 +1,37 @@
+{
+  "scenario_id": "RES-S6-02",
+  "model_info": {
+    "name": "gemma-3-27b-it",
+    "temperature": 0.0,
+    "timestamp": "2025-07-24T08:55:55.629208"
+  },
+  "input": {
+    "question_id": "Bahan apa saja yang paling sering muncul di seluruh resep? Tampilkan nama bahan dan total kemunculannya.",
+    "database": "resep",
+    "category": "Superlative"
+  },
+  "prompt_info": {
+    "prompt_length": 7232,
+    "prompt_lines": 165
+  },
+  "model_response": {
+    "sql_query": "SELECT b.nama_bahan, COUNT(rb.id_bahan) AS total_kemunculan FROM bahan b JOIN resep_bahan rb ON b.id_bahan = rb.id_bahan GROUP BY b.nama_bahan ORDER BY total_kemunculan DESC",
+    "explanation": "Query ini menghitung jumlah kemunculan setiap bahan di seluruh resep.  Query ini menggabungkan tabel `bahan` dan `resep_bahan` berdasarkan `id_bahan`, kemudian mengelompokkan hasilnya berdasarkan `nama_bahan` dan menghitung jumlah kemunculan setiap bahan menggunakan fungsi `COUNT()`. Hasilnya diurutkan secara menurun berdasarkan `total_kemunculan` untuk menampilkan bahan yang paling sering muncul terlebih dahulu.",
+    "confidence": 0.98,
+    "assumptions": [
+      "Tabel `bahan` dan `resep_bahan` sudah terisi dengan data yang benar.",
+      "Hubungan antara `bahan` dan `resep_bahan` sudah didefinisikan dengan benar melalui `id_bahan`."
+    ],
+    "potential_issues": [
+      "Jika ada duplikasi nama bahan di tabel `bahan`, hasilnya mungkin tidak akurat.  Sebaiknya gunakan `id_bahan` sebagai pengidentifikasi unik bahan."
+    ],
+    "response_time_ms": 6399.417599999651,
+    "model_name": "gemma-3-27b-it",
+    "timestamp": "2025-07-24T08:55:55.629208",
+    "token_usage": {
+      "prompt_tokens": 2193,
+      "completion_tokens": null,
+      "total_tokens": 2193
+    }
+  }
+}

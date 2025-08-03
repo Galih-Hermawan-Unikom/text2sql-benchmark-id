@@ -1,0 +1,38 @@
+{
+  "scenario_id": "RES-C5-03",
+  "model_info": {
+    "name": "gemini-2.5-flash-lite",
+    "temperature": 0.0,
+    "timestamp": "2025-07-23T13:53:14.987267"
+  },
+  "input": {
+    "question_id": "Bahan apa saja yang muncul lebih sering dibanding rata-rata frekuensi kemunculan semua bahan? Tampilkan nama bahan dan jumlah kemunculannya.",
+    "database": "resep",
+    "category": "Comparative"
+  },
+  "prompt_info": {
+    "prompt_length": 7268,
+    "prompt_lines": 165
+  },
+  "model_response": {
+    "sql_query": "SELECT b.nama_bahan, COUNT(rb.id_bahan) AS jumlah_kemunculan FROM bahan b JOIN resep_bahan rb ON b.id_bahan = rb.id_bahan GROUP BY b.id_bahan, b.nama_bahan HAVING jumlah_kemunculan > (SELECT AVG(count_bahan) FROM (SELECT COUNT(id_bahan) AS count_bahan FROM resep_bahan GROUP BY id_bahan) AS subquery_counts)",
+    "explanation": "Query ini pertama-tama menghitung frekuensi kemunculan setiap bahan dalam tabel 'resep_bahan' menggunakan GROUP BY pada 'id_bahan' dan COUNT(). Kemudian, ia menghitung rata-rata dari frekuensi kemunculan semua bahan menggunakan subkueri. Terakhir, ia menampilkan nama bahan dan jumlah kemunculannya hanya untuk bahan-bahan yang frekuensi kemunculannya lebih tinggi dari rata-rata tersebut.",
+    "confidence": 0.95,
+    "assumptions": [
+      "Setiap baris dalam tabel 'resep_bahan' merepresentasikan satu kemunculan bahan dalam sebuah resep.",
+      "Perbandingan 'lebih sering dibanding rata-rata' mengacu pada jumlah total kemunculan bahan di semua resep."
+    ],
+    "potential_issues": [
+      "Jika ada bahan yang tidak pernah digunakan dalam resep (tidak ada di tabel 'resep_bahan'), bahan tersebut tidak akan muncul dalam hasil.",
+      "Performa query bisa menjadi masalah pada dataset yang sangat besar karena penggunaan subkueri untuk menghitung rata-rata."
+    ],
+    "response_time_ms": 1362.4870999992709,
+    "model_name": "gemini-2.5-flash-lite",
+    "timestamp": "2025-07-23T13:53:14.987267",
+    "token_usage": {
+      "prompt_tokens": 2200,
+      "completion_tokens": 352,
+      "total_tokens": 2552
+    }
+  }
+}

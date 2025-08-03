@@ -1,0 +1,21 @@
+{
+  "metadata": {
+    "version": "1.0",
+    "generated_at": "2025-07-31T08:15:08.116396",
+    "tool": "text2sql_ollama"
+  },
+  "scenario_id": "SAK-C5-02",
+  "category": "Comparative",
+  "database": "sakila",
+  "question_id": "Tampilkan pelanggan yang jumlah sewanya berada di bawah (rata-rata jumlah sewa per pelanggan minus satu simpangan baku); sertakan nama dan total sewanya.",
+  "model": "gemma-3n-e2b",
+  "sql_query": "SELECT c.first_name AS nama_pelanggan, c.last_name AS nama_pelanggan, SUM(p.amount) AS total_sewa FROM customer c JOIN rental r ON c.customer_id = r.customer_id JOIN inventory i ON r.rental_id = i.inventory_id JOIN film f ON i.film_id = f.film_id JOIN payment p ON r.rental_id = p.rental_id GROUP BY c.customer_id, c.first_name, c.last_name HAVING SUM(p.amount) < ( SELECT AVG(total_sewa) FROM ( SELECT c.customer_id AS customer_id, SUM(p.amount) AS total_sewa FROM customer c JOIN rental r ON c.customer_id = r.customer_id JOIN inventory i ON r.rental_id = i.inventory_id JOIN film f",
+  "timestamp": "2025-07-31T08:15:08.116396",
+  "response_time_ms": 176962.90099999998,
+  "token_usage": {
+    "prompt_tokens": 1692,
+    "completion_tokens": 256,
+    "total_tokens": 1948
+  },
+  "raw_response": "```sql\nSELECT\n    c.first_name AS nama_pelanggan,\n    c.last_name AS nama_pelanggan,\n    SUM(p.amount) AS total_sewa\nFROM\n    customer c\nJOIN\n    rental r ON c.customer_id = r.customer_id\nJOIN\n    inventory i ON r.rental_id = i.inventory_id\nJOIN\n    film f ON i.film_id = f.film_id\nJOIN\n    payment p ON r.rental_id = p.rental_id\nGROUP BY\n    c.customer_id, c.first_name, c.last_name\nHAVING\n    SUM(p.amount) < (\n        SELECT\n            AVG(total_sewa)\n        FROM\n            (\n                SELECT\n                    c.customer_id AS customer_id,\n                    SUM(p.amount) AS total_sewa\n                FROM\n                    customer c\n                JOIN\n                    rental r ON c.customer_id = r.customer_id\n                JOIN\n                    inventory i ON r.rental_id = i.inventory_id\n                JOIN\n                    film f"
+}

@@ -1,0 +1,39 @@
+{
+  "scenario_id": "SAK-N4-03",
+  "model_info": {
+    "name": "gemini-2.5-flash-lite",
+    "temperature": 0.0,
+    "timestamp": "2025-07-23T13:54:58.946336"
+  },
+  "input": {
+    "question_id": "Tampilkan staf yang total nilai pembayarannya melebihi rata-rata total pembayaran per staf; sertakan nama staf dan total pembayarannya.",
+    "database": "sakila",
+    "category": "Nested / Subquery"
+  },
+  "prompt_info": {
+    "prompt_length": 9786,
+    "prompt_lines": 299
+  },
+  "model_response": {
+    "sql_query": "SELECT s.first_name, s.last_name, SUM(p.amount) AS total_payment FROM staff s JOIN payment p ON s.staff_id = p.staff_id GROUP BY s.staff_id, s.first_name, s.last_name HAVING SUM(p.amount) > (SELECT AVG(total_amount) FROM (SELECT SUM(p2.amount) AS total_amount FROM payment p2 GROUP BY p2.staff_id) AS staff_totals)",
+    "explanation": "Query ini pertama-tama menghitung total pembayaran untuk setiap staf. Kemudian, ia menghitung rata-rata dari total pembayaran per staf. Akhirnya, ia menampilkan staf yang total pembayarannya melebihi rata-rata tersebut, beserta nama depan, nama belakang, dan total pembayaran mereka.",
+    "confidence": 0.97,
+    "assumptions": [
+      "Setiap staf memiliki setidaknya satu pembayaran.",
+      "Kolom `amount` di tabel `payment` merepresentasikan nilai pembayaran.",
+      "Kolom `staff_id` di tabel `payment` terhubung dengan `staff_id` di tabel `staff`."
+    ],
+    "potential_issues": [
+      "Jika ada staf yang tidak memiliki pembayaran sama sekali, mereka tidak akan muncul dalam hasil.",
+      "Performa query bisa menjadi masalah pada dataset yang sangat besar karena subkueri untuk menghitung rata-rata."
+    ],
+    "response_time_ms": 1331.4437999997608,
+    "model_name": "gemini-2.5-flash-lite",
+    "timestamp": "2025-07-23T13:54:58.946336",
+    "token_usage": {
+      "prompt_tokens": 3081,
+      "completion_tokens": 324,
+      "total_tokens": 3405
+    }
+  }
+}

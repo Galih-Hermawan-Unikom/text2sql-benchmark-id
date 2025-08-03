@@ -1,0 +1,36 @@
+{
+  "scenario_id": "SAK-N4-03",
+  "model_info": {
+    "name": "gemini-2.5-flash",
+    "temperature": 0.0,
+    "timestamp": "2025-07-22T10:55:12.526677"
+  },
+  "input": {
+    "question_id": "Tampilkan staf yang total nilai pembayarannya melebihi rata-rata total pembayaran per staf; sertakan nama staf dan total pembayarannya.",
+    "database": "sakila",
+    "category": "Nested / Subquery"
+  },
+  "prompt_info": {
+    "prompt_length": 9291,
+    "prompt_lines": 299
+  },
+  "model_response": {
+    "sql_query": "WITH StaffTotalPayments AS (\n    SELECT\n        s.staff_id,\n        s.first_name,\n        s.last_name,\n        SUM(p.amount) AS total_amount_paid\n    FROM\n        staff s\n    JOIN\n        payment p ON s.staff_id = p.staff_id\n    GROUP BY\n        s.staff_id, s.first_name, s.last_name\n)\nSELECT\n    stp.first_name,\n    stp.last_name,\n    stp.total_amount_paid\nFROM\n    StaffTotalPayments stp\nWHERE\n    stp.total_amount_paid > (SELECT AVG(total_amount_paid) FROM StaffTotalPayments);",
+    "explanation": "Query ini pertama-tama menghitung total pembayaran untuk setiap staf menggunakan Common Table Expression (CTE) bernama `StaffTotalPayments`. Kemudian, query utama memilih staf yang total pembayarannya lebih besar dari rata-rata total pembayaran seluruh staf, yang dihitung dari CTE yang sama.",
+    "confidence": 0.98,
+    "assumptions": [
+      "Total nilai pembayaran per staf dihitung dari kolom `amount` di tabel `payment` yang terkait dengan `staff_id` masing-masing.",
+      "Rata-rata total pembayaran per staf dihitung dari rata-rata dari semua total pembayaran individu staf."
+    ],
+    "potential_issues": [],
+    "response_time_ms": 4847.991999999999,
+    "model_name": "gemini-2.5-flash",
+    "timestamp": "2025-07-22T10:55:12.526677",
+    "raw_response": "```json\n{\n  \"sql_query\": \"WITH StaffTotalPayments AS (\\n    SELECT\\n        s.staff_id,\\n        s.first_name,\\n        s.last_name,\\n        SUM(p.amount) AS total_amount_paid\\n    FROM\\n        staff s\\n    JOIN\\n        payment p ON s.staff_id = p.staff_id\\n    GROUP BY\\n        s.staff_id, s.first_name, s.last_name\\n)\\nSELECT\\n    stp.first_name,\\n    stp.last_name,\\n    stp.total_amount_paid\\nFROM\\n    StaffTotalPayments stp\\nWHERE\\n    stp.total_amount_paid > (SELECT AVG(total_amount_paid) FROM StaffTotalPayments);\",\n  \"confidence\": 0.98,\n  \"explanation\": \"Query ini pertama-tama menghitung total pembayaran untuk setiap staf menggunakan Common Table Expression (CTE) bernama `StaffTotalPayments`. Kemudian, query utama memilih staf yang total pembayarannya lebih besar dari rata-rata total pembayaran seluruh staf, yang dihitung dari CTE yang sama.\",\n  \"assumptions\": [\n    \"Total nilai pembayaran per staf dihitung dari kolom `amount` di tabel `payment` yang terkait dengan `staff_id` masing-masing.\",\n    \"Rata-rata total pembayaran per staf dihitung dari rata-rata dari semua total pembayaran individu staf.\"\n  ],\n  \"potential_issues\": []\n}\n```",
+    "token_usage": {
+      "prompt_tokens": 2964,
+      "completion_tokens": 337,
+      "total_tokens": 3951
+    }
+  }
+}

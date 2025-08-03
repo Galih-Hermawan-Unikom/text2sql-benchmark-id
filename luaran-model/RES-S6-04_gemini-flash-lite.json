@@ -1,0 +1,38 @@
+{
+  "scenario_id": "RES-S6-04",
+  "model_info": {
+    "name": "gemini-2.5-flash-lite",
+    "temperature": 0.0,
+    "timestamp": "2025-07-23T13:54:02.225656"
+  },
+  "input": {
+    "question_id": "Resep mana saja yang menggunakan jumlah bahan paling banyak? Sertakan judul resep dan jumlah bahannya.",
+    "database": "resep",
+    "category": "Superlative"
+  },
+  "prompt_info": {
+    "prompt_length": 7230,
+    "prompt_lines": 165
+  },
+  "model_response": {
+    "sql_query": "SELECT r.judul_resep, SUM(rb.jumlah) AS total_jumlah_bahan FROM resep r JOIN resep_bahan rb ON r.id_resep = rb.id_resep GROUP BY r.id_resep, r.judul_resep ORDER BY total_jumlah_bahan DESC",
+    "explanation": "Query ini mengambil judul resep dan menjumlahkan total jumlah semua bahan yang terkait dengan setiap resep. Hasilnya diurutkan berdasarkan total jumlah bahan secara menurun untuk menampilkan resep dengan jumlah bahan terbanyak.",
+    "confidence": 0.95,
+    "assumptions": [
+      "Pertanyaan 'jumlah bahan paling banyak' diinterpretasikan sebagai total kuantitas semua bahan yang digunakan dalam satu resep.",
+      "Satuan bahan tidak perlu disamakan untuk penjumlahan, hanya kuantitasnya yang dijumlahkan."
+    ],
+    "potential_issues": [
+      "Jika ada resep yang tidak memiliki bahan sama sekali, resep tersebut tidak akan muncul dalam hasil karena menggunakan JOIN.",
+      "Perbandingan jumlah bahan antar resep mungkin kurang akurat jika satuan bahan sangat bervariasi dan tidak ada konversi unit yang dilakukan."
+    ],
+    "response_time_ms": 1524.3114000004425,
+    "model_name": "gemini-2.5-flash-lite",
+    "timestamp": "2025-07-23T13:54:02.225656",
+    "token_usage": {
+      "prompt_tokens": 2192,
+      "completion_tokens": 273,
+      "total_tokens": 2465
+    }
+  }
+}

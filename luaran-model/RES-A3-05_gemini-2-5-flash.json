@@ -1,0 +1,35 @@
+{
+  "scenario_id": "RES-A3-05",
+  "model_info": {
+    "name": "gemini-2.5-flash",
+    "temperature": 0.0,
+    "timestamp": "2025-07-22T10:33:30.779645"
+  },
+  "input": {
+    "question_id": "Hitung jumlah masakan aktif dan tidak aktif. Tampilkan status_aktif (0 atau 1) beserta total masakannya.",
+    "database": "resep",
+    "category": "Aggregation"
+  },
+  "prompt_info": {
+    "prompt_length": 7077,
+    "prompt_lines": 167
+  },
+  "model_response": {
+    "sql_query": "SELECT status_aktif, COUNT(*) AS total_masakan FROM masakan GROUP BY status_aktif",
+    "explanation": "Mengelompokkan data berdasarkan status_aktif (aktif/tidak aktif) dan menghitung jumlah masakan untuk setiap status tersebut.",
+    "confidence": 0.98,
+    "assumptions": [
+      "Kolom 'status_aktif' di tabel 'masakan' adalah representasi boolean (0 untuk tidak aktif, 1 untuk aktif) seperti yang umum digunakan untuk tipe BOOLEAN."
+    ],
+    "potential_issues": [],
+    "response_time_ms": 2237.801,
+    "model_name": "gemini-2.5-flash",
+    "timestamp": "2025-07-22T10:33:30.779645",
+    "raw_response": "```json\n{\n  \"sql_query\": \"SELECT status_aktif, COUNT(*) AS total_masakan FROM masakan GROUP BY status_aktif\",\n  \"confidence\": 0.98,\n  \"explanation\": \"Mengelompokkan data berdasarkan status_aktif (aktif/tidak aktif) dan menghitung jumlah masakan untuk setiap status tersebut.\",\n  \"assumptions\": [\"Kolom 'status_aktif' di tabel 'masakan' adalah representasi boolean (0 untuk tidak aktif, 1 untuk aktif) seperti yang umum digunakan untuk tipe BOOLEAN.\"],\n  \"potential_issues\": []\n}\n```",
+    "token_usage": {
+      "prompt_tokens": 2172,
+      "completion_tokens": 132,
+      "total_tokens": 2511
+    }
+  }
+}

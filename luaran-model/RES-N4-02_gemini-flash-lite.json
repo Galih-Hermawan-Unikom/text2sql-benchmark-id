@@ -1,0 +1,38 @@
+{
+  "scenario_id": "RES-N4-02",
+  "model_info": {
+    "name": "gemini-2.5-flash-lite",
+    "temperature": 0.0,
+    "timestamp": "2025-07-23T13:53:46.080492"
+  },
+  "input": {
+    "question_id": "Tampilkan judul resep yang durasi memasaknya lebih lama daripada rata-rata durasi di kategori masakan yang sama.",
+    "database": "resep",
+    "category": "Nested / Subquery"
+  },
+  "prompt_info": {
+    "prompt_length": 7240,
+    "prompt_lines": 165
+  },
+  "model_response": {
+    "sql_query": "SELECT r.judul_resep FROM resep r JOIN masakan m ON r.kode_masakan = m.kode_masakan WHERE r.waktu_masak > (SELECT AVG(waktu_masak) FROM resep WHERE kode_masakan = m.kode_masakan)",
+    "explanation": "Query ini menampilkan judul resep yang durasi memasaknya lebih lama dari rata-rata durasi memasak untuk masakan yang sama. Ini dilakukan dengan menggabungkan tabel 'resep' dan 'masakan', kemudian membandingkan 'waktu_masak' setiap resep dengan rata-rata 'waktu_masak' dari resep lain dalam kategori masakan yang sama menggunakan subkueri.",
+    "confidence": 0.95,
+    "assumptions": [
+      "Setiap masakan dapat memiliki lebih dari satu resep.",
+      "Rata-rata durasi memasak dihitung per 'kode_masakan'."
+    ],
+    "potential_issues": [
+      "Jika sebuah masakan hanya memiliki satu resep, subkueri akan mengembalikan rata-rata dari satu nilai, yang sama dengan nilai itu sendiri, sehingga resep tersebut tidak akan muncul.",
+      "Performa bisa menjadi masalah jika tabel 'resep' sangat besar."
+    ],
+    "response_time_ms": 1203.766500000711,
+    "model_name": "gemini-2.5-flash-lite",
+    "timestamp": "2025-07-23T13:53:46.080492",
+    "token_usage": {
+      "prompt_tokens": 2196,
+      "completion_tokens": 294,
+      "total_tokens": 2490
+    }
+  }
+}

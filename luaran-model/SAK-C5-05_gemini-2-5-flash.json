@@ -1,0 +1,35 @@
+{
+  "scenario_id": "SAK-C5-05",
+  "model_info": {
+    "name": "gemini-2.5-flash",
+    "temperature": 0.0,
+    "timestamp": "2025-07-22T12:01:11.945001"
+  },
+  "input": {
+    "question_id": "Tampilkan staf yang jumlah transaksi pembayarannya lebih sedikit daripada rata-rata jumlah transaksi per staf; sertakan nama depan, nama belakang, dan jumlah transaksinya.",
+    "database": "sakila",
+    "category": "Comparative"
+  },
+  "prompt_info": {
+    "prompt_length": 9654,
+    "prompt_lines": 300
+  },
+  "model_response": {
+    "sql_query": "SELECT s.first_name, s.last_name, COUNT(p.payment_id) AS jumlah_transaksi FROM staff s JOIN payment p ON s.staff_id = p.staff_id GROUP BY s.staff_id, s.first_name, s.last_name HAVING COUNT(p.payment_id) < ( SELECT AVG(transaksi_per_staf.jumlah_transaksi_staf) FROM ( SELECT COUNT(payment_id) AS jumlah_transaksi_staf FROM payment GROUP BY staff_id ) AS transaksi_per_staf )",
+    "explanation": "Mengambil nama depan, nama belakang, dan total transaksi untuk staf yang memiliki jumlah transaksi pembayaran lebih sedikit dari rata-rata jumlah transaksi di antara semua staf. Pertama, menghitung jumlah transaksi untuk setiap staf. Kemudian, menghitung rata-rata dari jumlah transaksi tersebut. Terakhir, memfilter staf yang jumlah transaksinya di bawah rata-rata.",
+    "confidence": 0.98,
+    "assumptions": [
+      "Jumlah transaksi dihitung dari entri di tabel 'payment'."
+    ],
+    "potential_issues": [],
+    "response_time_ms": 6669.311000000001,
+    "model_name": "gemini-2.5-flash",
+    "timestamp": "2025-07-22T12:01:11.944002",
+    "raw_response": "```json\n{\n  \"sql_query\": \"SELECT s.first_name, s.last_name, COUNT(p.payment_id) AS jumlah_transaksi FROM staff s JOIN payment p ON s.staff_id = p.staff_id GROUP BY s.staff_id, s.first_name, s.last_name HAVING COUNT(p.payment_id) < ( SELECT AVG(transaksi_per_staf.jumlah_transaksi_staf) FROM ( SELECT COUNT(payment_id) AS jumlah_transaksi_staf FROM payment GROUP BY staff_id ) AS transaksi_per_staf )\",\n  \"confidence\": 0.98,\n  \"explanation\": \"Mengambil nama depan, nama belakang, dan total transaksi untuk staf yang memiliki jumlah transaksi pembayaran lebih sedikit dari rata-rata jumlah transaksi di antara semua staf. Pertama, menghitung jumlah transaksi untuk setiap staf. Kemudian, menghitung rata-rata dari jumlah transaksi tersebut. Terakhir, memfilter staf yang jumlah transaksinya di bawah rata-rata.\",\n  \"assumptions\": [\"Jumlah transaksi dihitung dari entri di tabel 'payment'.\"],\n  \"potential_issues\": []\n}\n```",
+    "token_usage": {
+      "prompt_tokens": 3040,
+      "completion_tokens": 258,
+      "total_tokens": 4349
+    }
+  }
+}

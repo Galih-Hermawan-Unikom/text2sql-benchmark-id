@@ -1,0 +1,35 @@
+{
+  "scenario_id": "RES-J2-03",
+  "model_info": {
+    "name": "gemini-2.5-flash-lite",
+    "temperature": 0.0,
+    "timestamp": "2025-07-23T13:53:26.715760"
+  },
+  "input": {
+    "question_id": "Sebutkan kode dan nama masakan khas Padang yang bisa dimasak dalam 90 menit atau kurang, sertakan judul resep dan lama memasaknya.",
+    "database": "resep",
+    "category": "Join + Filter"
+  },
+  "prompt_info": {
+    "prompt_length": 7258,
+    "prompt_lines": 165
+  },
+  "model_response": {
+    "sql_query": "SELECT m.kode_masakan, m.nama_masakan, r.judul_resep, r.waktu_masak FROM masakan m JOIN resep r ON m.kode_masakan = r.kode_masakan WHERE m.asal_daerah = 'Padang' AND r.waktu_masak <= 90",
+    "explanation": "Query ini mengambil kode masakan, nama masakan, judul resep, dan lama memasak dari tabel 'masakan' dan 'resep'. Data difilter untuk masakan yang berasal dari 'Padang' dan memiliki waktu masak 90 menit atau kurang.",
+    "confidence": 0.98,
+    "assumptions": [
+      "Asal daerah 'Padang' tercatat dengan tepat di kolom 'asal_daerah' pada tabel 'masakan'.",
+      "Waktu masak tercatat dalam menit di kolom 'waktu_masak' pada tabel 'resep'."
+    ],
+    "potential_issues": [],
+    "response_time_ms": 1038.2649000002857,
+    "model_name": "gemini-2.5-flash-lite",
+    "timestamp": "2025-07-23T13:53:26.715760",
+    "token_usage": {
+      "prompt_tokens": 2204,
+      "completion_tokens": 236,
+      "total_tokens": 2440
+    }
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "scenario_id": "RES-C5-04",
+  "model_info": {
+    "name": "gemma-3-27b-it",
+    "temperature": 0.0,
+    "timestamp": "2025-07-24T08:53:57.640622"
+  },
+  "input": {
+    "question_id": "Daerah asal mana yang memiliki jumlah masakan di bawah rata-rata jumlah masakan per daerah? Tampilkan nama daerah dan total masakannya.",
+    "database": "resep",
+    "category": "Comparative"
+  },
+  "prompt_info": {
+    "prompt_length": 7263,
+    "prompt_lines": 165
+  },
+  "model_response": {
+    "sql_query": "SELECT m.asal_daerah, COUNT(m.kode_masakan) AS total_masakan FROM masakan m GROUP BY m.asal_daerah HAVING COUNT(m.kode_masakan) < (SELECT AVG(jumlah_masakan) FROM (SELECT COUNT(kode_masakan) AS jumlah_masakan FROM masakan GROUP BY asal_daerah) AS subquery)",
+    "explanation": "Query ini menghitung jumlah masakan untuk setiap daerah asal, kemudian membandingkannya dengan rata-rata jumlah masakan per daerah.  Hanya daerah yang memiliki jumlah masakan di bawah rata-rata yang ditampilkan beserta total masakannya.",
+    "confidence": 0.95,
+    "assumptions": [
+      "Daerah asal diwakili oleh kolom `masakan.asal_daerah`.",
+      "Jumlah masakan dihitung berdasarkan jumlah baris dalam tabel `masakan` yang dikelompokkan berdasarkan `asal_daerah`."
+    ],
+    "potential_issues": [
+      "Jika tabel `masakan` sangat besar, subquery untuk menghitung rata-rata bisa mempengaruhi performa.  Pertimbangkan untuk menggunakan tabel sementara atau materialized view jika performa menjadi masalah."
+    ],
+    "response_time_ms": 6106.9877999998425,
+    "model_name": "gemma-3-27b-it",
+    "timestamp": "2025-07-24T08:53:57.640622",
+    "token_usage": {
+      "prompt_tokens": 2199,
+      "completion_tokens": null,
+      "total_tokens": 2199
+    }
+  }
+}

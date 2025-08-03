@@ -1,0 +1,36 @@
+{
+  "scenario_id": "RES-N4-01",
+  "model_info": {
+    "name": "gemma-3-27b-it",
+    "temperature": 0.0,
+    "timestamp": "2025-07-24T08:55:14.280176"
+  },
+  "input": {
+    "question_id": "Sebutkan nama masakan yang memakai lebih banyak bahan daripada rata-rata jumlah bahan semua masakan.",
+    "database": "resep",
+    "category": "Nested / Subquery"
+  },
+  "prompt_info": {
+    "prompt_length": 7228,
+    "prompt_lines": 165
+  },
+  "model_response": {
+    "sql_query": "SELECT m.nama_masakan FROM masakan m JOIN (SELECT kode_masakan, COUNT(rb.id_bahan) AS jumlah_bahan FROM resep_bahan rb GROUP BY kode_masakan) AS rb_count ON m.kode_masakan = rb_count.kode_masakan WHERE rb_count.jumlah_bahan > (SELECT AVG(jumlah_bahan) FROM (SELECT COUNT(rb.id_bahan) AS jumlah_bahan FROM resep_bahan rb GROUP BY rb.id_resep) AS avg_bahan)",
+    "explanation": "Query ini mencari nama masakan yang jumlah bahannya lebih besar dari rata-rata jumlah bahan dari semua masakan. Pertama, subquery menghitung jumlah bahan untuk setiap masakan. Kemudian, subquery lain menghitung rata-rata jumlah bahan dari semua masakan. Terakhir, query utama memfilter masakan yang jumlah bahannya lebih besar dari rata-rata tersebut dan menampilkan nama masakannya.",
+    "confidence": 0.9,
+    "assumptions": [
+      "Jumlah bahan untuk sebuah masakan dihitung berdasarkan jumlah entri di tabel `resep_bahan` yang terkait dengan `kode_masakan` tersebut."
+    ],
+    "potential_issues": [
+      "Jika tabel `resep_bahan` kosong, rata-rata jumlah bahan akan menjadi NULL, dan query mungkin tidak menghasilkan hasil yang diharapkan. Perlu ditangani kasus ini jika memungkinkan."
+    ],
+    "response_time_ms": 7017.827099999977,
+    "model_name": "gemma-3-27b-it",
+    "timestamp": "2025-07-24T08:55:14.280176",
+    "token_usage": {
+      "prompt_tokens": 2192,
+      "completion_tokens": null,
+      "total_tokens": 2192
+    }
+  }
+}

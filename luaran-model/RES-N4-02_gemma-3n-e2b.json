@@ -1,0 +1,21 @@
+{
+  "metadata": {
+    "version": "1.0",
+    "generated_at": "2025-07-31T07:26:45.630572",
+    "tool": "text2sql_ollama"
+  },
+  "scenario_id": "RES-N4-02",
+  "category": "Nested / Subquery",
+  "database": "resep",
+  "question_id": "Tampilkan judul resep yang durasi memasaknya lebih lama daripada rata-rata durasi di kategori masakan yang sama.",
+  "model": "gemma-3n-e2b",
+  "sql_query": "SELECT r.judul_resep AS judul_resep\nFROM resep r\nJOIN masakan m ON r.kode_masakan = m.kode_masakan\nWHERE r.status_aktif = TRUE\nGROUP BY r.judul_resep\nHAVING AVG(r.waktu_masak) > (SELECT AVG(waktu_masak) FROM resep WHERE kategori = m.kategori)",
+  "timestamp": "2025-07-31T07:26:45.630572",
+  "response_time_ms": 130820.74900000001,
+  "token_usage": {
+    "prompt_tokens": 1224,
+    "completion_tokens": 95,
+    "total_tokens": 1319
+  },
+  "raw_response": "```sql\nSELECT r.judul_resep AS judul_resep\nFROM resep r\nJOIN masakan m ON r.kode_masakan = m.kode_masakan\nWHERE r.status_aktif = TRUE\nGROUP BY r.judul_resep\nHAVING AVG(r.waktu_masak) > (SELECT AVG(waktu_masak) FROM resep WHERE kategori = m.kategori);\n```"
+}

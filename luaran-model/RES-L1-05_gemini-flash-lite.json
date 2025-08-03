@@ -1,0 +1,38 @@
+{
+  "scenario_id": "RES-L1-05",
+  "model_info": {
+    "name": "gemini-2.5-flash-lite",
+    "temperature": 0.0,
+    "timestamp": "2025-07-23T13:53:41.093088"
+  },
+  "input": {
+    "question_id": "Tampilkan bahan yang memiliki satuan bukan 'gram' atau 'ml'; sertakan id, nama bahan, dan satuannya.",
+    "database": "resep",
+    "category": "Lookup / Filter"
+  },
+  "prompt_info": {
+    "prompt_length": 7228,
+    "prompt_lines": 165
+  },
+  "model_response": {
+    "sql_query": "SELECT b.id_bahan, b.nama_bahan, rb.satuan_override FROM bahan b JOIN resep_bahan rb ON b.id_bahan = rb.id_bahan WHERE rb.satuan_override NOT IN ('gram', 'ml')",
+    "explanation": "Query ini mengambil ID bahan, nama bahan, dan satuan override dari tabel 'bahan' dan 'resep_bahan'. Ini difilter untuk menampilkan hanya bahan-bahan yang satuan override-nya bukan 'gram' atau 'ml'.",
+    "confidence": 0.95,
+    "assumptions": [
+      "Kolom 'satuan_override' di tabel 'resep_bahan' menyimpan informasi satuan yang spesifik untuk setiap resep.",
+      "Pertanyaan mengacu pada satuan yang didefinisikan dalam tabel 'resep_bahan' (satuan_override), bukan 'satuan_default' di tabel 'bahan'."
+    ],
+    "potential_issues": [
+      "Jika ada bahan yang tidak pernah digunakan dalam resep apa pun (tidak ada di tabel 'resep_bahan'), bahan tersebut tidak akan muncul dalam hasil.",
+      "Jika 'satuan_override' bisa NULL, query ini tidak akan menampilkannya. Jika ingin menyertakan NULL, klausa WHERE perlu dimodifikasi."
+    ],
+    "response_time_ms": 1312.9505999986577,
+    "model_name": "gemini-2.5-flash-lite",
+    "timestamp": "2025-07-23T13:53:41.093088",
+    "token_usage": {
+      "prompt_tokens": 2196,
+      "completion_tokens": 297,
+      "total_tokens": 2493
+    }
+  }
+}

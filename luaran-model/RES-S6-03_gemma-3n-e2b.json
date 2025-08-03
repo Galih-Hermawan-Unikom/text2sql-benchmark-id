@@ -1,0 +1,21 @@
+{
+  "metadata": {
+    "version": "1.0",
+    "generated_at": "2025-07-31T07:39:01.267720",
+    "tool": "text2sql_ollama"
+  },
+  "scenario_id": "RES-S6-03",
+  "category": "Superlative",
+  "database": "resep",
+  "question_id": "Daerah asal mana yang memiliki jumlah masakan terbanyak? Tampilkan nama daerah dan total masakannya (semua daerah dengan jumlah maksimum).",
+  "model": "gemma-3n-e2b",
+  "sql_query": "SELECT\n  m.asal_daerah,\n  COUNT(m.kode_masakan) AS total_masakan\nFROM Masakan AS m\nGROUP BY\n  m.asal_daerah\nORDER BY\n  total_masakan DESC\nLIMIT 1",
+  "timestamp": "2025-07-31T07:39:01.267720",
+  "response_time_ms": 116556.757,
+  "token_usage": {
+    "prompt_tokens": 1229,
+    "completion_tokens": 66,
+    "total_tokens": 1295
+  },
+  "raw_response": "```sql\nSELECT\n  m.asal_daerah,\n  COUNT(m.kode_masakan) AS total_masakan\nFROM Masakan AS m\nGROUP BY\n  m.asal_daerah\nORDER BY\n  total_masakan DESC\nLIMIT 1;\n```"
+}

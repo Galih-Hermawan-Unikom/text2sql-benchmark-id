@@ -1,0 +1,39 @@
+{
+  "scenario_id": "RES-A3-04",
+  "model_info": {
+    "name": "gemini-2.5-flash-lite",
+    "temperature": 0.0,
+    "timestamp": "2025-07-23T13:53:06.624377"
+  },
+  "input": {
+    "question_id": "Untuk setiap daerah asal, berapa banyak bahan unik yang digunakan di seluruh masakan daerah tersebut? Tampilkan nama daerah dan jumlah bahan uniknya.",
+    "database": "resep",
+    "category": "Aggregation"
+  },
+  "prompt_info": {
+    "prompt_length": 7277,
+    "prompt_lines": 165
+  },
+  "model_response": {
+    "sql_query": "SELECT m.asal_daerah, COUNT(DISTINCT rb.id_bahan) AS jumlah_bahan_unik FROM masakan m JOIN resep r ON m.kode_masakan = r.kode_masakan JOIN resep_bahan rb ON r.id_resep = rb.id_resep GROUP BY m.asal_daerah;",
+    "explanation": "Query ini menghitung jumlah bahan unik yang digunakan untuk setiap daerah asal masakan. Pertama, tabel 'masakan' digabungkan dengan tabel 'resep' menggunakan 'kode_masakan' untuk mengaitkan masakan dengan resepnya. Kemudian, tabel 'resep' digabungkan dengan tabel 'resep_bahan' menggunakan 'id_resep' untuk mendapatkan daftar bahan yang digunakan dalam setiap resep. Akhirnya, hasil dikelompokkan berdasarkan 'asal_daerah' dari tabel 'masakan', dan jumlah bahan unik ('id_bahan') dihitung untuk setiap daerah.",
+    "confidence": 0.97,
+    "assumptions": [
+      "Setiap masakan memiliki setidaknya satu resep.",
+      "Setiap resep memiliki setidaknya satu bahan.",
+      "Setiap daerah asal memiliki setidaknya satu masakan."
+    ],
+    "potential_issues": [
+      "Jika ada masakan yang tidak memiliki resep, daerah asal masakan tersebut tidak akan muncul dalam hasil.",
+      "Jika ada resep yang tidak memiliki bahan, bahan-bahan dari resep tersebut tidak akan dihitung."
+    ],
+    "response_time_ms": 1336.230599999908,
+    "model_name": "gemini-2.5-flash-lite",
+    "timestamp": "2025-07-23T13:53:06.624377",
+    "token_usage": {
+      "prompt_tokens": 2199,
+      "completion_tokens": 340,
+      "total_tokens": 2539
+    }
+  }
+}

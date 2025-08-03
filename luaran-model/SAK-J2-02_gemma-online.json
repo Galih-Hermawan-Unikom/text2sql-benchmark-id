@@ -1,0 +1,38 @@
+{
+  "scenario_id": "SAK-J2-02",
+  "model_info": {
+    "name": "gemma-3-27b-it",
+    "temperature": 0.0,
+    "timestamp": "2025-07-24T08:57:40.815865"
+  },
+  "input": {
+    "question_id": "Daftar judul film beserta nama bahasa untuk semua film berdurasi lebih dari 184 menit.",
+    "database": "sakila",
+    "category": "Join + Filter"
+  },
+  "prompt_info": {
+    "prompt_length": 9737,
+    "prompt_lines": 299
+  },
+  "model_response": {
+    "sql_query": "SELECT f.title, l.name AS bahasa FROM film f JOIN language l ON f.language_id = l.language_id WHERE f.length > 184",
+    "explanation": "Query ini mengambil judul film (f.title) dan nama bahasa (l.name) dari tabel film dan language.  Kondisi WHERE memfilter hanya film yang memiliki durasi (f.length) lebih dari 184 menit.  JOIN digunakan untuk menghubungkan tabel film dan language berdasarkan language_id.",
+    "confidence": 0.98,
+    "assumptions": [
+      "Durasi film disimpan dalam kolom 'length' pada tabel 'film'.",
+      "Nama bahasa disimpan dalam kolom 'name' pada tabel 'language'.",
+      "Tabel 'film' memiliki foreign key 'language_id' yang merujuk ke tabel 'language'."
+    ],
+    "potential_issues": [
+      "Jika kolom 'length' memiliki nilai NULL, film dengan durasi NULL tidak akan ditampilkan.  Jika ada kesalahan dalam foreign key relationship antara tabel film dan language, query mungkin tidak menghasilkan hasil yang benar."
+    ],
+    "response_time_ms": 5918.18319999993,
+    "model_name": "gemma-3-27b-it",
+    "timestamp": "2025-07-24T08:57:40.815865",
+    "token_usage": {
+      "prompt_tokens": 3071,
+      "completion_tokens": null,
+      "total_tokens": 3071
+    }
+  }
+}

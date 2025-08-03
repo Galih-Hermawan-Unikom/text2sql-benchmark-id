@@ -1,0 +1,38 @@
+{
+  "scenario_id": "SAK-N4-01",
+  "model_info": {
+    "name": "gemini-2.5-flash-lite",
+    "temperature": 0.0,
+    "timestamp": "2025-07-23T13:54:54.212410"
+  },
+  "input": {
+    "question_id": "Tampilkan **nama lengkap** (gabungan nama depan dan belakang) aktor serta jumlah filmnya yang membintangi film lebih banyak daripada Matthew Carrey, lalu urutkan dari jumlah film terbanyak.",
+    "database": "sakila",
+    "category": "Nested / Subquery"
+  },
+  "prompt_info": {
+    "prompt_length": 9840,
+    "prompt_lines": 299
+  },
+  "model_response": {
+    "sql_query": "SELECT CONCAT(a.first_name, ' ', a.last_name) AS actor_name, COUNT(fa.film_id) AS film_count FROM actor a JOIN film_actor fa ON a.actor_id = fa.actor_id WHERE a.actor_id IN (SELECT fa2.actor_id FROM film_actor fa2 GROUP BY fa2.actor_id HAVING COUNT(fa2.film_id) > (SELECT COUNT(fa3.film_id) FROM film_actor fa3 JOIN actor a2 ON fa3.actor_id = a2.actor_id WHERE a2.first_name = 'MATTHEW' AND a2.last_name = 'CARREY')) GROUP BY a.actor_id, actor_name ORDER BY film_count DESC;",
+    "explanation": "Query ini pertama-tama menghitung jumlah film yang dibintangi oleh Matthew Carrey. Kemudian, ia menghitung jumlah film untuk setiap aktor lain. Terakhir, ia menampilkan nama lengkap aktor dan jumlah film mereka, hanya untuk aktor yang membintangi lebih banyak film daripada Matthew Carrey, dan mengurutkannya berdasarkan jumlah film terbanyak.",
+    "confidence": 0.97,
+    "assumptions": [
+      "Nama 'Matthew Carrey' merujuk pada aktor dengan first_name 'MATTHEW' dan last_name 'CARREY'.",
+      "Jumlah film dihitung berdasarkan entri di tabel film_actor."
+    ],
+    "potential_issues": [
+      "Jika ada lebih dari satu aktor bernama Matthew Carrey, subkueri mungkin mengembalikan jumlah film dari salah satu dari mereka, atau jika tidak ada, perbandingan akan menjadi tidak valid.",
+      "Perbandingan jumlah film tidak mempertimbangkan kategori film atau rating, hanya jumlah total film."
+    ],
+    "response_time_ms": 1584.9785999998858,
+    "model_name": "gemini-2.5-flash-lite",
+    "timestamp": "2025-07-23T13:54:54.212410",
+    "token_usage": {
+      "prompt_tokens": 3092,
+      "completion_tokens": 403,
+      "total_tokens": 3495
+    }
+  }
+}

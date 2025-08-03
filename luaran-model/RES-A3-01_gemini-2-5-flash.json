@@ -1,0 +1,37 @@
+{
+  "scenario_id": "RES-A3-01",
+  "model_info": {
+    "name": "gemini-2.5-flash",
+    "temperature": 0.0,
+    "timestamp": "2025-07-22T10:33:17.829841"
+  },
+  "input": {
+    "question_id": "Berapa jumlah resep yang tersedia untuk tiap kategori masakan? Tampilkan kategori masakan dan total resepnya.",
+    "database": "resep",
+    "category": "Aggregation"
+  },
+  "prompt_info": {
+    "prompt_length": 7082,
+    "prompt_lines": 167
+  },
+  "model_response": {
+    "sql_query": "SELECT m.kategori, COUNT(r.id_resep) AS jumlah_resep FROM masakan m JOIN resep r ON m.kode_masakan = r.kode_masakan GROUP BY m.kategori",
+    "explanation": "Mengambil kategori masakan dari tabel 'masakan' dan menghitung jumlah resep yang terkait dengan setiap kategori tersebut dari tabel 'resep', kemudian mengelompokkan hasilnya berdasarkan kategori masakan.",
+    "confidence": 0.98,
+    "assumptions": [
+      "Setiap resep diasumsikan memiliki kategori masakan yang valid melalui kode_masakan."
+    ],
+    "potential_issues": [
+      "Resep yang tidak memiliki masakan terkait (misalnya kode_masakan di resep NULL atau tidak ada di tabel masakan) tidak akan terhitung. Namun, ini adalah asumsi standar untuk JOIN."
+    ],
+    "response_time_ms": 2282.731,
+    "model_name": "gemini-2.5-flash",
+    "timestamp": "2025-07-22T10:33:17.829841",
+    "raw_response": "```json\n{\n  \"sql_query\": \"SELECT m.kategori, COUNT(r.id_resep) AS jumlah_resep FROM masakan m JOIN resep r ON m.kode_masakan = r.kode_masakan GROUP BY m.kategori\",\n  \"confidence\": 0.98,\n  \"explanation\": \"Mengambil kategori masakan dari tabel 'masakan' dan menghitung jumlah resep yang terkait dengan setiap kategori tersebut dari tabel 'resep', kemudian mengelompokkan hasilnya berdasarkan kategori masakan.\",\n  \"assumptions\": [\n    \"Setiap resep diasumsikan memiliki kategori masakan yang valid melalui kode_masakan.\"\n  ],\n  \"potential_issues\": [\n    \"Resep yang tidak memiliki masakan terkait (misalnya kode_masakan di resep NULL atau tidak ada di tabel masakan) tidak akan terhitung. Namun, ini adalah asumsi standar untuk JOIN.\"\n  ]\n}\n```",
+    "token_usage": {
+      "prompt_tokens": 2170,
+      "completion_tokens": 210,
+      "total_tokens": 2555
+    }
+  }
+}

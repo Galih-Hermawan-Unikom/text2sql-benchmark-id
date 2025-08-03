@@ -1,0 +1,36 @@
+{
+  "scenario_id": "RES-J2-02",
+  "model_info": {
+    "name": "gemini-2.5-flash-lite",
+    "temperature": 0.0,
+    "timestamp": "2025-07-23T13:53:24.638406"
+  },
+  "input": {
+    "question_id": "Resep apa saja yang memakai bahan daun? Cantumkan judul resep dan nama bahannya.",
+    "database": "resep",
+    "category": "Join + Filter"
+  },
+  "prompt_info": {
+    "prompt_length": 7208,
+    "prompt_lines": 165
+  },
+  "model_response": {
+    "sql_query": "SELECT r.judul_resep, b.nama_bahan FROM resep r JOIN resep_bahan rb ON r.id_resep = rb.id_resep JOIN bahan b ON rb.id_bahan = b.id_bahan WHERE b.nama_bahan LIKE '%daun%'",
+    "explanation": "Query ini mengambil judul resep dan nama bahan dari tabel 'resep', 'resep_bahan', dan 'bahan'. Ini menggabungkan tabel 'resep' dan 'resep_bahan' berdasarkan 'id_resep', kemudian menggabungkan hasilnya dengan tabel 'bahan' berdasarkan 'id_bahan'. Filter diterapkan untuk mencari bahan yang namanya mengandung kata 'daun'.",
+    "confidence": 0.97,
+    "assumptions": [
+      "Kata 'daun' dalam pertanyaan merujuk pada nama bahan yang mengandung substring 'daun'."
+    ],
+    "potential_issues": [
+      "Jika ada bahan yang namanya mengandung 'daun' tetapi bukan daun sebenarnya (misalnya, 'daun pintu'), bahan tersebut juga akan disertakan."
+    ],
+    "response_time_ms": 1146.6627000008884,
+    "model_name": "gemini-2.5-flash-lite",
+    "timestamp": "2025-07-23T13:53:24.638406",
+    "token_usage": {
+      "prompt_tokens": 2191,
+      "completion_tokens": 252,
+      "total_tokens": 2443
+    }
+  }
+}

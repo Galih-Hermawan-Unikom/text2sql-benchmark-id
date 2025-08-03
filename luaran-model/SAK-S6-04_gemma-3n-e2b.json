@@ -1,0 +1,21 @@
+{
+  "metadata": {
+    "version": "1.0",
+    "generated_at": "2025-07-31T09:17:08.453928",
+    "tool": "text2sql_ollama"
+  },
+  "scenario_id": "SAK-S6-04",
+  "category": "Superlative",
+  "database": "sakila",
+  "question_id": "Siapa pelanggan yang paling sering menyewa film? Sertakan nama depan, nama belakang, dan jumlah sewanya.",
+  "model": "gemma-3n-e2b",
+  "sql_query": "SELECT\n    c.first_name AS nama_depan,\n    c.last_name AS nama_belakang,\n    COUNT(r.rental_id) AS jumlah_sewa\nFROM\n    customer c\nJOIN\n    rental r ON c.customer_id = r.customer_id\nJOIN\n    film f ON r.rental_id = f.film_id\nGROUP BY\n    c.customer_id, c.first_name, c.last_name\nORDER BY\n    jumlah_sewa DESC",
+  "timestamp": "2025-07-31T09:17:08.452851",
+  "response_time_ms": 186537.616,
+  "token_usage": {
+    "prompt_tokens": 1678,
+    "completion_tokens": 123,
+    "total_tokens": 1801
+  },
+  "raw_response": "```sql\nSELECT\n    c.first_name AS nama_depan,\n    c.last_name AS nama_belakang,\n    COUNT(r.rental_id) AS jumlah_sewa\nFROM\n    customer c\nJOIN\n    rental r ON c.customer_id = r.customer_id\nJOIN\n    film f ON r.rental_id = f.film_id\nGROUP BY\n    c.customer_id, c.first_name, c.last_name\nORDER BY\n    jumlah_sewa DESC;\n```"
+}

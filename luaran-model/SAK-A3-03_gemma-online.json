@@ -1,0 +1,37 @@
+{
+  "scenario_id": "SAK-A3-03",
+  "model_info": {
+    "name": "gemma-3-27b-it",
+    "temperature": 0.0,
+    "timestamp": "2025-07-24T08:56:31.242324"
+  },
+  "input": {
+    "question_id": "Hitung total nilai pembayaran per bulan pada tahun 2006.",
+    "database": "sakila",
+    "category": "Aggregation"
+  },
+  "prompt_info": {
+    "prompt_length": 9707,
+    "prompt_lines": 299
+  },
+  "model_response": {
+    "sql_query": "SELECT MONTH(payment_date) AS bulan, SUM(amount) AS total_pembayaran FROM payment WHERE YEAR(payment_date) = 2006 GROUP BY bulan ORDER BY bulan",
+    "explanation": "Query ini menghitung total nilai pembayaran untuk setiap bulan pada tahun 2006.  `MONTH(payment_date)` mengekstrak bulan dari tanggal pembayaran, `SUM(amount)` menghitung total nilai pembayaran, dan `GROUP BY bulan` mengelompokkan hasil berdasarkan bulan.",
+    "confidence": 0.98,
+    "assumptions": [
+      "Kolom 'payment_date' berisi tanggal pembayaran.",
+      "Kolom 'amount' berisi nilai pembayaran."
+    ],
+    "potential_issues": [
+      "Jika tidak ada pembayaran pada bulan tertentu di tahun 2006, bulan tersebut tidak akan muncul dalam hasil."
+    ],
+    "response_time_ms": 4863.2996000001185,
+    "model_name": "gemma-3-27b-it",
+    "timestamp": "2025-07-24T08:56:31.242324",
+    "token_usage": {
+      "prompt_tokens": 3066,
+      "completion_tokens": null,
+      "total_tokens": 3066
+    }
+  }
+}

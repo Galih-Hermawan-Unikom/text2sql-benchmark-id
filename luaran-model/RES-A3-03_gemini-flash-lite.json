@@ -1,0 +1,35 @@
+{
+  "scenario_id": "RES-A3-03",
+  "model_info": {
+    "name": "gemini-2.5-flash-lite",
+    "temperature": 0.0,
+    "timestamp": "2025-07-23T13:53:04.249654"
+  },
+  "input": {
+    "question_id": "Tampilkan lima bahan yang paling sering dipakai di semua resep\u2014urutkan dari yang terbanyak. Sertakan nama bahan dan berapa kali dipakai.",
+    "database": "resep",
+    "category": "Aggregation"
+  },
+  "prompt_info": {
+    "prompt_length": 7264,
+    "prompt_lines": 165
+  },
+  "model_response": {
+    "sql_query": "SELECT b.nama_bahan, COUNT(rb.id_bahan) AS jumlah_penggunaan FROM bahan b JOIN resep_bahan rb ON b.id_bahan = rb.id_bahan GROUP BY b.nama_bahan ORDER BY jumlah_penggunaan DESC LIMIT 5;",
+    "explanation": "Query ini menghitung berapa kali setiap bahan digunakan dalam resep. Pertama, ia menggabungkan tabel 'bahan' dengan tabel 'resep_bahan' menggunakan 'id_bahan'. Kemudian, ia mengelompokkan hasil berdasarkan nama bahan dan menghitung jumlah kemunculan setiap bahan. Terakhir, ia mengurutkan hasilnya berdasarkan jumlah penggunaan secara menurun dan membatasi output menjadi 5 bahan teratas.",
+    "confidence": 0.98,
+    "assumptions": [
+      "Setiap baris dalam tabel 'resep_bahan' mewakili satu penggunaan bahan dalam satu resep.",
+      "Nama bahan yang unik terdapat di kolom 'nama_bahan' pada tabel 'bahan'."
+    ],
+    "potential_issues": [],
+    "response_time_ms": 1137.610300000233,
+    "model_name": "gemini-2.5-flash-lite",
+    "timestamp": "2025-07-23T13:53:04.249654",
+    "token_usage": {
+      "prompt_tokens": 2200,
+      "completion_tokens": 238,
+      "total_tokens": 2438
+    }
+  }
+}

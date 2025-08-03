@@ -1,0 +1,36 @@
+{
+  "scenario_id": "SAK-J2-01",
+  "model_info": {
+    "name": "gemini-2.5-flash",
+    "temperature": 0.0,
+    "timestamp": "2025-07-22T10:18:38.794327"
+  },
+  "input": {
+    "question_id": "Tampilkan nama depan, nama belakang, dan kota tempat tinggal semua pelanggan yang pernah menyewa film dengan kategori animasi pada tahun 2006.",
+    "database": "sakila",
+    "category": "Join + Filter"
+  },
+  "prompt_info": {
+    "prompt_length": 9298,
+    "prompt_lines": 299
+  },
+  "model_response": {
+    "sql_query": "SELECT DISTINCT c.first_name, c.last_name, ci.city FROM customer c JOIN rental r ON c.customer_id = r.customer_id JOIN inventory i ON r.inventory_id = i.inventory_id JOIN film f ON i.film_id = f.film_id JOIN film_category fc ON f.film_id = fc.film_id JOIN category cat ON fc.category_id = cat.category_id JOIN address a ON c.address_id = a.address_id JOIN city ci ON a.city_id = ci.city_id WHERE cat.name = 'Animation' AND YEAR(r.rental_date) = 2006;",
+    "explanation": "Mengambil nama depan, nama belakang, dan kota tempat tinggal unik dari pelanggan yang menyewa film dengan kategori 'Animation' pada tahun 2006. Query ini menghubungkan tabel customer, rental, inventory, film, film_category, category, address, dan city.",
+    "confidence": 0.98,
+    "assumptions": [
+      "Kategori film diidentifikasi melalui kolom 'name' di tabel 'category'.",
+      "Tahun sewa film merujuk pada kolom 'rental_date' di tabel 'rental'."
+    ],
+    "potential_issues": [],
+    "response_time_ms": 6688.463,
+    "model_name": "gemini-2.5-flash",
+    "timestamp": "2025-07-22T10:18:38.794327",
+    "raw_response": "```json\n{\n  \"sql_query\": \"SELECT DISTINCT c.first_name, c.last_name, ci.city FROM customer c JOIN rental r ON c.customer_id = r.customer_id JOIN inventory i ON r.inventory_id = i.inventory_id JOIN film f ON i.film_id = f.film_id JOIN film_category fc ON f.film_id = fc.film_id JOIN category cat ON fc.category_id = cat.category_id JOIN address a ON c.address_id = a.address_id JOIN city ci ON a.city_id = ci.city_id WHERE cat.name = 'Animation' AND YEAR(r.rental_date) = 2006;\",\n  \"confidence\": 0.98,\n  \"explanation\": \"Mengambil nama depan, nama belakang, dan kota tempat tinggal unik dari pelanggan yang menyewa film dengan kategori 'Animation' pada tahun 2006. Query ini menghubungkan tabel customer, rental, inventory, film, film_category, category, address, dan city.\",\n  \"assumptions\": [\n    \"Kategori film diidentifikasi melalui kolom 'name' di tabel 'category'.\",\n    \"Tahun sewa film merujuk pada kolom 'rental_date' di tabel 'rental'.\"\n  ],\n  \"potential_issues\": []\n}\n```",
+    "token_usage": {
+      "prompt_tokens": 2964,
+      "completion_tokens": 301,
+      "total_tokens": 4266
+    }
+  }
+}

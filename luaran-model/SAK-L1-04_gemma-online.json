@@ -1,0 +1,36 @@
+{
+  "scenario_id": "SAK-L1-04",
+  "model_info": {
+    "name": "gemma-3-27b-it",
+    "temperature": 0.0,
+    "timestamp": "2025-07-24T08:58:26.983023"
+  },
+  "input": {
+    "question_id": "Tampilkan ID dan nama kategori film yang diperbarui pada atau setelah 15 Februari 2006.",
+    "database": "sakila",
+    "category": "Lookup / Filter"
+  },
+  "prompt_info": {
+    "prompt_length": 9738,
+    "prompt_lines": 299
+  },
+  "model_response": {
+    "sql_query": "SELECT category_id, name FROM category WHERE last_update >= '2006-02-15'",
+    "explanation": "Query ini memilih ID dan nama kategori dari tabel `category` di mana kolom `last_update` bernilai sama dengan atau setelah tanggal 15 Februari 2006.",
+    "confidence": 0.98,
+    "assumptions": [
+      "Kolom `last_update` pada tabel `category` menyimpan tanggal dan waktu pembaruan kategori."
+    ],
+    "potential_issues": [
+      "Format tanggal harus sesuai dengan format yang dikenali oleh MySQL ('YYYY-MM-DD'). Jika formatnya berbeda, perlu disesuaikan."
+    ],
+    "response_time_ms": 4279.44989999969,
+    "model_name": "gemma-3-27b-it",
+    "timestamp": "2025-07-24T08:58:26.983023",
+    "token_usage": {
+      "prompt_tokens": 3074,
+      "completion_tokens": null,
+      "total_tokens": 3074
+    }
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "scenario_id": "RES-L1-03",
+  "model_info": {
+    "name": "gemini-2.5-flash",
+    "temperature": 0.0,
+    "timestamp": "2025-07-22T10:14:13.324219"
+  },
+  "input": {
+    "question_id": "Tampilkan resep dengan lama waktu masak antara 30 dan 45 menit; sertakan id, judul, dan waktu masak resep.",
+    "database": "resep",
+    "category": "Lookup / Filter"
+  },
+  "prompt_info": {
+    "prompt_length": 6739,
+    "prompt_lines": 165
+  },
+  "model_response": {
+    "sql_query": "SELECT id_resep, judul_resep, waktu_masak FROM RESEP WHERE waktu_masak BETWEEN 30 AND 45",
+    "explanation": "Mengambil ID resep, judul resep, dan waktu masak dari tabel RESEP yang memiliki waktu masak di antara 30 dan 45 menit (inklusif).",
+    "confidence": 0.98,
+    "assumptions": [
+      "\"Lama waktu masak\" merujuk pada kolom `waktu_masak`.",
+      "Batas waktu 30 dan 45 menit bersifat inklusif (termasuk 30 dan 45)."
+    ],
+    "potential_issues": [],
+    "response_time_ms": 3310.1820000000002,
+    "model_name": "gemini-2.5-flash",
+    "timestamp": "2025-07-22T10:14:13.324219",
+    "raw_response": "```json\n{\n  \"sql_query\": \"SELECT id_resep, judul_resep, waktu_masak FROM RESEP WHERE waktu_masak BETWEEN 30 AND 45\",\n  \"confidence\": 0.98,\n  \"explanation\": \"Mengambil ID resep, judul resep, dan waktu masak dari tabel RESEP yang memiliki waktu masak di antara 30 dan 45 menit (inklusif).\",\n  \"assumptions\": [\n    \"\\\"Lama waktu masak\\\" merujuk pada kolom `waktu_masak`.\",\n    \"Batas waktu 30 dan 45 menit bersifat inklusif (termasuk 30 dan 45).\"\n  ],\n  \"potential_issues\": []\n}\n```",
+    "token_usage": {
+      "prompt_tokens": 2084,
+      "completion_tokens": 172,
+      "total_tokens": 2660
+    }
+  }
+}

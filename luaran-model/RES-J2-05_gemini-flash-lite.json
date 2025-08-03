@@ -1,0 +1,37 @@
+{
+  "scenario_id": "RES-J2-05",
+  "model_info": {
+    "name": "gemini-2.5-flash-lite",
+    "temperature": 0.0,
+    "timestamp": "2025-07-23T13:53:31.074151"
+  },
+  "input": {
+    "question_id": "Masakan apa saja secara unik yang menggunakan santan sebagai salah satu bahannya? Tampilkan nama masakan dan nama bahannya.",
+    "database": "resep",
+    "category": "Join + Filter"
+  },
+  "prompt_info": {
+    "prompt_length": 7251,
+    "prompt_lines": 165
+  },
+  "model_response": {
+    "sql_query": "SELECT DISTINCT m.nama_masakan, b.nama_bahan FROM masakan m JOIN resep r ON m.kode_masakan = r.kode_masakan JOIN resep_bahan rb ON r.id_resep = rb.id_resep JOIN bahan b ON rb.id_bahan = b.id_bahan WHERE b.nama_bahan LIKE '%santan%'",
+    "explanation": "Query ini menggabungkan tabel 'masakan', 'resep', 'resep_bahan', dan 'bahan' untuk menemukan masakan yang menggunakan santan. Ini dilakukan dengan mencocokkan 'kode_masakan' antara 'masakan' dan 'resep', 'id_resep' antara 'resep' dan 'resep_bahan', serta 'id_bahan' antara 'resep_bahan' dan 'bahan'. Kondisi WHERE kemudian memfilter hasil untuk hanya menyertakan bahan yang namanya mengandung 'santan'. Penggunaan DISTINCT memastikan setiap pasangan masakan dan bahan unik ditampilkan hanya sekali.",
+    "confidence": 0.98,
+    "assumptions": [
+      "Nama bahan yang mengandung 'santan' (misalnya, 'santan kental', 'santan encer') dianggap sebagai penggunaan santan.",
+      "Setiap masakan dapat memiliki lebih dari satu resep, dan setiap resep dapat memiliki banyak bahan."
+    ],
+    "potential_issues": [
+      "Jika ada variasi penulisan 'santan' (misalnya, 'santan kelapa'), query mungkin perlu disesuaikan dengan LIKE '%santan%' atau menggunakan fungsi pembersihan teks jika tersedia."
+    ],
+    "response_time_ms": 1267.8587999998854,
+    "model_name": "gemini-2.5-flash-lite",
+    "timestamp": "2025-07-23T13:53:31.074151",
+    "token_usage": {
+      "prompt_tokens": 2197,
+      "completion_tokens": 365,
+      "total_tokens": 2562
+    }
+  }
+}

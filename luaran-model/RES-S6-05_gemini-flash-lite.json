@@ -1,0 +1,35 @@
+{
+  "scenario_id": "RES-S6-05",
+  "model_info": {
+    "name": "gemini-2.5-flash-lite",
+    "temperature": 0.0,
+    "timestamp": "2025-07-23T13:54:04.279823"
+  },
+  "input": {
+    "question_id": "Masakan apa saja yang memiliki tingkat kepedasan tertinggi? Tampilkan kode masakan, nama masakan, dan level pedasnya.",
+    "database": "resep",
+    "category": "Superlative"
+  },
+  "prompt_info": {
+    "prompt_length": 7245,
+    "prompt_lines": 165
+  },
+  "model_response": {
+    "sql_query": "SELECT kode_masakan, nama_masakan, level_pedas FROM masakan WHERE level_pedas = (SELECT MAX(level_pedas) FROM masakan)",
+    "explanation": "Query ini mengambil kode masakan, nama masakan, dan level pedas dari tabel 'masakan'. Untuk menemukan masakan dengan tingkat kepedasan tertinggi, digunakan subkueri yang mencari nilai maksimum dari kolom 'level_pedas' di tabel 'masakan'. Kemudian, query utama memfilter masakan yang memiliki 'level_pedas' sama dengan nilai maksimum tersebut.",
+    "confidence": 0.98,
+    "assumptions": [
+      "Tingkat kepedasan tertinggi didefinisikan sebagai nilai numerik tertinggi dalam kolom 'level_pedas'.",
+      "Jika ada beberapa masakan dengan tingkat kepedasan tertinggi yang sama, semuanya akan ditampilkan."
+    ],
+    "potential_issues": [],
+    "response_time_ms": 1012.505600001532,
+    "model_name": "gemini-2.5-flash-lite",
+    "timestamp": "2025-07-23T13:54:04.279823",
+    "token_usage": {
+      "prompt_tokens": 2199,
+      "completion_tokens": 213,
+      "total_tokens": 2412
+    }
+  }
+}

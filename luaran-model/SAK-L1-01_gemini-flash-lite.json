@@ -1,0 +1,35 @@
+{
+  "scenario_id": "SAK-L1-01",
+  "model_info": {
+    "name": "gemini-2.5-flash-lite",
+    "temperature": 0.0,
+    "timestamp": "2025-07-23T13:54:43.061710"
+  },
+  "input": {
+    "question_id": "Daftar film berdurasi lebih dari 180 menit dengan rating 'R'; sertakan judul dan durasi setiap film.",
+    "database": "sakila",
+    "category": "Lookup / Filter"
+  },
+  "prompt_info": {
+    "prompt_length": 9751,
+    "prompt_lines": 299
+  },
+  "model_response": {
+    "sql_query": "SELECT title, length FROM film WHERE length > 180 AND rating = 'R'",
+    "explanation": "Query ini memilih judul dan durasi film dari tabel 'film' yang memiliki durasi lebih dari 180 menit dan rating 'R'.",
+    "confidence": 0.99,
+    "assumptions": [
+      "Durasi film disimpan dalam satuan menit di kolom 'length'.",
+      "Rating film disimpan dalam kolom 'rating' dengan nilai 'R' untuk film yang dibatasi usia."
+    ],
+    "potential_issues": [],
+    "response_time_ms": 1048.145700000532,
+    "model_name": "gemini-2.5-flash-lite",
+    "timestamp": "2025-07-23T13:54:43.061710",
+    "token_usage": {
+      "prompt_tokens": 3077,
+      "completion_tokens": 139,
+      "total_tokens": 3216
+    }
+  }
+}

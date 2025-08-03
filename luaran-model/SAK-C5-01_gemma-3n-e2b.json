@@ -1,0 +1,21 @@
+{
+  "metadata": {
+    "version": "1.0",
+    "generated_at": "2025-07-31T08:12:11.152494",
+    "tool": "text2sql_ollama"
+  },
+  "scenario_id": "SAK-C5-01",
+  "category": "Comparative",
+  "database": "sakila",
+  "question_id": "Tampilkan film ber-rating 'R' yang dirilis pada 2006 dengan durasi di atas rata-rata durasi semua film 'R' tahun 2006; sertakan judul, tahun rilis, dan durasinya.",
+  "model": "gemma-3n-e2b",
+  "sql_query": "SELECT\n    f.judul AS judul_film,\n    f.release_year AS tahun_rilis,\n    f.length / 60 AS durasi_film_menit\nFROM\n    film f\nJOIN\n    film_category fc ON f.film_id = fc.film_id\nJOIN\n    category c ON fc.category_id = c.category_id\nWHERE\n    f.rating = 'R'\n    AND f.release_year = 2006\n    AND f.length / 60 > (SELECT AVG(length / 60) FROM film f2 WHERE f2.release_year = 2006)\nORDER BY\n    f.release_year,\n    f.judul",
+  "timestamp": "2025-07-31T08:12:11.152494",
+  "response_time_ms": 161643.929,
+  "token_usage": {
+    "prompt_tokens": 1703,
+    "completion_tokens": 172,
+    "total_tokens": 1875
+  },
+  "raw_response": "```sql\nSELECT\n    f.judul AS judul_film,\n    f.release_year AS tahun_rilis,\n    f.length / 60 AS durasi_film_menit\nFROM\n    film f\nJOIN\n    film_category fc ON f.film_id = fc.film_id\nJOIN\n    category c ON fc.category_id = c.category_id\nWHERE\n    f.rating = 'R'\n    AND f.release_year = 2006\n    AND f.length / 60 > (SELECT AVG(length / 60) FROM film f2 WHERE f2.release_year = 2006)\nORDER BY\n    f.release_year,\n    f.judul;\n```"
+}

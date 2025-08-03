@@ -1,0 +1,39 @@
+{
+  "scenario_id": "SAK-C5-01",
+  "model_info": {
+    "name": "gemini-2.5-flash-lite",
+    "temperature": 0.0,
+    "timestamp": "2025-07-23T13:54:17.978623"
+  },
+  "input": {
+    "question_id": "Tampilkan film ber-rating 'R' yang dirilis pada 2006 dengan durasi di atas rata-rata durasi semua film 'R' tahun 2006; sertakan judul, tahun rilis, dan durasinya.",
+    "database": "sakila",
+    "category": "Comparative"
+  },
+  "prompt_info": {
+    "prompt_length": 9813,
+    "prompt_lines": 299
+  },
+  "model_response": {
+    "sql_query": "SELECT f.title, f.release_year, f.length FROM film f WHERE f.rating = 'R' AND f.release_year = 2006 AND f.length > (SELECT AVG(length) FROM film WHERE rating = 'R' AND release_year = 2006)",
+    "explanation": "Query ini memilih judul, tahun rilis, dan durasi film yang memiliki rating 'R' dan dirilis pada tahun 2006. Selain itu, query ini memfilter film-film tersebut yang durasinya lebih panjang dari rata-rata durasi semua film dengan rating 'R' yang dirilis pada tahun 2006. Rata-rata durasi dihitung menggunakan subkueri yang secara spesifik menargetkan film dengan rating 'R' dan tahun rilis 2006.",
+    "confidence": 0.98,
+    "assumptions": [
+      "Rating film yang dicari adalah 'R'.",
+      "Tahun rilis yang dicari adalah 2006.",
+      "Durasi film dibandingkan dengan rata-rata durasi film 'R' yang dirilis pada tahun 2006."
+    ],
+    "potential_issues": [
+      "Jika tidak ada film dengan rating 'R' yang dirilis pada tahun 2006, subkueri akan mengembalikan NULL, yang dapat menyebabkan perbandingan panjang menjadi tidak terduga (tergantung pada implementasi SQL). Namun, dalam kasus ini, perbandingan `>` dengan NULL biasanya akan menghasilkan FALSE, sehingga tidak ada film yang dikembalikan.",
+      "Performa query bisa menjadi perhatian jika tabel `film` sangat besar, karena subkueri harus dieksekusi terlebih dahulu."
+    ],
+    "response_time_ms": 1409.300200000871,
+    "model_name": "gemini-2.5-flash-lite",
+    "timestamp": "2025-07-23T13:54:17.978623",
+    "token_usage": {
+      "prompt_tokens": 3103,
+      "completion_tokens": 389,
+      "total_tokens": 3492
+    }
+  }
+}

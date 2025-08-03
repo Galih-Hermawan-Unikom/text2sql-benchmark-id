@@ -1,0 +1,36 @@
+{
+  "scenario_id": "SAK-C5-04",
+  "model_info": {
+    "name": "gemini-2.5-flash-lite",
+    "temperature": 0.0,
+    "timestamp": "2025-07-23T13:54:26.331813"
+  },
+  "input": {
+    "question_id": "Tampilkan kategori film yang rata-rata durasinya lebih pendek daripada rata-rata durasi semua film; sertakan nama kategori dan rata-rata durasinya.",
+    "database": "sakila",
+    "category": "Comparative"
+  },
+  "prompt_info": {
+    "prompt_length": 9798,
+    "prompt_lines": 299
+  },
+  "model_response": {
+    "sql_query": "SELECT c.name AS nama_kategori, AVG(f.length) AS rata_rata_durasi FROM category c JOIN film_category fc ON c.category_id = fc.category_id JOIN film f ON fc.film_id = f.film_id GROUP BY c.name HAVING AVG(f.length) < (SELECT AVG(length) FROM film)",
+    "explanation": "Query ini pertama-tama menggabungkan tabel 'category', 'film_category', dan 'film' untuk menghubungkan kategori dengan film. Kemudian, ia mengelompokkan hasil berdasarkan nama kategori dan menghitung rata-rata durasi film untuk setiap kategori. Terakhir, klausa HAVING digunakan untuk memfilter kategori yang rata-rata durasinya lebih pendek dari rata-rata durasi semua film, yang dihitung menggunakan subkueri.",
+    "confidence": 0.97,
+    "assumptions": [
+      "Durasi film disimpan dalam kolom 'length' pada tabel 'film'.",
+      "Hubungan antara kategori dan film dikelola melalui tabel 'film_category'.",
+      "Nama kategori disimpan dalam kolom 'name' pada tabel 'category'."
+    ],
+    "potential_issues": [],
+    "response_time_ms": 1251.5548000010313,
+    "model_name": "gemini-2.5-flash-lite",
+    "timestamp": "2025-07-23T13:54:26.331813",
+    "token_usage": {
+      "prompt_tokens": 3083,
+      "completion_tokens": 272,
+      "total_tokens": 3355
+    }
+  }
+}

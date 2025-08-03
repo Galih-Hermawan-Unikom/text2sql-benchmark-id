@@ -1,0 +1,37 @@
+{
+  "scenario_id": "SAK-N4-03",
+  "model_info": {
+    "name": "gemma-3-27b-it",
+    "temperature": 0.0,
+    "timestamp": "2025-07-24T08:58:55.172333"
+  },
+  "input": {
+    "question_id": "Tampilkan staf yang total nilai pembayarannya melebihi rata-rata total pembayaran per staf; sertakan nama staf dan total pembayarannya.",
+    "database": "sakila",
+    "category": "Nested / Subquery"
+  },
+  "prompt_info": {
+    "prompt_length": 9786,
+    "prompt_lines": 299
+  },
+  "model_response": {
+    "sql_query": "SELECT s.first_name, s.last_name, SUM(p.amount) AS total_pembayaran FROM staff s JOIN payment p ON s.staff_id = p.staff_id GROUP BY s.staff_id, s.first_name, s.last_name HAVING SUM(p.amount) > (SELECT AVG(total_pembayaran) FROM (SELECT SUM(amount) AS total_pembayaran FROM payment GROUP BY staff_id) AS subquery)",
+    "explanation": "Query ini menghitung total pembayaran untuk setiap staf dan kemudian membandingkannya dengan rata-rata total pembayaran semua staf. Hanya staf yang total pembayarannya melebihi rata-rata yang ditampilkan, beserta nama dan total pembayarannya.",
+    "confidence": 0.95,
+    "assumptions": [
+      "Kolom 'amount' pada tabel 'payment' merepresentasikan nilai pembayaran.",
+      "Tabel 'staff' dan 'payment' terhubung melalui kolom 'staff_id'."
+    ],
+    "potential_issues": [
+      "Jika tabel 'payment' sangat besar, subquery untuk menghitung rata-rata dapat mempengaruhi performa. Pertimbangkan untuk menggunakan CTE (Common Table Expression) untuk meningkatkan readability dan performa jika diperlukan."
+    ],
+    "response_time_ms": 6394.284699999844,
+    "model_name": "gemma-3-27b-it",
+    "timestamp": "2025-07-24T08:58:55.172333",
+    "token_usage": {
+      "prompt_tokens": 3081,
+      "completion_tokens": null,
+      "total_tokens": 3081
+    }
+  }
+}

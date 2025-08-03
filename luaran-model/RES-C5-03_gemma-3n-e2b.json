@@ -1,0 +1,21 @@
+{
+  "metadata": {
+    "version": "1.0",
+    "generated_at": "2025-07-31T06:58:39.990646",
+    "tool": "text2sql_ollama"
+  },
+  "scenario_id": "RES-C5-03",
+  "category": "Comparative",
+  "database": "resep",
+  "question_id": "Bahan apa saja yang muncul lebih sering dibanding rata-rata frekuensi kemunculan semua bahan? Tampilkan nama bahan dan jumlah kemunculannya.",
+  "model": "gemma-3n-e2b",
+  "sql_query": "SELECT\n    b.nama_bahan,\n    SUM(rf.jumlah) AS total_jumlah\nFROM\n    bahan b\nJOIN\n    resep_bahan rf ON b.id_bahan = rf.id_bahan\nGROUP BY\n    b.nama_bahan\nORDER BY\n    total_jumlah DESC",
+  "timestamp": "2025-07-31T06:58:39.990646",
+  "response_time_ms": 119469.765,
+  "token_usage": {
+    "prompt_tokens": 1228,
+    "completion_tokens": 74,
+    "total_tokens": 1302
+  },
+  "raw_response": "```sql\nSELECT\n    b.nama_bahan,\n    SUM(rf.jumlah) AS total_jumlah\nFROM\n    bahan b\nJOIN\n    resep_bahan rf ON b.id_bahan = rf.id_bahan\nGROUP BY\n    b.nama_bahan\nORDER BY\n    total_jumlah DESC;\n```"
+}

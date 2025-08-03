@@ -1,0 +1,21 @@
+{
+  "metadata": {
+    "version": "1.0",
+    "generated_at": "2025-07-31T08:39:56.171828",
+    "tool": "text2sql_ollama"
+  },
+  "scenario_id": "SAK-L1-01",
+  "category": "Lookup / Filter",
+  "database": "sakila",
+  "question_id": "Daftar film berdurasi lebih dari 180 menit dengan rating 'R'; sertakan judul dan durasi setiap film.",
+  "model": "gemma-3n-e2b",
+  "sql_query": "SELECT\n  f.title AS judul_film,\n  f.length AS durasi_film\nFROM film AS f\nJOIN film_actor AS fa\n  ON f.film_id = fa.film_id\nJOIN actor AS a\n  ON fa.actor_id = a.actor_id\nJOIN film_category AS fc\n  ON f.film_id = fc.film_id\nJOIN category AS c\n  ON fc.category_id = c.category_id\nWHERE\n  f.rating = 'R'\n  AND f.length > 180",
+  "timestamp": "2025-07-31T08:39:56.171828",
+  "response_time_ms": 188396.535,
+  "token_usage": {
+    "prompt_tokens": 1678,
+    "completion_tokens": 135,
+    "total_tokens": 1813
+  },
+  "raw_response": "```sql\nSELECT\n  f.title AS judul_film,\n  f.length AS durasi_film\nFROM film AS f\nJOIN film_actor AS fa\n  ON f.film_id = fa.film_id\nJOIN actor AS a\n  ON fa.actor_id = a.actor_id\nJOIN film_category AS fc\n  ON f.film_id = fc.film_id\nJOIN category AS c\n  ON fc.category_id = c.category_id\nWHERE\n  f.rating = 'R'\n  AND f.length > 180;\n```"
+}

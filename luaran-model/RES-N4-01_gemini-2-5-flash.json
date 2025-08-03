@@ -1,0 +1,36 @@
+{
+  "scenario_id": "RES-N4-01",
+  "model_info": {
+    "name": "gemini-2.5-flash",
+    "temperature": 0.0,
+    "timestamp": "2025-07-22T10:54:27.800787"
+  },
+  "input": {
+    "question_id": "Sebutkan nama masakan yang memakai lebih banyak bahan daripada rata-rata jumlah bahan semua masakan.",
+    "database": "resep",
+    "category": "Nested / Subquery"
+  },
+  "prompt_info": {
+    "prompt_length": 7073,
+    "prompt_lines": 167
+  },
+  "model_response": {
+    "sql_query": "SELECT DISTINCT m.nama_masakan FROM masakan m JOIN resep r ON m.kode_masakan = r.kode_masakan JOIN (SELECT id_resep, COUNT(id_bahan) AS jumlah_bahan_per_resep FROM resep_bahan GROUP BY id_resep) AS resep_bahan_count ON r.id_resep = resep_bahan_count.id_resep WHERE resep_bahan_count.jumlah_bahan_per_resep > (SELECT AVG(total_bahan) FROM (SELECT COUNT(id_bahan) AS total_bahan FROM resep_bahan GROUP BY id_resep) AS avg_counts)",
+    "explanation": "Query ini pertama-tama menghitung jumlah bahan untuk setiap resep. Kemudian, di dalam subquery, dihitung rata-rata jumlah bahan dari semua resep. Terakhir, query utama mengambil nama masakan unik (karena satu masakan bisa memiliki banyak resep) yang memiliki setidaknya satu resep dengan jumlah bahan melebihi rata-rata tersebut.",
+    "confidence": 0.98,
+    "assumptions": [
+      "Yang dimaksud 'rata-rata jumlah bahan semua masakan' adalah rata-rata jumlah bahan per resep di seluruh resep yang ada.",
+      "Jika suatu masakan memiliki beberapa resep dan salah satu resepnya memenuhi kriteria (jumlah bahan lebih dari rata-rata), maka nama masakan tersebut harus disertakan."
+    ],
+    "potential_issues": [],
+    "response_time_ms": 8643.739,
+    "model_name": "gemini-2.5-flash",
+    "timestamp": "2025-07-22T10:54:27.800787",
+    "raw_response": "```json\n{\n  \"sql_query\": \"SELECT DISTINCT m.nama_masakan FROM masakan m JOIN resep r ON m.kode_masakan = r.kode_masakan JOIN (SELECT id_resep, COUNT(id_bahan) AS jumlah_bahan_per_resep FROM resep_bahan GROUP BY id_resep) AS resep_bahan_count ON r.id_resep = resep_bahan_count.id_resep WHERE resep_bahan_count.jumlah_bahan_per_resep > (SELECT AVG(total_bahan) FROM (SELECT COUNT(id_bahan) AS total_bahan FROM resep_bahan GROUP BY id_resep) AS avg_counts)\",\n  \"confidence\": 0.98,\n  \"explanation\": \"Query ini pertama-tama menghitung jumlah bahan untuk setiap resep. Kemudian, di dalam subquery, dihitung rata-rata jumlah bahan dari semua resep. Terakhir, query utama mengambil nama masakan unik (karena satu masakan bisa memiliki banyak resep) yang memiliki setidaknya satu resep dengan jumlah bahan melebihi rata-rata tersebut.\",\n  \"assumptions\": [\n    \"Yang dimaksud 'rata-rata jumlah bahan semua masakan' adalah rata-rata jumlah bahan per resep di seluruh resep yang ada.\",\n    \"Jika suatu masakan memiliki beberapa resep dan salah satu resepnya memenuhi kriteria (jumlah bahan lebih dari rata-rata), maka nama masakan tersebut harus disertakan.\"\n  ],\n  \"potential_issues\": []\n}\n```",
+    "token_usage": {
+      "prompt_tokens": 2167,
+      "completion_tokens": 339,
+      "total_tokens": 3869
+    }
+  }
+}

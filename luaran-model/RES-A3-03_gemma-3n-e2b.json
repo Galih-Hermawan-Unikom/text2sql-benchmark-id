@@ -1,0 +1,21 @@
+{
+  "metadata": {
+    "version": "1.0",
+    "generated_at": "2025-07-31T06:48:17.273017",
+    "tool": "text2sql_ollama"
+  },
+  "scenario_id": "RES-A3-03",
+  "category": "Aggregation",
+  "database": "resep",
+  "question_id": "Tampilkan lima bahan yang paling sering dipakai di semua resep\u2014urutkan dari yang terbanyak. Sertakan nama bahan dan berapa kali dipakai.",
+  "model": "gemma-3n-e2b",
+  "sql_query": "SELECT\n  b.nama_bahan,\n  SUM(rf.jumlah) AS total_jumlah\nFROM BAHAN AS b\nJOIN RESEP_BAHAN AS rf\n  ON b.id_bahan = rf.id_bahan\nGROUP BY\n  b.nama_bahan\nORDER BY\n  total_jumlah DESC\nLIMIT 5",
+  "timestamp": "2025-07-31T06:48:17.273017",
+  "response_time_ms": 136533.676,
+  "token_usage": {
+    "prompt_tokens": 1227,
+    "completion_tokens": 80,
+    "total_tokens": 1307
+  },
+  "raw_response": "```sql\nSELECT\n  b.nama_bahan,\n  SUM(rf.jumlah) AS total_jumlah\nFROM BAHAN AS b\nJOIN RESEP_BAHAN AS rf\n  ON b.id_bahan = rf.id_bahan\nGROUP BY\n  b.nama_bahan\nORDER BY\n  total_jumlah DESC\nLIMIT 5;\n```"
+}

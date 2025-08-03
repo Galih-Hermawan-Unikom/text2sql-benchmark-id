@@ -1,0 +1,35 @@
+{
+  "scenario_id": "RES-A3-03",
+  "model_info": {
+    "name": "gemini-2.5-flash",
+    "temperature": 0.0,
+    "timestamp": "2025-07-22T10:33:24.027216"
+  },
+  "input": {
+    "question_id": "Tampilkan lima bahan yang paling sering dipakai di semua resep\u2014urutkan dari yang terbanyak. Sertakan nama bahan dan berapa kali dipakai.",
+    "database": "resep",
+    "category": "Aggregation"
+  },
+  "prompt_info": {
+    "prompt_length": 7109,
+    "prompt_lines": 167
+  },
+  "model_response": {
+    "sql_query": "SELECT b.nama_bahan, COUNT(rb.id_bahan) AS jumlah_pemakaian FROM resep_bahan rb JOIN bahan b ON rb.id_bahan = b.id_bahan GROUP BY b.id_bahan, b.nama_bahan ORDER BY jumlah_pemakaian DESC LIMIT 5",
+    "explanation": "Mengambil 5 bahan yang paling sering muncul di semua resep dengan menghitung jumlah kemunculan setiap bahan di tabel `resep_bahan`, kemudian mengurutkannya dari yang terbanyak.",
+    "confidence": 0.98,
+    "assumptions": [
+      "'Paling sering dipakai' diinterpretasikan sebagai jumlah kemunculan sebuah bahan dalam entri `resep_bahan`."
+    ],
+    "potential_issues": [],
+    "response_time_ms": 3597.069,
+    "model_name": "gemini-2.5-flash",
+    "timestamp": "2025-07-22T10:33:24.027216",
+    "raw_response": "```json\n{\n  \"sql_query\": \"SELECT b.nama_bahan, COUNT(rb.id_bahan) AS jumlah_pemakaian FROM resep_bahan rb JOIN bahan b ON rb.id_bahan = b.id_bahan GROUP BY b.id_bahan, b.nama_bahan ORDER BY jumlah_pemakaian DESC LIMIT 5\",\n  \"confidence\": 0.98,\n  \"explanation\": \"Mengambil 5 bahan yang paling sering muncul di semua resep dengan menghitung jumlah kemunculan setiap bahan di tabel `resep_bahan`, kemudian mengurutkannya dari yang terbanyak.\",\n  \"assumptions\": [\"'Paling sering dipakai' diinterpretasikan sebagai jumlah kemunculan sebuah bahan dalam entri `resep_bahan`.\"],\n  \"potential_issues\": []\n}\n```",
+    "token_usage": {
+      "prompt_tokens": 2175,
+      "completion_tokens": 178,
+      "total_tokens": 2766
+    }
+  }
+}

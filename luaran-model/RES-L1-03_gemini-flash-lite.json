@@ -1,0 +1,35 @@
+{
+  "scenario_id": "RES-L1-03",
+  "model_info": {
+    "name": "gemini-2.5-flash-lite",
+    "temperature": 0.0,
+    "timestamp": "2025-07-23T13:53:36.892204"
+  },
+  "input": {
+    "question_id": "Tampilkan resep dengan lama waktu masak antara 30 dan 45 menit; sertakan id, judul, dan waktu masak resep.",
+    "database": "resep",
+    "category": "Lookup / Filter"
+  },
+  "prompt_info": {
+    "prompt_length": 7234,
+    "prompt_lines": 165
+  },
+  "model_response": {
+    "sql_query": "SELECT id_resep, judul_resep, waktu_masak FROM resep WHERE waktu_masak BETWEEN 30 AND 45",
+    "explanation": "Query ini memilih ID resep, judul resep, dan waktu masak dari tabel 'resep'. Filter diterapkan untuk hanya menyertakan resep yang memiliki waktu masak antara 30 dan 45 menit (inklusif).",
+    "confidence": 0.98,
+    "assumptions": [
+      "Kolom 'waktu_masak' dalam tabel 'resep' menyimpan durasi memasak dalam menit.",
+      "Rentang waktu masak yang diminta adalah 30 hingga 45 menit, termasuk kedua nilai tersebut."
+    ],
+    "potential_issues": [],
+    "response_time_ms": 891.8066000005638,
+    "model_name": "gemini-2.5-flash-lite",
+    "timestamp": "2025-07-23T13:53:36.892204",
+    "token_usage": {
+      "prompt_tokens": 2201,
+      "completion_tokens": 181,
+      "total_tokens": 2382
+    }
+  }
+}

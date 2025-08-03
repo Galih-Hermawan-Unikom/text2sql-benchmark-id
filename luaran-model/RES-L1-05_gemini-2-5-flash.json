@@ -1,0 +1,35 @@
+{
+  "scenario_id": "RES-L1-05",
+  "model_info": {
+    "name": "gemini-2.5-flash",
+    "temperature": 0.0,
+    "timestamp": "2025-07-22T10:14:16.512272"
+  },
+  "input": {
+    "question_id": "Tampilkan bahan yang memiliki satuan bukan 'gram' atau 'ml'; sertakan id, nama bahan, dan satuannya.",
+    "database": "resep",
+    "category": "Lookup / Filter"
+  },
+  "prompt_info": {
+    "prompt_length": 6733,
+    "prompt_lines": 165
+  },
+  "model_response": {
+    "sql_query": "SELECT id_bahan, nama_bahan, satuan_default FROM bahan WHERE satuan_default NOT IN ('gram', 'ml')",
+    "explanation": "Mengambil id, nama, dan satuan bahan dari tabel 'bahan' di mana satuan defaultnya bukan 'gram' dan bukan 'ml'.",
+    "confidence": 0.98,
+    "assumptions": [
+      "Satuan bahan disimpan di kolom 'satuan_default' di tabel 'bahan'."
+    ],
+    "potential_issues": [],
+    "response_time_ms": 1452.978,
+    "model_name": "gemini-2.5-flash",
+    "timestamp": "2025-07-22T10:14:16.512272",
+    "raw_response": "```json\n{\n  \"sql_query\": \"SELECT id_bahan, nama_bahan, satuan_default FROM bahan WHERE satuan_default NOT IN ('gram', 'ml')\",\n  \"confidence\": 0.98,\n  \"explanation\": \"Mengambil id, nama, dan satuan bahan dari tabel 'bahan' di mana satuan defaultnya bukan 'gram' dan bukan 'ml'.\",\n  \"assumptions\": [\n    \"Satuan bahan disimpan di kolom 'satuan_default' di tabel 'bahan'.\"\n  ],\n  \"potential_issues\": []\n}\n```",
+    "token_usage": {
+      "prompt_tokens": 2079,
+      "completion_tokens": 126,
+      "total_tokens": 2283
+    }
+  }
+}

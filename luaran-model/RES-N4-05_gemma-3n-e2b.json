@@ -1,0 +1,21 @@
+{
+  "metadata": {
+    "version": "1.0",
+    "generated_at": "2025-07-31T07:33:06.567479",
+    "tool": "text2sql_ollama"
+  },
+  "scenario_id": "RES-N4-05",
+  "category": "Nested / Subquery",
+  "database": "resep",
+  "question_id": "Berapa banyak resep yang tidak menggunakan bahan apa pun yang mengandung kata 'Cabe'? Tampilkan jumlahnya saja.",
+  "model": "gemma-3n-e2b",
+  "sql_query": "SELECT COUNT(r.id_resep)\nFROM resep r\nLEFT JOIN resep_bahan rb ON r.id_resep = rb.id_resep\nLEFT JOIN bahan b ON rb.id_bahan = b.id_bahan\nWHERE b.nama_bahan LIKE '%cabe%'",
+  "timestamp": "2025-07-31T07:33:06.567479",
+  "response_time_ms": 121264.027,
+  "token_usage": {
+    "prompt_tokens": 1221,
+    "completion_tokens": 72,
+    "total_tokens": 1293
+  },
+  "raw_response": "```sql\nSELECT COUNT(r.id_resep)\nFROM resep r\nLEFT JOIN resep_bahan rb ON r.id_resep = rb.id_resep\nLEFT JOIN bahan b ON rb.id_bahan = b.id_bahan\nWHERE b.nama_bahan LIKE '%cabe%';\n```"
+}

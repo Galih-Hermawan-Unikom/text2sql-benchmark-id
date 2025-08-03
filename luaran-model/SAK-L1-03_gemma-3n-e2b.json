@@ -1,0 +1,21 @@
+{
+  "metadata": {
+    "version": "1.0",
+    "generated_at": "2025-07-31T08:45:12.729543",
+    "tool": "text2sql_ollama"
+  },
+  "scenario_id": "SAK-L1-03",
+  "category": "Lookup / Filter",
+  "database": "sakila",
+  "question_id": "Tampilkan transaksi pembayaran bernilai antara 11 hingga 12 dolar, sertakan ID pembayaran, jumlah, dan tanggal pembayarannya.",
+  "model": "gemma-3n-e2b",
+  "sql_query": "SELECT\n    p.payment_id,\n    p.amount,\n    p.payment_date\nFROM\n    payment p\nJOIN\n    rental r ON p.rental_id = r.rental_id\nJOIN\n    inventory i ON r.rental_id = i.inventory_id\nJOIN\n    film f ON i.film_id = f.film_id\nWHERE\n    p.amount BETWEEN 11 AND 12",
+  "timestamp": "2025-07-31T08:45:12.728542",
+  "response_time_ms": 168650.106,
+  "token_usage": {
+    "prompt_tokens": 1687,
+    "completion_tokens": 105,
+    "total_tokens": 1792
+  },
+  "raw_response": "```sql\nSELECT\n    p.payment_id,\n    p.amount,\n    p.payment_date\nFROM\n    payment p\nJOIN\n    rental r ON p.rental_id = r.rental_id\nJOIN\n    inventory i ON r.rental_id = i.inventory_id\nJOIN\n    film f ON i.film_id = f.film_id\nWHERE\n    p.amount BETWEEN 11 AND 12;\n```"
+}

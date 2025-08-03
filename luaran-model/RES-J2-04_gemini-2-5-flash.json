@@ -1,0 +1,37 @@
+{
+  "scenario_id": "RES-J2-04",
+  "model_info": {
+    "name": "gemini-2.5-flash",
+    "temperature": 0.0,
+    "timestamp": "2025-07-22T10:18:27.622821"
+  },
+  "input": {
+    "question_id": "Tampilkan ID resep, judul resep, dan nama bahan yang disajikan dalam satuan 'lembar'.",
+    "database": "resep",
+    "category": "Join + Filter"
+  },
+  "prompt_info": {
+    "prompt_length": 6718,
+    "prompt_lines": 165
+  },
+  "model_response": {
+    "sql_query": "SELECT r.id_resep, r.judul_resep, b.nama_bahan FROM resep r JOIN resep_bahan rb ON r.id_resep = rb.id_resep JOIN bahan b ON rb.id_bahan = b.id_bahan WHERE IFNULL(rb.satuan_override, b.satuan_default) = 'lembar'",
+    "explanation": "Query ini menggabungkan tabel `resep`, `resep_bahan`, dan `bahan` untuk mendapatkan informasi resep dan bahan. Kondisi `IFNULL(rb.satuan_override, b.satuan_default) = 'lembar'` digunakan untuk memeriksa unit bahan. Jika `satuan_override` ada (tidak NULL) di `resep_bahan`, maka unit tersebut yang digunakan. Jika `satuan_override` adalah NULL, maka `satuan_default` dari tabel `bahan` yang akan digunakan untuk perbandingan.",
+    "confidence": 0.98,
+    "assumptions": [
+      "Yang dimaksud 'disajikan dalam satuan' mengacu pada unit aktual yang digunakan untuk bahan dalam resep, yang bisa berupa `satuan_override` atau `satuan_default` jika `satuan_override` tidak ada."
+    ],
+    "potential_issues": [
+      "Jika ada variasi penulisan 'lembar' (misalnya 'Lembar', 'LEMBAR'), query ini mungkin tidak menangkapnya karena sensitivitas kasus."
+    ],
+    "response_time_ms": 5896.1449999999995,
+    "model_name": "gemini-2.5-flash",
+    "timestamp": "2025-07-22T10:18:27.622821",
+    "raw_response": "```json\n{\n  \"sql_query\": \"SELECT r.id_resep, r.judul_resep, b.nama_bahan FROM resep r JOIN resep_bahan rb ON r.id_resep = rb.id_resep JOIN bahan b ON rb.id_bahan = b.id_bahan WHERE IFNULL(rb.satuan_override, b.satuan_default) = 'lembar'\",\n  \"confidence\": 0.98,\n  \"explanation\": \"Query ini menggabungkan tabel `resep`, `resep_bahan`, dan `bahan` untuk mendapatkan informasi resep dan bahan. Kondisi `IFNULL(rb.satuan_override, b.satuan_default) = 'lembar'` digunakan untuk memeriksa unit bahan. Jika `satuan_override` ada (tidak NULL) di `resep_bahan`, maka unit tersebut yang digunakan. Jika `satuan_override` adalah NULL, maka `satuan_default` dari tabel `bahan` yang akan digunakan untuk perbandingan.\",\n  \"assumptions\": [\n    \"Yang dimaksud 'disajikan dalam satuan' mengacu pada unit aktual yang digunakan untuk bahan dalam resep, yang bisa berupa `satuan_override` atau `satuan_default` jika `satuan_override` tidak ada.\"\n  ],\n  \"potential_issues\": [\n    \"Jika ada variasi penulisan 'lembar' (misalnya 'Lembar', 'LEMBAR'), query ini mungkin tidak menangkapnya karena sensitivitas kasus.\"\n  ]\n}\n```",
+    "token_usage": {
+      "prompt_tokens": 2076,
+      "completion_tokens": 338,
+      "total_tokens": 3238
+    }
+  }
+}

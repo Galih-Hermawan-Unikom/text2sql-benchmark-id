@@ -1,0 +1,36 @@
+{
+  "scenario_id": "SAK-S6-03",
+  "model_info": {
+    "name": "gemma-3-27b-it",
+    "temperature": 0.0,
+    "timestamp": "2025-07-24T08:59:30.325238"
+  },
+  "input": {
+    "question_id": "Kota mana yang memiliki jumlah pelanggan terbanyak? Sertakan nama kota dan jumlah pelanggannya.",
+    "database": "sakila",
+    "category": "Superlative"
+  },
+  "prompt_info": {
+    "prompt_length": 9746,
+    "prompt_lines": 299
+  },
+  "model_response": {
+    "sql_query": "SELECT c.city, COUNT(cu.customer_id) AS jumlah_pelanggan FROM city c JOIN address a ON c.city_id = a.city_id JOIN customer cu ON a.address_id = cu.address_id GROUP BY c.city ORDER BY jumlah_pelanggan DESC LIMIT 1",
+    "explanation": "Query ini menghitung jumlah pelanggan di setiap kota dan kemudian menampilkan kota dengan jumlah pelanggan terbanyak.  Kita menggunakan JOIN untuk menghubungkan tabel `city`, `address`, dan `customer` untuk mendapatkan informasi kota dan pelanggan.  Kemudian, kita menggunakan `GROUP BY` untuk mengelompokkan pelanggan berdasarkan kota dan `COUNT()` untuk menghitung jumlah pelanggan di setiap kota. Terakhir, kita mengurutkan hasilnya berdasarkan jumlah pelanggan secara menurun dan mengambil hanya baris pertama (kota dengan jumlah pelanggan terbanyak).",
+    "confidence": 0.98,
+    "assumptions": [
+      "Setiap pelanggan memiliki alamat yang valid dan alamat tersebut terkait dengan kota yang valid."
+    ],
+    "potential_issues": [
+      "Jika ada data yang tidak konsisten (misalnya, alamat tanpa kota), query mungkin tidak memberikan hasil yang akurat."
+    ],
+    "response_time_ms": 6040.093399999932,
+    "model_name": "gemma-3-27b-it",
+    "timestamp": "2025-07-24T08:59:30.325238",
+    "token_usage": {
+      "prompt_tokens": 3070,
+      "completion_tokens": null,
+      "total_tokens": 3070
+    }
+  }
+}

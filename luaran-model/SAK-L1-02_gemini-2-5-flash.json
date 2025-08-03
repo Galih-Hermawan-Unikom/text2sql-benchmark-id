@@ -1,0 +1,35 @@
+{
+  "scenario_id": "SAK-L1-02",
+  "model_info": {
+    "name": "gemini-2.5-flash",
+    "temperature": 0.0,
+    "timestamp": "2025-07-22T10:14:20.508773"
+  },
+  "input": {
+    "question_id": "Tampilkan daftar aktor yang nama belakangnya diawali huruf 'A'.",
+    "database": "sakila",
+    "category": "Lookup / Filter"
+  },
+  "prompt_info": {
+    "prompt_length": 9219,
+    "prompt_lines": 299
+  },
+  "model_response": {
+    "sql_query": "SELECT first_name, last_name FROM actor WHERE last_name LIKE 'A%'",
+    "explanation": "Mengambil nama depan dan nama belakang aktor dari tabel 'actor' di mana nama belakangnya diawali dengan huruf 'A' menggunakan operator LIKE.",
+    "confidence": 0.99,
+    "assumptions": [
+      "Pencarian nama belakang 'A' adalah case-insensitive (tergantung pada konfigurasi kolasi database). Jika perlu case-sensitive, bisa menggunakan BINARY LIKE atau mengonversi ke UPPER/LOWER."
+    ],
+    "potential_issues": [],
+    "response_time_ms": 1792.301,
+    "model_name": "gemini-2.5-flash",
+    "timestamp": "2025-07-22T10:14:20.508773",
+    "raw_response": "```json\n{\n  \"sql_query\": \"SELECT first_name, last_name FROM actor WHERE last_name LIKE 'A%'\",\n  \"confidence\": 0.99,\n  \"explanation\": \"Mengambil nama depan dan nama belakang aktor dari tabel 'actor' di mana nama belakangnya diawali dengan huruf 'A' menggunakan operator LIKE.\",\n  \"assumptions\": [\n    \"Pencarian nama belakang 'A' adalah case-insensitive (tergantung pada konfigurasi kolasi database). Jika perlu case-sensitive, bisa menggunakan BINARY LIKE atau mengonversi ke UPPER/LOWER.\"\n  ],\n  \"potential_issues\": []\n}\n```",
+    "token_usage": {
+      "prompt_tokens": 2948,
+      "completion_tokens": 146,
+      "total_tokens": 3206
+    }
+  }
+}

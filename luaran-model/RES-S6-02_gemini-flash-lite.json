@@ -1,0 +1,35 @@
+{
+  "scenario_id": "RES-S6-02",
+  "model_info": {
+    "name": "gemini-2.5-flash-lite",
+    "temperature": 0.0,
+    "timestamp": "2025-07-23T13:53:57.423953"
+  },
+  "input": {
+    "question_id": "Bahan apa saja yang paling sering muncul di seluruh resep? Tampilkan nama bahan dan total kemunculannya.",
+    "database": "resep",
+    "category": "Superlative"
+  },
+  "prompt_info": {
+    "prompt_length": 7232,
+    "prompt_lines": 165
+  },
+  "model_response": {
+    "sql_query": "SELECT b.nama_bahan, COUNT(rb.id_bahan) AS total_kemunculan FROM bahan b JOIN resep_bahan rb ON b.id_bahan = rb.id_bahan GROUP BY b.nama_bahan ORDER BY total_kemunculan DESC",
+    "explanation": "Query ini menghitung berapa kali setiap bahan muncul di seluruh resep. Ini dilakukan dengan menggabungkan tabel 'bahan' dengan tabel 'resep_bahan' menggunakan 'id_bahan'. Kemudian, hasil dikelompokkan berdasarkan nama bahan dan diurutkan berdasarkan jumlah kemunculan bahan tersebut secara menurun.",
+    "confidence": 0.98,
+    "assumptions": [
+      "Setiap baris dalam tabel 'resep_bahan' mewakili satu kemunculan bahan dalam satu resep.",
+      "Nama bahan yang unik terdapat di kolom 'nama_bahan' pada tabel 'bahan'."
+    ],
+    "potential_issues": [],
+    "response_time_ms": 1153.3364000006259,
+    "model_name": "gemini-2.5-flash-lite",
+    "timestamp": "2025-07-23T13:53:57.423953",
+    "token_usage": {
+      "prompt_tokens": 2193,
+      "completion_tokens": 218,
+      "total_tokens": 2411
+    }
+  }
+}

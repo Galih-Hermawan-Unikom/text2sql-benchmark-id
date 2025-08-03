@@ -1,0 +1,21 @@
+{
+  "metadata": {
+    "version": "1.0",
+    "generated_at": "2025-07-31T07:20:20.538228",
+    "tool": "text2sql_ollama"
+  },
+  "scenario_id": "RES-L1-04",
+  "category": "Lookup / Filter",
+  "database": "resep",
+  "question_id": "Tampilkan masakan yang statusnya nonaktif; sertakan kode dan nama masakan.",
+  "model": "gemma-3n-e2b",
+  "sql_query": "SELECT\n  m.kode_masakan,\n  m.nama_masakan\nFROM Masakan AS m\nWHERE\n  m.status_aktif = FALSE",
+  "timestamp": "2025-07-31T07:20:20.538228",
+  "response_time_ms": 112734.836,
+  "token_usage": {
+    "prompt_tokens": 1216,
+    "completion_tokens": 42,
+    "total_tokens": 1258
+  },
+  "raw_response": "```sql\nSELECT\n  m.kode_masakan,\n  m.nama_masakan\nFROM Masakan AS m\nWHERE\n  m.status_aktif = FALSE;\n```"
+}

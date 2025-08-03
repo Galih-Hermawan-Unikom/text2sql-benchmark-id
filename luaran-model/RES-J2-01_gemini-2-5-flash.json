@@ -1,0 +1,36 @@
+{
+  "scenario_id": "RES-J2-01",
+  "model_info": {
+    "name": "gemini-2.5-flash",
+    "temperature": 0.0,
+    "timestamp": "2025-07-22T10:18:14.716253"
+  },
+  "input": {
+    "question_id": "Tampilkan daftar resep dessert yang masih aktif\u2014sertakan ID resep, judul resep, dan nama masakan.",
+    "database": "resep",
+    "category": "Join + Filter"
+  },
+  "prompt_info": {
+    "prompt_length": 6730,
+    "prompt_lines": 165
+  },
+  "model_response": {
+    "sql_query": "SELECT r.id_resep, r.judul_resep, m.nama_masakan FROM resep r JOIN masakan m ON r.kode_masakan = m.kode_masakan WHERE m.kategori = 'Dessert' AND r.status_aktif = TRUE",
+    "explanation": "Mengambil ID resep, judul resep, dan nama masakan dari resep yang berstatus aktif dan termasuk dalam kategori 'Dessert'. Query ini melakukan JOIN antara tabel 'resep' dan 'masakan' berdasarkan 'kode_masakan' untuk bisa memfilter berdasarkan kategori masakan dan status aktif resep.",
+    "confidence": 0.98,
+    "assumptions": [
+      "Kategori 'Dessert' merujuk pada kolom `masakan.kategori`.",
+      "Status aktif merujuk pada kolom `resep.status_aktif`."
+    ],
+    "potential_issues": [],
+    "response_time_ms": 2582.688,
+    "model_name": "gemini-2.5-flash",
+    "timestamp": "2025-07-22T10:18:14.716253",
+    "raw_response": "```json\n{\n  \"sql_query\": \"SELECT r.id_resep, r.judul_resep, m.nama_masakan FROM resep r JOIN masakan m ON r.kode_masakan = m.kode_masakan WHERE m.kategori = 'Dessert' AND r.status_aktif = TRUE\",\n  \"confidence\": 0.98,\n  \"explanation\": \"Mengambil ID resep, judul resep, dan nama masakan dari resep yang berstatus aktif dan termasuk dalam kategori 'Dessert'. Query ini melakukan JOIN antara tabel 'resep' dan 'masakan' berdasarkan 'kode_masakan' untuk bisa memfilter berdasarkan kategori masakan dan status aktif resep.\",\n  \"assumptions\": [\n    \"Kategori 'Dessert' merujuk pada kolom `masakan.kategori`.\",\n    \"Status aktif merujuk pada kolom `resep.status_aktif`.\"\n  ],\n  \"potential_issues\": []\n}\n```",
+    "token_usage": {
+      "prompt_tokens": 2080,
+      "completion_tokens": 219,
+      "total_tokens": 2470
+    }
+  }
+}

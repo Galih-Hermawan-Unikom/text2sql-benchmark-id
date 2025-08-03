@@ -1,0 +1,36 @@
+{
+  "scenario_id": "RES-S6-05",
+  "model_info": {
+    "name": "gemma-3-27b-it",
+    "temperature": 0.0,
+    "timestamp": "2025-07-24T08:56:13.462655"
+  },
+  "input": {
+    "question_id": "Masakan apa saja yang memiliki tingkat kepedasan tertinggi? Tampilkan kode masakan, nama masakan, dan level pedasnya.",
+    "database": "resep",
+    "category": "Superlative"
+  },
+  "prompt_info": {
+    "prompt_length": 7245,
+    "prompt_lines": 165
+  },
+  "model_response": {
+    "sql_query": "SELECT kode_masakan, nama_masakan, level_pedas FROM masakan WHERE level_pedas = (SELECT MAX(level_pedas) FROM masakan)",
+    "explanation": "Query ini mencari semua masakan yang memiliki tingkat kepedasan yang sama dengan tingkat kepedasan maksimum yang ada di tabel masakan.  Subquery `(SELECT MAX(level_pedas) FROM masakan)` digunakan untuk menentukan tingkat kepedasan maksimum.",
+    "confidence": 0.98,
+    "assumptions": [
+      "Tingkat kepedasan tertinggi diwakili oleh nilai maksimum dalam kolom `level_pedas`."
+    ],
+    "potential_issues": [
+      "Jika ada beberapa masakan dengan tingkat kepedasan yang sama dan merupakan nilai maksimum, semua masakan tersebut akan ditampilkan."
+    ],
+    "response_time_ms": 4584.648900000047,
+    "model_name": "gemma-3-27b-it",
+    "timestamp": "2025-07-24T08:56:13.462655",
+    "token_usage": {
+      "prompt_tokens": 2199,
+      "completion_tokens": null,
+      "total_tokens": 2199
+    }
+  }
+}

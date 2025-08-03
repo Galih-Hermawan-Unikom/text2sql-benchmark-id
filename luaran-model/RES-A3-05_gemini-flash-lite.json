@@ -1,0 +1,35 @@
+{
+  "scenario_id": "RES-A3-05",
+  "model_info": {
+    "name": "gemini-2.5-flash-lite",
+    "temperature": 0.0,
+    "timestamp": "2025-07-23T13:53:08.597442"
+  },
+  "input": {
+    "question_id": "Hitung jumlah masakan aktif dan tidak aktif. Tampilkan status_aktif (0 atau 1) beserta total masakannya.",
+    "database": "resep",
+    "category": "Aggregation"
+  },
+  "prompt_info": {
+    "prompt_length": 7232,
+    "prompt_lines": 165
+  },
+  "model_response": {
+    "sql_query": "SELECT status_aktif, COUNT(*) AS total_masakan FROM masakan GROUP BY status_aktif;",
+    "explanation": "Query ini menghitung jumlah masakan berdasarkan status aktifnya (0 untuk tidak aktif, 1 untuk aktif). Hasilnya akan menampilkan status_aktif dan jumlah masakan yang sesuai.",
+    "confidence": 0.98,
+    "assumptions": [
+      "Kolom 'status_aktif' di tabel 'masakan' merepresentasikan status aktif atau tidak aktif dari sebuah masakan.",
+      "Nilai 0 pada 'status_aktif' berarti tidak aktif, dan 1 berarti aktif."
+    ],
+    "potential_issues": [],
+    "response_time_ms": 932.6003000005585,
+    "model_name": "gemini-2.5-flash-lite",
+    "timestamp": "2025-07-23T13:53:08.598450",
+    "token_usage": {
+      "prompt_tokens": 2197,
+      "completion_tokens": 159,
+      "total_tokens": 2356
+    }
+  }
+}

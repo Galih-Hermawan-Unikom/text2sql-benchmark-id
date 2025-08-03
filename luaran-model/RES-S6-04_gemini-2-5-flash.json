@@ -1,0 +1,36 @@
+{
+  "scenario_id": "RES-S6-04",
+  "model_info": {
+    "name": "gemini-2.5-flash",
+    "temperature": 0.0,
+    "timestamp": "2025-07-22T12:21:54.944750"
+  },
+  "input": {
+    "question_id": "Resep mana saja yang menggunakan jumlah bahan paling banyak? Sertakan judul resep dan jumlah bahannya.",
+    "database": "resep",
+    "category": "Superlative"
+  },
+  "prompt_info": {
+    "prompt_length": 7402,
+    "prompt_lines": 168
+  },
+  "model_response": {
+    "sql_query": "SELECT r.judul_resep, COUNT(rb.id_bahan) AS jumlah_bahan FROM resep r JOIN resep_bahan rb ON r.id_resep = rb.id_resep GROUP BY r.id_resep, r.judul_resep HAVING COUNT(rb.id_bahan) = (SELECT MAX(bahan_count) FROM (SELECT COUNT(id_bahan) AS bahan_count FROM resep_bahan GROUP BY id_resep) AS recipe_ingredient_counts) ORDER BY jumlah_bahan DESC",
+    "explanation": "Menggabungkan tabel 'resep' dan 'resep_bahan' untuk menghitung total bahan untuk setiap resep. Kemudian, menggunakan subkueri untuk menemukan jumlah bahan maksimum yang digunakan oleh resep mana pun, dan menyaring hasil untuk hanya menampilkan resep-resep yang memiliki jumlah bahan sama dengan nilai maksimum tersebut. Diurutkan secara menurun berdasarkan jumlah bahan.",
+    "confidence": 0.98,
+    "assumptions": [
+      "'Jumlah bahan paling banyak' diinterpretasikan sebagai resep-resep yang memiliki jumlah bahan sama dengan jumlah bahan terbanyak di seluruh database.",
+      "Setiap baris di `resep_bahan` untuk suatu resep dihitung sebagai satu bahan, terlepas dari jumlah atau satuan override."
+    ],
+    "potential_issues": [],
+    "response_time_ms": 9965.795,
+    "model_name": "gemini-2.5-flash",
+    "timestamp": "2025-07-22T12:21:54.944750",
+    "raw_response": "```json\n{\n  \"sql_query\": \"SELECT r.judul_resep, COUNT(rb.id_bahan) AS jumlah_bahan FROM resep r JOIN resep_bahan rb ON r.id_resep = rb.id_resep GROUP BY r.id_resep, r.judul_resep HAVING COUNT(rb.id_bahan) = (SELECT MAX(bahan_count) FROM (SELECT COUNT(id_bahan) AS bahan_count FROM resep_bahan GROUP BY id_resep) AS recipe_ingredient_counts) ORDER BY jumlah_bahan DESC\",\n  \"confidence\": 0.98,\n  \"explanation\": \"Menggabungkan tabel 'resep' dan 'resep_bahan' untuk menghitung total bahan untuk setiap resep. Kemudian, menggunakan subkueri untuk menemukan jumlah bahan maksimum yang digunakan oleh resep mana pun, dan menyaring hasil untuk hanya menampilkan resep-resep yang memiliki jumlah bahan sama dengan nilai maksimum tersebut. Diurutkan secara menurun berdasarkan jumlah bahan.\",\n  \"assumptions\": [\"'Jumlah bahan paling banyak' diinterpretasikan sebagai resep-resep yang memiliki jumlah bahan sama dengan jumlah bahan terbanyak di seluruh database.\", \"Setiap baris di `resep_bahan` untuk suatu resep dihitung sebagai satu bahan, terlepas dari jumlah atau satuan override.\"],\n  \"potential_issues\": []\n}\n```",
+    "token_usage": {
+      "prompt_tokens": 2239,
+      "completion_tokens": 298,
+      "total_tokens": 4100
+    }
+  }
+}

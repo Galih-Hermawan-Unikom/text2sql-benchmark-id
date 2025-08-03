@@ -1,0 +1,36 @@
+{
+  "scenario_id": "SAK-A3-03",
+  "model_info": {
+    "name": "gemini-2.5-flash-lite",
+    "temperature": 0.0,
+    "timestamp": "2025-07-23T13:54:10.652996"
+  },
+  "input": {
+    "question_id": "Hitung total nilai pembayaran per bulan pada tahun 2006.",
+    "database": "sakila",
+    "category": "Aggregation"
+  },
+  "prompt_info": {
+    "prompt_length": 9707,
+    "prompt_lines": 299
+  },
+  "model_response": {
+    "sql_query": "SELECT DATE_FORMAT(p.payment_date, '%Y-%m') AS bulan_pembayaran, SUM(p.amount) AS total_pembayaran FROM payment p WHERE YEAR(p.payment_date) = 2006 GROUP BY bulan_pembayaran ORDER BY bulan_pembayaran;",
+    "explanation": "Query ini menghitung total nilai pembayaran untuk setiap bulan pada tahun 2006. Ini dilakukan dengan mengelompokkan pembayaran berdasarkan bulan dan tahun dari kolom `payment_date` di tabel `payment`, lalu menjumlahkan `amount` untuk setiap kelompok.",
+    "confidence": 0.98,
+    "assumptions": [
+      "Pertanyaan mengacu pada tabel `payment` untuk data pembayaran.",
+      "Kolom `payment_date` digunakan untuk menentukan bulan dan tahun pembayaran.",
+      "Kolom `amount` berisi nilai pembayaran yang akan dijumlahkan."
+    ],
+    "potential_issues": [],
+    "response_time_ms": 1156.9070000005013,
+    "model_name": "gemini-2.5-flash-lite",
+    "timestamp": "2025-07-23T13:54:10.652996",
+    "token_usage": {
+      "prompt_tokens": 3066,
+      "completion_tokens": 223,
+      "total_tokens": 3289
+    }
+  }
+}

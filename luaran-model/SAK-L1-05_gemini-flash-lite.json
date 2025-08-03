@@ -1,0 +1,35 @@
+{
+  "scenario_id": "SAK-L1-05",
+  "model_info": {
+    "name": "gemini-2.5-flash-lite",
+    "temperature": 0.0,
+    "timestamp": "2025-07-23T13:54:51.586426"
+  },
+  "input": {
+    "question_id": "Tampilkan semua nama bahasa yang tersedia selain Inggris dan Italia.",
+    "database": "sakila",
+    "category": "Lookup / Filter"
+  },
+  "prompt_info": {
+    "prompt_length": 9719,
+    "prompt_lines": 299
+  },
+  "model_response": {
+    "sql_query": "SELECT name FROM language WHERE name NOT IN ('English', 'Italian')",
+    "explanation": "Query ini memilih kolom 'name' dari tabel 'language'. Klausa WHERE digunakan untuk memfilter hasil agar hanya menyertakan bahasa yang namanya tidak sama dengan 'English' atau 'Italian'.",
+    "confidence": 0.99,
+    "assumptions": [
+      "Nama bahasa disimpan dalam kolom 'name' di tabel 'language'.",
+      "Pertanyaan secara eksplisit meminta pengecualian 'English' dan 'Italian'."
+    ],
+    "potential_issues": [],
+    "response_time_ms": 961.8909000000713,
+    "model_name": "gemini-2.5-flash-lite",
+    "timestamp": "2025-07-23T13:54:51.586426",
+    "token_usage": {
+      "prompt_tokens": 3063,
+      "completion_tokens": 140,
+      "total_tokens": 3203
+    }
+  }
+}

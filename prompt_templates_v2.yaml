@@ -1,0 +1,498 @@
+# Prompt Templates for Text-to-SQL Evaluation
+# Database schema and prompt configurations for Gemini and Ollama models
+
+# Database Schemas
+schemas:
+  sakila:
+    name: "Sakila"
+    description: "DVD rental business database with films, actors, customers, and rentals"
+    tables: |
+      SAKILA DATABASE SCHEMA:
+      
+      === CORE ENTITIES ===
+      1. FILM
+         - film_id (PRIMARY KEY)
+         - title (VARCHAR, film title)
+         - description (TEXT, plot summary)
+         - release_year (YEAR)
+         - language_id (FK → language.language_id)
+         - rental_duration (TINYINT, days)
+         - rental_rate (DECIMAL, price per rental)
+         - length (SMALLINT, duration in minutes)
+         - rating (ENUM: 'G','PG','PG-13','R','NC-17')
+         - special_features (SET: 'Trailers','Commentaries','Deleted Scenes','Behind the Scenes')
+      
+      2. ACTOR
+         - actor_id (PRIMARY KEY)
+         - first_name (VARCHAR)
+         - last_name (VARCHAR)
+      
+      3. CUSTOMER
+         - customer_id (PRIMARY KEY)
+         - store_id (FK → store.store_id)
+         - first_name (VARCHAR)
+         - last_name (VARCHAR)
+         - email (VARCHAR)
+         - address_id (FK → address.address_id)
+         - active (BOOLEAN)
+         - create_date (DATETIME)
+      
+      4. CATEGORY
+         - category_id (PRIMARY KEY)
+         - name (VARCHAR, e.g., 'Action', 'Comedy', 'Drama')
+         - last_update (DATETIME)
+      
+      5. LANGUAGE
+         - language_id (PRIMARY KEY)
+         - name (CHAR, e.g., 'English', 'French')
+      
+      === JUNCTION TABLES ===
+      6. FILM_ACTOR
+         - actor_id (FK → actor.actor_id)
+         - film_id (FK → film.film_id)
+         - PRIMARY KEY (actor_id, film_id)
+      
+      7. FILM_CATEGORY
+         - film_id (FK → film.film_id)
+         - category_id (FK → category.category_id)
+         - PRIMARY KEY (film_id, category_id)
+      
+      === BUSINESS TABLES ===
+      8. RENTAL
+         - rental_id (PRIMARY KEY)
+         - rental_date (DATETIME)
+         - inventory_id (FK → inventory.inventory_id)
+         - customer_id (FK → customer.customer_id)
+         - return_date (DATETIME, nullable)
+         - staff_id (FK → staff.staff_id)
+      
+      9. PAYMENT
+         - payment_id (PRIMARY KEY)
+         - customer_id (FK → customer.customer_id)
+         - staff_id (FK → staff.staff_id)
+         - rental_id (FK → rental.rental_id)
+         - amount (DECIMAL, payment amount)
+         - payment_date (DATETIME)
+      
+      10. INVENTORY
+          - inventory_id (PRIMARY KEY)
+          - film_id (FK → film.film_id)
+          - store_id (FK → store.store_id)
+      
+      11. STORE
+          - store_id (PRIMARY KEY)
+          - manager_staff_id (FK → staff.staff_id)
+          - address_id (FK → address.address_id)
+      
+      12. STAFF
+          - staff_id (PRIMARY KEY)
+          - first_name (VARCHAR)
+          - last_name (VARCHAR)
+          - address_id (FK → address.address_id)
+          - email (VARCHAR)
+          - store_id (FK → store.store_id)
+          - active (BOOLEAN)
+          - username (VARCHAR)
+      
+      === LOCATION TABLES ===
+      13. ADDRESS
+          - address_id (PRIMARY KEY)
+          - address (VARCHAR)
+          - address2 (VARCHAR)
+          - district (VARCHAR)
+          - city_id (FK → city.city_id)
+          - postal_code (VARCHAR)
+          - phone (VARCHAR)
+      
+      14. CITY
+          - city_id (PRIMARY KEY)
+          - city (VARCHAR)
+          - country_id (FK → country.country_id)
+      
+      15. COUNTRY
+          - country_id (PRIMARY KEY)
+          - country (VARCHAR)
+    
+    common_patterns: |
+      COMMON QUERY PATTERNS:
+      - Film by genre: film → film_category → category
+      - Actor filmography: actor → film_actor → film
+      - Customer rentals: customer → rental → inventory → film
+      - Store revenue: payment → staff → store
+      - Location queries: customer → address → city → country
+
+  resep:
+    name: "Resep"
+    description: "Indonesian recipe database with dishes, ingredients, and cooking instructions"
+    tables: |
+      RESEP DATABASE SCHEMA:
+      
+      === MAIN ENTITIES ===
+      1. MASAKAN (Dishes)
+         - kode_masakan (PRIMARY KEY, CHAR(5))
+         - nama_masakan (VARCHAR, dish name)
+         - kategori (ENUM: 'Daging','Ayam','Sayuran','Nasi','Mie','Seafood','Dessert','Minuman')
+         - asal_daerah (VARCHAR, origin region)
+         - level_pedas (TINYINT, spice level 0-5)
+         - ukuran_porsi (VARCHAR, serving size)
+         - deskripsi_singkat (VARCHAR, brief description)
+         - status_aktif (BOOLEAN, active status)
+      
+      2. RESEP (Recipes)
+         - id_resep (PRIMARY KEY)
+         - kode_masakan (FK → masakan.kode_masakan)
+         - judul_resep (VARCHAR, recipe title)
+         - deskripsi (TEXT, description)
+         - langkah (LONGTEXT, cooking steps)
+         - waktu_masak (SMALLINT, cooking time in minutes)
+         - teknik_masak (ENUM: 'goreng','bakar','rebus','kukus','tumis','panggang','kukus-bakar')
+         - tingkat_kesulitan (ENUM: 'mudah','sedang','sulit')
+         - status_aktif (BOOLEAN)
+      
+      3. BAHAN (Ingredients)
+         - id_bahan (PRIMARY KEY)
+         - nama_bahan (VARCHAR, ingredient name)
+         - satuan_default (VARCHAR, default unit)
+         - kategori_bahan (ENUM: 'Daging','Sayuran','Rempah','Bumbu','Seafood','Karbohidrat','Produk Susu','Lain')
+         - deskripsi (VARCHAR, description)
+      
+      === JUNCTION TABLE ===
+      4. RESEP_BAHAN (Recipe-Ingredients)
+         - id_resep (FK → resep.id_resep)
+         - id_bahan (FK → bahan.id_bahan)
+         - jumlah (DECIMAL, quantity)
+         - satuan_override (VARCHAR, unit override)
+         - PRIMARY KEY (id_resep, id_bahan)
+    
+    common_patterns: |
+      COMMON QUERY PATTERNS:
+      - Recipe ingredients: resep → resep_bahan → bahan
+      - Dishes by region: masakan (filter by asal_daerah)
+      - Spicy dishes: masakan (filter by level_pedas)
+      - Cooking techniques: resep (group by teknik_masak)
+      - Ingredient usage: bahan → resep_bahan → resep
+
+# Prompt Templates
+prompts:
+  gemini:
+    system_role: |
+      Anda adalah ahli generator query SQL untuk database MySQL yang mengkhususkan diri dalam memproses bahasa Indonesia. Anda bertugas mengonversi pertanyaan bahasa Indonesia alami menjadi query SQL SELECT yang akurat dan efisien.
+      
+      ATURAN KRITIS:
+      1. Hasilkan HANYA statement SELECT - tidak ada INSERT, UPDATE, DELETE, atau DDL
+      2. Gunakan nama tabel dan kolom yang persis sesuai dengan skema
+      3. Selalu gunakan sintaks JOIN yang benar (bukan WHERE clause joins)
+      4. Tangani nuansa bahasa Indonesia dengan tepat
+      5. Kembalikan respons sebagai JSON yang valid dengan format spesifik
+      6. Sertakan penanganan error untuk permintaan yang tidak valid
+      7. Berikan penjelasan dalam bahasa Indonesia
+    
+    base_template: |
+      {schema_context}
+      
+      TUGAS: Konversi pertanyaan bahasa Indonesia berikut menjadi query MySQL SELECT.
+      
+      PERTANYAAN: {question}
+      DATABASE: {database}
+      
+      FORMAT RESPONS (JSON):
+      {{
+        "sql_query": "SELECT ... FROM ... WHERE ...",
+        "confidence": 0.95,
+        "explanation": "Penjelasan singkat logika query dalam bahasa Indonesia",
+        "assumptions": ["Asumsi yang dibuat terhadap pertanyaan"],
+        "potential_issues": ["Potensi ambiguitas atau masalah"]
+      }}
+      
+      PANDUAN:
+      - Gunakan sintaks MySQL yang benar
+      - Tangani operasi tanggal/waktu dengan tepat
+      - Gunakan JOIN yang sesuai untuk query multi-tabel
+      - Pertimbangkan implikasi performa
+      - Tangani edge cases (nilai NULL, hasil kosong)
+      - Gunakan alias untuk readability yang lebih baik
+      - Ikuti konvensi penamaan Indonesia yang sesuai
+      - Berikan penjelasan dalam bahasa Indonesia
+      - **PENTING: Pastikan pemetaan entitas dari pertanyaan ke kolom database sangat akurat. Contoh: 'Rendang' dalam konteks nama masakan umum harus dipetakan ke `masakan.nama_masakan`, bukan `resep.judul_resep`.**
+      - **PENTING: Untuk perbandingan (misalnya, 'lebih dari rata-rata'), pastikan subkueri atau logika perbandingan mencakup semua filter yang relevan dari pertanyaan utama (misalnya, rating, durasi, kategori yang sama).**
+      - **PENTING: Saat pertanyaan meminta perhitungan agregat (seperti jumlah total atau rata-rata) untuk sebuah entitas utama yang memiliki banyak entitas turunan terkait, pastikan logika agregasi Anda menjumlahkan data dari *semua* entitas turunan yang relevan untuk mendapatkan satu nilai tunggal untuk entitas utama tersebut.**
+      - **PENTING: Hindari penggunaan `LIMIT` kecuali pertanyaan secara eksplisit meminta sejumlah 'TOP-N' atau 'paling banyak/sedikit'.**
+      - **PENTING: Perhatikan presisi numerik untuk kolom DECIMAL (misalnya, `rental_rate`, `amount`). Pastikan perbandingan atau agregasi menangani potensi perbedaan presisi.**
+      - **PENTING: Untuk pencarian bahan berdasarkan nama yang mungkin bervariasi (misalnya, 'santan', 'cabe'), gunakan operator LIKE dengan wildcard (misalnya, `%Santan%`).**
+    
+    context_learning_examples: |
+      CONTOH QUERY:
+      
+      Q: "Tampilkan 3 pelanggan yang paling aktif di toko nomor 1."
+      A: {{
+        "sql_query": "SELECT c.first_name, c.last_name, COUNT(r.rental_id) AS total_rentals FROM customer c JOIN rental r ON c.customer_id = r.customer_id WHERE c.store_id = 1 GROUP BY c.customer_id, c.first_name, c.last_name ORDER BY total_rentals DESC LIMIT 3",
+        "confidence": 0.98,
+        "explanation": "Mengambil 3 pelanggan teratas berdasarkan jumlah rental dari toko tertentu.",
+        "assumptions": ["Pelanggan aktif dihitung berdasarkan jumlah rental."],
+        "potential_issues": []
+      }}
+
+      Q: "Film apa saja yang disewa pada bulan Februari 2006?"
+      A: {{
+        "sql_query": "SELECT DISTINCT f.title FROM film f JOIN inventory i ON f.film_id = i.film_id JOIN rental r ON i.inventory_id = r.inventory_id WHERE YEAR(r.rental_date) = 2006 AND MONTH(r.rental_date) = 2",
+        "confidence": 0.95,
+        "explanation": "Mengambil film yang disewa pada bulan dan tahun tertentu.",
+        "assumptions": ["Tanggal sewa adalah rental_date."],
+        "potential_issues": []
+      }}
+
+      Q: "Berapa jumlah resep dengan tingkat kesulitan 'mudah'?"
+      A: {{
+        "sql_query": "SELECT COUNT(*) AS total_resep FROM resep WHERE tingkat_kesulitan = 'mudah'",
+        "confidence": 0.97,
+        "explanation": "Menghitung jumlah resep berdasarkan tingkat kesulitan tertentu.",
+        "assumptions": ["Tingkat kesulitan adalah kolom yang valid."],
+        "potential_issues": []
+      }}
+
+      Q: "Tampilkan nama bahan yang termasuk kategori 'Produk Susu'."
+      A: {{
+        "sql_query": "SELECT nama_bahan FROM bahan WHERE kategori_bahan = 'Produk Susu'",
+        "confidence": 0.96,
+        "explanation": "Mengambil nama bahan berdasarkan kategori bahan.",
+        "assumptions": ["Kategori bahan adalah kolom yang valid."],
+        "potential_issues": []
+      }}
+
+  ollama:
+    system_role: |
+      Anda adalah ahli generator query SQL untuk database MySQL yang mengkhususkan diri dalam memproses bahasa Indonesia. Anda bertugas mengonversi pertanyaan bahasa Indonesia alami menjadi query SQL SELECT yang akurat dan efisien.
+      
+      ATURAN KRITIS:
+      1. Hasilkan HANYA statement SELECT - tidak ada INSERT, UPDATE, DELETE, atau DDL
+      2. Gunakan nama tabel dan kolom yang persis sesuai dengan skema
+      3. Selalu gunakan sintaks JOIN yang benar (bukan WHERE clause joins)
+      4. Tangani nuansa bahasa Indonesia dengan tepat
+      5. Kembalikan respons sebagai JSON yang valid dengan format spesifik
+      6. Sertakan penanganan error untuk permintaan yang tidak valid
+      7. Berikan penjelasan dalam bahasa Indonesia
+    
+    base_template: |
+      {schema_context}
+      
+      TUGAS: Konversi pertanyaan bahasa Indonesia berikut menjadi query MySQL SELECT.
+      
+      PERTANYAAN: {question}
+      DATABASE: {database}
+      
+      FORMAT RESPONS (JSON):
+      {{
+        "sql_query": "SELECT ... FROM ... WHERE ...",
+        "confidence": 0.95,
+        "explanation": "Penjelasan singkat logika query dalam bahasa Indonesia",
+        "assumptions": ["Asumsi yang dibuat terhadap pertanyaan"],
+        "potential_issues": ["Potensi ambiguitas atau masalah"]
+      }}
+      
+      PANDUAN:
+      - Gunakan sintaks MySQL yang benar
+      - Tangani operasi tanggal/waktu dengan tepat
+      - Gunakan JOIN yang sesuai untuk query multi-tabel
+      - Pertimbangkan implikasi performa
+      - Tangani edge cases (nilai NULL, hasil kosong)
+      - Gunakan alias untuk readability yang lebih baik
+      - Ikuti konvensi penamaan Indonesia yang sesuai
+      - Berikan penjelasan dalam bahasa Indonesia
+      - **PENTING: Pastikan pemetaan entitas dari pertanyaan ke kolom database sangat akurat. Contoh: 'Rendang' dalam konteks nama masakan umum harus dipetakan ke `masakan.nama_masakan`, bukan `resep.judul_resep`.**
+      - **PENTING: Untuk perbandingan (misalnya, 'lebih dari rata-rata'), pastikan subkueri atau logika perbandingan mencakup semua filter yang relevan dari pertanyaan utama (misalnya, rating, durasi, kategori yang sama).**
+      - **PENTING: Saat pertanyaan meminta perhitungan agregat (seperti jumlah total atau rata-rata) untuk sebuah entitas utama yang memiliki banyak entitas turunan terkait, pastikan logika agregasi Anda menjumlahkan data dari *semua* entitas turunan yang relevan untuk mendapatkan satu nilai tunggal untuk entitas utama tersebut.**
+      - **PENTING: Hindari penggunaan `LIMIT` kecuali pertanyaan secara eksplisit meminta sejumlah 'TOP-N' atau 'paling banyak/sedikit'.**
+      - **PENTING: Perhatikan presisi numerik untuk kolom DECIMAL (misalnya, `rental_rate`, `amount`). Pastikan perbandingan atau agregasi menangani potensi perbedaan presisi.**
+      - **PENTING: Untuk pencarian bahan berdasarkan nama yang mungkin bervariasi (misalnya, 'santan', 'cabe'), gunakan operator LIKE dengan wildcard (misalnya, `%Santan%`).**
+
+    context_learning_examples: |
+      CONTOH QUERY:
+      
+      Q: "Tampilkan 3 pelanggan yang paling aktif di toko nomor 1."
+      A: {{
+        "sql_query": "SELECT c.first_name, c.last_name, COUNT(r.rental_id) AS total_rentals FROM customer c JOIN rental r ON c.customer_id = r.customer_id WHERE c.store_id = 1 GROUP BY c.customer_id, c.first_name, c.last_name ORDER BY total_rentals DESC LIMIT 3",
+        "confidence": 0.98,
+        "explanation": "Mengambil 3 pelanggan teratas berdasarkan jumlah rental dari toko tertentu.",
+        "assumptions": ["Pelanggan aktif dihitung berdasarkan jumlah rental."],
+        "potential_issues": []
+      }}
+
+      Q: "Film apa saja yang disewa pada bulan Februari 2006??"
+      A: {{
+        "sql_query": "SELECT DISTINCT f.title FROM film f JOIN inventory i ON f.film_id = i.film_id JOIN rental r ON i.inventory_id = r.inventory_id WHERE YEAR(r.rental_date) = 2006 AND MONTH(r.rental_date) = 2",
+        "confidence": 0.95,
+        "explanation": "Mengambil film yang disewa pada bulan dan tahun tertentu.",
+        "assumptions": ["Tanggal sewa adalah rental_date."],
+        "potential_issues": []
+      }}
+
+      Q: "Berapa jumlah resep dengan tingkat kesulitan 'mudah'?"
+      A: {{
+        "sql_query": "SELECT COUNT(*) AS total_resep FROM resep WHERE tingkat_kesulitan = 'mudah'",
+        "confidence": 0.97,
+        "explanation": "Menghitung jumlah resep berdasarkan tingkat kesulitan tertentu.",
+        "assumptions": ["Tingkat kesulitan adalah kolom yang valid."],
+        "potential_issues": []
+      }}
+
+      Q: "Tampilkan nama bahan yang termasuk kategori 'Produk Susu'."
+      A: {{
+        "sql_query": "SELECT nama_bahan FROM bahan WHERE kategori_bahan = 'Produk Susu'",
+        "confidence": 0.96,
+        "explanation": "Mengambil nama bahan berdasarkan kategori bahan.",
+        "assumptions": ["Kategori bahan adalah kolom yang valid."],
+        "potential_issues": []
+      }}
+  ollama_optimized:
+    system_role: |
+      Anda adalah ahli generator query SQL untuk database MySQL yang mengkhususkan diri dalam memproses bahasa Indonesia. Anda bertugas mengonversi pertanyaan bahasa Indonesia alami menjadi query SQL SELECT yang akurat dan efisien.
+      
+      ATURAN KRITIS:
+      1. Hasilkan HANYA statement SELECT - tidak ada INSERT, UPDATE, DELETE, atau DDL
+      2. Gunakan nama tabel dan kolom yang persis sesuai dengan skema
+      3. Selalu gunakan sintaks JOIN yang benar (bukan WHERE clause joins)
+      4. Tangani nuansa bahasa Indonesia dengan tepat
+      5. Kembalikan respons sebagai JSON yang valid dengan format spesifik
+      6. Sertakan penanganan error untuk permintaan yang tidak valid
+      7. Berikan penjelasan dalam bahasa Indonesia
+    
+    base_template: |
+      {schema_context}
+      
+      TUGAS: Konversi pertanyaan bahasa Indonesia berikut menjadi query MySQL SELECT.
+      
+      PERTANYAAN: {question}
+      DATABASE: {database}
+      
+      FORMAT RESPONS (JSON):
+      {{
+        "sql_query": "SELECT ... FROM ... WHERE ...",
+        "confidence": 0.95,
+        "explanation": "Penjelasan singkat logika query dalam bahasa Indonesia",
+        "assumptions": ["Asumsi yang dibuat terhadap pertanyaan"],
+        "potential_issues": ["Potensi ambiguitas atau masalah"]
+      }}
+      
+      PANDUAN:
+      - Gunakan sintaks MySQL yang benar
+      - Tangani operasi tanggal/waktu dengan tepat
+      - Gunakan JOIN yang sesuai untuk query multi-tabel
+      - Pertimbangkan implikasi performa
+      - Tangani edge cases (nilai NULL, hasil kosong)
+      - Gunakan alias untuk readability yang lebih baik
+      - Ikuti konvensi penamaan Indonesia yang sesuai
+      - Berikan penjelasan dalam bahasa Indonesia
+      - **PENTING: Pastikan pemetaan entitas dari pertanyaan ke kolom database sangat akurat. Contoh: 'Rendang' dalam konteks nama masakan umum harus dipetakan ke `masakan.nama_masakan`, bukan `resep.judul_resep`.**
+      - **PENTING: Untuk perbandingan (misalnya, 'lebih dari rata-rata'), pastikan subkueri atau logika perbandingan mencakup semua filter yang relevan dari pertanyaan utama (misalnya, rating, durasi, kategori yang sama).**
+      - **PENTING: Saat pertanyaan meminta perhitungan agregat (seperti jumlah total atau rata-rata) untuk sebuah entitas utama yang memiliki banyak entitas turunan terkait, pastikan logika agregasi Anda menjumlahkan data dari *semua* entitas turunan yang relevan untuk mendapatkan satu nilai tunggal untuk entitas utama tersebut.**
+      - **PENTING: Hindari penggunaan `LIMIT` kecuali pertanyaan secara eksplisit meminta sejumlah 'TOP-N' atau 'paling banyak/sedikit'.**
+      - **PENTING: Perhatikan presisi numerik untuk kolom DECIMAL (misalnya, `rental_rate`, `amount`). Pastikan perbandingan atau agregasi menangani potensi perbedaan presisi.**
+      - **PENTING: Untuk pencarian bahan berdasarkan nama yang mungkin bervariasi (misalnya, 'santan', 'cabe'), gunakan operator LIKE dengan wildcard (misalnya, `%Santan%`).**
+
+    context_learning_examples: |
+
+  ollama_optimized_v2:
+    system_role: |
+      Anda adalah generator query SQL untuk database MySQL yang mengkhususkan diri dalam memproses bahasa Indonesia. Tugas Anda adalah mengonversi pertanyaan bahasa Indonesia alami menjadi query SQL SELECT yang akurat dan efisien.
+      
+      ATURAN PENTING:
+      1. Hasilkan HANYA statement SELECT - tidak ada INSERT, UPDATE, DELETE, atau DDL
+      2. Gunakan nama tabel dan kolom yang persis sesuai dengan skema
+      3. Selalu gunakan sintaks JOIN yang benar (bukan WHERE clause joins)
+      4. Tangani nuansa bahasa Indonesia dengan tepat
+      5. HANYA kembalikan kode SQL tanpa penjelasan atau format tambahan
+      6. Pastikan query valid dan bisa langsung dijalankan di MySQL
+      
+      Format respons yang diharapkan:
+      ```sql
+      SELECT ... FROM ... WHERE ...
+      ```
+    
+    base_template: |
+      {schema_context}
+      
+      PERTANYAAN: {question}
+      DATABASE: {database}
+      
+      Berikan HANYA query SQL yang sesuai dengan pertanyaan di atas. Jangan sertakan penjelasan atau teks tambahan apapun.
+      
+      PANDUAN:
+      - Gunakan sintaks MySQL yang benar
+      - Tangani operasi tanggal/waktu dengan tepat
+      - Gunakan JOIN yang sesuai untuk query multi-tabel
+      - Pertimbangkan implikasi performa
+      - Tangani edge cases (nilai NULL, hasil kosong)
+      - Gunakan alias untuk readability yang lebih baik. Nama alias harus unik, tidak boleh kembar.
+      - Ikuti konvensi penamaan Indonesia yang sesuai
+      - Berikan penjelasan dalam bahasa Indonesia
+      - **PENTING: Pastikan pemetaan entitas dari pertanyaan ke kolom database sangat akurat. Contoh: 'Rendang' dalam konteks nama masakan umum harus dipetakan ke `masakan.nama_masakan`, bukan `resep.judul_resep`.**
+      - **PENTING: Untuk perbandingan (misalnya, 'lebih dari rata-rata'), pastikan subkueri atau logika perbandingan mencakup semua filter yang relevan dari pertanyaan utama (misalnya, rating, durasi, kategori yang sama).**
+      - **PENTING: Saat pertanyaan meminta perhitungan agregat (seperti jumlah total atau rata-rata) untuk sebuah entitas utama yang memiliki banyak entitas turunan terkait, pastikan logika agregasi Anda menjumlahkan data dari *semua* entitas turunan yang relevan untuk mendapatkan satu nilai tunggal untuk entitas utama tersebut.**
+      - **PENTING: Hindari penggunaan `LIMIT` kecuali pertanyaan secara eksplisit meminta sejumlah 'TOP-N' atau 'paling banyak/sedikit'.**
+      - **PENTING: Perhatikan presisi numerik untuk kolom DECIMAL (misalnya, `rental_rate`, `amount`). Pastikan perbandingan atau agregasi menangani potensi perbedaan presisi.**
+      - **PENTING: Untuk pencarian bahan berdasarkan nama yang mungkin bervariasi (misalnya, 'santan', 'cabe'), gunakan operator LIKE dengan wildcard (misalnya, `%Santan%`).**
+      
+      
+models:
+  gemini:
+    name_env: "GEMINI_MODEL"  # Read from .env
+    name_default: "gemini-2.5-flash"
+    temperature: 0.0
+    max_tokens: 1000
+    api_key_env: "GEMINI_API_KEY"
+    api_key_fallback_env: "GEMINI_API_KEY_2"  # Backup key
+    fallback_model_env: "GEMINI_FALLBACK_MODEL"
+    
+  ollama:
+    #name: "hf.co/unsloth/gemma-3n-E2B-it-GGUF:Q4_K_XL"
+    name: gemma3n:e2b
+    display_name: "gemma-3n-e2b"
+    #temperature: 0.0
+    #max_tokens: 4096
+    base_url: "http://localhost:11434"
+    #timeout_seconds: 600
+      # Sampling & determinisme
+    temperature: 0.0
+    top_p: 1.0
+    top_k: 0
+    repeat_penalty: 1.1
+    seed: 42
+
+    # Batas output & konteks
+    num_predict: 512   # ≈ 600-700 token teks
+    stop: ["}"]             # selesai setelah JSON
+    # stop: [";"]           # opsional: berhenti setelah titik-koma
+    # num_ctx: 4096           # jika model custom mendukung (butuh RAM)
+
+    # Runtime
+    timeout_seconds: 300
+
+# Evaluation Settings
+evaluation:
+  output_folder: "luaran-model"
+  backup_folder: "luaran-model/backup"
+  timeout_seconds: 180
+  retry_attempts: 3
+  
+  metrics:
+    - "sql_syntax_valid"
+    - "execution_success"
+    - "result_accuracy"
+    - "response_time"
+    - "token_usage"
+    - "confidence_score"
+
+# Test Configuration
+testing:
+  sample_scenarios: 
+    - "SAK-L1-01"  # Simple Sakila lookup
+    - "RES-L1-01"  # Simple recipe lookup
+    - "SAK-J2-01"  # Complex Sakila join
+    - "RES-J2-01"  # Complex recipe join
+  
+  validation_rules:
+    - "Must be SELECT statement only"
+    - "No semicolon at end"
+    - "Proper table/column names"
+    - "Valid MySQL syntax"
+    - "Reasonable query complexity"

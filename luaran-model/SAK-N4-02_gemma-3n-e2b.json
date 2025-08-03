@@ -1,0 +1,21 @@
+{
+  "metadata": {
+    "version": "1.0",
+    "generated_at": "2025-07-31T09:44:15.753459",
+    "tool": "text2sql_ollama"
+  },
+  "scenario_id": "SAK-N4-02",
+  "category": "Nested / Subquery",
+  "database": "sakila",
+  "question_id": "Tampilkan bahasa yang tidak memiliki satu pun film berating 'R'.",
+  "model": "gemma-3n-e2b",
+  "sql_query": "SELECT\n  l.name AS bahasa\nFROM lannguage AS l\nWHERE\n  l.lannguage_id NOT IN (\n    SELECT\n      fl.language_id\n    FROM film AS fl\n    WHERE\n      fl.rating = 'R'\n  )",
+  "timestamp": "2025-07-31T09:44:15.752455",
+  "response_time_ms": 155660.076,
+  "token_usage": {
+    "prompt_tokens": 1665,
+    "completion_tokens": 68,
+    "total_tokens": 1733
+  },
+  "raw_response": "```sql\nSELECT\n  l.name AS bahasa\nFROM lannguage AS l\nWHERE\n  l.lannguage_id NOT IN (\n    SELECT\n      fl.language_id\n    FROM film AS fl\n    WHERE\n      fl.rating = 'R'\n  );\n```"
+}

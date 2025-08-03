@@ -1,0 +1,21 @@
+{
+  "metadata": {
+    "version": "1.0",
+    "generated_at": "2025-07-31T07:41:05.559532",
+    "tool": "text2sql_ollama"
+  },
+  "scenario_id": "RES-S6-04",
+  "category": "Superlative",
+  "database": "resep",
+  "question_id": "Resep mana saja yang menggunakan jumlah bahan paling banyak? Sertakan judul resep dan jumlah bahannya.",
+  "model": "gemma-3n-e2b",
+  "sql_query": "SELECT\n    r.judul_resep AS judul_resep,\n    SUM(r_b.jumlah) AS total_jumlah_bahan\nFROM\n    resep r\nJOIN\n    resep_bahan r_b ON r.id_resep = r_b.id_resep\nGROUP BY\n    r.id_resep, r.judul_resep\nORDER BY\n    total_jumlah_bahan DESC\nLIMIT 1",
+  "timestamp": "2025-07-31T07:41:05.559532",
+  "response_time_ms": 124289.81,
+  "token_usage": {
+    "prompt_tokens": 1217,
+    "completion_tokens": 105,
+    "total_tokens": 1322
+  },
+  "raw_response": "```sql\nSELECT\n    r.judul_resep AS judul_resep,\n    SUM(r_b.jumlah) AS total_jumlah_bahan\nFROM\n    resep r\nJOIN\n    resep_bahan r_b ON r.id_resep = r_b.id_resep\nGROUP BY\n    r.id_resep, r.judul_resep\nORDER BY\n    total_jumlah_bahan DESC\nLIMIT 1;\n```"
+}

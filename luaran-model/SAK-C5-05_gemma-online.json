@@ -1,0 +1,36 @@
+{
+  "scenario_id": "SAK-C5-05",
+  "model_info": {
+    "name": "gemma-3-27b-it",
+    "temperature": 0.0,
+    "timestamp": "2025-07-24T08:57:25.088038"
+  },
+  "input": {
+    "question_id": "Tampilkan staf yang jumlah transaksi pembayarannya lebih sedikit daripada rata-rata jumlah transaksi per staf; sertakan nama depan, nama belakang, dan jumlah transaksinya.",
+    "database": "sakila",
+    "category": "Comparative"
+  },
+  "prompt_info": {
+    "prompt_length": 9822,
+    "prompt_lines": 299
+  },
+  "model_response": {
+    "sql_query": "SELECT s.first_name, s.last_name, COUNT(p.payment_id) AS jumlah_transaksi FROM staff s JOIN payment p ON s.staff_id = p.staff_id GROUP BY s.staff_id, s.first_name, s.last_name HAVING COUNT(p.payment_id) < (SELECT AVG(jumlah_transaksi) FROM (SELECT COUNT(payment_id) AS jumlah_transaksi FROM payment GROUP BY staff_id) AS subquery)",
+    "explanation": "Query ini menghitung jumlah transaksi pembayaran untuk setiap staf, kemudian membandingkannya dengan rata-rata jumlah transaksi per staf. Hanya staf yang jumlah transaksinya lebih sedikit dari rata-rata yang ditampilkan, beserta nama depan, nama belakang, dan jumlah transaksinya.",
+    "confidence": 0.95,
+    "assumptions": [
+      "Transaksi pembayaran direpresentasikan oleh tabel 'payment' dan terkait dengan staf melalui kolom 'staff_id'."
+    ],
+    "potential_issues": [
+      "Jika tabel 'payment' sangat besar, subquery untuk menghitung rata-rata dapat mempengaruhi performa. Pertimbangkan untuk menggunakan CTE (Common Table Expression) jika performa menjadi masalah."
+    ],
+    "response_time_ms": 6264.2093999998,
+    "model_name": "gemma-3-27b-it",
+    "timestamp": "2025-07-24T08:57:25.088038",
+    "token_usage": {
+      "prompt_tokens": 3085,
+      "completion_tokens": null,
+      "total_tokens": 3085
+    }
+  }
+}

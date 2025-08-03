@@ -1,0 +1,21 @@
+{
+  "metadata": {
+    "version": "1.0",
+    "generated_at": "2025-07-31T07:10:43.531229",
+    "tool": "text2sql_ollama"
+  },
+  "scenario_id": "RES-J2-04",
+  "category": "Join + Filter",
+  "database": "resep",
+  "question_id": "Tampilkan ID resep, judul resep, dan nama bahan yang disajikan dalam satuan 'lembar'.",
+  "model": "gemma-3n-e2b",
+  "sql_query": "SELECT\n    r.id_resep AS id_resep,\n    r.judul_resep AS judul_resep,\n    b.nama_bahan AS nama_bahan\nFROM\n    resep r\nJOIN\n    resep_bahan rb ON r.id_resep = rb.id_resep\nJOIN\n    bahan b ON rb.id_bahan = b.id_bahan\nWHERE\n    b.satuan_default = 'lembar'",
+  "timestamp": "2025-07-31T07:10:43.531229",
+  "response_time_ms": 123983.827,
+  "token_usage": {
+    "prompt_tokens": 1220,
+    "completion_tokens": 109,
+    "total_tokens": 1329
+  },
+  "raw_response": "```sql\nSELECT\n    r.id_resep AS id_resep,\n    r.judul_resep AS judul_resep,\n    b.nama_bahan AS nama_bahan\nFROM\n    resep r\nJOIN\n    resep_bahan rb ON r.id_resep = rb.id_resep\nJOIN\n    bahan b ON rb.id_bahan = b.id_bahan\nWHERE\n    b.satuan_default = 'lembar';\n```"
+}

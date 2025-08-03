@@ -1,0 +1,37 @@
+{
+  "scenario_id": "SAK-N4-04",
+  "model_info": {
+    "name": "gemma-3-27b-it",
+    "temperature": 0.0,
+    "timestamp": "2025-07-24T08:59:01.479309"
+  },
+  "input": {
+    "question_id": "Tampilkan film yang belum pernah disewa oleh pelanggan mana pun.",
+    "database": "sakila",
+    "category": "Nested / Subquery"
+  },
+  "prompt_info": {
+    "prompt_length": 9715,
+    "prompt_lines": 299
+  },
+  "model_response": {
+    "sql_query": "SELECT f.title FROM film f WHERE f.film_id NOT IN (SELECT i.film_id FROM inventory i JOIN rental r ON i.inventory_id = r.inventory_id)",
+    "explanation": "Query ini memilih judul film dari tabel `film` yang `film_id`-nya tidak terdapat dalam daftar `film_id` yang ada di tabel `inventory` yang telah disewa (melalui tabel `rental`). Dengan kata lain, query ini menampilkan film-film yang belum pernah muncul dalam riwayat penyewaan.",
+    "confidence": 0.95,
+    "assumptions": [
+      "Tabel `inventory` mencatat semua film yang tersedia untuk disewa.",
+      "Tabel `rental` mencatat semua riwayat penyewaan film."
+    ],
+    "potential_issues": [
+      "Jika ada film yang tidak tercatat di tabel `inventory`, film tersebut akan muncul dalam hasil query meskipun sebenarnya sudah pernah disewa melalui cara lain."
+    ],
+    "response_time_ms": 5288.943499999732,
+    "model_name": "gemma-3-27b-it",
+    "timestamp": "2025-07-24T08:59:01.479309",
+    "token_usage": {
+      "prompt_tokens": 3064,
+      "completion_tokens": null,
+      "total_tokens": 3064
+    }
+  }
+}

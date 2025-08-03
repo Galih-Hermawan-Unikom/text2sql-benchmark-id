@@ -1,0 +1,35 @@
+{
+  "scenario_id": "RES-N4-04",
+  "model_info": {
+    "name": "gemini-2.5-flash",
+    "temperature": 0.0,
+    "timestamp": "2025-07-22T10:54:45.074398"
+  },
+  "input": {
+    "question_id": "Sebutkan bahan apa saja yang sama sekali belum pernah dipakai di masakan mana pun. Tampilkan nama bahannya saja.",
+    "database": "resep",
+    "category": "Nested / Subquery"
+  },
+  "prompt_info": {
+    "prompt_length": 7085,
+    "prompt_lines": 167
+  },
+  "model_response": {
+    "sql_query": "SELECT b.nama_bahan FROM bahan b LEFT JOIN resep_bahan rb ON b.id_bahan = rb.id_bahan WHERE rb.id_bahan IS NULL",
+    "explanation": "Mengambil semua nama bahan dari tabel 'bahan' yang tidak memiliki entri yang sesuai di tabel 'resep_bahan', mengindikasikan bahwa bahan tersebut belum pernah digunakan dalam resep apa pun. Ini dicapai dengan melakukan LEFT JOIN dan memfilter di mana kolom dari tabel kanan (resep_bahan) adalah NULL.",
+    "confidence": 0.98,
+    "assumptions": [
+      "Bahan yang belum pernah dipakai berarti tidak ada dalam tabel 'resep_bahan' sama sekali."
+    ],
+    "potential_issues": [],
+    "response_time_ms": 3939.562,
+    "model_name": "gemini-2.5-flash",
+    "timestamp": "2025-07-22T10:54:45.074398",
+    "raw_response": "```json\n{\n  \"sql_query\": \"SELECT b.nama_bahan FROM bahan b LEFT JOIN resep_bahan rb ON b.id_bahan = rb.id_bahan WHERE rb.id_bahan IS NULL\",\n  \"confidence\": 0.98,\n  \"explanation\": \"Mengambil semua nama bahan dari tabel 'bahan' yang tidak memiliki entri yang sesuai di tabel 'resep_bahan', mengindikasikan bahwa bahan tersebut belum pernah digunakan dalam resep apa pun. Ini dicapai dengan melakukan LEFT JOIN dan memfilter di mana kolom dari tabel kanan (resep_bahan) adalah NULL.\",\n  \"assumptions\": [\"Bahan yang belum pernah dipakai berarti tidak ada dalam tabel 'resep_bahan' sama sekali.\"],\n  \"potential_issues\": []\n}\n```",
+    "token_usage": {
+      "prompt_tokens": 2171,
+      "completion_tokens": 171,
+      "total_tokens": 2850
+    }
+  }
+}

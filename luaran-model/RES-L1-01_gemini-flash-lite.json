@@ -1,0 +1,35 @@
+{
+  "scenario_id": "RES-L1-01",
+  "model_info": {
+    "name": "gemini-2.5-flash-lite",
+    "temperature": 0.0,
+    "timestamp": "2025-07-23T13:53:32.973755"
+  },
+  "input": {
+    "question_id": "Tampilkan semua bahan pada kategori Rempah, sertakan id dan nama bahannya.",
+    "database": "resep",
+    "category": "Lookup / Filter"
+  },
+  "prompt_info": {
+    "prompt_length": 7202,
+    "prompt_lines": 165
+  },
+  "model_response": {
+    "sql_query": "SELECT id_bahan, nama_bahan FROM bahan WHERE kategori_bahan = 'Rempah'",
+    "explanation": "Query ini memilih kolom 'id_bahan' dan 'nama_bahan' dari tabel 'bahan'. Filter diterapkan pada kolom 'kategori_bahan' untuk hanya menyertakan bahan yang termasuk dalam kategori 'Rempah'.",
+    "confidence": 0.98,
+    "assumptions": [
+      "Tabel 'bahan' memiliki kolom 'id_bahan', 'nama_bahan', dan 'kategori_bahan'.",
+      "Nilai 'Rempah' adalah nilai yang valid dalam kolom 'kategori_bahan'."
+    ],
+    "potential_issues": [],
+    "response_time_ms": 860.1060000000871,
+    "model_name": "gemini-2.5-flash-lite",
+    "timestamp": "2025-07-23T13:53:32.973755",
+    "token_usage": {
+      "prompt_tokens": 2188,
+      "completion_tokens": 167,
+      "total_tokens": 2355
+    }
+  }
+}

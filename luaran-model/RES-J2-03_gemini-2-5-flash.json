@@ -1,0 +1,36 @@
+{
+  "scenario_id": "RES-J2-03",
+  "model_info": {
+    "name": "gemini-2.5-flash",
+    "temperature": 0.0,
+    "timestamp": "2025-07-22T10:18:21.714683"
+  },
+  "input": {
+    "question_id": "Sebutkan kode dan nama masakan khas Padang yang bisa dimasak dalam 90 menit atau kurang, sertakan judul resep dan lama memasaknya.",
+    "database": "resep",
+    "category": "Join + Filter"
+  },
+  "prompt_info": {
+    "prompt_length": 6763,
+    "prompt_lines": 165
+  },
+  "model_response": {
+    "sql_query": "SELECT m.kode_masakan, m.nama_masakan, r.judul_resep, r.waktu_masak FROM masakan m JOIN resep r ON m.kode_masakan = r.kode_masakan WHERE m.asal_daerah = 'Padang' AND r.waktu_masak <= 90",
+    "explanation": "Mengambil kode dan nama masakan dari daerah 'Padang' beserta judul resep dan waktu memasaknya, dengan syarat waktu masak tidak lebih dari 90 menit. Dilakukan JOIN antara tabel `masakan` dan `resep` menggunakan `kode_masakan`.",
+    "confidence": 0.98,
+    "assumptions": [
+      "Kolom 'asal_daerah' di tabel 'masakan' menyimpan informasi daerah asal masakan.",
+      "Kolom 'waktu_masak' di tabel 'resep' menyimpan waktu memasak dalam menit."
+    ],
+    "potential_issues": [],
+    "response_time_ms": 3374.4049999999997,
+    "model_name": "gemini-2.5-flash",
+    "timestamp": "2025-07-22T10:18:21.714683",
+    "raw_response": "```json\n{\n  \"sql_query\": \"SELECT m.kode_masakan, m.nama_masakan, r.judul_resep, r.waktu_masak FROM masakan m JOIN resep r ON m.kode_masakan = r.kode_masakan WHERE m.asal_daerah = 'Padang' AND r.waktu_masak <= 90\",\n  \"confidence\": 0.98,\n  \"explanation\": \"Mengambil kode dan nama masakan dari daerah 'Padang' beserta judul resep dan waktu memasaknya, dengan syarat waktu masak tidak lebih dari 90 menit. Dilakukan JOIN antara tabel `masakan` dan `resep` menggunakan `kode_masakan`.\",\n  \"assumptions\": [\n    \"Kolom 'asal_daerah' di tabel 'masakan' menyimpan informasi daerah asal masakan.\",\n    \"Kolom 'waktu_masak' di tabel 'resep' menyimpan waktu memasak dalam menit.\"\n  ],\n  \"potential_issues\": []\n}\n```",
+    "token_usage": {
+      "prompt_tokens": 2087,
+      "completion_tokens": 232,
+      "total_tokens": 2709
+    }
+  }
+}

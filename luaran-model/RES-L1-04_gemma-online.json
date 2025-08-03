@@ -1,0 +1,34 @@
+{
+  "scenario_id": "RES-L1-04",
+  "model_info": {
+    "name": "gemma-3-27b-it",
+    "temperature": 0.0,
+    "timestamp": "2025-07-24T08:55:00.993535"
+  },
+  "input": {
+    "question_id": "Tampilkan masakan yang statusnya nonaktif; sertakan kode dan nama masakan.",
+    "database": "resep",
+    "category": "Lookup / Filter"
+  },
+  "prompt_info": {
+    "prompt_length": 7202,
+    "prompt_lines": 165
+  },
+  "model_response": {
+    "sql_query": "SELECT kode_masakan, nama_masakan FROM masakan WHERE status_aktif = FALSE",
+    "explanation": "Query ini memilih kode dan nama masakan dari tabel 'masakan' di mana nilai kolom 'status_aktif' adalah FALSE (nonaktif).",
+    "confidence": 0.98,
+    "assumptions": [
+      "Kolom 'status_aktif' pada tabel 'masakan' merepresentasikan status aktif/nonaktif masakan."
+    ],
+    "potential_issues": [],
+    "response_time_ms": 3407.114300000103,
+    "model_name": "gemma-3-27b-it",
+    "timestamp": "2025-07-24T08:55:00.993535",
+    "token_usage": {
+      "prompt_tokens": 2189,
+      "completion_tokens": null,
+      "total_tokens": 2189
+    }
+  }
+}

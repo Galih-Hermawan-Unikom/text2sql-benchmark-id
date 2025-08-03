@@ -1,0 +1,21 @@
+{
+  "metadata": {
+    "version": "1.0",
+    "generated_at": "2025-07-31T08:09:29.507559",
+    "tool": "text2sql_ollama"
+  },
+  "scenario_id": "SAK-A3-05",
+  "category": "Aggregation",
+  "database": "sakila",
+  "question_id": "Tampilkan nama aktor dan jumlah film yang mereka bintangi, urutkan dari yang terbanyak.",
+  "model": "gemma-3n-e2b",
+  "sql_query": "SELECT\n  a.first_name AS nama_aktor,\n  COUNT(f.film_id) AS jumlah_film\nFROM actor AS a\nJOIN film_actor AS fa\n  ON a.actor_id = fa.actor_id\nJOIN film AS f\n  ON fa.film_id = f.film_id\nGROUP BY\n  a.first_name\nORDER BY\n  jumlah_film DESC",
+  "timestamp": "2025-07-31T08:09:29.507559",
+  "response_time_ms": 155051.763,
+  "token_usage": {
+    "prompt_tokens": 1673,
+    "completion_tokens": 98,
+    "total_tokens": 1771
+  },
+  "raw_response": "```sql\nSELECT\n  a.first_name AS nama_aktor,\n  COUNT(f.film_id) AS jumlah_film\nFROM actor AS a\nJOIN film_actor AS fa\n  ON a.actor_id = fa.actor_id\nJOIN film AS f\n  ON fa.film_id = f.film_id\nGROUP BY\n  a.first_name\nORDER BY\n  jumlah_film DESC;\n```"
+}

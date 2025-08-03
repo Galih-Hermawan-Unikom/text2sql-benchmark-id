@@ -1,0 +1,36 @@
+{
+  "scenario_id": "RES-S6-03",
+  "model_info": {
+    "name": "gemma-3-27b-it",
+    "temperature": 0.0,
+    "timestamp": "2025-07-24T08:56:01.701328"
+  },
+  "input": {
+    "question_id": "Daerah asal mana yang memiliki jumlah masakan terbanyak? Tampilkan nama daerah dan total masakannya (semua daerah dengan jumlah maksimum).",
+    "database": "resep",
+    "category": "Superlative"
+  },
+  "prompt_info": {
+    "prompt_length": 7266,
+    "prompt_lines": 165
+  },
+  "model_response": {
+    "sql_query": "SELECT asal_daerah, COUNT(*) AS total_masakan FROM masakan GROUP BY asal_daerah HAVING COUNT(*) = (SELECT MAX(jumlah_masakan) FROM (SELECT COUNT(*) AS jumlah_masakan FROM masakan GROUP BY asal_daerah) AS subquery)",
+    "explanation": "Query ini menghitung jumlah masakan untuk setiap daerah asal, kemudian memilih daerah asal yang memiliki jumlah masakan tertinggi. Subquery digunakan untuk menemukan jumlah masakan maksimum, dan klausa HAVING digunakan untuk memfilter hanya daerah asal yang memiliki jumlah masakan sama dengan maksimum tersebut.",
+    "confidence": 0.95,
+    "assumptions": [
+      "Kolom 'asal_daerah' pada tabel 'masakan' berisi informasi daerah asal masakan."
+    ],
+    "potential_issues": [
+      "Jika ada beberapa daerah asal yang memiliki jumlah masakan yang sama dan merupakan jumlah maksimum, query akan mengembalikan semua daerah tersebut."
+    ],
+    "response_time_ms": 5055.848700000297,
+    "model_name": "gemma-3-27b-it",
+    "timestamp": "2025-07-24T08:56:01.701328",
+    "token_usage": {
+      "prompt_tokens": 2199,
+      "completion_tokens": null,
+      "total_tokens": 2199
+    }
+  }
+}

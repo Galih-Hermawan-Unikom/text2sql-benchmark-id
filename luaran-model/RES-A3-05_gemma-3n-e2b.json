@@ -1,0 +1,21 @@
+{
+  "metadata": {
+    "version": "1.0",
+    "generated_at": "2025-07-31T06:52:28.766275",
+    "tool": "text2sql_ollama"
+  },
+  "scenario_id": "RES-A3-05",
+  "category": "Aggregation",
+  "database": "resep",
+  "question_id": "Hitung jumlah masakan aktif dan tidak aktif. Tampilkan status_aktif (0 atau 1) beserta total masakannya.",
+  "model": "gemma-3n-e2b",
+  "sql_query": "SELECT\n  COUNT(m.kode_masakan) AS total_masakan_aktif,\n  SUM(CASE WHEN m.status_aktif = 1 THEN 1 ELSE 0 END) AS total_masakan_aktif,\n  SUM(CASE WHEN m.status_aktif = 0 THEN 1 ELSE 0 END) AS total_masakan_tidak_aktif\nFROM Masakan m",
+  "timestamp": "2025-07-31T06:52:28.766275",
+  "response_time_ms": 122734.334,
+  "token_usage": {
+    "prompt_tokens": 1222,
+    "completion_tokens": 93,
+    "total_tokens": 1315
+  },
+  "raw_response": "```sql\nSELECT\n  COUNT(m.kode_masakan) AS total_masakan_aktif,\n  SUM(CASE WHEN m.status_aktif = 1 THEN 1 ELSE 0 END) AS total_masakan_aktif,\n  SUM(CASE WHEN m.status_aktif = 0 THEN 1 ELSE 0 END) AS total_masakan_tidak_aktif\nFROM Masakan m;\n```"
+}

@@ -1,0 +1,21 @@
+{
+  "metadata": {
+    "version": "1.0",
+    "generated_at": "2025-07-31T07:00:40.602386",
+    "tool": "text2sql_ollama"
+  },
+  "scenario_id": "RES-C5-04",
+  "category": "Comparative",
+  "database": "resep",
+  "question_id": "Daerah asal mana yang memiliki jumlah masakan di bawah rata-rata jumlah masakan per daerah? Tampilkan nama daerah dan total masakannya.",
+  "model": "gemma-3n-e2b",
+  "sql_query": "SELECT\n  m.asal_daerah,\n  COUNT(m.kode_masakan) AS total_masakan\nFROM Masakan AS m\nGROUP BY\n  m.asal_daerah\nHAVING\n  COUNT(m.kode_masakan) < (\n    SELECT\n      AVG(jumlah)\n    FROM Recipe_Bahan AS rb\n    GROUP BY\n      m.kode_masakan\n  )",
+  "timestamp": "2025-07-31T07:00:40.602386",
+  "response_time_ms": 120609.73300000001,
+  "token_usage": {
+    "prompt_tokens": 1228,
+    "completion_tokens": 100,
+    "total_tokens": 1328
+  },
+  "raw_response": "```sql\nSELECT\n  m.asal_daerah,\n  COUNT(m.kode_masakan) AS total_masakan\nFROM Masakan AS m\nGROUP BY\n  m.asal_daerah\nHAVING\n  COUNT(m.kode_masakan) < (\n    SELECT\n      AVG(jumlah)\n    FROM Recipe_Bahan AS rb\n    GROUP BY\n      m.kode_masakan\n  );\n```"
+}

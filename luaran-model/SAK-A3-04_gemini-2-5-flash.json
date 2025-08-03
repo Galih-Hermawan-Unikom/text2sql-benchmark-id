@@ -1,0 +1,36 @@
+{
+  "scenario_id": "SAK-A3-04",
+  "model_info": {
+    "name": "gemini-2.5-flash",
+    "temperature": 0.0,
+    "timestamp": "2025-07-22T10:33:41.741414"
+  },
+  "input": {
+    "question_id": "Tampilkan setiap toko beserta total nilai pembayaran yang diterima sepanjang tahun 2006.",
+    "database": "sakila",
+    "category": "Aggregation"
+  },
+  "prompt_info": {
+    "prompt_length": 9244,
+    "prompt_lines": 299
+  },
+  "model_response": {
+    "sql_query": "SELECT s.store_id, SUM(p.amount) AS total_pembayaran FROM store s JOIN staff st ON s.store_id = st.store_id JOIN payment p ON st.staff_id = p.staff_id WHERE YEAR(p.payment_date) = 2006 GROUP BY s.store_id ORDER BY s.store_id",
+    "explanation": "Mengambil setiap toko dan menjumlahkan semua pembayaran yang terkait dengan staf toko tersebut untuk tahun 2006.",
+    "confidence": 0.98,
+    "assumptions": [
+      "Total nilai pembayaran dihitung berdasarkan kolom 'amount' di tabel 'payment'.",
+      "Staf terkait dengan toko di mana mereka bekerja, dan pembayaran dilakukan oleh staf tersebut."
+    ],
+    "potential_issues": [],
+    "response_time_ms": 4996.202,
+    "model_name": "gemini-2.5-flash",
+    "timestamp": "2025-07-22T10:33:41.740418",
+    "raw_response": "```json\n{\n  \"sql_query\": \"SELECT s.store_id, SUM(p.amount) AS total_pembayaran FROM store s JOIN staff st ON s.store_id = st.store_id JOIN payment p ON st.staff_id = p.staff_id WHERE YEAR(p.payment_date) = 2006 GROUP BY s.store_id ORDER BY s.store_id\",\n  \"confidence\": 0.98,\n  \"explanation\": \"Mengambil setiap toko dan menjumlahkan semua pembayaran yang terkait dengan staf toko tersebut untuk tahun 2006.\",\n  \"assumptions\": [\n    \"Total nilai pembayaran dihitung berdasarkan kolom 'amount' di tabel 'payment'.\",\n    \"Staf terkait dengan toko di mana mereka bekerja, dan pembayaran dilakukan oleh staf tersebut.\"\n  ],\n  \"potential_issues\": []\n}\n```",
+    "token_usage": {
+      "prompt_tokens": 2952,
+      "completion_tokens": 196,
+      "total_tokens": 3822
+    }
+  }
+}

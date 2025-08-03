@@ -1,0 +1,21 @@
+{
+  "metadata": {
+    "version": "1.0",
+    "generated_at": "2025-07-31T07:43:01.466742",
+    "tool": "text2sql_ollama"
+  },
+  "scenario_id": "RES-S6-05",
+  "category": "Superlative",
+  "database": "resep",
+  "question_id": "Masakan apa saja yang memiliki tingkat kepedasan tertinggi? Tampilkan kode masakan, nama masakan, dan level pedasnya.",
+  "model": "gemma-3n-e2b",
+  "sql_query": "SELECT\n  m.kode_masakan,\n  m.nama_masakan,\n  m.level_pedas\nFROM Masakan AS m\nWHERE\n  m.level_pedas = (\n    SELECT\n      MAX(level_pedas)\n    FROM Masakan\n  )",
+  "timestamp": "2025-07-31T07:43:01.466742",
+  "response_time_ms": 115904.696,
+  "token_usage": {
+    "prompt_tokens": 1229,
+    "completion_tokens": 71,
+    "total_tokens": 1300
+  },
+  "raw_response": "```sql\nSELECT\n  m.kode_masakan,\n  m.nama_masakan,\n  m.level_pedas\nFROM Masakan AS m\nWHERE\n  m.level_pedas = (\n    SELECT\n      MAX(level_pedas)\n    FROM Masakan\n  );\n```"
+}

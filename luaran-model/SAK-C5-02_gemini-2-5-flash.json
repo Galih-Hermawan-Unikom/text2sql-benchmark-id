@@ -1,0 +1,39 @@
+{
+  "scenario_id": "SAK-C5-02",
+  "model_info": {
+    "name": "gemini-2.5-flash",
+    "temperature": 0.0,
+    "timestamp": "2025-07-22T12:00:51.318922"
+  },
+  "input": {
+    "question_id": "Tampilkan pelanggan yang jumlah sewanya berada di bawah (rata-rata jumlah sewa per pelanggan minus satu simpangan baku); sertakan nama dan total sewanya.",
+    "database": "sakila",
+    "category": "Comparative"
+  },
+  "prompt_info": {
+    "prompt_length": 9636,
+    "prompt_lines": 300
+  },
+  "model_response": {
+    "sql_query": "WITH CustomerRentalCounts AS (\n    SELECT\n        c.customer_id,\n        c.first_name,\n        c.last_name,\n        COUNT(r.rental_id) AS total_rentals\n    FROM\n        customer c\n    JOIN\n        rental r ON c.customer_id = r.customer_id\n    GROUP BY\n        c.customer_id, c.first_name, c.last_name\n),\nRentalStatistics AS (\n    SELECT\n        AVG(total_rentals) AS avg_rentals,\n        STDDEV(total_rentals) AS stddev_rentals\n    FROM\n        CustomerRentalCounts\n)\nSELECT\n    crc.first_name,\n    crc.last_name,\n    crc.total_rentals\nFROM\n    CustomerRentalCounts crc,\n    RentalStatistics rs\nWHERE\n    crc.total_rentals < (rs.avg_rentals - rs.stddev_rentals)\nORDER BY\n    crc.total_rentals ASC;",
+    "explanation": "Query ini terlebih dahulu menghitung total jumlah sewa untuk setiap pelanggan. Kemudian, ia menghitung rata-rata dan simpangan baku dari jumlah sewa tersebut di seluruh pelanggan. Akhirnya, query menampilkan nama pelanggan dan total sewanya jika total sewa mereka berada di bawah nilai rata-rata dikurangi satu simpangan baku.",
+    "confidence": 0.98,
+    "assumptions": [
+      "Jumlah sewa pelanggan dihitung dari total entri di tabel `rental` untuk setiap `customer_id`.",
+      "Simpangan baku yang dimaksud adalah simpangan baku populasi (menggunakan fungsi STDDEV() MySQL)."
+    ],
+    "potential_issues": [
+      "Jika data sewa pelanggan sangat sedikit atau sangat seragam, nilai simpangan baku bisa mendekati nol, yang mungkin menghasilkan kriteria filter yang sangat ketat atau tidak relevan.",
+      "Performa query mungkin sedikit lebih lambat pada database yang sangat besar karena melibatkan beberapa agregasi dan subkueri."
+    ],
+    "response_time_ms": 9430.508,
+    "model_name": "gemini-2.5-flash",
+    "timestamp": "2025-07-22T12:00:51.318922",
+    "raw_response": "```json\n{\n  \"sql_query\": \"WITH CustomerRentalCounts AS (\\n    SELECT\\n        c.customer_id,\\n        c.first_name,\\n        c.last_name,\\n        COUNT(r.rental_id) AS total_rentals\\n    FROM\\n        customer c\\n    JOIN\\n        rental r ON c.customer_id = r.customer_id\\n    GROUP BY\\n        c.customer_id, c.first_name, c.last_name\\n),\\nRentalStatistics AS (\\n    SELECT\\n        AVG(total_rentals) AS avg_rentals,\\n        STDDEV(total_rentals) AS stddev_rentals\\n    FROM\\n        CustomerRentalCounts\\n)\\nSELECT\\n    crc.first_name,\\n    crc.last_name,\\n    crc.total_rentals\\nFROM\\n    CustomerRentalCounts crc,\\n    RentalStatistics rs\\nWHERE\\n    crc.total_rentals < (rs.avg_rentals - rs.stddev_rentals)\\nORDER BY\\n    crc.total_rentals ASC;\",\n  \"confidence\": 0.98,\n  \"explanation\": \"Query ini terlebih dahulu menghitung total jumlah sewa untuk setiap pelanggan. Kemudian, ia menghitung rata-rata dan simpangan baku dari jumlah sewa tersebut di seluruh pelanggan. Akhirnya, query menampilkan nama pelanggan dan total sewanya jika total sewa mereka berada di bawah nilai rata-rata dikurangi satu simpangan baku.\",\n  \"assumptions\": [\n    \"Jumlah sewa pelanggan dihitung dari total entri di tabel `rental` untuk setiap `customer_id`.\",\n    \"Simpangan baku yang dimaksud adalah simpangan baku populasi (menggunakan fungsi STDDEV() MySQL).\"\n  ],\n  \"potential_issues\": [\n    \"Jika data sewa pelanggan sangat sedikit atau sangat seragam, nilai simpangan baku bisa mendekati nol, yang mungkin menghasilkan kriteria filter yang sangat ketat atau tidak relevan.\",\n    \"Performa query mungkin sedikit lebih lambat pada database yang sangat besar karena melibatkan beberapa agregasi dan subkueri.\"\n  ]\n}\n```",
+    "token_usage": {
+      "prompt_tokens": 3039,
+      "completion_tokens": 480,
+      "total_tokens": 4941
+    }
+  }
+}

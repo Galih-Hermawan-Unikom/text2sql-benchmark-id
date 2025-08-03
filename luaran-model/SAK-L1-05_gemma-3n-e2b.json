@@ -1,0 +1,21 @@
+{
+  "metadata": {
+    "version": "1.0",
+    "generated_at": "2025-07-31T08:50:12.387560",
+    "tool": "text2sql_ollama"
+  },
+  "scenario_id": "SAK-L1-05",
+  "category": "Lookup / Filter",
+  "database": "sakila",
+  "question_id": "Tampilkan semua nama bahasa yang tersedia selain Inggris dan Italia.",
+  "model": "gemma-3n-e2b",
+  "sql_query": "SELECT\n  l.name AS nama_bahasa\nFROM language AS l\nWHERE\n  l.name NOT IN ('English', 'Italian')",
+  "timestamp": "2025-07-31T08:50:12.387560",
+  "response_time_ms": 144726.574,
+  "token_usage": {
+    "prompt_tokens": 1665,
+    "completion_tokens": 37,
+    "total_tokens": 1702
+  },
+  "raw_response": "```sql\nSELECT\n  l.name AS nama_bahasa\nFROM language AS l\nWHERE\n  l.name NOT IN ('English', 'Italian');\n```"
+}

@@ -1,0 +1,39 @@
+{
+  "scenario_id": "SAK-N4-05",
+  "model_info": {
+    "name": "gemini-2.5-flash-lite",
+    "temperature": 0.0,
+    "timestamp": "2025-07-23T13:55:04.542281"
+  },
+  "input": {
+    "question_id": "Tampilkan pelanggan dari Indonesia yang pernah menyewa film kategori 'Action' tetapi belum pernah menyewa film kategori 'Animation'; sertakan nama depan dan nama belakang mereka.",
+    "database": "sakila",
+    "category": "Nested / Subquery"
+  },
+  "prompt_info": {
+    "prompt_length": 9829,
+    "prompt_lines": 299
+  },
+  "model_response": {
+    "sql_query": "SELECT c.first_name, c.last_name FROM customer c JOIN address a ON c.address_id = a.address_id JOIN city ci ON a.city_id = ci.city_id JOIN country co ON ci.country_id = co.country_id JOIN rental r ON c.customer_id = r.customer_id JOIN inventory i ON r.inventory_id = i.inventory_id JOIN film f ON i.film_id = f.film_id JOIN film_category fc ON f.film_id = fc.film_id JOIN category cat ON fc.category_id = cat.category_id WHERE co.country = 'Indonesia' AND cat.name = 'Action' EXCEPT SELECT c.first_name, c.last_name FROM customer c JOIN address a ON c.address_id = a.address_id JOIN city ci ON a.city_id = ci.city_id JOIN country co ON ci.country_id = co.country_id JOIN rental r ON c.customer_id = r.customer_id JOIN inventory i ON r.inventory_id = i.inventory_id JOIN film f ON i.film_id = f.film_id JOIN film_category fc ON f.film_id = fc.film_id JOIN category cat ON fc.category_id = cat.category_id WHERE co.country = 'Indonesia' AND cat.name = 'Animation';",
+    "explanation": "Query ini pertama-tama mengidentifikasi semua pelanggan dari Indonesia yang pernah menyewa film bergenre 'Action'. Kemudian, menggunakan operator EXCEPT, query ini menghilangkan pelanggan yang juga pernah menyewa film bergenre 'Animation'. Hasil akhirnya adalah daftar pelanggan dari Indonesia yang hanya menyewa film 'Action' dan tidak pernah menyewa film 'Animation'.",
+    "confidence": 0.97,
+    "assumptions": [
+      "Negara 'Indonesia' ada dalam tabel 'country'.",
+      "Kategori 'Action' dan 'Animation' ada dalam tabel 'category'.",
+      "Pelanggan yang menyewa film diidentifikasi melalui tabel 'rental', 'inventory', 'film_category', dan 'category'."
+    ],
+    "potential_issues": [
+      "Jika seorang pelanggan menyewa film 'Action' dan 'Animation' dalam satu transaksi rental yang sama, logika ini mungkin tidak menangkapnya dengan tepat tergantung pada bagaimana data direkam.",
+      "Performa query bisa menjadi masalah pada dataset yang sangat besar karena penggunaan JOIN yang banyak dan operator EXCEPT."
+    ],
+    "response_time_ms": 2133.0723999999464,
+    "model_name": "gemini-2.5-flash-lite",
+    "timestamp": "2025-07-23T13:55:04.542339",
+    "token_usage": {
+      "prompt_tokens": 3084,
+      "completion_tokens": 555,
+      "total_tokens": 3639
+    }
+  }
+}

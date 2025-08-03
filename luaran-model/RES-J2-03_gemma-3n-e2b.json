@@ -1,0 +1,21 @@
+{
+  "metadata": {
+    "version": "1.0",
+    "generated_at": "2025-07-31T07:08:39.546403",
+    "tool": "text2sql_ollama"
+  },
+  "scenario_id": "RES-J2-03",
+  "category": "Join + Filter",
+  "database": "resep",
+  "question_id": "Sebutkan kode dan nama masakan khas Padang yang bisa dimasak dalam 90 menit atau kurang, sertakan judul resep dan lama memasaknya.",
+  "model": "gemma-3n-e2b",
+  "sql_query": "SELECT\n    m.kode_masakan AS kode_masakan,\n    m.nama_masakan AS nama_masakan,\n    r.judul_resep AS judul_resep,\n    r.waktu_masak AS lama_memasak\nFROM\n    masakan m\nJOIN\n    resep r ON m.kode_masakan = r.kode_masakan\nWHERE\n    m.kategori = 'Daging'\n    AND r.waktu_masak <= 90\n    AND m.status_aktif = TRUE",
+  "timestamp": "2025-07-31T07:08:39.546403",
+  "response_time_ms": 120967.446,
+  "token_usage": {
+    "prompt_tokens": 1230,
+    "completion_tokens": 129,
+    "total_tokens": 1359
+  },
+  "raw_response": "```sql\nSELECT\n    m.kode_masakan AS kode_masakan,\n    m.nama_masakan AS nama_masakan,\n    r.judul_resep AS judul_resep,\n    r.waktu_masak AS lama_memasak\nFROM\n    masakan m\nJOIN\n    resep r ON m.kode_masakan = r.kode_masakan\nWHERE\n    m.kategori = 'Daging'\n    AND r.waktu_masak <= 90\n    AND m.status_aktif = TRUE;\n```"
+}

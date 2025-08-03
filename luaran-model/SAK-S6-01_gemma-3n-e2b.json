@@ -1,0 +1,21 @@
+{
+  "metadata": {
+    "version": "1.0",
+    "generated_at": "2025-07-31T09:07:18.405043",
+    "tool": "text2sql_ollama"
+  },
+  "scenario_id": "SAK-S6-01",
+  "category": "Superlative",
+  "database": "sakila",
+  "question_id": "Siapa pelanggan dengan total nilai pembayaran terbesar? Sertakan nama depan, nama belakang, dan total pembayarannya.",
+  "model": "gemma-3n-e2b",
+  "sql_query": "SELECT\n    c.first_name AS nama_depan,\n    c.last_name AS nama_belakang,\n    SUM(p.amount) AS total_pembayaran\nFROM\n    customer c\nJOIN\n    rental r ON c.customer_id = r.customer_id\nJOIN\n    payment p ON r.rental_id = p.rental_id\nGROUP BY\n    c.customer_id, c.first_name, c.last_name\nORDER BY\n    total_pembayaran DESC\nLIMIT 1",
+  "timestamp": "2025-07-31T09:07:18.405043",
+  "response_time_ms": 184259.231,
+  "token_usage": {
+    "prompt_tokens": 1681,
+    "completion_tokens": 127,
+    "total_tokens": 1808
+  },
+  "raw_response": "```sql\nSELECT\n    c.first_name AS nama_depan,\n    c.last_name AS nama_belakang,\n    SUM(p.amount) AS total_pembayaran\nFROM\n    customer c\nJOIN\n    rental r ON c.customer_id = r.customer_id\nJOIN\n    payment p ON r.rental_id = p.rental_id\nGROUP BY\n    c.customer_id, c.first_name, c.last_name\nORDER BY\n    total_pembayaran DESC\nLIMIT 1;\n```"
+}

@@ -1,0 +1,21 @@
+{
+  "metadata": {
+    "version": "1.0",
+    "generated_at": "2025-07-31T06:56:40.519889",
+    "tool": "text2sql_ollama"
+  },
+  "scenario_id": "RES-C5-02",
+  "category": "Comparative",
+  "database": "resep",
+  "question_id": "Masakan mana saja yang tingkat kepedasannya di atas rata-rata semua masakan? Sertakan kode masakan, nama masakan, dan level pedasnya.",
+  "model": "gemma-3n-e2b",
+  "sql_query": "SELECT\n    m.kode_masakan AS kode_masakan,\n    m.nama_masakan AS nama_masakan,\n    m.level_pedas AS level_pedas\nFROM\n    masakan m\nWHERE\n    m.level_pedas > (SELECT AVG(level_pedas) FROM masakan)",
+  "timestamp": "2025-07-31T06:56:40.518883",
+  "response_time_ms": 118675.852,
+  "token_usage": {
+    "prompt_tokens": 1234,
+    "completion_tokens": 79,
+    "total_tokens": 1313
+  },
+  "raw_response": "```sql\nSELECT\n    m.kode_masakan AS kode_masakan,\n    m.nama_masakan AS nama_masakan,\n    m.level_pedas AS level_pedas\nFROM\n    masakan m\nWHERE\n    m.level_pedas > (SELECT AVG(level_pedas) FROM masakan);\n```"
+}

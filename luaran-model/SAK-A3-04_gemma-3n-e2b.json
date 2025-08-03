@@ -1,0 +1,21 @@
+{
+  "metadata": {
+    "version": "1.0",
+    "generated_at": "2025-07-31T08:06:54.454395",
+    "tool": "text2sql_ollama"
+  },
+  "scenario_id": "SAK-A3-04",
+  "category": "Aggregation",
+  "database": "sakila",
+  "question_id": "Tampilkan setiap toko beserta total nilai pembayaran yang diterima sepanjang tahun 2006.",
+  "model": "gemma-3n-e2b",
+  "sql_query": "SELECT\n    s.store_id,\n    SUM(p.amount) AS total_nilai_pembayaran\nFROM\n    store s\nJOIN\n    staff st ON s.manager_staff_id = st.staff_id\nJOIN\n    rental r ON s.store_id = r.store_id\nJOIN\n    payment p ON r.rental_id = p.rental_id\nWHERE\n    YEAR(r.rental_date) = 2006\nGROUP BY\n    s.store_id\nORDER BY\n    total_nilai_pembayaran DESC",
+  "timestamp": "2025-07-31T08:06:54.454395",
+  "response_time_ms": 154677.876,
+  "token_usage": {
+    "prompt_tokens": 1672,
+    "completion_tokens": 135,
+    "total_tokens": 1807
+  },
+  "raw_response": "```sql\nSELECT\n    s.store_id,\n    SUM(p.amount) AS total_nilai_pembayaran\nFROM\n    store s\nJOIN\n    staff st ON s.manager_staff_id = st.staff_id\nJOIN\n    rental r ON s.store_id = r.store_id\nJOIN\n    payment p ON r.rental_id = p.rental_id\nWHERE\n    YEAR(r.rental_date) = 2006\nGROUP BY\n    s.store_id\nORDER BY\n    total_nilai_pembayaran DESC;\n```"
+}

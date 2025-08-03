@@ -1,0 +1,36 @@
+{
+  "scenario_id": "RES-L1-01",
+  "model_info": {
+    "name": "gemma-3-27b-it",
+    "temperature": 0.0,
+    "timestamp": "2025-07-24T08:54:45.917550"
+  },
+  "input": {
+    "question_id": "Tampilkan semua bahan pada kategori Rempah, sertakan id dan nama bahannya.",
+    "database": "resep",
+    "category": "Lookup / Filter"
+  },
+  "prompt_info": {
+    "prompt_length": 7202,
+    "prompt_lines": 165
+  },
+  "model_response": {
+    "sql_query": "SELECT id_bahan, nama_bahan FROM bahan WHERE kategori_bahan = 'Rempah'",
+    "explanation": "Query ini memilih kolom id_bahan dan nama_bahan dari tabel bahan, dengan kondisi kategori_bahan sama dengan 'Rempah'.",
+    "confidence": 0.98,
+    "assumptions": [
+      "Kategori bahan 'Rempah' sudah ada di dalam tabel bahan."
+    ],
+    "potential_issues": [
+      "Jika tidak ada bahan dengan kategori 'Rempah', query akan mengembalikan hasil kosong."
+    ],
+    "response_time_ms": 3636.1400999999205,
+    "model_name": "gemma-3-27b-it",
+    "timestamp": "2025-07-24T08:54:45.917550",
+    "token_usage": {
+      "prompt_tokens": 2188,
+      "completion_tokens": null,
+      "total_tokens": 2188
+    }
+  }
+}

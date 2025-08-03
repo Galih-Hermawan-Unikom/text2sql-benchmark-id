@@ -1,0 +1,38 @@
+{
+  "scenario_id": "SAK-N4-04",
+  "model_info": {
+    "name": "gemini-2.5-flash-lite",
+    "temperature": 0.0,
+    "timestamp": "2025-07-23T13:55:01.370353"
+  },
+  "input": {
+    "question_id": "Tampilkan film yang belum pernah disewa oleh pelanggan mana pun.",
+    "database": "sakila",
+    "category": "Nested / Subquery"
+  },
+  "prompt_info": {
+    "prompt_length": 9715,
+    "prompt_lines": 299
+  },
+  "model_response": {
+    "sql_query": "SELECT f.title FROM film f LEFT JOIN inventory i ON f.film_id = i.film_id LEFT JOIN rental r ON i.inventory_id = r.inventory_id WHERE r.rental_id IS NULL;",
+    "explanation": "Query ini menampilkan judul film yang belum pernah disewa. Ini dilakukan dengan menggabungkan tabel film dengan inventory dan rental. Film yang tidak memiliki catatan rental (yaitu, rental_id adalah NULL setelah LEFT JOIN) dianggap belum pernah disewa.",
+    "confidence": 0.97,
+    "assumptions": [
+      "Setiap film yang ada di tabel `film` memiliki potensi untuk disewa.",
+      "Jika sebuah film tidak muncul dalam tabel `rental` sama sekali, itu berarti film tersebut belum pernah disewa."
+    ],
+    "potential_issues": [
+      "Jika sebuah film ada di tabel `film` tetapi tidak ada di tabel `inventory`, maka film tersebut juga tidak akan pernah disewa. Query ini akan menganggapnya belum disewa karena tidak akan ada kecocokan di `inventory` dan `rental`.",
+      "Perlu dipastikan bahwa tabel `inventory` mencakup semua film yang tersedia untuk disewa. Jika ada film yang belum dimasukkan ke dalam `inventory`, maka film tersebut juga tidak akan muncul dalam hasil."
+    ],
+    "response_time_ms": 1382.5782999992953,
+    "model_name": "gemini-2.5-flash-lite",
+    "timestamp": "2025-07-23T13:55:01.370353",
+    "token_usage": {
+      "prompt_tokens": 3064,
+      "completion_tokens": 294,
+      "total_tokens": 3358
+    }
+  }
+}

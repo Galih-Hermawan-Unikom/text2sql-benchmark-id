@@ -1,0 +1,40 @@
+{
+  "scenario_id": "SAK-C5-03",
+  "model_info": {
+    "name": "gemma-3-27b-it",
+    "temperature": 0.0,
+    "timestamp": "2025-07-24T08:57:11.798503"
+  },
+  "input": {
+    "question_id": "Di antara film 'PG-13', tampilkan yang biaya sewanya lebih tinggi dari rata-rata biaya sewa film 'PG-13' **dengan durasi > 120 menit** di kategori yang sama; sertakan judul, kategori, dan rental_rate.",
+    "database": "sakila",
+    "category": "Comparative"
+  },
+  "prompt_info": {
+    "prompt_length": 9851,
+    "prompt_lines": 299
+  },
+  "model_response": {
+    "sql_query": "SELECT f.title, c.name AS category_name, f.rental_rate FROM film f JOIN film_category fc ON f.film_id = fc.film_id JOIN category c ON fc.category_id = c.category_id WHERE f.rating = 'PG-13' AND f.length > 120 AND f.rental_rate > (SELECT AVG(f2.rental_rate) FROM film f2 JOIN film_category fc2 ON f2.film_id = fc2.film_id WHERE f2.rating = 'PG-13' AND f2.length > 120 AND fc2.category_id = fc.category_id)",
+    "explanation": "Query ini mengambil judul film, nama kategori, dan biaya sewa dari film-film dengan rating 'PG-13' dan durasi lebih dari 120 menit.  Biaya sewanya harus lebih tinggi dari rata-rata biaya sewa film 'PG-13' dengan durasi lebih dari 120 menit dalam kategori yang sama.",
+    "confidence": 0.95,
+    "assumptions": [
+      "Rating film disimpan dalam kolom 'rating' dengan nilai 'PG-13'.",
+      "Durasi film disimpan dalam kolom 'length' dengan satuan menit.",
+      "Biaya sewa film disimpan dalam kolom 'rental_rate'.",
+      "Kategori film dihubungkan melalui tabel 'film_category' dan 'category'."
+    ],
+    "potential_issues": [
+      "Performa query dapat menurun jika tabel film, film_category, dan category sangat besar.  Indeks yang tepat pada kolom yang digunakan dalam JOIN dan WHERE clause dapat membantu meningkatkan performa.",
+      "Jika tidak ada film 'PG-13' dengan durasi lebih dari 120 menit, subquery akan mengembalikan NULL, dan query utama tidak akan mengembalikan hasil apa pun."
+    ],
+    "response_time_ms": 9034.763999999996,
+    "model_name": "gemma-3-27b-it",
+    "timestamp": "2025-07-24T08:57:11.798503",
+    "token_usage": {
+      "prompt_tokens": 3109,
+      "completion_tokens": null,
+      "total_tokens": 3109
+    }
+  }
+}

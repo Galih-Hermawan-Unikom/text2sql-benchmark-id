@@ -1,0 +1,34 @@
+{
+  "scenario_id": "RES-J2-04",
+  "model_info": {
+    "name": "gemini-2.5-flash-lite",
+    "temperature": 0.0,
+    "timestamp": "2025-07-23T13:53:28.766298"
+  },
+  "input": {
+    "question_id": "Tampilkan ID resep, judul resep, dan nama bahan yang disajikan dalam satuan 'lembar'.",
+    "database": "resep",
+    "category": "Join + Filter"
+  },
+  "prompt_info": {
+    "prompt_length": 7213,
+    "prompt_lines": 165
+  },
+  "model_response": {
+    "sql_query": "SELECT r.id_resep, r.judul_resep, b.nama_bahan FROM resep r JOIN resep_bahan rb ON r.id_resep = rb.id_resep JOIN bahan b ON rb.id_bahan = b.id_bahan WHERE rb.satuan_override = 'lembar';",
+    "explanation": "Query ini mengambil ID resep, judul resep, dan nama bahan dari tabel yang relevan. Ini dilakukan dengan menggabungkan tabel 'resep', 'resep_bahan', dan 'bahan'. Filter diterapkan pada tabel 'resep_bahan' untuk hanya menyertakan bahan yang memiliki 'satuan_override' bernilai 'lembar'.",
+    "confidence": 0.97,
+    "assumptions": [
+      "Satuan 'lembar' dicatat dalam kolom 'satuan_override' pada tabel 'resep_bahan'."
+    ],
+    "potential_issues": [],
+    "response_time_ms": 1010.1544999997714,
+    "model_name": "gemini-2.5-flash-lite",
+    "timestamp": "2025-07-23T13:53:28.766298",
+    "token_usage": {
+      "prompt_tokens": 2193,
+      "completion_tokens": 221,
+      "total_tokens": 2414
+    }
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "scenario_id": "SAK-J2-05",
+  "model_info": {
+    "name": "gemini-2.5-flash",
+    "temperature": 0.0,
+    "timestamp": "2025-07-22T10:24:44.410475"
+  },
+  "input": {
+    "question_id": "Tampilkan judul film, kategori film, dan nama lengkap penyewanya untuk transaksi pada 16 Agustus 2005.",
+    "database": "sakila",
+    "category": "Join + Filter"
+  },
+  "prompt_info": {
+    "prompt_length": 9258,
+    "prompt_lines": 299
+  },
+  "model_response": {
+    "sql_query": "SELECT f.title, cat.name AS category_name, CONCAT(c.first_name, ' ', c.last_name) AS renter_full_name FROM rental r JOIN customer c ON r.customer_id = c.customer_id JOIN inventory i ON r.inventory_id = i.inventory_id JOIN film f ON i.film_id = f.film_id JOIN film_category fc ON f.film_id = fc.film_id JOIN category cat ON fc.category_id = cat.category_id WHERE DATE(r.rental_date) = '2005-08-16'",
+    "explanation": "Menggabungkan tabel rental, customer, inventory, film, film_category, dan category untuk menampilkan judul film, nama kategori film, dan nama lengkap penyewa (customer) berdasarkan tanggal sewa (rental_date) yang spesifik.",
+    "confidence": 0.98,
+    "assumptions": [
+      "Transaksi pada tanggal 16 Agustus 2005 merujuk pada `rental_date` di tabel `rental`.",
+      "Penyewa merujuk pada `customer` di tabel `customer`."
+    ],
+    "potential_issues": [
+      "Jika sebuah film memiliki lebih dari satu kategori, film tersebut akan muncul beberapa kali dalam hasil, sekali untuk setiap kategori yang terkait."
+    ],
+    "response_time_ms": 6818.234,
+    "model_name": "gemini-2.5-flash",
+    "timestamp": "2025-07-22T10:24:44.410475",
+    "raw_response": "```json\n{\n  \"sql_query\": \"SELECT f.title, cat.name AS category_name, CONCAT(c.first_name, ' ', c.last_name) AS renter_full_name FROM rental r JOIN customer c ON r.customer_id = c.customer_id JOIN inventory i ON r.inventory_id = i.inventory_id JOIN film f ON i.film_id = f.film_id JOIN film_category fc ON f.film_id = fc.film_id JOIN category cat ON fc.category_id = cat.category_id WHERE DATE(r.rental_date) = '2005-08-16'\",\n  \"confidence\": 0.98,\n  \"explanation\": \"Menggabungkan tabel rental, customer, inventory, film, film_category, dan category untuk menampilkan judul film, nama kategori film, dan nama lengkap penyewa (customer) berdasarkan tanggal sewa (rental_date) yang spesifik.\",\n  \"assumptions\": [\n    \"Transaksi pada tanggal 16 Agustus 2005 merujuk pada `rental_date` di tabel `rental`.\",\n    \"Penyewa merujuk pada `customer` di tabel `customer`.\"\n  ],\n  \"potential_issues\": [\n    \"Jika sebuah film memiliki lebih dari satu kategori, film tersebut akan muncul beberapa kali dalam hasil, sekali untuk setiap kategori yang terkait.\"\n  ]\n}\n```",
+    "token_usage": {
+      "prompt_tokens": 2961,
+      "completion_tokens": 317,
+      "total_tokens": 4375
+    }
+  }
+}

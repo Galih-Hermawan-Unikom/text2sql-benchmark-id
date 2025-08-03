@@ -1,0 +1,36 @@
+{
+  "scenario_id": "SAK-S6-01",
+  "model_info": {
+    "name": "gemma-3-27b-it",
+    "temperature": 0.0,
+    "timestamp": "2025-07-24T08:59:18.220457"
+  },
+  "input": {
+    "question_id": "Siapa pelanggan dengan total nilai pembayaran terbesar? Sertakan nama depan, nama belakang, dan total pembayarannya.",
+    "database": "sakila",
+    "category": "Superlative"
+  },
+  "prompt_info": {
+    "prompt_length": 9767,
+    "prompt_lines": 299
+  },
+  "model_response": {
+    "sql_query": "SELECT c.first_name, c.last_name, SUM(p.amount) AS total_pembayaran FROM customer c JOIN payment p ON c.customer_id = p.customer_id GROUP BY c.customer_id, c.first_name, c.last_name ORDER BY total_pembayaran DESC LIMIT 1",
+    "explanation": "Query ini menghitung total pembayaran untuk setiap pelanggan, kemudian mengurutkan hasilnya berdasarkan total pembayaran secara menurun, dan akhirnya memilih pelanggan dengan total pembayaran tertinggi.",
+    "confidence": 0.98,
+    "assumptions": [
+      "Total nilai pembayaran dihitung berdasarkan jumlah semua pembayaran yang dilakukan oleh pelanggan."
+    ],
+    "potential_issues": [
+      "Jika ada pelanggan dengan total pembayaran yang sama, query hanya akan mengembalikan salah satu dari mereka."
+    ],
+    "response_time_ms": 4734.416000000238,
+    "model_name": "gemma-3-27b-it",
+    "timestamp": "2025-07-24T08:59:18.220457",
+    "token_usage": {
+      "prompt_tokens": 3074,
+      "completion_tokens": null,
+      "total_tokens": 3074
+    }
+  }
+}

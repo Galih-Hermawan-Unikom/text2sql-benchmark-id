@@ -1,0 +1,35 @@
+{
+  "scenario_id": "SAK-N4-02",
+  "model_info": {
+    "name": "gemini-2.5-flash",
+    "temperature": 0.0,
+    "timestamp": "2025-07-22T10:55:07.666691"
+  },
+  "input": {
+    "question_id": "Tampilkan bahasa yang tidak memiliki satu pun film berating 'R'.",
+    "database": "sakila",
+    "category": "Nested / Subquery"
+  },
+  "prompt_info": {
+    "prompt_length": 9220,
+    "prompt_lines": 299
+  },
+  "model_response": {
+    "sql_query": "SELECT l.name FROM language l LEFT JOIN film f ON l.language_id = f.language_id AND f.rating = 'R' GROUP BY l.language_id, l.name HAVING COUNT(f.film_id) = 0",
+    "explanation": "Query ini mencari semua bahasa. Kemudian, menggunakan LEFT JOIN dengan tabel film, hanya mencocokkan film yang memiliki rating 'R'. Dengan mengelompokkan hasilnya berdasarkan bahasa dan menghitung jumlah film berating 'R' untuk setiap bahasa, klausa HAVING COUNT(f.film_id) = 0 memastikan bahwa hanya bahasa yang tidak memiliki film berating 'R' yang akan ditampilkan.",
+    "confidence": 0.98,
+    "assumptions": [
+      "Bahasa yang tidak memiliki film sama sekali atau hanya memiliki film non-R akan termasuk dalam hasil."
+    ],
+    "potential_issues": [],
+    "response_time_ms": 5764.496,
+    "model_name": "gemini-2.5-flash",
+    "timestamp": "2025-07-22T10:55:07.666691",
+    "raw_response": "```json\n{\n  \"sql_query\": \"SELECT l.name FROM language l LEFT JOIN film f ON l.language_id = f.language_id AND f.rating = 'R' GROUP BY l.language_id, l.name HAVING COUNT(f.film_id) = 0\",\n  \"confidence\": 0.98,\n  \"explanation\": \"Query ini mencari semua bahasa. Kemudian, menggunakan LEFT JOIN dengan tabel film, hanya mencocokkan film yang memiliki rating 'R'. Dengan mengelompokkan hasilnya berdasarkan bahasa dan menghitung jumlah film berating 'R' untuk setiap bahasa, klausa HAVING COUNT(f.film_id) = 0 memastikan bahwa hanya bahasa yang tidak memiliki film berating 'R' yang akan ditampilkan.\",\n  \"assumptions\": [\n    \"Bahasa yang tidak memiliki film sama sekali atau hanya memiliki film non-R akan termasuk dalam hasil.\"\n  ],\n  \"potential_issues\": []\n}\n```",
+    "token_usage": {
+      "prompt_tokens": 2948,
+      "completion_tokens": 209,
+      "total_tokens": 4026
+    }
+  }
+}

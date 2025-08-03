@@ -1,0 +1,34 @@
+{
+  "scenario_id": "SAK-S6-04",
+  "model_info": {
+    "name": "gemini-2.5-flash-lite",
+    "temperature": 0.0,
+    "timestamp": "2025-07-23T13:55:13.160745"
+  },
+  "input": {
+    "question_id": "Siapa pelanggan yang paling sering menyewa film? Sertakan nama depan, nama belakang, dan jumlah sewanya.",
+    "database": "sakila",
+    "category": "Superlative"
+  },
+  "prompt_info": {
+    "prompt_length": 9755,
+    "prompt_lines": 299
+  },
+  "model_response": {
+    "sql_query": "SELECT c.first_name, c.last_name, COUNT(r.rental_id) AS jumlah_sewa FROM customer c JOIN rental r ON c.customer_id = r.customer_id GROUP BY c.customer_id, c.first_name, c.last_name ORDER BY jumlah_sewa DESC",
+    "explanation": "Query ini menggabungkan tabel 'customer' dan 'rental' menggunakan 'customer_id'. Kemudian, ia mengelompokkan hasil berdasarkan pelanggan dan menghitung jumlah total sewa untuk setiap pelanggan. Hasilnya diurutkan berdasarkan jumlah sewa secara menurun untuk menampilkan pelanggan yang paling sering menyewa film.",
+    "confidence": 0.99,
+    "assumptions": [
+      "Pelanggan yang paling sering menyewa film diidentifikasi berdasarkan jumlah total rental yang mereka lakukan."
+    ],
+    "potential_issues": [],
+    "response_time_ms": 1183.6480000001757,
+    "model_name": "gemini-2.5-flash-lite",
+    "timestamp": "2025-07-23T13:55:13.160745",
+    "token_usage": {
+      "prompt_tokens": 3074,
+      "completion_tokens": 206,
+      "total_tokens": 3280
+    }
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "scenario_id": "SAK-A3-05",
+  "model_info": {
+    "name": "gemini-2.5-flash",
+    "temperature": 0.0,
+    "timestamp": "2025-07-22T10:33:44.131397"
+  },
+  "input": {
+    "question_id": "Tampilkan nama aktor dan jumlah film yang mereka bintangi, urutkan dari yang terbanyak.",
+    "database": "sakila",
+    "category": "Aggregation"
+  },
+  "prompt_info": {
+    "prompt_length": 9243,
+    "prompt_lines": 299
+  },
+  "model_response": {
+    "sql_query": "SELECT a.first_name, a.last_name, COUNT(fa.film_id) AS jumlah_film FROM actor a JOIN film_actor fa ON a.actor_id = fa.actor_id GROUP BY a.actor_id, a.first_name, a.last_name ORDER BY jumlah_film DESC",
+    "explanation": "Mengambil nama depan dan nama belakang aktor, lalu menghitung jumlah film yang dibintangi oleh setiap aktor dengan menggabungkan tabel `actor` dan `film_actor`. Hasilnya dikelompokkan berdasarkan aktor dan diurutkan berdasarkan jumlah film dari yang terbanyak.",
+    "confidence": 0.98,
+    "assumptions": [
+      "Jumlah film yang dibintangi dihitung dari entri di tabel `film_actor`."
+    ],
+    "potential_issues": [],
+    "response_time_ms": 2375.955,
+    "model_name": "gemini-2.5-flash",
+    "timestamp": "2025-07-22T10:33:44.131397",
+    "raw_response": "```json\n{\n  \"sql_query\": \"SELECT a.first_name, a.last_name, COUNT(fa.film_id) AS jumlah_film FROM actor a JOIN film_actor fa ON a.actor_id = fa.actor_id GROUP BY a.actor_id, a.first_name, a.last_name ORDER BY jumlah_film DESC\",\n  \"confidence\": 0.98,\n  \"explanation\": \"Mengambil nama depan dan nama belakang aktor, lalu menghitung jumlah film yang dibintangi oleh setiap aktor dengan menggabungkan tabel `actor` dan `film_actor`. Hasilnya dikelompokkan berdasarkan aktor dan diurutkan berdasarkan jumlah film dari yang terbanyak.\",\n  \"assumptions\": [\"Jumlah film yang dibintangi dihitung dari entri di tabel `film_actor`.\"],\n  \"potential_issues\": []\n}\n```",
+    "token_usage": {
+      "prompt_tokens": 2955,
+      "completion_tokens": 193,
+      "total_tokens": 3346
+    }
+  }
+}

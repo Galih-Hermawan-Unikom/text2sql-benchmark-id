@@ -1,0 +1,37 @@
+{
+  "scenario_id": "RES-A3-04",
+  "model_info": {
+    "name": "gemma-3-27b-it",
+    "temperature": 0.0,
+    "timestamp": "2025-07-24T08:53:26.179201"
+  },
+  "input": {
+    "question_id": "Untuk setiap daerah asal, berapa banyak bahan unik yang digunakan di seluruh masakan daerah tersebut? Tampilkan nama daerah dan jumlah bahan uniknya.",
+    "database": "resep",
+    "category": "Aggregation"
+  },
+  "prompt_info": {
+    "prompt_length": 7277,
+    "prompt_lines": 165
+  },
+  "model_response": {
+    "sql_query": "SELECT m.asal_daerah, COUNT(DISTINCT rb.id_bahan) AS jumlah_bahan_unik FROM masakan m JOIN resep r ON m.kode_masakan = r.kode_masakan JOIN resep_bahan rb ON r.id_resep = rb.id_resep GROUP BY m.asal_daerah",
+    "explanation": "Query ini menghitung jumlah bahan unik yang digunakan dalam masakan dari setiap daerah asal.  Query ini melakukan JOIN antara tabel `masakan`, `resep`, dan `resep_bahan` untuk menghubungkan daerah asal dengan bahan-bahan yang digunakan dalam resep masakan tersebut. Kemudian, menggunakan `COUNT(DISTINCT rb.id_bahan)` untuk menghitung jumlah bahan unik untuk setiap daerah asal, dan mengelompokkan hasilnya berdasarkan `asal_daerah`.",
+    "confidence": 0.98,
+    "assumptions": [
+      "Setiap masakan memiliki setidaknya satu resep terkait.",
+      "Tabel `resep_bahan` berisi semua bahan yang digunakan dalam setiap resep."
+    ],
+    "potential_issues": [
+      "Jika ada data yang tidak konsisten antara tabel-tabel yang di-JOIN, hasilnya mungkin tidak akurat."
+    ],
+    "response_time_ms": 6277.9985999995915,
+    "model_name": "gemma-3-27b-it",
+    "timestamp": "2025-07-24T08:53:26.179201",
+    "token_usage": {
+      "prompt_tokens": 2199,
+      "completion_tokens": null,
+      "total_tokens": 2199
+    }
+  }
+}

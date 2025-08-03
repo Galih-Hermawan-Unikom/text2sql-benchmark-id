@@ -1,0 +1,36 @@
+{
+  "scenario_id": "RES-C5-01",
+  "model_info": {
+    "name": "gemma-3-27b-it",
+    "temperature": 0.0,
+    "timestamp": "2025-07-24T08:53:36.538327"
+  },
+  "input": {
+    "question_id": "Resep apa saja yang durasi memasaknya lebih lama daripada rata-rata durasi semua resep? Tampilkan judul resep dan lamanya memasak.",
+    "database": "resep",
+    "category": "Comparative"
+  },
+  "prompt_info": {
+    "prompt_length": 7258,
+    "prompt_lines": 165
+  },
+  "model_response": {
+    "sql_query": "SELECT r.judul_resep, r.waktu_masak FROM resep r WHERE r.waktu_masak > (SELECT AVG(waktu_masak) FROM resep)",
+    "explanation": "Query ini mengambil judul resep dan durasi memasak dari tabel 'resep' di mana durasi memasaknya lebih besar dari rata-rata durasi memasak dari semua resep dalam tabel 'resep'. Subquery digunakan untuk menghitung rata-rata durasi memasak.",
+    "confidence": 0.97,
+    "assumptions": [
+      "Kolom 'waktu_masak' dalam tabel 'resep' menyimpan durasi memasak dalam menit."
+    ],
+    "potential_issues": [
+      "Jika tabel 'resep' kosong, subquery akan mengembalikan NULL, dan query utama tidak akan mengembalikan baris apa pun. Ini adalah perilaku yang diharapkan."
+    ],
+    "response_time_ms": 5060.72260000019,
+    "model_name": "gemma-3-27b-it",
+    "timestamp": "2025-07-24T08:53:36.538327",
+    "token_usage": {
+      "prompt_tokens": 2203,
+      "completion_tokens": null,
+      "total_tokens": 2203
+    }
+  }
+}

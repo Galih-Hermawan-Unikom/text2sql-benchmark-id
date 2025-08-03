@@ -1,0 +1,38 @@
+{
+  "scenario_id": "RES-C5-02",
+  "model_info": {
+    "name": "gemini-2.5-flash",
+    "temperature": 0.0,
+    "timestamp": "2025-07-22T12:00:01.436876"
+  },
+  "input": {
+    "question_id": "Masakan mana saja yang tingkat kepedasannya di atas rata-rata semua masakan? Sertakan kode masakan, nama masakan, dan level pedasnya.",
+    "database": "resep",
+    "category": "Comparative"
+  },
+  "prompt_info": {
+    "prompt_length": 7433,
+    "prompt_lines": 168
+  },
+  "model_response": {
+    "sql_query": "SELECT kode_masakan, nama_masakan, level_pedas FROM masakan WHERE level_pedas > (SELECT AVG(level_pedas) FROM masakan)",
+    "explanation": "Mengambil semua masakan yang memiliki level kepedasan di atas rata-rata level kepedasan dari seluruh masakan yang ada di database. Subquery digunakan untuk menghitung nilai rata-rata level pedas terlebih dahulu.",
+    "confidence": 0.98,
+    "assumptions": [
+      "Level kepedasan diukur dalam kolom 'level_pedas' pada tabel 'masakan'.",
+      "Rata-rata level kepedasan dihitung dari semua masakan yang ada."
+    ],
+    "potential_issues": [
+      "Jika tidak ada data masakan, subquery akan mengembalikan NULL, yang mungkin menyebabkan hasil kosong atau error tergantung pada perilaku SQL client/server."
+    ],
+    "response_time_ms": 2606.4280000000003,
+    "model_name": "gemini-2.5-flash",
+    "timestamp": "2025-07-22T12:00:01.435862",
+    "raw_response": "```json\n{\n  \"sql_query\": \"SELECT kode_masakan, nama_masakan, level_pedas FROM masakan WHERE level_pedas > (SELECT AVG(level_pedas) FROM masakan)\",\n  \"confidence\": 0.98,\n  \"explanation\": \"Mengambil semua masakan yang memiliki level kepedasan di atas rata-rata level kepedasan dari seluruh masakan yang ada di database. Subquery digunakan untuk menghitung nilai rata-rata level pedas terlebih dahulu.\",\n  \"assumptions\": [\n    \"Level kepedasan diukur dalam kolom 'level_pedas' pada tabel 'masakan'.\",\n    \"Rata-rata level kepedasan dihitung dari semua masakan yang ada.\"\n  ],\n  \"potential_issues\": [\n    \"Jika tidak ada data masakan, subquery akan mengembalikan NULL, yang mungkin menyebabkan hasil kosong atau error tergantung pada perilaku SQL client/server.\"\n  ]\n}\n```",
+    "token_usage": {
+      "prompt_tokens": 2252,
+      "completion_tokens": 212,
+      "total_tokens": 2664
+    }
+  }
+}

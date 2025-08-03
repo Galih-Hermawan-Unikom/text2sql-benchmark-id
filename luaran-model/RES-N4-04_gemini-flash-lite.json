@@ -1,0 +1,34 @@
+{
+  "scenario_id": "RES-N4-04",
+  "model_info": {
+    "name": "gemini-2.5-flash-lite",
+    "temperature": 0.0,
+    "timestamp": "2025-07-23T13:53:50.695956"
+  },
+  "input": {
+    "question_id": "Sebutkan bahan apa saja yang sama sekali belum pernah dipakai di masakan mana pun. Tampilkan nama bahannya saja.",
+    "database": "resep",
+    "category": "Nested / Subquery"
+  },
+  "prompt_info": {
+    "prompt_length": 7240,
+    "prompt_lines": 165
+  },
+  "model_response": {
+    "sql_query": "SELECT b.nama_bahan FROM bahan b LEFT JOIN resep_bahan rb ON b.id_bahan = rb.id_bahan WHERE rb.id_bahan IS NULL;",
+    "explanation": "Query ini mencari bahan-bahan yang belum pernah digunakan dalam resep manapun. Ini dilakukan dengan melakukan LEFT JOIN dari tabel 'bahan' ke tabel 'resep_bahan' berdasarkan 'id_bahan'. Jika sebuah bahan tidak memiliki entri yang cocok di 'resep_bahan' (artinya belum pernah digunakan), maka kolom 'id_bahan' dari tabel 'resep_bahan' akan bernilai NULL. Kondisi WHERE rb.id_bahan IS NULL kemudian memfilter hanya bahan-bahan tersebut.",
+    "confidence": 0.98,
+    "assumptions": [
+      "Setiap bahan yang belum pernah digunakan dalam resep tidak akan memiliki entri di tabel 'resep_bahan'."
+    ],
+    "potential_issues": [],
+    "response_time_ms": 1106.8168000001606,
+    "model_name": "gemini-2.5-flash-lite",
+    "timestamp": "2025-07-23T13:53:50.695956",
+    "token_usage": {
+      "prompt_tokens": 2196,
+      "completion_tokens": 217,
+      "total_tokens": 2413
+    }
+  }
+}

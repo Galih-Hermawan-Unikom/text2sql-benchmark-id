@@ -1,0 +1,21 @@
+{
+  "metadata": {
+    "version": "1.0",
+    "generated_at": "2025-07-31T08:42:24.077925",
+    "tool": "text2sql_ollama"
+  },
+  "scenario_id": "SAK-L1-02",
+  "category": "Lookup / Filter",
+  "database": "sakila",
+  "question_id": "Tampilkan daftar aktor yang nama belakangnya diawali huruf 'A'.",
+  "model": "gemma-3n-e2b",
+  "sql_query": "SELECT a.first_name, a.last_name\nFROM actor a\nJOIN film_actor fa ON a.actor_id = fa.actor_id\nJOIN film f ON fa.film_id = f.film_id\nWHERE a.last_name LIKE 'A%'",
+  "timestamp": "2025-07-31T08:42:24.077339",
+  "response_time_ms": 147904.513,
+  "token_usage": {
+    "prompt_tokens": 1667,
+    "completion_tokens": 67,
+    "total_tokens": 1734
+  },
+  "raw_response": "```sql\nSELECT a.first_name, a.last_name\nFROM actor a\nJOIN film_actor fa ON a.actor_id = fa.actor_id\nJOIN film f ON fa.film_id = f.film_id\nWHERE a.last_name LIKE 'A%';\n```"
+}

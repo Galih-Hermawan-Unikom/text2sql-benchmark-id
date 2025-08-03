@@ -1,0 +1,37 @@
+{
+  "scenario_id": "RES-N4-02",
+  "model_info": {
+    "name": "gemma-3-27b-it",
+    "temperature": 0.0,
+    "timestamp": "2025-07-24T08:55:21.342309"
+  },
+  "input": {
+    "question_id": "Tampilkan judul resep yang durasi memasaknya lebih lama daripada rata-rata durasi di kategori masakan yang sama.",
+    "database": "resep",
+    "category": "Nested / Subquery"
+  },
+  "prompt_info": {
+    "prompt_length": 7240,
+    "prompt_lines": 165
+  },
+  "model_response": {
+    "sql_query": "SELECT r.judul_resep FROM resep r JOIN masakan m ON r.kode_masakan = m.kode_masakan WHERE r.waktu_masak > (SELECT AVG(waktu_masak) FROM resep WHERE kode_masakan = r.kode_masakan)",
+    "explanation": "Query ini mengambil judul resep yang waktu memasaknya lebih lama dari rata-rata waktu memasak untuk masakan dengan kode yang sama.  Subquery menghitung rata-rata waktu memasak untuk setiap kode masakan, dan klausa WHERE membandingkan waktu masak resep dengan rata-rata tersebut.",
+    "confidence": 0.95,
+    "assumptions": [
+      "Kolom 'waktu_masak' pada tabel 'resep' berisi durasi memasak dalam menit.",
+      "Kode masakan digunakan untuk mengelompokkan resep berdasarkan jenis masakan."
+    ],
+    "potential_issues": [
+      "Jika tidak ada resep dengan kode masakan yang sama, subquery akan mengembalikan NULL, yang dapat menyebabkan hasil yang tidak terduga.  Namun, karena perbandingan dengan NULL akan menghasilkan FALSE, resep tersebut tidak akan ditampilkan."
+    ],
+    "response_time_ms": 6048.333800000364,
+    "model_name": "gemma-3-27b-it",
+    "timestamp": "2025-07-24T08:55:21.342309",
+    "token_usage": {
+      "prompt_tokens": 2196,
+      "completion_tokens": null,
+      "total_tokens": 2196
+    }
+  }
+}

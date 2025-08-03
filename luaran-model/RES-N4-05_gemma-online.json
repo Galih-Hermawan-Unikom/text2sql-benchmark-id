@@ -1,0 +1,37 @@
+{
+  "scenario_id": "RES-N4-05",
+  "model_info": {
+    "name": "gemma-3-27b-it",
+    "temperature": 0.0,
+    "timestamp": "2025-07-24T08:55:42.899742"
+  },
+  "input": {
+    "question_id": "Berapa banyak resep yang tidak menggunakan bahan apa pun yang mengandung kata 'Cabe'? Tampilkan jumlahnya saja.",
+    "database": "resep",
+    "category": "Nested / Subquery"
+  },
+  "prompt_info": {
+    "prompt_length": 7239,
+    "prompt_lines": 165
+  },
+  "model_response": {
+    "sql_query": "SELECT COUNT(*) AS jumlah_resep FROM resep WHERE id_resep NOT IN (SELECT rb.id_resep FROM resep_bahan rb JOIN bahan b ON rb.id_bahan = b.id_bahan WHERE b.nama_bahan LIKE '%Cabe%')",
+    "explanation": "Query ini menghitung jumlah resep yang tidak menggunakan bahan yang mengandung kata 'Cabe'.  Pertama, subquery mencari semua `id_resep` yang menggunakan bahan yang mengandung 'Cabe'. Kemudian, query utama menghitung jumlah resep yang `id_resep`-nya tidak ada dalam hasil subquery tersebut.",
+    "confidence": 0.95,
+    "assumptions": [
+      "Kata 'Cabe' dalam nama bahan menunjukkan bahan yang mengandung cabe.",
+      "Pencarian 'Cabe' bersifat case-insensitive (menggunakan LIKE)."
+    ],
+    "potential_issues": [
+      "Jika ada variasi penulisan 'Cabe' (misalnya, 'cabe', 'CABAI'), query mungkin perlu dimodifikasi untuk menangani semua variasi tersebut.  Penggunaan LIKE dengan wildcard mungkin memengaruhi performa jika tabel bahan sangat besar."
+    ],
+    "response_time_ms": 5942.752000000382,
+    "model_name": "gemma-3-27b-it",
+    "timestamp": "2025-07-24T08:55:42.899742",
+    "token_usage": {
+      "prompt_tokens": 2194,
+      "completion_tokens": null,
+      "total_tokens": 2194
+    }
+  }
+}

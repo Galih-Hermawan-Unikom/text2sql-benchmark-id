@@ -1,0 +1,36 @@
+{
+  "scenario_id": "SAK-S6-02",
+  "model_info": {
+    "name": "gemma-3-27b-it",
+    "temperature": 0.0,
+    "timestamp": "2025-07-24T08:59:23.272850"
+  },
+  "input": {
+    "question_id": "Film apa yang memiliki durasi terlama? Sertakan judul dan durasinya.",
+    "database": "sakila",
+    "category": "Superlative"
+  },
+  "prompt_info": {
+    "prompt_length": 9719,
+    "prompt_lines": 299
+  },
+  "model_response": {
+    "sql_query": "SELECT title, length FROM film ORDER BY length DESC LIMIT 1",
+    "explanation": "Query ini memilih judul dan durasi film dari tabel 'film', kemudian mengurutkannya berdasarkan durasi secara menurun (terpanjang ke terpendek), dan terakhir hanya mengambil satu baris teratas (film dengan durasi terlama).",
+    "confidence": 0.98,
+    "assumptions": [
+      "Durasi film disimpan dalam kolom 'length' dengan satuan menit."
+    ],
+    "potential_issues": [
+      "Jika ada beberapa film dengan durasi yang sama dan merupakan durasi terlama, query ini hanya akan mengembalikan salah satunya."
+    ],
+    "response_time_ms": 4028.926099999808,
+    "model_name": "gemma-3-27b-it",
+    "timestamp": "2025-07-24T08:59:23.272850",
+    "token_usage": {
+      "prompt_tokens": 3067,
+      "completion_tokens": null,
+      "total_tokens": 3067
+    }
+  }
+}

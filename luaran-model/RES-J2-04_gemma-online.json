@@ -1,0 +1,36 @@
+{
+  "scenario_id": "RES-J2-04",
+  "model_info": {
+    "name": "gemma-3-27b-it",
+    "temperature": 0.0,
+    "timestamp": "2025-07-24T08:54:33.402239"
+  },
+  "input": {
+    "question_id": "Tampilkan ID resep, judul resep, dan nama bahan yang disajikan dalam satuan 'lembar'.",
+    "database": "resep",
+    "category": "Join + Filter"
+  },
+  "prompt_info": {
+    "prompt_length": 7213,
+    "prompt_lines": 165
+  },
+  "model_response": {
+    "sql_query": "SELECT r.id_resep, r.judul_resep, b.nama_bahan FROM resep r JOIN resep_bahan rb ON r.id_resep = rb.id_resep JOIN bahan b ON rb.id_bahan = b.id_bahan WHERE rb.satuan_override = 'lembar'",
+    "explanation": "Query ini mengambil ID resep, judul resep, dan nama bahan dari tabel resep, resep_bahan, dan bahan.  Query ini menggunakan JOIN untuk menghubungkan tabel-tabel tersebut berdasarkan kunci asing yang sesuai.  Klausa WHERE memfilter hasil untuk hanya menampilkan bahan yang menggunakan satuan 'lembar' pada tabel resep_bahan.",
+    "confidence": 0.97,
+    "assumptions": [
+      "Satuan 'lembar' disimpan dalam kolom satuan_override pada tabel resep_bahan."
+    ],
+    "potential_issues": [
+      "Jika satuan 'lembar' tidak selalu disimpan dalam kolom satuan_override, query ini mungkin tidak mengembalikan semua hasil yang diharapkan.  Perlu dipastikan bahwa satuan yang digunakan konsisten."
+    ],
+    "response_time_ms": 5781.374800000322,
+    "model_name": "gemma-3-27b-it",
+    "timestamp": "2025-07-24T08:54:33.402239",
+    "token_usage": {
+      "prompt_tokens": 2193,
+      "completion_tokens": null,
+      "total_tokens": 2193
+    }
+  }
+}

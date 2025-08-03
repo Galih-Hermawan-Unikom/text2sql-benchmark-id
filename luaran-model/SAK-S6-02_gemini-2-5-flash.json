@@ -1,0 +1,35 @@
+{
+  "scenario_id": "SAK-S6-02",
+  "model_info": {
+    "name": "gemini-2.5-flash",
+    "temperature": 0.0,
+    "timestamp": "2025-07-22T12:50:22.217017"
+  },
+  "input": {
+    "question_id": "Film apa yang memiliki durasi terlama? Sertakan judul dan durasinya.",
+    "database": "sakila",
+    "category": "Superlative"
+  },
+  "prompt_info": {
+    "prompt_length": 9891,
+    "prompt_lines": 301
+  },
+  "model_response": {
+    "sql_query": "SELECT title, length FROM film WHERE length = (SELECT MAX(length) FROM film)",
+    "explanation": "Mengambil judul dan durasi (length) film di mana durasinya sama dengan durasi maksimum yang ditemukan di tabel film. Ini memastikan semua film dengan durasi terlama akan ditampilkan, meskipun ada beberapa film dengan durasi yang sama.",
+    "confidence": 0.98,
+    "assumptions": [
+      "Durasi film disimpan dalam kolom 'length' di tabel 'film'."
+    ],
+    "potential_issues": [],
+    "response_time_ms": 2623.448,
+    "model_name": "gemini-2.5-flash",
+    "timestamp": "2025-07-22T12:50:22.215986",
+    "raw_response": "```json\n{\n  \"sql_query\": \"SELECT title, length FROM film WHERE length = (SELECT MAX(length) FROM film)\",\n  \"confidence\": 0.98,\n  \"explanation\": \"Mengambil judul dan durasi (length) film di mana durasinya sama dengan durasi maksimum yang ditemukan di tabel film. Ini memastikan semua film dengan durasi terlama akan ditampilkan, meskipun ada beberapa film dengan durasi yang sama.\",\n  \"assumptions\": [\n    \"Durasi film disimpan dalam kolom 'length' di tabel 'film'.\"\n  ],\n  \"potential_issues\": []\n}\n```",
+    "token_usage": {
+      "prompt_tokens": 3102,
+      "completion_tokens": 133,
+      "total_tokens": 3488
+    }
+  }
+}

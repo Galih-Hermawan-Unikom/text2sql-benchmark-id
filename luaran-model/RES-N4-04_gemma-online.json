@@ -1,0 +1,36 @@
+{
+  "scenario_id": "RES-N4-04",
+  "model_info": {
+    "name": "gemma-3-27b-it",
+    "temperature": 0.0,
+    "timestamp": "2025-07-24T08:55:35.945316"
+  },
+  "input": {
+    "question_id": "Sebutkan bahan apa saja yang sama sekali belum pernah dipakai di masakan mana pun. Tampilkan nama bahannya saja.",
+    "database": "resep",
+    "category": "Nested / Subquery"
+  },
+  "prompt_info": {
+    "prompt_length": 7240,
+    "prompt_lines": 165
+  },
+  "model_response": {
+    "sql_query": "SELECT b.nama_bahan FROM bahan b WHERE NOT EXISTS (SELECT 1 FROM resep_bahan rb WHERE rb.id_bahan = b.id_bahan)",
+    "explanation": "Query ini mencari semua bahan yang tidak terdapat dalam tabel `resep_bahan`. Dengan kata lain, bahan-bahan tersebut belum pernah digunakan dalam resep apa pun.  Kita menggunakan `NOT EXISTS` untuk memastikan hanya bahan yang tidak memiliki entri terkait di `resep_bahan` yang ditampilkan.",
+    "confidence": 0.98,
+    "assumptions": [
+      "Tabel `resep_bahan` mencatat semua penggunaan bahan dalam resep."
+    ],
+    "potential_issues": [
+      "Jika ada kesalahan data di mana bahan seharusnya terdaftar di `resep_bahan` tetapi tidak, bahan tersebut akan muncul dalam hasil."
+    ],
+    "response_time_ms": 4627.268200000344,
+    "model_name": "gemma-3-27b-it",
+    "timestamp": "2025-07-24T08:55:35.945316",
+    "token_usage": {
+      "prompt_tokens": 2196,
+      "completion_tokens": null,
+      "total_tokens": 2196
+    }
+  }
+}

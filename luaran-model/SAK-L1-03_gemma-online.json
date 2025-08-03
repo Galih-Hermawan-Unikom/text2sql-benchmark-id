@@ -1,0 +1,34 @@
+{
+  "scenario_id": "SAK-L1-03",
+  "model_info": {
+    "name": "gemma-3-27b-it",
+    "temperature": 0.0,
+    "timestamp": "2025-07-24T08:58:21.674818"
+  },
+  "input": {
+    "question_id": "Tampilkan transaksi pembayaran bernilai antara 11 hingga 12 dolar, sertakan ID pembayaran, jumlah, dan tanggal pembayarannya.",
+    "database": "sakila",
+    "category": "Lookup / Filter"
+  },
+  "prompt_info": {
+    "prompt_length": 9776,
+    "prompt_lines": 299
+  },
+  "model_response": {
+    "sql_query": "SELECT payment_id, amount, payment_date FROM payment WHERE amount BETWEEN 11 AND 12",
+    "explanation": "Query ini memilih ID pembayaran, jumlah pembayaran, dan tanggal pembayaran dari tabel 'payment' di mana jumlah pembayaran berada di antara 11 dan 12 dolar.",
+    "confidence": 0.98,
+    "assumptions": [
+      "Tabel 'payment' berisi kolom 'payment_id', 'amount', dan 'payment_date'."
+    ],
+    "potential_issues": [],
+    "response_time_ms": 3801.4838999997664,
+    "model_name": "gemma-3-27b-it",
+    "timestamp": "2025-07-24T08:58:21.674818",
+    "token_usage": {
+      "prompt_tokens": 3080,
+      "completion_tokens": null,
+      "total_tokens": 3080
+    }
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "metadata": {
+    "version": "1.0",
+    "generated_at": "2025-07-31T09:53:16.058135",
+    "tool": "text2sql_ollama"
+  },
+  "scenario_id": "RES-L1-01",
+  "category": "Lookup / Filter",
+  "database": "resep",
+  "question_id": "Tampilkan semua bahan pada kategori Rempah, sertakan id dan nama bahannya.",
+  "model": "gemma-3n-e2b",
+  "sql_query": "SELECT\n  b.id_bahan AS id_bahan,\n  b.nama_bahan AS nama_bahan\nFROM BAHAN AS b\nWHERE\n  b.kategori_bahan = 'Rempaah'",
+  "timestamp": "2025-07-31T09:53:16.057217",
+  "response_time_ms": 165554.68,
+  "token_usage": {
+    "prompt_tokens": 1214,
+    "completion_tokens": 52,
+    "total_tokens": 1266
+  },
+  "raw_response": "```sql\nSELECT\n  b.id_bahan AS id_bahan,\n  b.nama_bahan AS nama_bahan\nFROM BAHAN AS b\nWHERE\n  b.kategori_bahan = 'Rempaah';\n```"
+}

@@ -1,0 +1,36 @@
+{
+  "scenario_id": "RES-L1-05",
+  "model_info": {
+    "name": "gemma-3-27b-it",
+    "temperature": 0.0,
+    "timestamp": "2025-07-24T08:55:06.248635"
+  },
+  "input": {
+    "question_id": "Tampilkan bahan yang memiliki satuan bukan 'gram' atau 'ml'; sertakan id, nama bahan, dan satuannya.",
+    "database": "resep",
+    "category": "Lookup / Filter"
+  },
+  "prompt_info": {
+    "prompt_length": 7228,
+    "prompt_lines": 165
+  },
+  "model_response": {
+    "sql_query": "SELECT id_bahan, nama_bahan, satuan_default FROM bahan WHERE satuan_default NOT IN ('gram', 'ml')",
+    "explanation": "Query ini memilih id_bahan, nama_bahan, dan satuan_default dari tabel 'bahan' di mana nilai satuan_default tidak sama dengan 'gram' atau 'ml'.",
+    "confidence": 0.98,
+    "assumptions": [
+      "Satuan default disimpan dalam kolom 'satuan_default' pada tabel 'bahan'."
+    ],
+    "potential_issues": [
+      "Jika ada nilai satuan_default yang NULL, baris tersebut akan disertakan dalam hasil karena NULL tidak sama dengan 'gram' atau 'ml'."
+    ],
+    "response_time_ms": 4241.809300000114,
+    "model_name": "gemma-3-27b-it",
+    "timestamp": "2025-07-24T08:55:06.248635",
+    "token_usage": {
+      "prompt_tokens": 2196,
+      "completion_tokens": null,
+      "total_tokens": 2196
+    }
+  }
+}

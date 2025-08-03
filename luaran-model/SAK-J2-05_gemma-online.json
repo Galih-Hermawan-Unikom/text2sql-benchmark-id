@@ -1,0 +1,39 @@
+{
+  "scenario_id": "SAK-J2-05",
+  "model_info": {
+    "name": "gemma-3-27b-it",
+    "temperature": 0.0,
+    "timestamp": "2025-07-24T08:58:05.886115"
+  },
+  "input": {
+    "question_id": "Tampilkan judul film, kategori film, dan nama lengkap penyewanya untuk transaksi pada 16 Agustus 2005.",
+    "database": "sakila",
+    "category": "Join + Filter"
+  },
+  "prompt_info": {
+    "prompt_length": 9753,
+    "prompt_lines": 299
+  },
+  "model_response": {
+    "sql_query": "SELECT f.title AS judul_film, c.name AS kategori_film, cust.first_name AS nama_depan_penyewa, cust.last_name AS nama_belakang_penyewa FROM rental r JOIN inventory i ON r.inventory_id = i.inventory_id JOIN film f ON i.film_id = f.film_id JOIN film_category fc ON f.film_id = fc.film_id JOIN category c ON fc.category_id = c.category_id JOIN customer cust ON r.customer_id = cust.customer_id WHERE DATE(r.rental_date) = '2005-08-16'",
+    "explanation": "Query ini mengambil judul film, kategori film, dan nama lengkap penyewa untuk transaksi penyewaan yang terjadi pada tanggal 16 Agustus 2005. Query ini menggunakan JOIN untuk menghubungkan tabel rental, inventory, film, film_category, category, dan customer untuk mendapatkan informasi yang diperlukan.",
+    "confidence": 0.97,
+    "assumptions": [
+      "Tanggal penyewaan disimpan dalam kolom rental_date pada tabel rental.",
+      "Nama depan dan nama belakang penyewa disimpan dalam kolom first_name dan last_name pada tabel customer.",
+      "Kategori film disimpan dalam tabel category dan dihubungkan ke film melalui tabel film_category."
+    ],
+    "potential_issues": [
+      "Jika ada beberapa kategori untuk satu film, query akan mengembalikan baris terpisah untuk setiap kategori. Jika hanya satu kategori yang diinginkan, perlu ditambahkan logika untuk memilih satu kategori saja (misalnya, menggunakan subquery atau fungsi agregasi).",
+      "Jika tanggal rental_date memiliki informasi waktu, hanya tanggal yang dibandingkan. Jika diperlukan perbandingan yang lebih spesifik (misalnya, jam, menit, detik), perlu disesuaikan format tanggal."
+    ],
+    "response_time_ms": 8753.14759999992,
+    "model_name": "gemma-3-27b-it",
+    "timestamp": "2025-07-24T08:58:05.886115",
+    "token_usage": {
+      "prompt_tokens": 3078,
+      "completion_tokens": null,
+      "total_tokens": 3078
+    }
+  }
+}

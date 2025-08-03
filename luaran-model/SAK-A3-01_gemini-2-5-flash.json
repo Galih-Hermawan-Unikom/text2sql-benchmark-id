@@ -1,0 +1,36 @@
+{
+  "scenario_id": "SAK-A3-01",
+  "model_info": {
+    "name": "gemini-2.5-flash",
+    "temperature": 0.0,
+    "timestamp": "2025-07-22T10:33:32.322751"
+  },
+  "input": {
+    "question_id": "Hitung berapa banyak film pada setiap rating.",
+    "database": "sakila",
+    "category": "Aggregation"
+  },
+  "prompt_info": {
+    "prompt_length": 9201,
+    "prompt_lines": 299
+  },
+  "model_response": {
+    "sql_query": "SELECT rating, COUNT(film_id) AS jumlah_film FROM film GROUP BY rating",
+    "explanation": "Mengambil setiap rating unik dari tabel film dan menghitung jumlah film yang termasuk dalam rating tersebut.",
+    "confidence": 0.99,
+    "assumptions": [
+      "'rating' merujuk pada kolom rating di tabel film.",
+      "Jumlah film dihitung berdasarkan film_id yang unik."
+    ],
+    "potential_issues": [],
+    "response_time_ms": 1530.136,
+    "model_name": "gemini-2.5-flash",
+    "timestamp": "2025-07-22T10:33:32.322751",
+    "raw_response": "```json\n{\n  \"sql_query\": \"SELECT rating, COUNT(film_id) AS jumlah_film FROM film GROUP BY rating\",\n  \"confidence\": 0.99,\n  \"explanation\": \"Mengambil setiap rating unik dari tabel film dan menghitung jumlah film yang termasuk dalam rating tersebut.\",\n  \"assumptions\": [\"'rating' merujuk pada kolom rating di tabel film.\", \"Jumlah film dihitung berdasarkan film_id yang unik.\"],\n  \"potential_issues\": []\n}\n```",
+    "token_usage": {
+      "prompt_tokens": 2943,
+      "completion_tokens": 111,
+      "total_tokens": 3139
+    }
+  }
+}

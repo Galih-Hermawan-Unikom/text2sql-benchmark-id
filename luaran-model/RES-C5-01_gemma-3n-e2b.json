@@ -1,0 +1,21 @@
+{
+  "metadata": {
+    "version": "1.0",
+    "generated_at": "2025-07-31T06:54:41.841032",
+    "tool": "text2sql_ollama"
+  },
+  "scenario_id": "RES-C5-01",
+  "category": "Comparative",
+  "database": "resep",
+  "question_id": "Resep apa saja yang durasi memasaknya lebih lama daripada rata-rata durasi semua resep? Tampilkan judul resep dan lamanya memasak.",
+  "model": "gemma-3n-e2b",
+  "sql_query": "SELECT\n  r.judul_resep,\n  r.waktu_masak AS durasi_memasak\nFROM resep AS r\nWHERE\n  r.waktu_masak > (\n    SELECT\n      AVG(w.waktu_masak)\n    FROM resep AS w\n  )",
+  "timestamp": "2025-07-31T06:54:41.841032",
+  "response_time_ms": 133073.242,
+  "token_usage": {
+    "prompt_tokens": 1231,
+    "completion_tokens": 75,
+    "total_tokens": 1306
+  },
+  "raw_response": "```sql\nSELECT\n  r.judul_resep,\n  r.waktu_masak AS durasi_memasak\nFROM resep AS r\nWHERE\n  r.waktu_masak > (\n    SELECT\n      AVG(w.waktu_masak)\n    FROM resep AS w\n  );\n```"
+}

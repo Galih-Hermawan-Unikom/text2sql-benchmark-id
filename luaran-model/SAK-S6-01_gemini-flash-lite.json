@@ -1,0 +1,37 @@
+{
+  "scenario_id": "SAK-S6-01",
+  "model_info": {
+    "name": "gemini-2.5-flash-lite",
+    "temperature": 0.0,
+    "timestamp": "2025-07-23T13:55:06.893538"
+  },
+  "input": {
+    "question_id": "Siapa pelanggan dengan total nilai pembayaran terbesar? Sertakan nama depan, nama belakang, dan total pembayarannya.",
+    "database": "sakila",
+    "category": "Superlative"
+  },
+  "prompt_info": {
+    "prompt_length": 9767,
+    "prompt_lines": 299
+  },
+  "model_response": {
+    "sql_query": "SELECT c.first_name, c.last_name, SUM(p.amount) AS total_payment FROM customer c JOIN payment p ON c.customer_id = p.customer_id GROUP BY c.customer_id, c.first_name, c.last_name ORDER BY total_payment DESC",
+    "explanation": "Query ini menggabungkan tabel 'customer' dan 'payment' menggunakan 'customer_id'. Kemudian, ia mengelompokkan hasil berdasarkan pelanggan dan menjumlahkan semua pembayaran ('amount') untuk setiap pelanggan. Hasilnya diurutkan berdasarkan total pembayaran dari yang terbesar ke terkecil untuk menampilkan pelanggan dengan nilai pembayaran terbesar.",
+    "confidence": 0.99,
+    "assumptions": [
+      "Pelanggan dengan total nilai pembayaran terbesar dihitung berdasarkan jumlah total dari semua transaksi pembayaran mereka.",
+      "Setiap baris dalam tabel 'payment' mewakili satu transaksi pembayaran yang terkait dengan seorang pelanggan."
+    ],
+    "potential_issues": [
+      "Jika ada pelanggan yang belum pernah melakukan pembayaran, mereka tidak akan muncul dalam hasil karena menggunakan JOIN yang secara implisit memfilter baris tanpa pasangan di tabel 'payment'. Jika ingin menyertakan pelanggan tanpa pembayaran (dengan total 0), INNER JOIN harus diganti dengan LEFT JOIN dan SUM(p.amount) diganti dengan COALESCE(SUM(p.amount), 0)."
+    ],
+    "response_time_ms": 1312.3606000008294,
+    "model_name": "gemini-2.5-flash-lite",
+    "timestamp": "2025-07-23T13:55:06.893538",
+    "token_usage": {
+      "prompt_tokens": 3074,
+      "completion_tokens": 312,
+      "total_tokens": 3386
+    }
+  }
+}

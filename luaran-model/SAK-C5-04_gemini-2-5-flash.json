@@ -1,0 +1,35 @@
+{
+  "scenario_id": "SAK-C5-04",
+  "model_info": {
+    "name": "gemini-2.5-flash",
+    "temperature": 0.0,
+    "timestamp": "2025-07-22T12:01:05.262500"
+  },
+  "input": {
+    "question_id": "Tampilkan kategori film yang rata-rata durasinya lebih pendek daripada rata-rata durasi semua film; sertakan nama kategori dan rata-rata durasinya.",
+    "database": "sakila",
+    "category": "Comparative"
+  },
+  "prompt_info": {
+    "prompt_length": 9630,
+    "prompt_lines": 300
+  },
+  "model_response": {
+    "sql_query": "SELECT c.name AS category_name, AVG(f.length) AS average_duration FROM category c JOIN film_category fc ON c.category_id = fc.category_id JOIN film f ON fc.film_id = f.film_id GROUP BY c.category_id, c.name HAVING AVG(f.length) < (SELECT AVG(length) FROM film)",
+    "explanation": "Query ini pertama-tama menghitung rata-rata durasi semua film secara keseluruhan menggunakan subkueri. Kemudian, query utama menggabungkan tabel 'category', 'film_category', dan 'film' untuk menghitung rata-rata durasi film untuk setiap kategori. Terakhir, klausa HAVING digunakan untuk memfilter kategori-kategori yang rata-rata durasi filmnya lebih pendek dari rata-rata durasi semua film.",
+    "confidence": 0.98,
+    "assumptions": [
+      "Durasi film mengacu pada kolom 'length' di tabel 'film'."
+    ],
+    "potential_issues": [],
+    "response_time_ms": 4057.1539999999995,
+    "model_name": "gemini-2.5-flash",
+    "timestamp": "2025-07-22T12:01:05.262500",
+    "raw_response": "```json\n{\n  \"sql_query\": \"SELECT c.name AS category_name, AVG(f.length) AS average_duration FROM category c JOIN film_category fc ON c.category_id = fc.category_id JOIN film f ON fc.film_id = f.film_id GROUP BY c.category_id, c.name HAVING AVG(f.length) < (SELECT AVG(length) FROM film)\",\n  \"confidence\": 0.98,\n  \"explanation\": \"Query ini pertama-tama menghitung rata-rata durasi semua film secara keseluruhan menggunakan subkueri. Kemudian, query utama menggabungkan tabel 'category', 'film_category', dan 'film' untuk menghitung rata-rata durasi film untuk setiap kategori. Terakhir, klausa HAVING digunakan untuk memfilter kategori-kategori yang rata-rata durasi filmnya lebih pendek dari rata-rata durasi semua film.\",\n  \"assumptions\": [\"Durasi film mengacu pada kolom 'length' di tabel 'film'.\"],\n  \"potential_issues\": []\n}\n```",
+    "token_usage": {
+      "prompt_tokens": 3038,
+      "completion_tokens": 233,
+      "total_tokens": 3804
+    }
+  }
+}

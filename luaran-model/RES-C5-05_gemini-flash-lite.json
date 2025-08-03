@@ -1,0 +1,39 @@
+{
+  "scenario_id": "RES-C5-05",
+  "model_info": {
+    "name": "gemini-2.5-flash-lite",
+    "temperature": 0.0,
+    "timestamp": "2025-07-23T13:53:20.292937"
+  },
+  "input": {
+    "question_id": "Resep mana yang durasi memasaknya lebih singkat daripada resep 'Rendang'? Tampilkan judul resep dan durasinya.",
+    "database": "resep",
+    "category": "Comparative"
+  },
+  "prompt_info": {
+    "prompt_length": 7238,
+    "prompt_lines": 165
+  },
+  "model_response": {
+    "sql_query": "SELECT r1.judul_resep, r1.waktu_masak FROM resep r1 JOIN masakan m ON r1.kode_masakan = m.kode_masakan WHERE m.nama_masakan = 'Rendang' AND r1.waktu_masak < (SELECT waktu_masak FROM resep r2 JOIN masakan m2 ON r2.kode_masakan = m2.kode_masakan WHERE m2.nama_masakan = 'Rendang')",
+    "explanation": "Query ini mencari resep yang memiliki waktu masak lebih singkat daripada resep 'Rendang'. Pertama, ia mengidentifikasi waktu masak resep 'Rendang' menggunakan subkueri. Kemudian, ia membandingkan waktu masak semua resep lain dengan waktu masak 'Rendang' tersebut dan menampilkan judul resep serta durasinya.",
+    "confidence": 0.95,
+    "assumptions": [
+      "Nama masakan 'Rendang' terdapat di kolom `masakan.nama_masakan`.",
+      "Setiap masakan hanya memiliki satu resep utama yang digunakan untuk perbandingan durasi.",
+      "Jika ada beberapa resep untuk 'Rendang', subkueri akan mengambil salah satunya (biasanya yang pertama ditemukan)."
+    ],
+    "potential_issues": [
+      "Jika ada beberapa resep untuk 'Rendang', subkueri mungkin tidak secara deterministik mengembalikan waktu masak yang sama, yang dapat mempengaruhi hasil.",
+      "Pertanyaan tidak secara eksplisit menyatakan bahwa perbandingan harus dilakukan dengan resep 'Rendang' yang memiliki kategori atau tingkat kesulitan yang sama, sehingga perbandingan dilakukan dengan semua resep 'Rendang'."
+    ],
+    "response_time_ms": 2039.0040000002045,
+    "model_name": "gemini-2.5-flash-lite",
+    "timestamp": "2025-07-23T13:53:20.292937",
+    "token_usage": {
+      "prompt_tokens": 2198,
+      "completion_tokens": 385,
+      "total_tokens": 2583
+    }
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "metadata": {
+    "version": "1.0",
+    "generated_at": "2025-07-31T07:28:54.599433",
+    "tool": "text2sql_ollama"
+  },
+  "scenario_id": "RES-N4-03",
+  "category": "Nested / Subquery",
+  "database": "resep",
+  "question_id": "Masakan asal mana yang menggunakan setidaknya satu bahan yang tidak pernah dipakai masakan asal 'Bali'? Tampilkan nama daerahnya saja.",
+  "model": "gemma-3n-e2b",
+  "sql_query": "SELECT m.nama_masakan\nFROM masakan m\nWHERE m.asal_daerah IN (SELECT b.kategori_bahan\n                         FROM bahan b\n                         WHERE b.nama_bahan NOT IN (SELECT b2.nama_bahan\n                                                      FROM bahan b2\n                                                      WHERE b2.kategori_bahan = 'Bali')\n                         GROUP BY b.kategori_bahan)\nGROUP BY m.nama_masakan",
+  "timestamp": "2025-07-31T07:28:54.599433",
+  "response_time_ms": 128966.86299999998,
+  "token_usage": {
+    "prompt_tokens": 1229,
+    "completion_tokens": 102,
+    "total_tokens": 1331
+  },
+  "raw_response": "```sql\nSELECT m.nama_masakan\nFROM masakan m\nWHERE m.asal_daerah IN (SELECT b.kategori_bahan\n                         FROM bahan b\n                         WHERE b.nama_bahan NOT IN (SELECT b2.nama_bahan\n                                                      FROM bahan b2\n                                                      WHERE b2.kategori_bahan = 'Bali')\n                         GROUP BY b.kategori_bahan)\nGROUP BY m.nama_masakan;\n```"
+}

@@ -1,0 +1,35 @@
+{
+  "scenario_id": "SAK-J2-02",
+  "model_info": {
+    "name": "gemini-2.5-flash-lite",
+    "temperature": 0.0,
+    "timestamp": "2025-07-23T13:54:33.236228"
+  },
+  "input": {
+    "question_id": "Daftar judul film beserta nama bahasa untuk semua film berdurasi lebih dari 184 menit.",
+    "database": "sakila",
+    "category": "Join + Filter"
+  },
+  "prompt_info": {
+    "prompt_length": 9737,
+    "prompt_lines": 299
+  },
+  "model_response": {
+    "sql_query": "SELECT f.title, l.name AS language_name FROM film f JOIN language l ON f.language_id = l.language_id WHERE f.length > 184;",
+    "explanation": "Query ini mengambil judul film dan nama bahasanya dari tabel 'film' dan 'language'. Film difilter berdasarkan durasi (kolom 'length') yang lebih dari 184 menit. Tabel 'film' di-join dengan tabel 'language' menggunakan 'language_id' untuk mendapatkan nama bahasa.",
+    "confidence": 0.98,
+    "assumptions": [
+      "Durasi film disimpan dalam kolom 'length' dalam satuan menit.",
+      "Nama bahasa disimpan dalam kolom 'name' di tabel 'language'."
+    ],
+    "potential_issues": [],
+    "response_time_ms": 1011.3623999986885,
+    "model_name": "gemini-2.5-flash-lite",
+    "timestamp": "2025-07-23T13:54:33.236228",
+    "token_usage": {
+      "prompt_tokens": 3071,
+      "completion_tokens": 186,
+      "total_tokens": 3257
+    }
+  }
+}

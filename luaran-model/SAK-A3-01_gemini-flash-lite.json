@@ -1,0 +1,35 @@
+{
+  "scenario_id": "SAK-A3-01",
+  "model_info": {
+    "name": "gemini-2.5-flash-lite",
+    "temperature": 0.0,
+    "timestamp": "2025-07-23T13:54:06.250689"
+  },
+  "input": {
+    "question_id": "Hitung berapa banyak film pada setiap rating.",
+    "database": "sakila",
+    "category": "Aggregation"
+  },
+  "prompt_info": {
+    "prompt_length": 9696,
+    "prompt_lines": 299
+  },
+  "model_response": {
+    "sql_query": "SELECT rating, COUNT(*) AS jumlah_film FROM film GROUP BY rating ORDER BY jumlah_film DESC;",
+    "explanation": "Query ini menghitung jumlah film untuk setiap rating yang tersedia dalam tabel 'film'. Hasilnya dikelompokkan berdasarkan rating dan diurutkan berdasarkan jumlah film secara menurun.",
+    "confidence": 0.99,
+    "assumptions": [
+      "Setiap film memiliki rating yang valid.",
+      "Kolom 'rating' di tabel 'film' berisi nilai-nilai yang dapat dikelompokkan."
+    ],
+    "potential_issues": [],
+    "response_time_ms": 907.407400000011,
+    "model_name": "gemini-2.5-flash-lite",
+    "timestamp": "2025-07-23T13:54:06.250689",
+    "token_usage": {
+      "prompt_tokens": 3060,
+      "completion_tokens": 141,
+      "total_tokens": 3201
+    }
+  }
+}

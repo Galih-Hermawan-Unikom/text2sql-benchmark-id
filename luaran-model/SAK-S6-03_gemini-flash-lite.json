@@ -1,0 +1,36 @@
+{
+  "scenario_id": "SAK-S6-03",
+  "model_info": {
+    "name": "gemini-2.5-flash-lite",
+    "temperature": 0.0,
+    "timestamp": "2025-07-23T13:55:10.930655"
+  },
+  "input": {
+    "question_id": "Kota mana yang memiliki jumlah pelanggan terbanyak? Sertakan nama kota dan jumlah pelanggannya.",
+    "database": "sakila",
+    "category": "Superlative"
+  },
+  "prompt_info": {
+    "prompt_length": 9746,
+    "prompt_lines": 299
+  },
+  "model_response": {
+    "sql_query": "SELECT c.city, COUNT(cust.customer_id) AS jumlah_pelanggan FROM city c JOIN address a ON c.city_id = a.city_id JOIN customer cust ON a.address_id = cust.address_id GROUP BY c.city ORDER BY jumlah_pelanggan DESC",
+    "explanation": "Query ini menggabungkan tabel 'city', 'address', dan 'customer' untuk menghitung jumlah pelanggan di setiap kota. Hasilnya diurutkan berdasarkan jumlah pelanggan terbanyak.",
+    "confidence": 0.98,
+    "assumptions": [
+      "Setiap pelanggan memiliki alamat yang terhubung ke sebuah kota.",
+      "Kolom 'city' di tabel 'city' berisi nama kota.",
+      "Kolom 'customer_id' di tabel 'customer' adalah pengenal unik untuk setiap pelanggan."
+    ],
+    "potential_issues": [],
+    "response_time_ms": 1037.6336999997875,
+    "model_name": "gemini-2.5-flash-lite",
+    "timestamp": "2025-07-23T13:55:10.930655",
+    "token_usage": {
+      "prompt_tokens": 3070,
+      "completion_tokens": 208,
+      "total_tokens": 3278
+    }
+  }
+}

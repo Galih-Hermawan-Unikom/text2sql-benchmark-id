@@ -1,0 +1,36 @@
+{
+  "scenario_id": "SAK-S6-05",
+  "model_info": {
+    "name": "gemini-2.5-flash-lite",
+    "temperature": 0.0,
+    "timestamp": "2025-07-23T13:55:15.392741"
+  },
+  "input": {
+    "question_id": "Pada tahun 2005, bulan apa yang mencatat total pembayaran terbesar? Sertakan nomor bulan (1\u201312) dan total pembayarannya.",
+    "database": "sakila",
+    "category": "Superlative"
+  },
+  "prompt_info": {
+    "prompt_length": 9771,
+    "prompt_lines": 299
+  },
+  "model_response": {
+    "sql_query": "SELECT MONTH(p.payment_date) AS bulan, SUM(p.amount) AS total_pembayaran FROM payment p WHERE YEAR(p.payment_date) = 2005 GROUP BY MONTH(p.payment_date) ORDER BY total_pembayaran DESC LIMIT 1",
+    "explanation": "Query ini menghitung total pembayaran untuk setiap bulan di tahun 2005. Kemudian, ia mengurutkan bulan-bulan tersebut berdasarkan total pembayaran dari yang terbesar ke terkecil dan mengambil baris teratas (bulan dengan pembayaran terbesar).",
+    "confidence": 0.98,
+    "assumptions": [
+      "Pertanyaan mengacu pada tabel 'payment' untuk data pembayaran.",
+      "Kolom 'payment_date' digunakan untuk menentukan bulan dan tahun transaksi.",
+      "Kolom 'amount' digunakan untuk menghitung total pembayaran."
+    ],
+    "potential_issues": [],
+    "response_time_ms": 1192.363000000114,
+    "model_name": "gemini-2.5-flash-lite",
+    "timestamp": "2025-07-23T13:55:15.392741",
+    "token_usage": {
+      "prompt_tokens": 3084,
+      "completion_tokens": 214,
+      "total_tokens": 3298
+    }
+  }
+}

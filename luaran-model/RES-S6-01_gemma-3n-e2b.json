@@ -1,0 +1,21 @@
+{
+  "metadata": {
+    "version": "1.0",
+    "generated_at": "2025-07-31T07:35:07.213885",
+    "tool": "text2sql_ollama"
+  },
+  "scenario_id": "RES-S6-01",
+  "category": "Superlative",
+  "database": "resep",
+  "question_id": "Daftar semua resep yang membutuhkan waktu memasak paling lama\u2014sertakan judul resep dan lamanya memasak.",
+  "model": "gemma-3n-e2b",
+  "sql_query": "SELECT\n  r.judul_resep AS judul_resep,\n  r.waktu_masak AS lama_memasak\nFROM RESEP AS r\nWHERE\n  r.status_aktif = TRUE\nORDER BY\n  r.waktu_masak DESC\nLIMIT 1",
+  "timestamp": "2025-07-31T07:35:07.213885",
+  "response_time_ms": 120645.407,
+  "token_usage": {
+    "prompt_tokens": 1222,
+    "completion_tokens": 70,
+    "total_tokens": 1292
+  },
+  "raw_response": "```sql\nSELECT\n  r.judul_resep AS judul_resep,\n  r.waktu_masak AS lama_memasak\nFROM RESEP AS r\nWHERE\n  r.status_aktif = TRUE\nORDER BY\n  r.waktu_masak DESC\nLIMIT 1;\n```"
+}

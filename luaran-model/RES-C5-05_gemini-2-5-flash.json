@@ -1,0 +1,39 @@
+{
+  "scenario_id": "RES-C5-05",
+  "model_info": {
+    "name": "gemini-2.5-flash",
+    "temperature": 0.0,
+    "timestamp": "2025-07-22T12:00:37.872770"
+  },
+  "input": {
+    "question_id": "Resep mana yang durasi memasaknya lebih singkat daripada resep 'Rendang'? Tampilkan judul resep dan durasinya.",
+    "database": "resep",
+    "category": "Comparative"
+  },
+  "prompt_info": {
+    "prompt_length": 7410,
+    "prompt_lines": 168
+  },
+  "model_response": {
+    "sql_query": "SELECT r.judul_resep, r.waktu_masak FROM resep r WHERE r.waktu_masak < (SELECT AVG(r2.waktu_masak) FROM resep r2 JOIN masakan m2 ON r2.kode_masakan = m2.kode_masakan WHERE m2.nama_masakan = 'Rendang')",
+    "explanation": "Mengambil judul resep dan waktu masak dari semua resep yang durasinya lebih singkat daripada rata-rata waktu masak dari semua resep yang terkait dengan masakan 'Rendang'. Ini melibatkan subkueri untuk mendapatkan rata-rata waktu masak 'Rendang' dan kemudian membandingkannya dengan waktu masak resep lainnya.",
+    "confidence": 0.95,
+    "assumptions": [
+      "Istilah 'Rendang' merujuk pada nama masakan di kolom `masakan.nama_masakan`.",
+      "Jika ada beberapa resep yang terkait dengan masakan 'Rendang' (misalnya, 'Rendang Daging', 'Rendang Ayam'), perbandingan waktu masak dilakukan terhadap nilai rata-rata dari semua resep 'Rendang' tersebut."
+    ],
+    "potential_issues": [
+      "Jika tidak ada masakan dengan nama 'Rendang' di database, atau jika subkueri menghasilkan NULL (misalnya, tidak ada waktu masak yang ditemukan untuk 'Rendang'), maka kueri utama tidak akan mengembalikan hasil.",
+      "Jika maksud pengguna adalah perbandingan dengan waktu masak dari *satu* resep 'Rendang' tertentu (misalnya, resep yang berjudul 'Rendang' secara spesifik), dan bukan rata-rata, maka kueri ini mungkin tidak tepat. Namun, berdasarkan instruksi 'PENTING' tentang pemetaan 'Rendang' ke `nama_masakan` dan kebutuhan untuk mendapatkan nilai tunggal dari subkueri, penggunaan `AVG` adalah pendekatan yang aman."
+    ],
+    "response_time_ms": 24083.494000000002,
+    "model_name": "gemini-2.5-flash",
+    "timestamp": "2025-07-22T12:00:37.872770",
+    "raw_response": "```json\n{\n  \"sql_query\": \"SELECT r.judul_resep, r.waktu_masak FROM resep r WHERE r.waktu_masak < (SELECT AVG(r2.waktu_masak) FROM resep r2 JOIN masakan m2 ON r2.kode_masakan = m2.kode_masakan WHERE m2.nama_masakan = 'Rendang')\",\n  \"confidence\": 0.95,\n  \"explanation\": \"Mengambil judul resep dan waktu masak dari semua resep yang durasinya lebih singkat daripada rata-rata waktu masak dari semua resep yang terkait dengan masakan 'Rendang'. Ini melibatkan subkueri untuk mendapatkan rata-rata waktu masak 'Rendang' dan kemudian membandingkannya dengan waktu masak resep lainnya.\",\n  \"assumptions\": [\n    \"Istilah 'Rendang' merujuk pada nama masakan di kolom `masakan.nama_masakan`.\",\n    \"Jika ada beberapa resep yang terkait dengan masakan 'Rendang' (misalnya, 'Rendang Daging', 'Rendang Ayam'), perbandingan waktu masak dilakukan terhadap nilai rata-rata dari semua resep 'Rendang' tersebut.\"\n  ],\n  \"potential_issues\": [\n    \"Jika tidak ada masakan dengan nama 'Rendang' di database, atau jika subkueri menghasilkan NULL (misalnya, tidak ada waktu masak yang ditemukan untuk 'Rendang'), maka kueri utama tidak akan mengembalikan hasil.\",\n    \"Jika maksud pengguna adalah perbandingan dengan waktu masak dari *satu* resep 'Rendang' tertentu (misalnya, resep yang berjudul 'Rendang' secara spesifik), dan bukan rata-rata, maka kueri ini mungkin tidak tepat. Namun, berdasarkan instruksi 'PENTING' tentang pemetaan 'Rendang' ke `nama_masakan` dan kebutuhan untuk mendapatkan nilai tunggal dari subkueri, penggunaan `AVG` adalah pendekatan yang aman.\"\n  ]\n}\n```",
+    "token_usage": {
+      "prompt_tokens": 2245,
+      "completion_tokens": 441,
+      "total_tokens": 7042
+    }
+  }
+}

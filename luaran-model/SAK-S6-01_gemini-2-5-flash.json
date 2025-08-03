@@ -1,0 +1,35 @@
+{
+  "scenario_id": "SAK-S6-01",
+  "model_info": {
+    "name": "gemini-2.5-flash",
+    "temperature": 0.0,
+    "timestamp": "2025-07-22T12:21:59.560563"
+  },
+  "input": {
+    "question_id": "Siapa pelanggan dengan total nilai pembayaran terbesar? Sertakan nama depan, nama belakang, dan total pembayarannya.",
+    "database": "sakila",
+    "category": "Superlative"
+  },
+  "prompt_info": {
+    "prompt_length": 9599,
+    "prompt_lines": 300
+  },
+  "model_response": {
+    "sql_query": "SELECT c.first_name, c.last_name, SUM(p.amount) AS total_payments FROM customer c JOIN payment p ON c.customer_id = p.customer_id GROUP BY c.customer_id, c.first_name, c.last_name ORDER BY total_payments DESC LIMIT 1",
+    "explanation": "Mengambil nama depan, nama belakang, dan total pembayaran untuk setiap pelanggan, kemudian mengurutkan hasilnya berdasarkan total pembayaran tertinggi dan mengambil pelanggan teratas.",
+    "confidence": 0.98,
+    "assumptions": [
+      "'Total nilai pembayaran terbesar' merujuk pada jumlah akumulasi dari semua pembayaran yang dilakukan oleh seorang pelanggan."
+    ],
+    "potential_issues": [],
+    "response_time_ms": 2460.283,
+    "model_name": "gemini-2.5-flash",
+    "timestamp": "2025-07-22T12:21:59.560563",
+    "raw_response": "```json\n{\n  \"sql_query\": \"SELECT c.first_name, c.last_name, SUM(p.amount) AS total_payments FROM customer c JOIN payment p ON c.customer_id = p.customer_id GROUP BY c.customer_id, c.first_name, c.last_name ORDER BY total_payments DESC LIMIT 1\",\n  \"confidence\": 0.98,\n  \"explanation\": \"Mengambil nama depan, nama belakang, dan total pembayaran untuk setiap pelanggan, kemudian mengurutkan hasilnya berdasarkan total pembayaran tertinggi dan mengambil pelanggan teratas.\",\n  \"assumptions\": [\"'Total nilai pembayaran terbesar' merujuk pada jumlah akumulasi dari semua pembayaran yang dilakukan oleh seorang pelanggan.\"],\n  \"potential_issues\": []\n}\n```",
+    "token_usage": {
+      "prompt_tokens": 3029,
+      "completion_tokens": 170,
+      "total_tokens": 3460
+    }
+  }
+}

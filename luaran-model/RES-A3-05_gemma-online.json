@@ -1,0 +1,34 @@
+{
+  "scenario_id": "RES-A3-05",
+  "model_info": {
+    "name": "gemma-3-27b-it",
+    "temperature": 0.0,
+    "timestamp": "2025-07-24T08:53:30.465043"
+  },
+  "input": {
+    "question_id": "Hitung jumlah masakan aktif dan tidak aktif. Tampilkan status_aktif (0 atau 1) beserta total masakannya.",
+    "database": "resep",
+    "category": "Aggregation"
+  },
+  "prompt_info": {
+    "prompt_length": 7232,
+    "prompt_lines": 165
+  },
+  "model_response": {
+    "sql_query": "SELECT status_aktif, COUNT(*) AS total_masakan FROM masakan GROUP BY status_aktif",
+    "explanation": "Query ini menghitung jumlah masakan untuk setiap status aktif (0 atau 1) dari tabel 'masakan' dan menampilkan hasilnya.",
+    "confidence": 0.98,
+    "assumptions": [
+      "Status aktif direpresentasikan sebagai 0 untuk tidak aktif dan 1 untuk aktif."
+    ],
+    "potential_issues": [],
+    "response_time_ms": 3270.6725999996706,
+    "model_name": "gemma-3-27b-it",
+    "timestamp": "2025-07-24T08:53:30.465043",
+    "token_usage": {
+      "prompt_tokens": 2197,
+      "completion_tokens": null,
+      "total_tokens": 2197
+    }
+  }
+}

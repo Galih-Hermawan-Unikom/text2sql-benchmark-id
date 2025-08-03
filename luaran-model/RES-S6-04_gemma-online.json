@@ -1,0 +1,37 @@
+{
+  "scenario_id": "RES-S6-04",
+  "model_info": {
+    "name": "gemma-3-27b-it",
+    "temperature": 0.0,
+    "timestamp": "2025-07-24T08:56:07.865536"
+  },
+  "input": {
+    "question_id": "Resep mana saja yang menggunakan jumlah bahan paling banyak? Sertakan judul resep dan jumlah bahannya.",
+    "database": "resep",
+    "category": "Superlative"
+  },
+  "prompt_info": {
+    "prompt_length": 7230,
+    "prompt_lines": 165
+  },
+  "model_response": {
+    "sql_query": "SELECT r.judul_resep, COUNT(rb.id_bahan) AS jumlah_bahan FROM resep r JOIN resep_bahan rb ON r.id_resep = rb.id_resep GROUP BY r.id_resep, r.judul_resep ORDER BY jumlah_bahan DESC",
+    "explanation": "Query ini menghitung jumlah bahan yang digunakan dalam setiap resep. Kemudian, query mengurutkan hasilnya berdasarkan jumlah bahan secara menurun dan menampilkan judul resep beserta jumlah bahannya.",
+    "confidence": 0.97,
+    "assumptions": [
+      "Tabel `resep_bahan` menghubungkan resep dengan bahan-bahannya.",
+      "Jumlah bahan dihitung berdasarkan jumlah baris dalam tabel `resep_bahan` untuk setiap resep."
+    ],
+    "potential_issues": [
+      "Jika ada duplikasi entri dalam tabel `resep_bahan`, jumlah bahan akan terhitung lebih tinggi dari yang seharusnya."
+    ],
+    "response_time_ms": 5152.216899999985,
+    "model_name": "gemma-3-27b-it",
+    "timestamp": "2025-07-24T08:56:07.866531",
+    "token_usage": {
+      "prompt_tokens": 2192,
+      "completion_tokens": null,
+      "total_tokens": 2192
+    }
+  }
+}

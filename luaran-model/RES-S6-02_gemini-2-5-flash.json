@@ -1,0 +1,35 @@
+{
+  "scenario_id": "RES-S6-02",
+  "model_info": {
+    "name": "gemini-2.5-flash",
+    "temperature": 0.0,
+    "timestamp": "2025-07-22T12:51:30.656504"
+  },
+  "input": {
+    "question_id": "Bahan apa saja yang paling sering muncul di seluruh resep? Tampilkan nama bahan dan total kemunculannya.",
+    "database": "resep",
+    "category": "Superlative"
+  },
+  "prompt_info": {
+    "prompt_length": 7744,
+    "prompt_lines": 169
+  },
+  "model_response": {
+    "sql_query": "SELECT b.nama_bahan, COUNT(rb.id_bahan) AS total_kemunculan FROM resep_bahan rb JOIN bahan b ON rb.id_bahan = b.id_bahan GROUP BY b.id_bahan, b.nama_bahan ORDER BY total_kemunculan DESC",
+    "explanation": "Mengambil semua bahan yang terdaftar dalam resep_bahan, menghitung berapa kali setiap bahan muncul di seluruh resep, lalu mengurutkannya dari yang paling sering muncul ke yang paling jarang.",
+    "confidence": 0.98,
+    "assumptions": [
+      "'Paling sering muncul' diartikan sebagai kemunculan bahan di berbagai resep (bukan jumlah bahan dalam satu resep)."
+    ],
+    "potential_issues": [],
+    "response_time_ms": 3516.858,
+    "model_name": "gemini-2.5-flash",
+    "timestamp": "2025-07-22T12:51:30.656504",
+    "raw_response": "```json\n{\n  \"sql_query\": \"SELECT b.nama_bahan, COUNT(rb.id_bahan) AS total_kemunculan FROM resep_bahan rb JOIN bahan b ON rb.id_bahan = b.id_bahan GROUP BY b.id_bahan, b.nama_bahan ORDER BY total_kemunculan DESC\",\n  \"confidence\": 0.98,\n  \"explanation\": \"Mengambil semua bahan yang terdaftar dalam resep_bahan, menghitung berapa kali setiap bahan muncul di seluruh resep, lalu mengurutkannya dari yang paling sering muncul ke yang paling jarang.\",\n  \"assumptions\": [\"'Paling sering muncul' diartikan sebagai kemunculan bahan di berbagai resep (bukan jumlah bahan dalam satu resep).\"],\n  \"potential_issues\": []\n}\n```",
+    "token_usage": {
+      "prompt_tokens": 2320,
+      "completion_tokens": 180,
+      "total_tokens": 2899
+    }
+  }
+}

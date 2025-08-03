@@ -1,0 +1,37 @@
+{
+  "scenario_id": "SAK-S6-05",
+  "model_info": {
+    "name": "gemma-3-27b-it",
+    "temperature": 0.0,
+    "timestamp": "2025-07-24T08:59:41.597283"
+  },
+  "input": {
+    "question_id": "Pada tahun 2005, bulan apa yang mencatat total pembayaran terbesar? Sertakan nomor bulan (1\u201312) dan total pembayarannya.",
+    "database": "sakila",
+    "category": "Superlative"
+  },
+  "prompt_info": {
+    "prompt_length": 9771,
+    "prompt_lines": 299
+  },
+  "model_response": {
+    "sql_query": "SELECT MONTH(payment_date) AS bulan, SUM(amount) AS total_pembayaran FROM payment WHERE YEAR(payment_date) = 2005 GROUP BY bulan ORDER BY total_pembayaran DESC LIMIT 1",
+    "explanation": "Query ini menghitung total pembayaran untuk setiap bulan di tahun 2005 dan kemudian mengurutkan hasilnya berdasarkan total pembayaran secara menurun.  `LIMIT 1` digunakan untuk hanya menampilkan bulan dengan total pembayaran tertinggi.",
+    "confidence": 0.98,
+    "assumptions": [
+      "Kolom `payment_date` menyimpan tanggal pembayaran.",
+      "Kolom `amount` menyimpan jumlah pembayaran."
+    ],
+    "potential_issues": [
+      "Jika tidak ada pembayaran pada tahun 2005, query akan mengembalikan hasil kosong."
+    ],
+    "response_time_ms": 4557.9523999999765,
+    "model_name": "gemma-3-27b-it",
+    "timestamp": "2025-07-24T08:59:41.597283",
+    "token_usage": {
+      "prompt_tokens": 3084,
+      "completion_tokens": null,
+      "total_tokens": 3084
+    }
+  }
+}

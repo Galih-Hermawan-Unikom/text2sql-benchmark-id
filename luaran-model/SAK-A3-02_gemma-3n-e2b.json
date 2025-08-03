@@ -1,0 +1,21 @@
+{
+  "metadata": {
+    "version": "1.0",
+    "generated_at": "2025-07-31T08:01:45.419982",
+    "tool": "text2sql_ollama"
+  },
+  "scenario_id": "SAK-A3-02",
+  "category": "Aggregation",
+  "database": "sakila",
+  "question_id": "Tampilkan rata-rata durasi film untuk setiap kategori film.",
+  "model": "gemma-3n-e2b",
+  "sql_query": "SELECT\n    c.category_name,\n    AVG(f.length) AS rata_rata_durasi\nFROM\n    film f\nJOIN\n    film_category fc ON f.film_id = fc.film_id\nJOIN\n    category c ON fc.category_id = c.category_id\nGROUP BY\n    c.category_name",
+  "timestamp": "2025-07-31T08:01:45.419982",
+  "response_time_ms": 147670.774,
+  "token_usage": {
+    "prompt_tokens": 1664,
+    "completion_tokens": 85,
+    "total_tokens": 1749
+  },
+  "raw_response": "```sql\nSELECT\n    c.category_name,\n    AVG(f.length) AS rata_rata_durasi\nFROM\n    film f\nJOIN\n    film_category fc ON f.film_id = fc.film_id\nJOIN\n    category c ON fc.category_id = c.category_id\nGROUP BY\n    c.category_name;\n```"
+}

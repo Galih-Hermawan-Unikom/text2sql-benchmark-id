@@ -1,0 +1,36 @@
+{
+  "scenario_id": "SAK-A3-02",
+  "model_info": {
+    "name": "gemini-2.5-flash",
+    "temperature": 0.0,
+    "timestamp": "2025-07-22T10:33:34.477449"
+  },
+  "input": {
+    "question_id": "Tampilkan rata-rata durasi film untuk setiap kategori film.",
+    "database": "sakila",
+    "category": "Aggregation"
+  },
+  "prompt_info": {
+    "prompt_length": 9215,
+    "prompt_lines": 299
+  },
+  "model_response": {
+    "sql_query": "SELECT c.name AS category_name, AVG(f.length) AS average_film_duration FROM category c JOIN film_category fc ON c.category_id = fc.category_id JOIN film f ON fc.film_id = f.film_id GROUP BY c.name ORDER BY c.name",
+    "explanation": "Mengambil rata-rata durasi film (film.length) untuk setiap kategori film (category.name). Query ini menggabungkan tabel `category`, `film_category`, dan `film` untuk menghubungkan kategori dengan film, kemudian menghitung rata-rata durasi untuk setiap kelompok kategori.",
+    "confidence": 0.98,
+    "assumptions": [
+      "'Durasi film' merujuk pada kolom `length` di tabel `film`.",
+      "'Kategori film' merujuk pada kolom `name` di tabel `category`."
+    ],
+    "potential_issues": [],
+    "response_time_ms": 2144.701,
+    "model_name": "gemini-2.5-flash",
+    "timestamp": "2025-07-22T10:33:34.477449",
+    "raw_response": "```json\n{\n  \"sql_query\": \"SELECT c.name AS category_name, AVG(f.length) AS average_film_duration FROM category c JOIN film_category fc ON c.category_id = fc.category_id JOIN film f ON fc.film_id = f.film_id GROUP BY c.name ORDER BY c.name\",\n  \"confidence\": 0.98,\n  \"explanation\": \"Mengambil rata-rata durasi film (film.length) untuk setiap kategori film (category.name). Query ini menggabungkan tabel `category`, `film_category`, dan `film` untuk menghubungkan kategori dengan film, kemudian menghitung rata-rata durasi untuk setiap kelompok kategori.\",\n  \"assumptions\": [\"'Durasi film' merujuk pada kolom `length` di tabel `film`.\", \"'Kategori film' merujuk pada kolom `name` di tabel `category`.\"],\n  \"potential_issues\": []\n}\n```",
+    "token_usage": {
+      "prompt_tokens": 2947,
+      "completion_tokens": 213,
+      "total_tokens": 3301
+    }
+  }
+}

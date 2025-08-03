@@ -1,0 +1,35 @@
+{
+  "scenario_id": "RES-A3-02",
+  "model_info": {
+    "name": "gemini-2.5-flash",
+    "temperature": 0.0,
+    "timestamp": "2025-07-22T10:33:20.419110"
+  },
+  "input": {
+    "question_id": "Hitung rata-rata waktu memasak untuk setiap tingkat kesulitan resep. Tampilkan tingkat kesulitan dan rata-ratanya (dalam menit).",
+    "database": "resep",
+    "category": "Aggregation"
+  },
+  "prompt_info": {
+    "prompt_length": 7101,
+    "prompt_lines": 167
+  },
+  "model_response": {
+    "sql_query": "SELECT tingkat_kesulitan, AVG(waktu_masak) AS rata_rata_waktu_masak FROM resep GROUP BY tingkat_kesulitan",
+    "explanation": "Mengambil tingkat kesulitan resep dan menghitung rata-rata waktu memasak (dalam menit) untuk setiap tingkat kesulitan tersebut, kemudian mengelompokkan hasilnya berdasarkan tingkat kesulitan.",
+    "confidence": 0.98,
+    "assumptions": [
+      "Kolom 'waktu_masak' di tabel 'resep' menyimpan durasi dalam menit dan 'tingkat_kesulitan' adalah kolom yang valid untuk pengelompokan."
+    ],
+    "potential_issues": [],
+    "response_time_ms": 2577.271,
+    "model_name": "gemini-2.5-flash",
+    "timestamp": "2025-07-22T10:33:20.419110",
+    "raw_response": "```json\n{\n  \"sql_query\": \"SELECT tingkat_kesulitan, AVG(waktu_masak) AS rata_rata_waktu_masak FROM resep GROUP BY tingkat_kesulitan\",\n  \"confidence\": 0.98,\n  \"explanation\": \"Mengambil tingkat kesulitan resep dan menghitung rata-rata waktu memasak (dalam menit) untuk setiap tingkat kesulitan tersebut, kemudian mengelompokkan hasilnya berdasarkan tingkat kesulitan.\",\n  \"assumptions\": [\"Kolom 'waktu_masak' di tabel 'resep' menyimpan durasi dalam menit dan 'tingkat_kesulitan' adalah kolom yang valid untuk pengelompokan.\"],\n  \"potential_issues\": []\n}\n```",
+    "token_usage": {
+      "prompt_tokens": 2174,
+      "completion_tokens": 155,
+      "total_tokens": 2588
+    }
+  }
+}

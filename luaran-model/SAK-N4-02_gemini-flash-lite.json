@@ -1,0 +1,37 @@
+{
+  "scenario_id": "SAK-N4-02",
+  "model_info": {
+    "name": "gemini-2.5-flash-lite",
+    "temperature": 0.0,
+    "timestamp": "2025-07-23T13:54:56.576672"
+  },
+  "input": {
+    "question_id": "Tampilkan bahasa yang tidak memiliki satu pun film berating 'R'.",
+    "database": "sakila",
+    "category": "Nested / Subquery"
+  },
+  "prompt_info": {
+    "prompt_length": 9715,
+    "prompt_lines": 299
+  },
+  "model_response": {
+    "sql_query": "SELECT l.name FROM language l LEFT JOIN (SELECT DISTINCT language_id FROM film WHERE rating = 'R') AS r_films ON l.language_id = r_films.language_id WHERE r_films.language_id IS NULL;",
+    "explanation": "Query ini pertama-tama membuat subkueri yang mengidentifikasi semua `language_id` dari film yang memiliki rating 'R'. Kemudian, query utama memilih semua nama bahasa dari tabel `language` yang `language_id`-nya tidak muncul dalam hasil subkueri tersebut. Ini secara efektif menampilkan bahasa yang tidak memiliki film berating 'R'.",
+    "confidence": 0.97,
+    "assumptions": [
+      "Setiap film hanya memiliki satu bahasa.",
+      "Rating 'R' adalah nilai yang valid dalam kolom `rating` tabel `film`."
+    ],
+    "potential_issues": [
+      "Jika ada bahasa yang tidak memiliki film sama sekali (baik berating 'R' maupun tidak), bahasa tersebut akan tetap ditampilkan karena `LEFT JOIN` akan menghasilkan NULL untuk `r_films.language_id`."
+    ],
+    "response_time_ms": 1324.721300001329,
+    "model_name": "gemini-2.5-flash-lite",
+    "timestamp": "2025-07-23T13:54:56.576672",
+    "token_usage": {
+      "prompt_tokens": 3065,
+      "completion_tokens": 255,
+      "total_tokens": 3320
+    }
+  }
+}

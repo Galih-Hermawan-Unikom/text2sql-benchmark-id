@@ -1,0 +1,21 @@
+{
+  "metadata": {
+    "version": "1.0",
+    "generated_at": "2025-07-31T09:40:48.934245",
+    "tool": "text2sql_ollama"
+  },
+  "scenario_id": "SAK-N4-05",
+  "category": "Nested / Subquery",
+  "database": "sakila",
+  "question_id": "Tampilkan pelanggan dari Indonesia yang pernah menyewa film kategori 'Action' tetapi belum pernah menyewa film kategori 'Animation'; sertakan nama depan dan nama belakang mereka.",
+  "model": "gemma-3n-e2b",
+  "sql_query": "SELECT\n  c.first_name,\n  c.last_name\nFROM customer AS c\nJOIN rental AS r\n  ON c.customer_id = r.customer_id\nJOIN film_actor AS fa\n  ON r.rental_id = fa.film_id\nJOIN film AS f\n  ON fa.film_id = f.film_id\nJOIN film_category AS fc\n  ON f.film_id = fc.film_id\nJOIN category AS cat\n  ON fc.category_id = cat.category_id\nWHERE\n  cat.name = 'Action'\n  AND c.store_id IN (\n    SELECT\n      store_id\n    FROM store\n    WHERE\n      country_id IN (\n        SELECT\n          country_id\n        FROM country\n        WHERE\n          country = 'Indonesia'\n      )\n  )\n  AND c.active = TRUE\n  AND c.create_date <= CURDATE()\nGROUP BY\n  c.customer_id,\n  c.first_name,\n  c.last_name\nHAVING\n  COUNT(DISTINCT f.film_id) = 0\n  AND cat.name != 'Animation'",
+  "timestamp": "2025-07-31T09:40:48.934245",
+  "response_time_ms": 178592.434,
+  "token_usage": {
+    "prompt_tokens": 1691,
+    "completion_tokens": 271,
+    "total_tokens": 1962
+  },
+  "raw_response": "```sql\nSELECT\n  c.first_name,\n  c.last_name\nFROM customer AS c\nJOIN rental AS r\n  ON c.customer_id = r.customer_id\nJOIN film_actor AS fa\n  ON r.rental_id = fa.film_id\nJOIN film AS f\n  ON fa.film_id = f.film_id\nJOIN film_category AS fc\n  ON f.film_id = fc.film_id\nJOIN category AS cat\n  ON fc.category_id = cat.category_id\nWHERE\n  cat.name = 'Action'\n  AND c.store_id IN (\n    SELECT\n      store_id\n    FROM store\n    WHERE\n      country_id IN (\n        SELECT\n          country_id\n        FROM country\n        WHERE\n          country = 'Indonesia'\n      )\n  )\n  AND c.active = TRUE\n  AND c.create_date <= CURDATE()\nGROUP BY\n  c.customer_id,\n  c.first_name,\n  c.last_name\nHAVING\n  COUNT(DISTINCT f.film_id) = 0\n  AND cat.name != 'Animation';\n```"
+}

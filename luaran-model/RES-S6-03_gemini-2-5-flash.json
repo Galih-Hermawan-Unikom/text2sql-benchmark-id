@@ -1,0 +1,35 @@
+{
+  "scenario_id": "RES-S6-03",
+  "model_info": {
+    "name": "gemini-2.5-flash",
+    "temperature": 0.0,
+    "timestamp": "2025-07-22T12:21:44.963548"
+  },
+  "input": {
+    "question_id": "Daerah asal mana yang memiliki jumlah masakan terbanyak? Tampilkan nama daerah dan total masakannya (semua daerah dengan jumlah maksimum).",
+    "database": "resep",
+    "category": "Superlative"
+  },
+  "prompt_info": {
+    "prompt_length": 7438,
+    "prompt_lines": 168
+  },
+  "model_response": {
+    "sql_query": "SELECT asal_daerah, COUNT(kode_masakan) AS total_masakan FROM masakan GROUP BY asal_daerah HAVING COUNT(kode_masakan) = (SELECT MAX(jumlah_masakan) FROM (SELECT COUNT(kode_masakan) AS jumlah_masakan FROM masakan GROUP BY asal_daerah) AS subquery_counts)",
+    "explanation": "Mengambil jumlah masakan untuk setiap daerah asal, kemudian memfilter hasilnya untuk hanya menampilkan daerah yang jumlah masakannya sama dengan jumlah masakan maksimum yang ada di seluruh daerah.",
+    "confidence": 0.98,
+    "assumptions": [
+      "Jumlah masakan dihitung berdasarkan entri unik di tabel `masakan` untuk setiap daerah asal."
+    ],
+    "potential_issues": [],
+    "response_time_ms": 3594.525,
+    "model_name": "gemini-2.5-flash",
+    "timestamp": "2025-07-22T12:21:44.963548",
+    "raw_response": "```json\n{\n  \"sql_query\": \"SELECT asal_daerah, COUNT(kode_masakan) AS total_masakan FROM masakan GROUP BY asal_daerah HAVING COUNT(kode_masakan) = (SELECT MAX(jumlah_masakan) FROM (SELECT COUNT(kode_masakan) AS jumlah_masakan FROM masakan GROUP BY asal_daerah) AS subquery_counts)\",\n  \"confidence\": 0.98,\n  \"explanation\": \"Mengambil jumlah masakan untuk setiap daerah asal, kemudian memfilter hasilnya untuk hanya menampilkan daerah yang jumlah masakannya sama dengan jumlah masakan maksimum yang ada di seluruh daerah.\",\n  \"assumptions\": [\"Jumlah masakan dihitung berdasarkan entri unik di tabel `masakan` untuk setiap daerah asal.\"],\n  \"potential_issues\": []\n}\n```",
+    "token_usage": {
+      "prompt_tokens": 2246,
+      "completion_tokens": 178,
+      "total_tokens": 2888
+    }
+  }
+}

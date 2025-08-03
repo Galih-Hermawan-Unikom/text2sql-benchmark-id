@@ -1,0 +1,39 @@
+{
+  "scenario_id": "SAK-J2-01",
+  "model_info": {
+    "name": "gemma-3-27b-it",
+    "temperature": 0.0,
+    "timestamp": "2025-07-24T08:57:33.884150"
+  },
+  "input": {
+    "question_id": "Tampilkan nama depan, nama belakang, dan kota tempat tinggal semua pelanggan yang pernah menyewa film dengan kategori animasi pada tahun 2006.",
+    "database": "sakila",
+    "category": "Join + Filter"
+  },
+  "prompt_info": {
+    "prompt_length": 9793,
+    "prompt_lines": 299
+  },
+  "model_response": {
+    "sql_query": "SELECT c.first_name, c.last_name, ci.city FROM customer c JOIN rental r ON c.customer_id = r.customer_id JOIN inventory i ON r.inventory_id = i.inventory_id JOIN film f ON i.film_id = f.film_id JOIN film_category fc ON f.film_id = fc.film_id JOIN category cat ON fc.category_id = cat.category_id JOIN address a ON c.address_id = a.address_id JOIN city ci ON a.city_id = ci.city_id WHERE cat.name = 'Animation' AND YEAR(r.rental_date) = 2006",
+    "explanation": "Query ini mengambil nama depan, nama belakang, dan kota tempat tinggal pelanggan yang menyewa film dengan kategori 'Animation' pada tahun 2006. Query ini menggunakan JOIN untuk menghubungkan tabel customer, rental, inventory, film, film_category, category, address, dan city untuk mendapatkan informasi yang diperlukan.",
+    "confidence": 0.95,
+    "assumptions": [
+      "Kategori film 'Animation' ada di tabel category.",
+      "Tahun sewa diambil dari kolom rental_date di tabel rental.",
+      "Setiap pelanggan memiliki alamat yang terhubung ke kota."
+    ],
+    "potential_issues": [
+      "Jika nama kategori tidak tepat (case-sensitive), query mungkin tidak mengembalikan hasil yang benar.",
+      "Jika ada data yang tidak konsisten antara tabel-tabel yang di-JOIN, query mungkin menghasilkan hasil yang tidak akurat."
+    ],
+    "response_time_ms": 7770.206500000313,
+    "model_name": "gemma-3-27b-it",
+    "timestamp": "2025-07-24T08:57:33.884150",
+    "token_usage": {
+      "prompt_tokens": 3081,
+      "completion_tokens": null,
+      "total_tokens": 3081
+    }
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "scenario_id": "RES-C5-04",
+  "model_info": {
+    "name": "gemini-2.5-flash-lite",
+    "temperature": 0.0,
+    "timestamp": "2025-07-23T13:53:17.215294"
+  },
+  "input": {
+    "question_id": "Daerah asal mana yang memiliki jumlah masakan di bawah rata-rata jumlah masakan per daerah? Tampilkan nama daerah dan total masakannya.",
+    "database": "resep",
+    "category": "Comparative"
+  },
+  "prompt_info": {
+    "prompt_length": 7263,
+    "prompt_lines": 165
+  },
+  "model_response": {
+    "sql_query": "SELECT m.asal_daerah, COUNT(m.kode_masakan) AS jumlah_masakan FROM masakan m GROUP BY m.asal_daerah HAVING jumlah_masakan < (SELECT AVG(jumlah_masakan) FROM (SELECT COUNT(kode_masakan) AS jumlah_masakan FROM masakan GROUP BY asal_daerah) AS subquery_jumlah_masakan);",
+    "explanation": "Query ini pertama-tama menghitung jumlah masakan untuk setiap daerah asal. Kemudian, ia menghitung rata-rata jumlah masakan per daerah asal. Terakhir, ia menampilkan daerah asal yang jumlah masakannya di bawah rata-rata tersebut, beserta jumlah masakannya.",
+    "confidence": 0.95,
+    "assumptions": [
+      "Setiap daerah asal memiliki setidaknya satu masakan.",
+      "Kolom `asal_daerah` di tabel `masakan` berisi nama daerah asal yang valid."
+    ],
+    "potential_issues": [
+      "Jika ada daerah asal yang tidak memiliki masakan sama sekali, daerah tersebut tidak akan muncul dalam hasil.",
+      "Perhitungan rata-rata akan mengabaikan daerah asal yang tidak memiliki masakan."
+    ],
+    "response_time_ms": 1191.936999999598,
+    "model_name": "gemini-2.5-flash-lite",
+    "timestamp": "2025-07-23T13:53:17.216295",
+    "token_usage": {
+      "prompt_tokens": 2199,
+      "completion_tokens": 272,
+      "total_tokens": 2471
+    }
+  }
+}

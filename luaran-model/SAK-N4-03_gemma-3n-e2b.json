@@ -1,0 +1,21 @@
+{
+  "metadata": {
+    "version": "1.0",
+    "generated_at": "2025-07-31T08:58:30.293385",
+    "tool": "text2sql_ollama"
+  },
+  "scenario_id": "SAK-N4-03",
+  "category": "Nested / Subquery",
+  "database": "sakila",
+  "question_id": "Tampilkan staf yang total nilai pembayarannya melebihi rata-rata total pembayaran per staf; sertakan nama staf dan total pembayarannya.",
+  "model": "gemma-3n-e2b",
+  "sql_query": "SELECT\n  s.first_name AS nama_staf,\n  s.last_name AS nama_staf,\n  SUM(p.amount) AS total_pembayaran\nFROM STAFF AS s\nJOIN PAYMENT AS p\n  ON s.staff_id = p.staff_id\nGROUP BY\n  s.staff_id,\n  s.first_name,\n  s.last_name\nHAVING\n  SUM(p.amount) > (\n    SELECT\n      AVG(amount)\n    FROM PAYMENT\n  )",
+  "timestamp": "2025-07-31T08:58:30.293385",
+  "response_time_ms": 175971.676,
+  "token_usage": {
+    "prompt_tokens": 1686,
+    "completion_tokens": 130,
+    "total_tokens": 1816
+  },
+  "raw_response": "```sql\nSELECT\n  s.first_name AS nama_staf,\n  s.last_name AS nama_staf,\n  SUM(p.amount) AS total_pembayaran\nFROM STAFF AS s\nJOIN PAYMENT AS p\n  ON s.staff_id = p.staff_id\nGROUP BY\n  s.staff_id,\n  s.first_name,\n  s.last_name\nHAVING\n  SUM(p.amount) > (\n    SELECT\n      AVG(amount)\n    FROM PAYMENT\n  );\n```"
+}

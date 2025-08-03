@@ -1,0 +1,38 @@
+{
+  "scenario_id": "RES-N4-03",
+  "model_info": {
+    "name": "gemma-3-27b-it",
+    "temperature": 0.0,
+    "timestamp": "2025-07-24T08:55:30.299248"
+  },
+  "input": {
+    "question_id": "Masakan asal mana yang menggunakan setidaknya satu bahan yang tidak pernah dipakai masakan asal 'Bali'? Tampilkan nama daerahnya saja.",
+    "database": "resep",
+    "category": "Nested / Subquery"
+  },
+  "prompt_info": {
+    "prompt_length": 7262,
+    "prompt_lines": 165
+  },
+  "model_response": {
+    "sql_query": "SELECT DISTINCT m.asal_daerah FROM masakan m WHERE m.kode_masakan IN (SELECT r.kode_masakan FROM resep r JOIN resep_bahan rb ON r.id_resep = rb.id_resep JOIN bahan b ON rb.id_bahan = b.id_bahan WHERE b.id_bahan NOT IN (SELECT rb2.id_bahan FROM resep r2 JOIN resep_bahan rb2 ON r2.id_resep = rb2.id_resep JOIN masakan m2 ON r2.kode_masakan = m2.kode_masakan WHERE m2.asal_daerah = 'Bali'))",
+    "explanation": "Query ini mencari masakan yang berasal dari daerah tertentu yang menggunakan bahan yang tidak pernah digunakan dalam masakan dari Bali.  Pertama, subquery dalam `WHERE NOT IN` mencari semua bahan yang digunakan dalam masakan Bali. Kemudian, query utama mencari masakan yang menggunakan bahan yang *tidak* ada dalam daftar bahan masakan Bali.",
+    "confidence": 0.85,
+    "assumptions": [
+      "Nama daerah masakan disimpan di kolom `masakan.asal_daerah`.",
+      "Hubungan antara masakan, resep, bahan, dan resep_bahan sudah benar seperti yang didefinisikan dalam skema database."
+    ],
+    "potential_issues": [
+      "Performa query bisa lambat jika tabel sangat besar.  Penggunaan `IN` dengan subquery bisa dioptimalkan dengan `JOIN` jika diperlukan.",
+      "Jika ada kesalahan pengetikan pada nama daerah 'Bali', query tidak akan memberikan hasil yang benar."
+    ],
+    "response_time_ms": 7942.4424000003455,
+    "model_name": "gemma-3-27b-it",
+    "timestamp": "2025-07-24T08:55:30.299248",
+    "token_usage": {
+      "prompt_tokens": 2198,
+      "completion_tokens": null,
+      "total_tokens": 2198
+    }
+  }
+}

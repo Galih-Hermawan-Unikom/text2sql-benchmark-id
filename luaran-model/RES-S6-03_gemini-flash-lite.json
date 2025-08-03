@@ -1,0 +1,37 @@
+{
+  "scenario_id": "RES-S6-03",
+  "model_info": {
+    "name": "gemini-2.5-flash-lite",
+    "temperature": 0.0,
+    "timestamp": "2025-07-23T13:53:59.661044"
+  },
+  "input": {
+    "question_id": "Daerah asal mana yang memiliki jumlah masakan terbanyak? Tampilkan nama daerah dan total masakannya (semua daerah dengan jumlah maksimum).",
+    "database": "resep",
+    "category": "Superlative"
+  },
+  "prompt_info": {
+    "prompt_length": 7266,
+    "prompt_lines": 165
+  },
+  "model_response": {
+    "sql_query": "SELECT asal_daerah, COUNT(*) AS total_masakan FROM masakan GROUP BY asal_daerah ORDER BY total_masakan DESC",
+    "explanation": "Query ini mengelompokkan masakan berdasarkan daerah asalnya dan menghitung jumlah masakan di setiap daerah. Kemudian, hasilnya diurutkan berdasarkan jumlah masakan secara menurun untuk menampilkan daerah dengan masakan terbanyak di urutan teratas.",
+    "confidence": 0.98,
+    "assumptions": [
+      "Setiap masakan memiliki satu daerah asal yang tercatat di kolom `asal_daerah` pada tabel `masakan`."
+    ],
+    "potential_issues": [
+      "Jika ada daerah asal yang memiliki jumlah masakan yang sama dan merupakan jumlah maksimum, semua daerah tersebut akan ditampilkan.",
+      "Jika ada nilai NULL pada `asal_daerah`, daerah tersebut akan dikelompokkan sebagai satu grup terpisah."
+    ],
+    "response_time_ms": 1199.0243999989616,
+    "model_name": "gemini-2.5-flash-lite",
+    "timestamp": "2025-07-23T13:53:59.661044",
+    "token_usage": {
+      "prompt_tokens": 2199,
+      "completion_tokens": 213,
+      "total_tokens": 2412
+    }
+  }
+}

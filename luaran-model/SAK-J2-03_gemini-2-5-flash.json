@@ -1,0 +1,37 @@
+{
+  "scenario_id": "SAK-J2-03",
+  "model_info": {
+    "name": "gemini-2.5-flash",
+    "temperature": 0.0,
+    "timestamp": "2025-07-22T10:18:43.529238"
+  },
+  "input": {
+    "question_id": "Tampilkan nama aktor dan judul film yang dirilis tahun 2006 dengan rating 'PG'. Di mana judul filmnya mengandung kata pilot.",
+    "database": "sakila",
+    "category": "Join + Filter"
+  },
+  "prompt_info": {
+    "prompt_length": 9280,
+    "prompt_lines": 299
+  },
+  "model_response": {
+    "sql_query": "SELECT a.first_name, a.last_name, f.title FROM actor a JOIN film_actor fa ON a.actor_id = fa.actor_id JOIN film f ON fa.film_id = f.film_id WHERE f.release_year = 2006 AND f.rating = 'PG' AND f.title LIKE '%pilot%'",
+    "explanation": "Mengambil nama depan dan belakang aktor beserta judul film yang memenuhi kriteria: dirilis pada tahun 2006, memiliki rating 'PG', dan judul filmnya mengandung kata 'pilot'.",
+    "confidence": 0.98,
+    "assumptions": [
+      "Pencarian 'mengandung kata pilot' dilakukan dengan operator LIKE '%pilot%' yang akan mencocokkan di mana saja dalam string judul film."
+    ],
+    "potential_issues": [
+      "Jika 'pilot' adalah kata yang sangat umum dan bisa muncul dalam judul film yang tidak relevan, hasil mungkin kurang spesifik dari yang diinginkan pengguna."
+    ],
+    "response_time_ms": 2817.114,
+    "model_name": "gemini-2.5-flash",
+    "timestamp": "2025-07-22T10:18:43.529238",
+    "raw_response": "```json\n{\n  \"sql_query\": \"SELECT a.first_name, a.last_name, f.title FROM actor a JOIN film_actor fa ON a.actor_id = fa.actor_id JOIN film f ON fa.film_id = f.film_id WHERE f.release_year = 2006 AND f.rating = 'PG' AND f.title LIKE '%pilot%'\",\n  \"confidence\": 0.98,\n  \"explanation\": \"Mengambil nama depan dan belakang aktor beserta judul film yang memenuhi kriteria: dirilis pada tahun 2006, memiliki rating 'PG', dan judul filmnya mengandung kata 'pilot'.\",\n  \"assumptions\": [\"Pencarian 'mengandung kata pilot' dilakukan dengan operator LIKE '%pilot%' yang akan mencocokkan di mana saja dalam string judul film.\"],\n  \"potential_issues\": [\"Jika 'pilot' adalah kata yang sangat umum dan bisa muncul dalam judul film yang tidak relevan, hasil mungkin kurang spesifik dari yang diinginkan pengguna.\"]\n}\n```",
+    "token_usage": {
+      "prompt_tokens": 2964,
+      "completion_tokens": 229,
+      "total_tokens": 3461
+    }
+  }
+}

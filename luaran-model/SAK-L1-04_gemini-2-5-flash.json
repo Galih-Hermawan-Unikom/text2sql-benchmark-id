@@ -1,0 +1,35 @@
+{
+  "scenario_id": "SAK-L1-04",
+  "model_info": {
+    "name": "gemini-2.5-flash",
+    "temperature": 0.0,
+    "timestamp": "2025-07-22T10:14:25.166082"
+  },
+  "input": {
+    "question_id": "Tampilkan ID dan nama kategori film yang diperbarui pada atau setelah 15 Februari 2006.",
+    "database": "sakila",
+    "category": "Lookup / Filter"
+  },
+  "prompt_info": {
+    "prompt_length": 9243,
+    "prompt_lines": 299
+  },
+  "model_response": {
+    "sql_query": "SELECT category_id, name FROM category WHERE last_update >= '2006-02-15'",
+    "explanation": "Mengambil ID kategori dan nama kategori dari tabel `category` yang kolom `last_update`nya menunjukkan tanggal pada atau setelah 15 Februari 2006.",
+    "confidence": 0.98,
+    "assumptions": [
+      "Tanggal '15 Februari 2006' merujuk pada kolom `last_update` di tabel `category`."
+    ],
+    "potential_issues": [],
+    "response_time_ms": 2620.016,
+    "model_name": "gemini-2.5-flash",
+    "timestamp": "2025-07-22T10:14:25.165089",
+    "raw_response": "```json\n{\n  \"sql_query\": \"SELECT category_id, name FROM category WHERE last_update >= '2006-02-15'\",\n  \"confidence\": 0.98,\n  \"explanation\": \"Mengambil ID kategori dan nama kategori dari tabel `category` yang kolom `last_update`nya menunjukkan tanggal pada atau setelah 15 Februari 2006.\",\n  \"assumptions\": [\"Tanggal '15 Februari 2006' merujuk pada kolom `last_update` di tabel `category`.\"],\n  \"potential_issues\": []\n}\n```",
+    "token_usage": {
+      "prompt_tokens": 2957,
+      "completion_tokens": 135,
+      "total_tokens": 3412
+    }
+  }
+}

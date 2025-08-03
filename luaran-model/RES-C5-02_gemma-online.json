@@ -1,0 +1,37 @@
+{
+  "scenario_id": "RES-C5-02",
+  "model_info": {
+    "name": "gemma-3-27b-it",
+    "temperature": 0.0,
+    "timestamp": "2025-07-24T08:53:43.526114"
+  },
+  "input": {
+    "question_id": "Masakan mana saja yang tingkat kepedasannya di atas rata-rata semua masakan? Sertakan kode masakan, nama masakan, dan level pedasnya.",
+    "database": "resep",
+    "category": "Comparative"
+  },
+  "prompt_info": {
+    "prompt_length": 7261,
+    "prompt_lines": 165
+  },
+  "model_response": {
+    "sql_query": "SELECT m.kode_masakan, m.nama_masakan, m.level_pedas FROM masakan m WHERE m.level_pedas > (SELECT AVG(level_pedas) FROM masakan)",
+    "explanation": "Query ini memilih kode masakan, nama masakan, dan level pedas dari tabel `masakan` di mana level pedasnya lebih besar dari rata-rata level pedas dari semua masakan dalam tabel yang sama. Subquery digunakan untuk menghitung rata-rata level pedas.",
+    "confidence": 0.98,
+    "assumptions": [
+      "Level pedas diwakili oleh kolom `level_pedas` dalam tabel `masakan`.",
+      "Rata-rata level pedas dihitung dari semua entri dalam tabel `masakan`."
+    ],
+    "potential_issues": [
+      "Jika tabel `masakan` kosong, subquery akan mengembalikan NULL, dan query utama mungkin tidak mengembalikan hasil yang diharapkan.  Dalam kasus ini, perbandingan `m.level_pedas > NULL` akan menghasilkan NULL, sehingga tidak ada baris yang akan dipilih."
+    ],
+    "response_time_ms": 5974.599099999978,
+    "model_name": "gemma-3-27b-it",
+    "timestamp": "2025-07-24T08:53:43.526114",
+    "token_usage": {
+      "prompt_tokens": 2205,
+      "completion_tokens": null,
+      "total_tokens": 2205
+    }
+  }
+}

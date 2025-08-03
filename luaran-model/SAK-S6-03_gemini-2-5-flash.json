@@ -1,0 +1,35 @@
+{
+  "scenario_id": "SAK-S6-03",
+  "model_info": {
+    "name": "gemini-2.5-flash",
+    "temperature": 0.0,
+    "timestamp": "2025-07-22T12:51:10.874894"
+  },
+  "input": {
+    "question_id": "Kota mana yang memiliki jumlah pelanggan terbanyak? Sertakan nama kota dan jumlah pelanggannya.",
+    "database": "sakila",
+    "category": "Superlative"
+  },
+  "prompt_info": {
+    "prompt_length": 9918,
+    "prompt_lines": 301
+  },
+  "model_response": {
+    "sql_query": "SELECT cy.city, COUNT(cu.customer_id) AS jumlah_pelanggan FROM customer cu JOIN address ad ON cu.address_id = ad.address_id JOIN city cy ON ad.city_id = cy.city_id GROUP BY cy.city_id, cy.city HAVING COUNT(cu.customer_id) = (SELECT MAX(customer_counts.count_val) FROM (SELECT COUNT(c_inner.customer_id) AS count_val FROM customer c_inner JOIN address a_inner ON c_inner.address_id = a_inner.address_id JOIN city cy_inner ON a_inner.city_id = cy_inner.city_id GROUP BY cy_inner.city_id) AS customer_counts)",
+    "explanation": "Query ini menggabungkan tabel 'customer', 'address', dan 'city' untuk menghubungkan pelanggan dengan kota tempat tinggal mereka. Kemudian, menghitung jumlah pelanggan untuk setiap kota menggunakan GROUP BY. Klausa HAVING digunakan untuk memfilter hasil, hanya menampilkan kota-kota yang jumlah pelanggannya sama dengan jumlah pelanggan maksimum yang ditemukan di seluruh kota (diambil dari subkueri). Ini memastikan bahwa semua kota yang memiliki jumlah pelanggan terbanyak, termasuk jika ada hasil yang seri, akan ditampilkan.",
+    "confidence": 0.98,
+    "assumptions": [
+      "Jumlah pelanggan terbanyak dihitung berdasarkan jumlah entri pelanggan yang berasosiasi dengan sebuah kota."
+    ],
+    "potential_issues": [],
+    "response_time_ms": 9933.806,
+    "model_name": "gemini-2.5-flash",
+    "timestamp": "2025-07-22T12:51:10.874894",
+    "raw_response": "```json\n{\n  \"sql_query\": \"SELECT cy.city, COUNT(cu.customer_id) AS jumlah_pelanggan FROM customer cu JOIN address ad ON cu.address_id = ad.address_id JOIN city cy ON ad.city_id = cy.city_id GROUP BY cy.city_id, cy.city HAVING COUNT(cu.customer_id) = (SELECT MAX(customer_counts.count_val) FROM (SELECT COUNT(c_inner.customer_id) AS count_val FROM customer c_inner JOIN address a_inner ON c_inner.address_id = a_inner.address_id JOIN city cy_inner ON a_inner.city_id = cy_inner.city_id GROUP BY cy_inner.city_id) AS customer_counts)\",\n  \"confidence\": 0.98,\n  \"explanation\": \"Query ini menggabungkan tabel 'customer', 'address', dan 'city' untuk menghubungkan pelanggan dengan kota tempat tinggal mereka. Kemudian, menghitung jumlah pelanggan untuk setiap kota menggunakan GROUP BY. Klausa HAVING digunakan untuk memfilter hasil, hanya menampilkan kota-kota yang jumlah pelanggannya sama dengan jumlah pelanggan maksimum yang ditemukan di seluruh kota (diambil dari subkueri). Ini memastikan bahwa semua kota yang memiliki jumlah pelanggan terbanyak, termasuk jika ada hasil yang seri, akan ditampilkan.\",\n  \"assumptions\": [\n    \"Jumlah pelanggan terbanyak dihitung berdasarkan jumlah entri pelanggan yang berasosiasi dengan sebuah kota.\"\n  ],\n  \"potential_issues\": []\n}\n```",
+    "token_usage": {
+      "prompt_tokens": 3105,
+      "completion_tokens": 335,
+      "total_tokens": 5066
+    }
+  }
+}

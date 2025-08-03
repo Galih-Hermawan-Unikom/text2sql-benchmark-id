@@ -1,0 +1,37 @@
+{
+  "scenario_id": "SAK-A3-03",
+  "model_info": {
+    "name": "gemini-2.5-flash",
+    "temperature": 0.0,
+    "timestamp": "2025-07-22T10:33:36.731217"
+  },
+  "input": {
+    "question_id": "Hitung total nilai pembayaran per bulan pada tahun 2006.",
+    "database": "sakila",
+    "category": "Aggregation"
+  },
+  "prompt_info": {
+    "prompt_length": 9212,
+    "prompt_lines": 299
+  },
+  "model_response": {
+    "sql_query": "SELECT MONTH(payment_date) AS bulan, SUM(amount) AS total_pembayaran FROM payment WHERE YEAR(payment_date) = 2006 GROUP BY bulan ORDER BY bulan",
+    "explanation": "Mengambil bulan dari tanggal pembayaran dan menghitung total jumlah pembayaran untuk setiap bulan pada tahun 2006.",
+    "confidence": 0.98,
+    "assumptions": [
+      "Pembayaran yang dimaksud adalah kolom 'amount' di tabel 'payment'."
+    ],
+    "potential_issues": [
+      "Jika ada bulan tanpa pembayaran di tahun 2006, bulan tersebut tidak akan muncul dalam hasil."
+    ],
+    "response_time_ms": 2242.779,
+    "model_name": "gemini-2.5-flash",
+    "timestamp": "2025-07-22T10:33:36.731217",
+    "raw_response": "```json\n{\n  \"sql_query\": \"SELECT MONTH(payment_date) AS bulan, SUM(amount) AS total_pembayaran FROM payment WHERE YEAR(payment_date) = 2006 GROUP BY bulan ORDER BY bulan\",\n  \"confidence\": 0.98,\n  \"explanation\": \"Mengambil bulan dari tanggal pembayaran dan menghitung total jumlah pembayaran untuk setiap bulan pada tahun 2006.\",\n  \"assumptions\": [\"Pembayaran yang dimaksud adalah kolom 'amount' di tabel 'payment'.\"],\n  \"potential_issues\": [\"Jika ada bulan tanpa pembayaran di tahun 2006, bulan tersebut tidak akan muncul dalam hasil.\"]\n}\n```",
+    "token_usage": {
+      "prompt_tokens": 2949,
+      "completion_tokens": 149,
+      "total_tokens": 3256
+    }
+  }
+}

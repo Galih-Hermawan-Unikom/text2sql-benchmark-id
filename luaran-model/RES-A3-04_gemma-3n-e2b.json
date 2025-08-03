@@ -1,0 +1,21 @@
+{
+  "metadata": {
+    "version": "1.0",
+    "generated_at": "2025-07-31T06:50:26.026768",
+    "tool": "text2sql_ollama"
+  },
+  "scenario_id": "RES-A3-04",
+  "category": "Aggregation",
+  "database": "resep",
+  "question_id": "Untuk setiap daerah asal, berapa banyak bahan unik yang digunakan di seluruh masakan daerah tersebut? Tampilkan nama daerah dan jumlah bahan uniknya.",
+  "model": "gemma-3n-e2b",
+  "sql_query": "SELECT\n    m.asal_daerah,\n    COUNT(b.id_bahan) AS jumlah_bahan_unik\nFROM\n    masakan m\nJOIN\n    resep_bahan rb ON m.kode_masakan = rb.id_resep\nJOIN\n    bahan b ON rb.id_bahan = b.id_bahan\nGROUP BY\n    m.asal_daerah\nORDER BY\n    jumlah_bahan_unik DESC",
+  "timestamp": "2025-07-31T06:50:26.025767",
+  "response_time_ms": 128750.751,
+  "token_usage": {
+    "prompt_tokens": 1233,
+    "completion_tokens": 105,
+    "total_tokens": 1338
+  },
+  "raw_response": "```sql\nSELECT\n    m.asal_daerah,\n    COUNT(b.id_bahan) AS jumlah_bahan_unik\nFROM\n    masakan m\nJOIN\n    resep_bahan rb ON m.kode_masakan = rb.id_resep\nJOIN\n    bahan b ON rb.id_bahan = b.id_bahan\nGROUP BY\n    m.asal_daerah\nORDER BY\n    jumlah_bahan_unik DESC;\n```"
+}

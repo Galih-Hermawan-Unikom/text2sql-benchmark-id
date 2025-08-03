@@ -1,0 +1,35 @@
+{
+  "scenario_id": "SAK-L1-05",
+  "model_info": {
+    "name": "gemini-2.5-flash",
+    "temperature": 0.0,
+    "timestamp": "2025-07-22T10:14:26.844227"
+  },
+  "input": {
+    "question_id": "Tampilkan semua nama bahasa yang tersedia selain Inggris dan Italia.",
+    "database": "sakila",
+    "category": "Lookup / Filter"
+  },
+  "prompt_info": {
+    "prompt_length": 9224,
+    "prompt_lines": 299
+  },
+  "model_response": {
+    "sql_query": "SELECT name FROM language WHERE name NOT IN ('English', 'Italian')",
+    "explanation": "Mengambil semua nama bahasa dari tabel 'language' yang bukan 'English' atau 'Italian'.",
+    "confidence": 0.98,
+    "assumptions": [
+      "Kolom 'name' di tabel 'language' menyimpan nama bahasa yang relevan."
+    ],
+    "potential_issues": [],
+    "response_time_ms": 1668.146,
+    "model_name": "gemini-2.5-flash",
+    "timestamp": "2025-07-22T10:14:26.844227",
+    "raw_response": "```json\n{\n  \"sql_query\": \"SELECT name FROM language WHERE name NOT IN ('English', 'Italian')\",\n  \"confidence\": 0.98,\n  \"explanation\": \"Mengambil semua nama bahasa dari tabel 'language' yang bukan 'English' atau 'Italian'.\",\n  \"assumptions\": [\"Kolom 'name' di tabel 'language' menyimpan nama bahasa yang relevan.\"],\n  \"potential_issues\": []\n}\n```",
+    "token_usage": {
+      "prompt_tokens": 2946,
+      "completion_tokens": 99,
+      "total_tokens": 3173
+    }
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "scenario_id": "RES-A3-01",
+  "model_info": {
+    "name": "gemma-3-27b-it",
+    "temperature": 0.0,
+    "timestamp": "2025-07-24T09:05:40.209904"
+  },
+  "input": {
+    "question_id": "Berapa jumlah resep yang tersedia untuk tiap kategori masakan? Tampilkan kategori masakan dan total resepnya.",
+    "database": "resep",
+    "category": "Aggregation"
+  },
+  "prompt_info": {
+    "prompt_length": 7237,
+    "prompt_lines": 165
+  },
+  "model_response": {
+    "sql_query": "SELECT m.kategori, COUNT(r.id_resep) AS total_resep FROM masakan m JOIN resep r ON m.kode_masakan = r.kode_masakan GROUP BY m.kategori",
+    "explanation": "Query ini menghitung jumlah resep untuk setiap kategori masakan.  Query ini melakukan JOIN antara tabel `masakan` dan `resep` berdasarkan `kode_masakan`, kemudian mengelompokkan hasilnya berdasarkan `kategori` dari tabel `masakan` dan menghitung jumlah resep dalam setiap kategori menggunakan fungsi `COUNT()`.",
+    "confidence": 0.98,
+    "assumptions": [
+      "Tabel `masakan` memiliki kolom `kategori` yang berisi kategori masakan.",
+      "Tabel `resep` memiliki kolom `kode_masakan` yang merupakan foreign key ke tabel `masakan`."
+    ],
+    "potential_issues": [
+      "Jika ada data yang tidak konsisten antara tabel `masakan` dan `resep` (misalnya, `kode_masakan` yang tidak valid), query mungkin tidak menghasilkan hasil yang akurat."
+    ],
+    "response_time_ms": 6066.561699999511,
+    "model_name": "gemma-3-27b-it",
+    "timestamp": "2025-07-24T09:05:40.209904",
+    "token_usage": {
+      "prompt_tokens": 2195,
+      "completion_tokens": null,
+      "total_tokens": 2195
+    }
+  }
+}

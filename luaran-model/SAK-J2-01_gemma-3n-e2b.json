@@ -1,0 +1,21 @@
+{
+  "metadata": {
+    "version": "1.0",
+    "generated_at": "2025-07-31T08:26:02.105785",
+    "tool": "text2sql_ollama"
+  },
+  "scenario_id": "SAK-J2-01",
+  "category": "Join + Filter",
+  "database": "sakila",
+  "question_id": "Tampilkan nama depan, nama belakang, dan kota tempat tinggal semua pelanggan yang pernah menyewa film dengan kategori animasi pada tahun 2006.",
+  "model": "gemma-3n-e2b",
+  "sql_query": "SELECT\n    a.first_name,\n    a.last_name,\n    c.city\nFROM\n    customer c\nJOIN\n    rental r ON c.customer_id = r.customer_id\nJOIN\n    film f ON r.rental_id = f.film_id\nJOIN\n    film_category fc ON f.film_id = fc.film_id\nJOIN\n    category cat ON fc.category_id = cat.category_id\nWHERE\n    cat.name = 'Animasi'\n    AND STRFTIME('%Y', f.release_year) = '2006'\n    AND c.active = '1'\nGROUP BY\n    a.first_name,\n    a.last_name,\n    c.city",
+  "timestamp": "2025-07-31T08:26:02.105785",
+  "response_time_ms": 165879.725,
+  "token_usage": {
+    "prompt_tokens": 1688,
+    "completion_tokens": 177,
+    "total_tokens": 1865
+  },
+  "raw_response": "```sql\nSELECT\n    a.first_name,\n    a.last_name,\n    c.city\nFROM\n    customer c\nJOIN\n    rental r ON c.customer_id = r.customer_id\nJOIN\n    film f ON r.rental_id = f.film_id\nJOIN\n    film_category fc ON f.film_id = fc.film_id\nJOIN\n    category cat ON fc.category_id = cat.category_id\nWHERE\n    cat.name = 'Animasi'\n    AND STRFTIME('%Y', f.release_year) = '2006'\n    AND c.active = '1'\nGROUP BY\n    a.first_name,\n    a.last_name,\n    c.city;\n```"
+}

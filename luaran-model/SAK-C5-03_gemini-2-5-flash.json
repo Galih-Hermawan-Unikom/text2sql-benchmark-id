@@ -1,0 +1,38 @@
+{
+  "scenario_id": "SAK-C5-03",
+  "model_info": {
+    "name": "gemini-2.5-flash",
+    "temperature": 0.0,
+    "timestamp": "2025-07-22T12:01:01.193343"
+  },
+  "input": {
+    "question_id": "Di antara film 'PG-13', tampilkan yang biaya sewanya lebih tinggi dari rata-rata biaya sewa film 'PG-13' **dengan durasi > 120 menit** di kategori yang sama; sertakan judul, kategori, dan rental_rate.",
+    "database": "sakila",
+    "category": "Comparative"
+  },
+  "prompt_info": {
+    "prompt_length": 9683,
+    "prompt_lines": 300
+  },
+  "model_response": {
+    "sql_query": "SELECT\n    f.title,\n    c.name AS category_name,\n    f.rental_rate\nFROM\n    film f\nJOIN\n    film_category fc ON f.film_id = fc.film_id\nJOIN\n    category c ON fc.category_id = c.category_id\nWHERE\n    f.rating = 'PG-13'\n    AND f.length > 120\n    AND f.rental_rate > (\n        SELECT\n            AVG(f_sub.rental_rate)\n        FROM\n            film f_sub\n        JOIN\n            film_category fc_sub ON f_sub.film_id = fc_sub.film_id\n        WHERE\n            f_sub.rating = 'PG-13'\n            AND f_sub.length > 120\n            AND fc_sub.category_id = fc.category_id\n    );",
+    "explanation": "Query ini mencari film-film dengan rating 'PG-13' dan durasi lebih dari 120 menit. Untuk setiap film yang memenuhi kriteria ini, biaya sewanya dibandingkan dengan rata-rata biaya sewa film lain yang juga berating 'PG-13', durasinya lebih dari 120 menit, DAN berada dalam kategori yang sama. Jika biaya sewa film tersebut lebih tinggi dari rata-rata kategori yang relevan, maka judul, kategori, dan biaya sewanya akan ditampilkan.",
+    "confidence": 0.99,
+    "assumptions": [
+      "Biaya sewa mengacu pada kolom `rental_rate` di tabel `film`.",
+      "Durasi film mengacu pada kolom `length` di tabel `film`."
+    ],
+    "potential_issues": [
+      "Film yang termasuk dalam beberapa kategori dapat muncul beberapa kali dalam hasil jika memenuhi kriteria untuk setiap kategori tersebut, karena rata-rata dihitung per kategori."
+    ],
+    "response_time_ms": 9861.44,
+    "model_name": "gemini-2.5-flash",
+    "timestamp": "2025-07-22T12:01:01.193343",
+    "raw_response": "```json\n{\n  \"sql_query\": \"SELECT\\n    f.title,\\n    c.name AS category_name,\\n    f.rental_rate\\nFROM\\n    film f\\nJOIN\\n    film_category fc ON f.film_id = fc.film_id\\nJOIN\\n    category c ON fc.category_id = c.category_id\\nWHERE\\n    f.rating = 'PG-13'\\n    AND f.length > 120\\n    AND f.rental_rate > (\\n        SELECT\\n            AVG(f_sub.rental_rate)\\n        FROM\\n            film f_sub\\n        JOIN\\n            film_category fc_sub ON f_sub.film_id = fc_sub.film_id\\n        WHERE\\n            f_sub.rating = 'PG-13'\\n            AND f_sub.length > 120\\n            AND fc_sub.category_id = fc.category_id\\n    );\",\n  \"confidence\": 0.99,\n  \"explanation\": \"Query ini mencari film-film dengan rating 'PG-13' dan durasi lebih dari 120 menit. Untuk setiap film yang memenuhi kriteria ini, biaya sewanya dibandingkan dengan rata-rata biaya sewa film lain yang juga berating 'PG-13', durasinya lebih dari 120 menit, DAN berada dalam kategori yang sama. Jika biaya sewa film tersebut lebih tinggi dari rata-rata kategori yang relevan, maka judul, kategori, dan biaya sewanya akan ditampilkan.\",\n  \"assumptions\": [\n    \"Biaya sewa mengacu pada kolom `rental_rate` di tabel `film`.\",\n    \"Durasi film mengacu pada kolom `length` di tabel `film`.\"\n  ],\n  \"potential_issues\": [\n    \"Film yang termasuk dalam beberapa kategori dapat muncul beberapa kali dalam hasil jika memenuhi kriteria untuk setiap kategori tersebut, karena rata-rata dihitung per kategori.\"\n  ]\n}\n```",
+    "token_usage": {
+      "prompt_tokens": 3064,
+      "completion_tokens": 453,
+      "total_tokens": 5088
+    }
+  }
+}

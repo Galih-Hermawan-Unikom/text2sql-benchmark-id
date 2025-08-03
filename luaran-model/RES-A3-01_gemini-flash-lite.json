@@ -1,0 +1,35 @@
+{
+  "scenario_id": "RES-A3-01",
+  "model_info": {
+    "name": "gemini-2.5-flash-lite",
+    "temperature": 0.0,
+    "timestamp": "2025-07-23T13:53:00.154442"
+  },
+  "input": {
+    "question_id": "Berapa jumlah resep yang tersedia untuk tiap kategori masakan? Tampilkan kategori masakan dan total resepnya.",
+    "database": "resep",
+    "category": "Aggregation"
+  },
+  "prompt_info": {
+    "prompt_length": 7237,
+    "prompt_lines": 165
+  },
+  "model_response": {
+    "sql_query": "SELECT m.kategori, COUNT(r.id_resep) AS total_resep FROM masakan m JOIN resep r ON m.kode_masakan = r.kode_masakan GROUP BY m.kategori;",
+    "explanation": "Query ini menghitung jumlah resep untuk setiap kategori masakan. Ini dilakukan dengan menggabungkan tabel 'masakan' dan 'resep' berdasarkan 'kode_masakan', kemudian mengelompokkan hasilnya berdasarkan 'kategori' masakan dan menghitung jumlah resep ('id_resep') dalam setiap kelompok.",
+    "confidence": 0.98,
+    "assumptions": [
+      "Setiap resep terkait dengan satu kategori masakan melalui tabel 'masakan'.",
+      "Kolom 'kategori' di tabel 'masakan' berisi nilai-nilai yang ingin dihitung."
+    ],
+    "potential_issues": [],
+    "response_time_ms": 1243.7926000002335,
+    "model_name": "gemini-2.5-flash-lite",
+    "timestamp": "2025-07-23T13:53:00.154442",
+    "token_usage": {
+      "prompt_tokens": 2195,
+      "completion_tokens": 209,
+      "total_tokens": 2404
+    }
+  }
+}

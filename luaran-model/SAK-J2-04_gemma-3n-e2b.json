@@ -1,0 +1,21 @@
+{
+  "metadata": {
+    "version": "1.0",
+    "generated_at": "2025-07-31T08:34:02.242504",
+    "tool": "text2sql_ollama"
+  },
+  "scenario_id": "SAK-J2-04",
+  "category": "Join + Filter",
+  "database": "sakila",
+  "question_id": "Daftar nama depan dan belakang pelanggan beserta tanggal sewanya untuk setiap transaksi dengan pembayaran di atas 11 dolar. Jangan tampilkan baris duplikat.",
+  "model": "gemma-3n-e2b",
+  "sql_query": "SELECT\n    c.first_name,\n    c.last_name,\n    r.rental_date\nFROM\n    customer c\nJOIN\n    rental r ON c.customer_id = r.customer_id\nWHERE\n    r.amount > 11\nGROUP BY\n    c.customer_id, c.first_name, c.last_name, r.rental_date",
+  "timestamp": "2025-07-31T08:34:02.242504",
+  "response_time_ms": 156220.143,
+  "token_usage": {
+    "prompt_tokens": 1689,
+    "completion_tokens": 94,
+    "total_tokens": 1783
+  },
+  "raw_response": "```sql\nSELECT\n    c.first_name,\n    c.last_name,\n    r.rental_date\nFROM\n    customer c\nJOIN\n    rental r ON c.customer_id = r.customer_id\nWHERE\n    r.amount > 11\nGROUP BY\n    c.customer_id, c.first_name, c.last_name, r.rental_date;\n```"
+}

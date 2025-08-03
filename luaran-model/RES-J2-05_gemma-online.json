@@ -1,0 +1,36 @@
+{
+  "scenario_id": "RES-J2-05",
+  "model_info": {
+    "name": "gemma-3-27b-it",
+    "temperature": 0.0,
+    "timestamp": "2025-07-24T08:54:41.264020"
+  },
+  "input": {
+    "question_id": "Masakan apa saja secara unik yang menggunakan santan sebagai salah satu bahannya? Tampilkan nama masakan dan nama bahannya.",
+    "database": "resep",
+    "category": "Join + Filter"
+  },
+  "prompt_info": {
+    "prompt_length": 7251,
+    "prompt_lines": 165
+  },
+  "model_response": {
+    "sql_query": "SELECT DISTINCT m.nama_masakan, b.nama_bahan FROM masakan m JOIN resep r ON m.kode_masakan = r.kode_masakan JOIN resep_bahan rb ON r.id_resep = rb.id_resep JOIN bahan b ON rb.id_bahan = b.id_bahan WHERE b.nama_bahan LIKE '%Santan%'",
+    "explanation": "Query ini mengambil nama masakan dan nama bahan yang menggunakan santan. Query ini melakukan join antara tabel masakan, resep, resep_bahan, dan bahan untuk menghubungkan masakan dengan bahan-bahannya. Klausa WHERE memfilter hasil untuk hanya menyertakan bahan yang namanya mengandung 'Santan'. DISTINCT digunakan untuk memastikan hanya masakan dan bahan yang unik yang ditampilkan.",
+    "confidence": 0.95,
+    "assumptions": [
+      "Nama bahan 'santan' dapat bervariasi (misalnya, 'santan kental', 'santan instan'). Oleh karena itu, digunakan operator LIKE dengan wildcard '%Santan%' untuk pencarian yang lebih fleksibel."
+    ],
+    "potential_issues": [
+      "Jika nama bahan 'santan' tidak konsisten dalam database, query mungkin tidak mengembalikan semua hasil yang relevan. Sensitivitas huruf besar/kecil pada pencarian LIKE dapat menjadi masalah, tergantung pada konfigurasi database."
+    ],
+    "response_time_ms": 6848.207500000171,
+    "model_name": "gemma-3-27b-it",
+    "timestamp": "2025-07-24T08:54:41.264020",
+    "token_usage": {
+      "prompt_tokens": 2197,
+      "completion_tokens": null,
+      "total_tokens": 2197
+    }
+  }
+}

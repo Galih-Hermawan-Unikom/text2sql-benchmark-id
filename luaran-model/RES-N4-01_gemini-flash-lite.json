@@ -1,0 +1,40 @@
+{
+  "scenario_id": "RES-N4-01",
+  "model_info": {
+    "name": "gemini-2.5-flash-lite",
+    "temperature": 0.0,
+    "timestamp": "2025-07-23T13:53:43.838657"
+  },
+  "input": {
+    "question_id": "Sebutkan nama masakan yang memakai lebih banyak bahan daripada rata-rata jumlah bahan semua masakan.",
+    "database": "resep",
+    "category": "Nested / Subquery"
+  },
+  "prompt_info": {
+    "prompt_length": 7228,
+    "prompt_lines": 165
+  },
+  "model_response": {
+    "sql_query": "SELECT m.nama_masakan FROM masakan m JOIN resep r ON m.kode_masakan = r.kode_masakan JOIN resep_bahan rb ON r.id_resep = rb.id_resep GROUP BY m.kode_masakan, m.nama_masakan HAVING COUNT(rb.id_bahan) > (SELECT AVG(jumlah_bahan) FROM (SELECT COUNT(rb_sub.id_bahan) AS jumlah_bahan FROM resep_bahan rb_sub GROUP BY rb_sub.id_resep) AS avg_counts)",
+    "explanation": "Query ini pertama-tama menghitung jumlah bahan untuk setiap resep, kemudian menghitung rata-rata dari jumlah bahan tersebut di semua resep. Selanjutnya, query ini menghitung jumlah bahan untuk setiap masakan (dengan menggabungkan resep yang terkait dengan masakan tersebut) dan membandingkannya dengan rata-rata yang telah dihitung. Masakan yang memiliki jumlah bahan lebih banyak dari rata-rata akan ditampilkan.",
+    "confidence": 0.95,
+    "assumptions": [
+      "Setiap masakan dapat memiliki satu atau lebih resep.",
+      "Setiap resep dapat memiliki satu atau lebih bahan.",
+      "Kita perlu menghitung jumlah bahan unik per masakan, bukan per resep.",
+      "Rata-rata jumlah bahan dihitung berdasarkan jumlah bahan per resep."
+    ],
+    "potential_issues": [
+      "Jika sebuah masakan memiliki banyak resep, jumlah bahan yang dihitung untuk masakan tersebut bisa menjadi sangat besar jika tidak ditangani dengan benar. Query ini mengasumsikan bahwa kita ingin menghitung jumlah bahan unik yang terkait dengan masakan, yang mungkin memerlukan agregasi lebih lanjut jika satu bahan digunakan di banyak resep untuk masakan yang sama.",
+      "Perhitungan rata-rata jumlah bahan dihitung per resep. Jika pertanyaan mengacu pada rata-rata jumlah bahan per masakan, maka subkueri perlu disesuaikan."
+    ],
+    "response_time_ms": 1617.6004000008106,
+    "model_name": "gemini-2.5-flash-lite",
+    "timestamp": "2025-07-23T13:53:43.838657",
+    "token_usage": {
+      "prompt_tokens": 2192,
+      "completion_tokens": 438,
+      "total_tokens": 2630
+    }
+  }
+}

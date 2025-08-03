@@ -1,0 +1,21 @@
+{
+  "metadata": {
+    "version": "1.0",
+    "generated_at": "2025-07-31T09:14:01.914242",
+    "tool": "text2sql_ollama"
+  },
+  "scenario_id": "SAK-S6-03",
+  "category": "Superlative",
+  "database": "sakila",
+  "question_id": "Kota mana yang memiliki jumlah pelanggan terbanyak? Sertakan nama kota dan jumlah pelanggannya.",
+  "model": "gemma-3n-e2b",
+  "sql_query": "SELECT\n  c.city,\n  COUNT(c.customer_id) AS jumlah_pelanggan\nFROM customer AS c\nJOIN address AS ca\n  ON c.address_id = ca.address_id\nJOIN city AS ci\n  ON ca.city_id = ci.city_id\nGROUP BY\n  c.city\nORDER BY\n  jumlah_pelanggan DESC",
+  "timestamp": "2025-07-31T09:14:01.913236",
+  "response_time_ms": 194215.007,
+  "token_usage": {
+    "prompt_tokens": 1675,
+    "completion_tokens": 92,
+    "total_tokens": 1767
+  },
+  "raw_response": "```sql\nSELECT\n  c.city,\n  COUNT(c.customer_id) AS jumlah_pelanggan\nFROM customer AS c\nJOIN address AS ca\n  ON c.address_id = ca.address_id\nJOIN city AS ci\n  ON ca.city_id = ci.city_id\nGROUP BY\n  c.city\nORDER BY\n  jumlah_pelanggan DESC;\n```"
+}

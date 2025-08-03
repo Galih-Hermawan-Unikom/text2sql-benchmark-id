@@ -1,0 +1,35 @@
+{
+  "scenario_id": "RES-L1-04",
+  "model_info": {
+    "name": "gemini-2.5-flash",
+    "temperature": 0.0,
+    "timestamp": "2025-07-22T10:14:15.048308"
+  },
+  "input": {
+    "question_id": "Tampilkan masakan yang statusnya nonaktif; sertakan kode dan nama masakan.",
+    "database": "resep",
+    "category": "Lookup / Filter"
+  },
+  "prompt_info": {
+    "prompt_length": 6707,
+    "prompt_lines": 165
+  },
+  "model_response": {
+    "sql_query": "SELECT kode_masakan, nama_masakan FROM masakan WHERE status_aktif = FALSE",
+    "explanation": "Mengambil kode dan nama masakan dari tabel 'masakan' di mana status aktifnya adalah FALSE (nonaktif).",
+    "confidence": 0.98,
+    "assumptions": [
+      "Kolom 'status_aktif' di tabel 'masakan' adalah tipe data BOOLEAN dan FALSE merepresentasikan status nonaktif."
+    ],
+    "potential_issues": [],
+    "response_time_ms": 1713.091,
+    "model_name": "gemini-2.5-flash",
+    "timestamp": "2025-07-22T10:14:15.048308",
+    "raw_response": "```json\n{\n  \"sql_query\": \"SELECT kode_masakan, nama_masakan FROM masakan WHERE status_aktif = FALSE\",\n  \"confidence\": 0.98,\n  \"explanation\": \"Mengambil kode dan nama masakan dari tabel 'masakan' di mana status aktifnya adalah FALSE (nonaktif).\",\n  \"assumptions\": [\n    \"Kolom 'status_aktif' di tabel 'masakan' adalah tipe data BOOLEAN dan FALSE merepresentasikan status nonaktif.\"\n  ],\n  \"potential_issues\": []\n}\n```",
+    "token_usage": {
+      "prompt_tokens": 2072,
+      "completion_tokens": 125,
+      "total_tokens": 2327
+    }
+  }
+}

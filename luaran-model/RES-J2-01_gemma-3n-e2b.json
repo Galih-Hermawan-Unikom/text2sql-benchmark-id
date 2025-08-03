@@ -1,0 +1,21 @@
+{
+  "metadata": {
+    "version": "1.0",
+    "generated_at": "2025-07-31T15:50:04.933110",
+    "tool": "text2sql_ollama"
+  },
+  "scenario_id": "RES-J2-01",
+  "category": "Join + Filter",
+  "database": "resep",
+  "question_id": "Tampilkan daftar resep dessert yang masih aktif\u2014sertakan ID resep, judul resep, dan nama masakan.",
+  "model": "gemma-3n-e2b",
+  "sql_query": "SELECT\n  m.kode_masakan AS kode_masakan,\n  m.nama_masakan AS nama_masakan,\n  m.kategori AS kategori\nFROM Masakan AS m\nJOIN Resep AS r\n  ON m.kode_masakan = r.kode_masakan\nWHERE\n  m.status_aktif = TRUE\n  AND r.status_aktif = TRUE\n  AND m.asal_daerah IN ('Indonesia')\n  AND m.level_pedas <= 3",
+  "timestamp": "2025-07-31T15:50:04.933110",
+  "response_time_ms": 129786.41500000001,
+  "token_usage": {
+    "prompt_tokens": 1222,
+    "completion_tokens": 119,
+    "total_tokens": 1341
+  },
+  "raw_response": "```sql\nSELECT\n  m.kode_masakan AS kode_masakan,\n  m.nama_masakan AS nama_masakan,\n  m.kategori AS kategori\nFROM Masakan AS m\nJOIN Resep AS r\n  ON m.kode_masakan = r.kode_masakan\nWHERE\n  m.status_aktif = TRUE\n  AND r.status_aktif = TRUE\n  AND m.asal_daerah IN ('Indonesia')\n  AND m.level_pedas <= 3;\n```"
+}

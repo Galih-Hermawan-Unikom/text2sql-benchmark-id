@@ -1,0 +1,38 @@
+{
+  "scenario_id": "RES-C5-03",
+  "model_info": {
+    "name": "gemini-2.5-flash",
+    "temperature": 0.0,
+    "timestamp": "2025-07-22T12:00:08.545342"
+  },
+  "input": {
+    "question_id": "Bahan apa saja yang muncul lebih sering dibanding rata-rata frekuensi kemunculan semua bahan? Tampilkan nama bahan dan jumlah kemunculannya.",
+    "database": "resep",
+    "category": "Comparative"
+  },
+  "prompt_info": {
+    "prompt_length": 7440,
+    "prompt_lines": 168
+  },
+  "model_response": {
+    "sql_query": "SELECT b.nama_bahan, COUNT(rb.id_bahan) AS jumlah_kemunculan FROM bahan b JOIN RESEP_BAHAN rb ON b.id_bahan = rb.id_bahan GROUP BY b.id_bahan, b.nama_bahan HAVING COUNT(rb.id_bahan) > (SELECT AVG(jumlah_per_bahan.count_bahan) FROM (SELECT COUNT(id_bahan) AS count_bahan FROM RESEP_BAHAN GROUP BY id_bahan) AS jumlah_per_bahan) ORDER BY jumlah_kemunculan DESC",
+    "explanation": "Query ini pertama-tama menghitung berapa kali setiap bahan muncul di seluruh resep (jumlah kemunculan). Kemudian, menggunakan subquery, query menghitung rata-rata dari semua frekuensi kemunculan bahan. Terakhir, query memfilter hasil untuk hanya menampilkan bahan-bahan yang jumlah kemunculannya lebih besar dari rata-rata tersebut, serta menampilkan nama bahan dan jumlah kemunculannya.",
+    "confidence": 0.98,
+    "assumptions": [
+      "Frekuensi kemunculan bahan dihitung berdasarkan jumlah entri bahan tersebut di tabel RESEP_BAHAN, yang berarti berapa banyak resep yang menggunakan bahan tersebut.",
+      "Rata-rata frekuensi kemunculan dihitung dari frekuensi masing-masing bahan unik."
+    ],
+    "potential_issues": [
+      "Performa mungkin sedikit terpengaruh pada database yang sangat besar karena penggunaan subquery di klausa HAVING yang menghitung rata-rata setiap kali."
+    ],
+    "response_time_ms": 7096.469,
+    "model_name": "gemini-2.5-flash",
+    "timestamp": "2025-07-22T12:00:08.545342",
+    "raw_response": "```json\n{\n  \"sql_query\": \"SELECT b.nama_bahan, COUNT(rb.id_bahan) AS jumlah_kemunculan FROM bahan b JOIN RESEP_BAHAN rb ON b.id_bahan = rb.id_bahan GROUP BY b.id_bahan, b.nama_bahan HAVING COUNT(rb.id_bahan) > (SELECT AVG(jumlah_per_bahan.count_bahan) FROM (SELECT COUNT(id_bahan) AS count_bahan FROM RESEP_BAHAN GROUP BY id_bahan) AS jumlah_per_bahan) ORDER BY jumlah_kemunculan DESC\",\n  \"confidence\": 0.98,\n  \"explanation\": \"Query ini pertama-tama menghitung berapa kali setiap bahan muncul di seluruh resep (jumlah kemunculan). Kemudian, menggunakan subquery, query menghitung rata-rata dari semua frekuensi kemunculan bahan. Terakhir, query memfilter hasil untuk hanya menampilkan bahan-bahan yang jumlah kemunculannya lebih besar dari rata-rata tersebut, serta menampilkan nama bahan dan jumlah kemunculannya.\",\n  \"assumptions\": [\n    \"Frekuensi kemunculan bahan dihitung berdasarkan jumlah entri bahan tersebut di tabel RESEP_BAHAN, yang berarti berapa banyak resep yang menggunakan bahan tersebut.\",\n    \"Rata-rata frekuensi kemunculan dihitung dari frekuensi masing-masing bahan unik.\"\n  ],\n  \"potential_issues\": [\n    \"Performa mungkin sedikit terpengaruh pada database yang sangat besar karena penggunaan subquery di klausa HAVING yang menghitung rata-rata setiap kali.\"\n  ]\n}\n```",
+    "token_usage": {
+      "prompt_tokens": 2247,
+      "completion_tokens": 345,
+      "total_tokens": 3614
+    }
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "scenario_id": "RES-N4-02",
+  "model_info": {
+    "name": "gemini-2.5-flash",
+    "temperature": 0.0,
+    "timestamp": "2025-07-22T10:54:34.390832"
+  },
+  "input": {
+    "question_id": "Tampilkan judul resep yang durasi memasaknya lebih lama daripada rata-rata durasi di kategori masakan yang sama.",
+    "database": "resep",
+    "category": "Nested / Subquery"
+  },
+  "prompt_info": {
+    "prompt_length": 7085,
+    "prompt_lines": 167
+  },
+  "model_response": {
+    "sql_query": "SELECT r.judul_resep FROM resep r JOIN masakan m ON r.kode_masakan = m.kode_masakan JOIN ( SELECT m2.kategori, AVG(r2.waktu_masak) AS avg_waktu_kategori FROM resep r2 JOIN masakan m2 ON r2.kode_masakan = m2.kode_masakan GROUP BY m2.kategori ) AS avg_kategori ON m.kategori = avg_kategori.kategori WHERE r.waktu_masak > avg_kategori.avg_waktu_kategori;",
+    "explanation": "Query ini pertama-tama menghitung rata-rata waktu masak untuk setiap kategori masakan menggunakan subquery (derived table 'avg_kategori'). Kemudian, ia menggabungkan tabel resep dan masakan, serta hasil rata-rata kategori, untuk memfilter resep yang waktu masaknya lebih besar dari rata-rata waktu masak untuk kategori masakan mereka sendiri.",
+    "confidence": 0.98,
+    "assumptions": [
+      "Waktu masak untuk resep disimpan dalam kolom `waktu_masak` di tabel `resep`.",
+      "Kategori masakan disimpan dalam kolom `kategori` di tabel `masakan`."
+    ],
+    "potential_issues": [
+      "Jika ada kategori masakan yang tidak memiliki resep terkait, kategori tersebut tidak akan muncul dalam perhitungan rata-rata dan tidak akan memengaruhi hasil query utama."
+    ],
+    "response_time_ms": 6580.0470000000005,
+    "model_name": "gemini-2.5-flash",
+    "timestamp": "2025-07-22T10:54:34.390832",
+    "raw_response": "```json\n{\n  \"sql_query\": \"SELECT r.judul_resep FROM resep r JOIN masakan m ON r.kode_masakan = m.kode_masakan JOIN ( SELECT m2.kategori, AVG(r2.waktu_masak) AS avg_waktu_kategori FROM resep r2 JOIN masakan m2 ON r2.kode_masakan = m2.kode_masakan GROUP BY m2.kategori ) AS avg_kategori ON m.kategori = avg_kategori.kategori WHERE r.waktu_masak > avg_kategori.avg_waktu_kategori;\",\n  \"confidence\": 0.98,\n  \"explanation\": \"Query ini pertama-tama menghitung rata-rata waktu masak untuk setiap kategori masakan menggunakan subquery (derived table 'avg_kategori'). Kemudian, ia menggabungkan tabel resep dan masakan, serta hasil rata-rata kategori, untuk memfilter resep yang waktu masaknya lebih besar dari rata-rata waktu masak untuk kategori masakan mereka sendiri.\",\n  \"assumptions\": [\n    \"Waktu masak untuk resep disimpan dalam kolom `waktu_masak` di tabel `resep`.\",\n    \"Kategori masakan disimpan dalam kolom `kategori` di tabel `masakan`.\"\n  ],\n  \"potential_issues\": [\n    \"Jika ada kategori masakan yang tidak memiliki resep terkait, kategori tersebut tidak akan muncul dalam perhitungan rata-rata dan tidak akan memengaruhi hasil query utama.\"\n  ]\n}\n```",
+    "token_usage": {
+      "prompt_tokens": 2171,
+      "completion_tokens": 339,
+      "total_tokens": 3434
+    }
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "scenario_id": "SAK-J2-05",
+  "model_info": {
+    "name": "gemini-2.5-flash-lite",
+    "temperature": 0.0,
+    "timestamp": "2025-07-23T13:54:40.974198"
+  },
+  "input": {
+    "question_id": "Tampilkan judul film, kategori film, dan nama lengkap penyewanya untuk transaksi pada 16 Agustus 2005.",
+    "database": "sakila",
+    "category": "Join + Filter"
+  },
+  "prompt_info": {
+    "prompt_length": 9753,
+    "prompt_lines": 299
+  },
+  "model_response": {
+    "sql_query": "SELECT f.title AS judul_film, c.name AS kategori_film, CONCAT(cust.first_name, ' ', cust.last_name) AS nama_penyewa FROM rental r JOIN inventory i ON r.inventory_id = i.inventory_id JOIN film f ON i.film_id = f.film_id JOIN film_category fc ON f.film_id = fc.film_id JOIN category c ON fc.category_id = c.category_id JOIN customer cust ON r.customer_id = cust.customer_id WHERE DATE(r.rental_date) = '2005-08-16'",
+    "explanation": "Query ini menggabungkan tabel rental, inventory, film, film_category, category, dan customer untuk menampilkan judul film, nama kategori film, dan nama lengkap penyewa. Filter diterapkan pada tanggal sewa untuk transaksi pada 16 Agustus 2005.",
+    "confidence": 0.97,
+    "assumptions": [
+      "Tanggal transaksi yang dimaksud adalah `rental_date`.",
+      "Setiap film hanya memiliki satu kategori utama yang relevan untuk ditampilkan.",
+      "Nama lengkap penyewa dibentuk dengan menggabungkan `first_name` dan `last_name` dari tabel `customer`."
+    ],
+    "potential_issues": [
+      "Jika sebuah film memiliki lebih dari satu kategori, query ini akan menampilkan baris duplikat untuk film tersebut, masing-masing dengan kategori yang berbeda. Jika hanya satu kategori per film yang diinginkan, logika tambahan mungkin diperlukan (misalnya, memilih kategori berdasarkan ID terendah atau tertinggi, atau kategori yang paling sering muncul)."
+    ],
+    "response_time_ms": 1461.602799998218,
+    "model_name": "gemini-2.5-flash-lite",
+    "timestamp": "2025-07-23T13:54:40.974198",
+    "token_usage": {
+      "prompt_tokens": 3078,
+      "completion_tokens": 379,
+      "total_tokens": 3457
+    }
+  }
+}

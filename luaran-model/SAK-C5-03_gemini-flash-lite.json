@@ -1,0 +1,39 @@
+{
+  "scenario_id": "SAK-C5-03",
+  "model_info": {
+    "name": "gemini-2.5-flash-lite",
+    "temperature": 0.0,
+    "timestamp": "2025-07-23T13:54:24.014466"
+  },
+  "input": {
+    "question_id": "Di antara film 'PG-13', tampilkan yang biaya sewanya lebih tinggi dari rata-rata biaya sewa film 'PG-13' **dengan durasi > 120 menit** di kategori yang sama; sertakan judul, kategori, dan rental_rate.",
+    "database": "sakila",
+    "category": "Comparative"
+  },
+  "prompt_info": {
+    "prompt_length": 9851,
+    "prompt_lines": 299
+  },
+  "model_response": {
+    "sql_query": "SELECT f.title, c.name AS category_name, f.rental_rate FROM film f JOIN film_category fc ON f.film_id = fc.film_id JOIN category c ON fc.category_id = c.category_id WHERE f.rating = 'PG-13' AND f.length > 120 AND f.rental_rate > (SELECT AVG(f2.rental_rate) FROM film f2 JOIN film_category fc2 ON f2.film_id = fc2.film_id JOIN category c2 ON fc2.category_id = c2.category_id WHERE f2.rating = 'PG-13' AND f2.length > 120 AND c2.category_id = c.category_id)",
+    "explanation": "Query ini pertama-tama mengidentifikasi film-film dengan rating 'PG-13' dan durasi lebih dari 120 menit. Kemudian, untuk setiap film tersebut, ia menghitung rata-rata biaya sewa (rental_rate) dari film-film lain yang memiliki rating 'PG-13', durasi lebih dari 120 menit, DAN berada dalam kategori yang sama dengan film yang sedang diperiksa. Akhirnya, query menampilkan judul film, nama kategorinya, dan biaya sewanya, hanya untuk film yang biaya sewanya lebih tinggi dari rata-rata yang dihitung untuk kategori yang sama.",
+    "confidence": 0.97,
+    "assumptions": [
+      "Pertanyaan mengacu pada film dengan rating 'PG-13' dan durasi lebih dari 120 menit sebagai dasar perbandingan rata-rata.",
+      "Kategori yang sama berarti film harus memiliki category_id yang sama untuk perbandingan rata-rata.",
+      "Kolom `rental_rate` pada tabel `film` adalah nilai numerik yang dapat dibandingkan."
+    ],
+    "potential_issues": [
+      "Jika tidak ada film lain dalam kategori yang sama yang memenuhi kriteria rating dan durasi, subkueri rata-rata mungkin mengembalikan NULL atau error, yang dapat mempengaruhi hasil utama.",
+      "Perbandingan `c2.category_id = c.category_id` dalam subkueri memastikan bahwa rata-rata dihitung hanya untuk film dalam kategori yang sama dengan film di kueri luar."
+    ],
+    "response_time_ms": 2284.1472000000067,
+    "model_name": "gemini-2.5-flash-lite",
+    "timestamp": "2025-07-23T13:54:24.014533",
+    "token_usage": {
+      "prompt_tokens": 3109,
+      "completion_tokens": 515,
+      "total_tokens": 3624
+    }
+  }
+}

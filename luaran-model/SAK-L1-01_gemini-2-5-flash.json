@@ -1,0 +1,35 @@
+{
+  "scenario_id": "SAK-L1-01",
+  "model_info": {
+    "name": "gemini-2.5-flash",
+    "temperature": 0.0,
+    "timestamp": "2025-07-22T10:14:18.706474"
+  },
+  "input": {
+    "question_id": "Daftar film berdurasi lebih dari 180 menit dengan rating 'R'; sertakan judul dan durasi setiap film.",
+    "database": "sakila",
+    "category": "Lookup / Filter"
+  },
+  "prompt_info": {
+    "prompt_length": 9256,
+    "prompt_lines": 299
+  },
+  "model_response": {
+    "sql_query": "SELECT title, length FROM film WHERE length > 180 AND rating = 'R'",
+    "explanation": "Mengambil judul (title) dan durasi (length) film dari tabel 'film' yang memiliki durasi lebih dari 180 menit dan rating 'R'.",
+    "confidence": 0.99,
+    "assumptions": [
+      "Durasi film diwakili oleh kolom 'length' dan diukur dalam menit."
+    ],
+    "potential_issues": [],
+    "response_time_ms": 2184.2019999999998,
+    "model_name": "gemini-2.5-flash",
+    "timestamp": "2025-07-22T10:14:18.706474",
+    "raw_response": "```json\n{\n  \"sql_query\": \"SELECT title, length FROM film WHERE length > 180 AND rating = 'R'\",\n  \"confidence\": 0.99,\n  \"explanation\": \"Mengambil judul (title) dan durasi (length) film dari tabel 'film' yang memiliki durasi lebih dari 180 menit dan rating 'R'.\",\n  \"assumptions\": [\n    \"Durasi film diwakili oleh kolom 'length' dan diukur dalam menit.\"\n  ],\n  \"potential_issues\": []\n}\n```",
+    "token_usage": {
+      "prompt_tokens": 2960,
+      "completion_tokens": 125,
+      "total_tokens": 3349
+    }
+  }
+}

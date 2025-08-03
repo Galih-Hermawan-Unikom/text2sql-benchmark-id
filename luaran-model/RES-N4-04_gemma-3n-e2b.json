@@ -1,0 +1,21 @@
+{
+  "metadata": {
+    "version": "1.0",
+    "generated_at": "2025-07-31T07:31:05.302449",
+    "tool": "text2sql_ollama"
+  },
+  "scenario_id": "RES-N4-04",
+  "category": "Nested / Subquery",
+  "database": "resep",
+  "question_id": "Sebutkan bahan apa saja yang sama sekali belum pernah dipakai di masakan mana pun. Tampilkan nama bahannya saja.",
+  "model": "gemma-3n-e2b",
+  "sql_query": "SELECT b.nama_bahan\nFROM bahan b\nWHERE b.id_bahan NOT IN (\n    SELECT r.id_bahan\n    FROM resep_bahan r\n    WHERE r.id_resep IN (SELECT id_resep FROM resep)\n)",
+  "timestamp": "2025-07-31T07:31:05.301308",
+  "response_time_ms": 130700.87100000001,
+  "token_usage": {
+    "prompt_tokens": 1226,
+    "completion_tokens": 64,
+    "total_tokens": 1290
+  },
+  "raw_response": "```sql\nSELECT b.nama_bahan\nFROM bahan b\nWHERE b.id_bahan NOT IN (\n    SELECT r.id_bahan\n    FROM resep_bahan r\n    WHERE r.id_resep IN (SELECT id_resep FROM resep)\n);\n```"
+}

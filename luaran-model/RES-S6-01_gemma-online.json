@@ -1,0 +1,36 @@
+{
+  "scenario_id": "RES-S6-01",
+  "model_info": {
+    "name": "gemma-3-27b-it",
+    "temperature": 0.0,
+    "timestamp": "2025-07-24T08:55:48.215333"
+  },
+  "input": {
+    "question_id": "Daftar semua resep yang membutuhkan waktu memasak paling lama\u2014sertakan judul resep dan lamanya memasak.",
+    "database": "resep",
+    "category": "Superlative"
+  },
+  "prompt_info": {
+    "prompt_length": 7231,
+    "prompt_lines": 165
+  },
+  "model_response": {
+    "sql_query": "SELECT judul_resep, waktu_masak FROM resep ORDER BY waktu_masak DESC",
+    "explanation": "Query ini mengambil judul resep dan waktu memasak dari tabel 'resep', kemudian mengurutkannya secara menurun berdasarkan waktu memasak. Dengan demikian, resep dengan waktu memasak paling lama akan muncul di bagian atas hasil.",
+    "confidence": 0.98,
+    "assumptions": [
+      "Waktu memasak diukur dalam menit dan disimpan di kolom 'waktu_masak' pada tabel 'resep'."
+    ],
+    "potential_issues": [
+      "Jika ada beberapa resep dengan waktu memasak yang sama, urutan di antara resep-resep tersebut tidak ditentukan."
+    ],
+    "response_time_ms": 4302.511500000037,
+    "model_name": "gemma-3-27b-it",
+    "timestamp": "2025-07-24T08:55:48.215333",
+    "token_usage": {
+      "prompt_tokens": 2195,
+      "completion_tokens": null,
+      "total_tokens": 2195
+    }
+  }
+}

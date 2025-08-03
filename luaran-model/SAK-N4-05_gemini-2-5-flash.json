@@ -1,0 +1,38 @@
+{
+  "scenario_id": "SAK-N4-05",
+  "model_info": {
+    "name": "gemini-2.5-flash",
+    "temperature": 0.0,
+    "timestamp": "2025-07-22T10:55:30.719312"
+  },
+  "input": {
+    "question_id": "Tampilkan pelanggan dari Indonesia yang pernah menyewa film kategori 'Action' tetapi belum pernah menyewa film kategori 'Animation'; sertakan nama depan dan nama belakang mereka.",
+    "database": "sakila",
+    "category": "Nested / Subquery"
+  },
+  "prompt_info": {
+    "prompt_length": 9334,
+    "prompt_lines": 299
+  },
+  "model_response": {
+    "sql_query": "SELECT DISTINCT\n    c.first_name,\n    c.last_name\nFROM\n    customer c\nJOIN\n    address a ON c.address_id = a.address_id\nJOIN\n    city cy ON a.city_id = cy.city_id\nJOIN\n    country co ON cy.country_id = co.country_id\nWHERE\n    co.country = 'Indonesia'\n    AND EXISTS (\n        SELECT 1\n        FROM rental r\n        JOIN inventory i ON r.inventory_id = i.inventory_id\n        JOIN film_category fc ON i.film_id = fc.film_id\n        JOIN category cat ON fc.category_id = cat.category_id\n        WHERE r.customer_id = c.customer_id\n          AND cat.name = 'Action'\n    )\n    AND NOT EXISTS (\n        SELECT 1\n        FROM rental r\n        JOIN inventory i ON r.inventory_id = i.inventory_id\n        JOIN film_category fc ON i.film_id = fc.film_id\n        JOIN category cat ON fc.category_id = cat.category_id\n        WHERE r.customer_id = c.customer_id\n          AND cat.name = 'Animation'\n    );",
+    "explanation": "Mengambil nama depan dan belakang pelanggan yang terdaftar di negara 'Indonesia'. Query ini kemudian memverifikasi bahwa pelanggan tersebut pernah menyewa film dengan kategori 'Action' (menggunakan subkueri EXISTS) dan, pada saat yang sama, belum pernah menyewa film dengan kategori 'Animation' (menggunakan subkueri NOT EXISTS). DISTINCT digunakan untuk memastikan setiap pelanggan hanya muncul sekali dalam hasil.",
+    "confidence": 0.98,
+    "assumptions": [
+      "Pelanggan dari Indonesia diidentifikasi berdasarkan kolom `country.country` yang bernilai 'Indonesia'.",
+      "Aktivitas penyewaan film diidentifikasi melalui tabel `rental`, `inventory`, `film_category`, dan `category`."
+    ],
+    "potential_issues": [
+      "Jika nama kategori 'Action' atau 'Animation' tidak sesuai persis dengan data di tabel `category`, query mungkin tidak mengembalikan hasil yang diharapkan."
+    ],
+    "response_time_ms": 12696.161999999998,
+    "model_name": "gemini-2.5-flash",
+    "timestamp": "2025-07-22T10:55:30.719312",
+    "raw_response": "```json\n{\n  \"sql_query\": \"SELECT DISTINCT\\n    c.first_name,\\n    c.last_name\\nFROM\\n    customer c\\nJOIN\\n    address a ON c.address_id = a.address_id\\nJOIN\\n    city cy ON a.city_id = cy.city_id\\nJOIN\\n    country co ON cy.country_id = co.country_id\\nWHERE\\n    co.country = 'Indonesia'\\n    AND EXISTS (\\n        SELECT 1\\n        FROM rental r\\n        JOIN inventory i ON r.inventory_id = i.inventory_id\\n        JOIN film_category fc ON i.film_id = fc.film_id\\n        JOIN category cat ON fc.category_id = cat.category_id\\n        WHERE r.customer_id = c.customer_id\\n          AND cat.name = 'Action'\\n    )\\n    AND NOT EXISTS (\\n        SELECT 1\\n        FROM rental r\\n        JOIN inventory i ON r.inventory_id = i.inventory_id\\n        JOIN film_category fc ON i.film_id = fc.film_id\\n        JOIN category cat ON fc.category_id = cat.category_id\\n        WHERE r.customer_id = c.customer_id\\n          AND cat.name = 'Animation'\\n    );\",\n  \"confidence\": 0.98,\n  \"explanation\": \"Mengambil nama depan dan belakang pelanggan yang terdaftar di negara 'Indonesia'. Query ini kemudian memverifikasi bahwa pelanggan tersebut pernah menyewa film dengan kategori 'Action' (menggunakan subkueri EXISTS) dan, pada saat yang sama, belum pernah menyewa film dengan kategori 'Animation' (menggunakan subkueri NOT EXISTS). DISTINCT digunakan untuk memastikan setiap pelanggan hanya muncul sekali dalam hasil.\",\n  \"assumptions\": [\n    \"Pelanggan dari Indonesia diidentifikasi berdasarkan kolom `country.country` yang bernilai 'Indonesia'.\",\n    \"Aktivitas penyewaan film diidentifikasi melalui tabel `rental`, `inventory`, `film_category`, dan `category`.\"\n  ],\n  \"potential_issues\": [\n    \"Jika nama kategori 'Action' atau 'Animation' tidak sesuai persis dengan data di tabel `category`, query mungkin tidak mengembalikan hasil yang diharapkan.\"\n  ]\n}\n```",
+    "token_usage": {
+      "prompt_tokens": 2967,
+      "completion_tokens": 525,
+      "total_tokens": 5653
+    }
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "metadata": {
+    "version": "1.0",
+    "generated_at": "2025-07-31T08:23:16.223055",
+    "tool": "text2sql_ollama"
+  },
+  "scenario_id": "SAK-C5-05",
+  "category": "Comparative",
+  "database": "sakila",
+  "question_id": "Tampilkan staf yang jumlah transaksi pembayarannya lebih sedikit daripada rata-rata jumlah transaksi per staf; sertakan nama depan, nama belakang, dan jumlah transaksinya.",
+  "model": "gemma-3n-e2b",
+  "sql_query": "SELECT\n    a.first_name AS nama_depan,\n    a.last_name AS nama_belakang,\n    COUNT(r.rental_id) AS jumlah_transaksi\nFROM\n    staff a\nJOIN\n    rental r ON a.staff_id = r.staff_id\nGROUP BY\n    a.staff_id, a.first_name, a.last_name\nHAVING\n    COUNT(r.rental_id) < (SELECT AVG(rental_id) FROM staff)",
+  "timestamp": "2025-07-31T08:23:16.223055",
+  "response_time_ms": 161207.063,
+  "token_usage": {
+    "prompt_tokens": 1689,
+    "completion_tokens": 119,
+    "total_tokens": 1808
+  },
+  "raw_response": "```sql\nSELECT\n    a.first_name AS nama_depan,\n    a.last_name AS nama_belakang,\n    COUNT(r.rental_id) AS jumlah_transaksi\nFROM\n    staff a\nJOIN\n    rental r ON a.staff_id = r.staff_id\nGROUP BY\n    a.staff_id, a.first_name, a.last_name\nHAVING\n    COUNT(r.rental_id) < (SELECT AVG(rental_id) FROM staff);\n```"
+}

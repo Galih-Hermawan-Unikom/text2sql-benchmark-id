@@ -1,0 +1,38 @@
+{
+  "scenario_id": "RES-N4-05",
+  "model_info": {
+    "name": "gemini-2.5-flash-lite",
+    "temperature": 0.0,
+    "timestamp": "2025-07-23T13:53:53.234687"
+  },
+  "input": {
+    "question_id": "Berapa banyak resep yang tidak menggunakan bahan apa pun yang mengandung kata 'Cabe'? Tampilkan jumlahnya saja.",
+    "database": "resep",
+    "category": "Nested / Subquery"
+  },
+  "prompt_info": {
+    "prompt_length": 7239,
+    "prompt_lines": 165
+  },
+  "model_response": {
+    "sql_query": "SELECT COUNT(DISTINCT r.id_resep) FROM resep r LEFT JOIN resep_bahan rb ON r.id_resep = rb.id_resep LEFT JOIN bahan b ON rb.id_bahan = b.id_bahan WHERE r.id_resep NOT IN (SELECT DISTINCT rb_inner.id_resep FROM resep_bahan rb_inner JOIN bahan b_inner ON rb_inner.id_bahan = b_inner.id_bahan WHERE b_inner.nama_bahan LIKE '%Cabe%');",
+    "explanation": "Query ini menghitung jumlah resep unik yang tidak memiliki bahan yang namanya mengandung kata 'Cabe'. Ini dilakukan dengan mencari semua resep yang memiliki bahan dengan nama mengandung 'Cabe' terlebih dahulu, lalu menghitung jumlah resep yang tidak termasuk dalam daftar tersebut.",
+    "confidence": 0.95,
+    "assumptions": [
+      "Kata 'Cabe' adalah indikator utama untuk bahan yang ingin dikecualikan.",
+      "Pencarian bahan yang mengandung 'Cabe' bersifat case-insensitive (meskipun MySQL defaultnya case-insensitive untuk LIKE, ini adalah asumsi umum)."
+    ],
+    "potential_issues": [
+      "Jika ada resep yang tidak memiliki bahan sama sekali (tidak terhubung ke tabel resep_bahan), resep tersebut akan dihitung sebagai tidak menggunakan bahan 'Cabe'. Ini mungkin atau mungkin tidak diinginkan tergantung pada interpretasi 'tidak menggunakan bahan apa pun yang mengandung kata 'Cabe''. Query saat ini akan menghitung resep tanpa bahan sama sekali.",
+      "Performa query bisa menjadi masalah pada database yang sangat besar karena penggunaan subkueri dan JOIN."
+    ],
+    "response_time_ms": 1496.64920000032,
+    "model_name": "gemini-2.5-flash-lite",
+    "timestamp": "2025-07-23T13:53:53.234687",
+    "token_usage": {
+      "prompt_tokens": 2194,
+      "completion_tokens": 369,
+      "total_tokens": 2563
+    }
+  }
+}

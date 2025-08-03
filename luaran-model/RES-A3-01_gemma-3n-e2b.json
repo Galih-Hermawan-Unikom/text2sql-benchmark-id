@@ -1,0 +1,21 @@
+{
+  "metadata": {
+    "version": "1.0",
+    "generated_at": "2025-07-31T06:42:53.525165",
+    "tool": "text2sql_ollama"
+  },
+  "scenario_id": "RES-A3-01",
+  "category": "Aggregation",
+  "database": "resep",
+  "question_id": "Berapa jumlah resep yang tersedia untuk tiap kategori masakan? Tampilkan kategori masakan dan total resepnya.",
+  "model": "gemma-3n-e2b",
+  "sql_query": "SELECT\n    m.kategori AS kategori_masakan,\n    COUNT(m.kode_masakan) AS total_resep\nFROM\n    masakan m\nGROUP BY\n    m.kategori\nORDER BY\n    total_resep DESC",
+  "timestamp": "2025-07-31T06:42:53.525165",
+  "response_time_ms": 51992.276,
+  "token_usage": {
+    "prompt_tokens": 1220,
+    "completion_tokens": 62,
+    "total_tokens": 1282
+  },
+  "raw_response": "```sql\nSELECT\n    m.kategori AS kategori_masakan,\n    COUNT(m.kode_masakan) AS total_resep\nFROM\n    masakan m\nGROUP BY\n    m.kategori\nORDER BY\n    total_resep DESC;\n```"
+}

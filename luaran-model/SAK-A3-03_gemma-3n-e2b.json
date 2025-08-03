@@ -1,0 +1,21 @@
+{
+  "metadata": {
+    "version": "1.0",
+    "generated_at": "2025-07-31T08:04:19.776012",
+    "tool": "text2sql_ollama"
+  },
+  "scenario_id": "SAK-A3-03",
+  "category": "Aggregation",
+  "database": "sakila",
+  "question_id": "Hitung total nilai pembayaran per bulan pada tahun 2006.",
+  "model": "gemma-3n-e2b",
+  "sql_query": "SELECT\n    SUM(p.amount) AS total_nilai_pembayaran\nFROM\n    pembayaran p\nWHERE\n    p.rental_id IN (\n        SELECT\n            r.rental_id\n        FROM\n            rental r\n        WHERE\n            r.rental_date BETWEEN '2006-01-01' AND '2006-12-31'\n    )",
+  "timestamp": "2025-07-31T08:04:19.775263",
+  "response_time_ms": 154354.28,
+  "token_usage": {
+    "prompt_tokens": 1668,
+    "completion_tokens": 98,
+    "total_tokens": 1766
+  },
+  "raw_response": "```sql\nSELECT\n    SUM(p.amount) AS total_nilai_pembayaran\nFROM\n    pembayaran p\nWHERE\n    p.rental_id IN (\n        SELECT\n            r.rental_id\n        FROM\n            rental r\n        WHERE\n            r.rental_date BETWEEN '2006-01-01' AND '2006-12-31'\n    );\n```"
+}

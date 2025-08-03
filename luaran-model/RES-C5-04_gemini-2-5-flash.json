@@ -1,0 +1,36 @@
+{
+  "scenario_id": "RES-C5-04",
+  "model_info": {
+    "name": "gemini-2.5-flash",
+    "temperature": 0.0,
+    "timestamp": "2025-07-22T12:00:13.767219"
+  },
+  "input": {
+    "question_id": "Daerah asal mana yang memiliki jumlah masakan di bawah rata-rata jumlah masakan per daerah? Tampilkan nama daerah dan total masakannya.",
+    "database": "resep",
+    "category": "Comparative"
+  },
+  "prompt_info": {
+    "prompt_length": 7435,
+    "prompt_lines": 168
+  },
+  "model_response": {
+    "sql_query": "SELECT\n    m.asal_daerah,\n    COUNT(m.kode_masakan) AS total_masakan\nFROM\n    masakan m\nGROUP BY\n    m.asal_daerah\nHAVING\n    COUNT(m.kode_masakan) < (SELECT AVG(counts.num_masakan) FROM (SELECT COUNT(kode_masakan) AS num_masakan FROM masakan GROUP BY asal_daerah) AS counts)",
+    "explanation": "Mengambil daftar daerah asal dan jumlah masakannya, kemudian memfilter daerah-daerah tersebut yang jumlah masakannya berada di bawah rata-rata jumlah masakan per daerah secara keseluruhan. Subquery digunakan untuk menghitung rata-rata jumlah masakan per daerah.",
+    "confidence": 0.98,
+    "assumptions": [
+      "Yang dimaksud 'masakan' adalah entri dalam tabel `masakan`.",
+      "Yang dimaksud 'daerah asal' adalah kolom `asal_daerah` dalam tabel `masakan`."
+    ],
+    "potential_issues": [],
+    "response_time_ms": 5202.874000000001,
+    "model_name": "gemini-2.5-flash",
+    "timestamp": "2025-07-22T12:00:13.767219",
+    "raw_response": "```json\n{\n  \"sql_query\": \"SELECT\\n    m.asal_daerah,\\n    COUNT(m.kode_masakan) AS total_masakan\\nFROM\\n    masakan m\\nGROUP BY\\n    m.asal_daerah\\nHAVING\\n    COUNT(m.kode_masakan) < (SELECT AVG(counts.num_masakan) FROM (SELECT COUNT(kode_masakan) AS num_masakan FROM masakan GROUP BY asal_daerah) AS counts)\",\n  \"confidence\": 0.98,\n  \"explanation\": \"Mengambil daftar daerah asal dan jumlah masakannya, kemudian memfilter daerah-daerah tersebut yang jumlah masakannya berada di bawah rata-rata jumlah masakan per daerah secara keseluruhan. Subquery digunakan untuk menghitung rata-rata jumlah masakan per daerah.\",\n  \"assumptions\": [\n    \"Yang dimaksud 'masakan' adalah entri dalam tabel `masakan`.\",\n    \"Yang dimaksud 'daerah asal' adalah kolom `asal_daerah` dalam tabel `masakan`.\"\n  ],\n  \"potential_issues\": []\n}\n```",
+    "token_usage": {
+      "prompt_tokens": 2246,
+      "completion_tokens": 251,
+      "total_tokens": 3192
+    }
+  }
+}

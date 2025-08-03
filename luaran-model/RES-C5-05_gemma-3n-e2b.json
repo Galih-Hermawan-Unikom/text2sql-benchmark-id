@@ -1,0 +1,21 @@
+{
+  "metadata": {
+    "version": "1.0",
+    "generated_at": "2025-07-31T07:02:39.895266",
+    "tool": "text2sql_ollama"
+  },
+  "scenario_id": "RES-C5-05",
+  "category": "Comparative",
+  "database": "resep",
+  "question_id": "Resep mana yang durasi memasaknya lebih singkat daripada resep 'Rendang'? Tampilkan judul resep dan durasinya.",
+  "model": "gemma-3n-e2b",
+  "sql_query": "SELECT r.judul_resep, r.waktu_masak\nFROM resep r\nJOIN resep_bahan rb ON r.id_resep = rb.id_resep\nJOIN bahan b ON rb.id_bahan = b.id_bahan\nWHERE r.waktu_masak < (SELECT MAX(waktu_masak) FROM resep WHERE nama_masakan = 'Rendanang')",
+  "timestamp": "2025-07-31T07:02:39.895266",
+  "response_time_ms": 119289.598,
+  "token_usage": {
+    "prompt_tokens": 1228,
+    "completion_tokens": 97,
+    "total_tokens": 1325
+  },
+  "raw_response": "```sql\nSELECT r.judul_resep, r.waktu_masak\nFROM resep r\nJOIN resep_bahan rb ON r.id_resep = rb.id_resep\nJOIN bahan b ON rb.id_bahan = b.id_bahan\nWHERE r.waktu_masak < (SELECT MAX(waktu_masak) FROM resep WHERE nama_masakan = 'Rendanang');\n```"
+}

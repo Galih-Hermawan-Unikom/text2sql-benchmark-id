@@ -1,0 +1,21 @@
+{
+  "metadata": {
+    "version": "1.0",
+    "generated_at": "2025-07-31T07:59:17.748209",
+    "tool": "text2sql_ollama"
+  },
+  "scenario_id": "SAK-A3-01",
+  "category": "Aggregation",
+  "database": "sakila",
+  "question_id": "Hitung berapa banyak film pada setiap rating.",
+  "model": "gemma-3n-e2b",
+  "sql_query": "SELECT\n  r.rating AS rating,\n  COUNT(f.film_id) AS jumlah_film\nFROM film AS f\nJOIN film_actor AS fa\n  ON f.film_id = fa.film_id\nJOIN actor AS a\n  ON fa.actor_id = a.actor_id\nJOIN rental AS r\n  ON f.film_id = r.film_id\nGROUP BY\n  r.rating\nORDER BY\n  r.rating",
+  "timestamp": "2025-07-31T07:59:17.747210",
+  "response_time_ms": 976279.47,
+  "token_usage": {
+    "prompt_tokens": 1659,
+    "completion_tokens": 110,
+    "total_tokens": 1769
+  },
+  "raw_response": "```sql\nSELECT\n  r.rating AS rating,\n  COUNT(f.film_id) AS jumlah_film\nFROM film AS f\nJOIN film_actor AS fa\n  ON f.film_id = fa.film_id\nJOIN actor AS a\n  ON fa.actor_id = a.actor_id\nJOIN rental AS r\n  ON f.film_id = r.film_id\nGROUP BY\n  r.rating\nORDER BY\n  r.rating;\n```"
+}

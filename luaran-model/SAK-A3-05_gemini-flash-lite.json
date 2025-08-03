@@ -1,0 +1,35 @@
+{
+  "scenario_id": "SAK-A3-05",
+  "model_info": {
+    "name": "gemini-2.5-flash-lite",
+    "temperature": 0.0,
+    "timestamp": "2025-07-23T13:54:15.528149"
+  },
+  "input": {
+    "question_id": "Tampilkan nama aktor dan jumlah film yang mereka bintangi, urutkan dari yang terbanyak.",
+    "database": "sakila",
+    "category": "Aggregation"
+  },
+  "prompt_info": {
+    "prompt_length": 9738,
+    "prompt_lines": 299
+  },
+  "model_response": {
+    "sql_query": "SELECT a.first_name, a.last_name, COUNT(fa.film_id) AS total_films FROM actor a JOIN film_actor fa ON a.actor_id = fa.actor_id GROUP BY a.actor_id, a.first_name, a.last_name ORDER BY total_films DESC",
+    "explanation": "Query ini menggabungkan tabel 'actor' dengan tabel 'film_actor' untuk menghubungkan aktor dengan film yang mereka bintangi. Kemudian, ia mengelompokkan hasil berdasarkan aktor dan menghitung jumlah film yang dibintangi oleh setiap aktor. Hasilnya diurutkan berdasarkan jumlah film secara menurun untuk menampilkan aktor yang membintangi paling banyak film terlebih dahulu.",
+    "confidence": 0.99,
+    "assumptions": [
+      "Setiap baris dalam tabel 'film_actor' mewakili satu film yang dibintangi oleh seorang aktor.",
+      "Nama aktor yang dicari adalah 'first_name' dan 'last_name' dari tabel 'actor'."
+    ],
+    "potential_issues": [],
+    "response_time_ms": 1086.3163999983954,
+    "model_name": "gemini-2.5-flash-lite",
+    "timestamp": "2025-07-23T13:54:15.528149",
+    "token_usage": {
+      "prompt_tokens": 3072,
+      "completion_tokens": 247,
+      "total_tokens": 3319
+    }
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "metadata": {
+    "version": "1.0",
+    "generated_at": "2025-07-31T06:46:00.735341",
+    "tool": "text2sql_ollama"
+  },
+  "scenario_id": "RES-A3-02",
+  "category": "Aggregation",
+  "database": "resep",
+  "question_id": "Hitung rata-rata waktu memasak untuk setiap tingkat kesulitan resep. Tampilkan tingkat kesulitan dan rata-ratanya (dalam menit).",
+  "model": "gemma-3n-e2b",
+  "sql_query": "SELECT\n    r.tingkat_kesulitan,\n    ROUND(AVG(r.waktu_masak), 2) AS rata_rata_waktu_masak\nFROM\n    resep r\nGROUP BY\n    r.tingkat_kesulitan",
+  "timestamp": "2025-07-31T06:46:00.735341",
+  "response_time_ms": 187206.18,
+  "token_usage": {
+    "prompt_tokens": 1232,
+    "completion_tokens": 64,
+    "total_tokens": 1296
+  },
+  "raw_response": "```sql\nSELECT\n    r.tingkat_kesulitan,\n    ROUND(AVG(r.waktu_masak), 2) AS rata_rata_waktu_masak\nFROM\n    resep r\nGROUP BY\n    r.tingkat_kesulitan;\n```"
+}
