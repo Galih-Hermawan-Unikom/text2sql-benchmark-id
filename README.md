@@ -10,8 +10,8 @@ A lightweight, fully reproducible benchmark to evaluate large language models (L
 
 * **Galih Hermawan** — Lecturer & Researcher, Informatics Department, Universitas Komputer Indonesia (UNIKOM)
 
-  E‑mail: [galih.hermawan@email.unikom.ac.id](mailto:galih.hermawan@email.unikom.ac.id)
-  ORCID: [https://orcid.org/0000-0002-8476-5996](https://orcid.org/0000-0002-8476-5996)
+  E‑mail: [galih.hermawan@email.unikom.ac.id](mailto:galih.hermawan@email.unikom.ac.id) </br>
+  ORCID: [https://orcid.org/0000-0002-8476-5996](https://orcid.org/0000-0002-8476-5996) </br>
   GitHub: [@Galih-Hermawan-Unikom](https://github.com/Galih-Hermawan-Unikom)
 
 ### 🤝 Contributing
