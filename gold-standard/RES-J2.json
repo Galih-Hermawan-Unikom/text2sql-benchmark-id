@@ -1,0 +1,361 @@
+{
+  "RES-J2-01": {
+    "id": "RES-J2-01",
+    "db": "resep",
+    "category": "Join + Filter",
+    "question_id": "Tampilkan daftar resep dessert yang masih aktif—sertakan ID resep, judul resep, dan nama masakan.",
+    "question_en": "Display a list of active dessert recipes—include recipe ID, recipe title, and dish name.",
+    "solution_sql": "SELECT r.id_resep, r.judul_resep, m.nama_masakan\nFROM resep AS r\nJOIN masakan AS m ON r.kode_masakan = m.kode_masakan\nWHERE m.kategori = 'Dessert' AND m.status_aktif = 1;",
+    "expected_rows": [
+      {
+        "id_resep": 20,
+        "judul_resep": "Kolak Pisang",
+        "nama_masakan": "Kolak Pisang"
+      }
+    ],
+    "ordering": null,
+    "notes": "Satu JOIN (resep ↔ masakan); filter pada kategori Dessert dan status aktif."
+  },
+  "RES-J2-02": {
+    "id": "RES-J2-02",
+    "db": "resep",
+    "category": "Join + Filter",
+    "question_id": "Resep apa saja yang memakai bahan daun? Cantumkan judul resep dan nama bahannya.",
+    "question_en": "What recipes use leaf ingredients? List the recipe title and ingredient name.",
+    "solution_sql": "SELECT DISTINCT r.judul_resep, b.nama_bahan\nFROM resep AS r\nJOIN resep_bahan AS rb ON r.id_resep = rb.id_resep\nJOIN bahan AS b ON rb.id_bahan = b.id_bahan\nWHERE b.nama_bahan LIKE '%Daun%';",
+    "expected_rows": [
+      {
+        "judul_resep": "Sop Buntut",
+        "nama_bahan": "Daun bawang"
+      },
+      {
+        "judul_resep": "Ikan Kuah Pala Banda",
+        "nama_bahan": "Daun kunyit"
+      },
+      {
+        "judul_resep": "Rendang Padang Asli",
+        "nama_bahan": "Daun salam"
+      },
+      {
+        "judul_resep": "Rendang Kering Cepat",
+        "nama_bahan": "Daun salam"
+      },
+      {
+        "judul_resep": "Soto Betawi Kuah Susu",
+        "nama_bahan": "Daun salam"
+      },
+      {
+        "judul_resep": "Pepes Ikan Mas Daun Pisang",
+        "nama_bahan": "Daun salam"
+      },
+      {
+        "judul_resep": "Rawon Surabaya",
+        "nama_bahan": "Daun salam"
+      },
+      {
+        "judul_resep": "Kare Rajungan Madura",
+        "nama_bahan": "Daun salam"
+      },
+      {
+        "judul_resep": "Gudeg Jogja",
+        "nama_bahan": "Daun salam"
+      },
+      {
+        "judul_resep": "Coto Makassar",
+        "nama_bahan": "Daun salam"
+      },
+      {
+        "judul_resep": "Opor Ayam Lebaran",
+        "nama_bahan": "Daun salam"
+      },
+      {
+        "judul_resep": "Nasi Kuning Manado",
+        "nama_bahan": "Daun salam"
+      },
+      {
+        "judul_resep": "Sayur Asem Sunda",
+        "nama_bahan": "Daun salam"
+      },
+      {
+        "judul_resep": "Laksa Betawi",
+        "nama_bahan": "Daun salam"
+      },
+      {
+        "judul_resep": "Ayam Betutu",
+        "nama_bahan": "Daun salam"
+      },
+      {
+        "judul_resep": "Gudeg Manggar",
+        "nama_bahan": "Daun salam"
+      },
+      {
+        "judul_resep": "Nasi Liwet Beras Merah",
+        "nama_bahan": "Daun salam"
+      },
+      {
+        "judul_resep": "Rendang Jamur Champignon",
+        "nama_bahan": "Daun salam"
+      },
+      {
+        "judul_resep": "Rendang Padang Asli",
+        "nama_bahan": "Daun jeruk purut"
+      },
+      {
+        "judul_resep": "Rendang Kering Cepat",
+        "nama_bahan": "Daun jeruk purut"
+      },
+      {
+        "judul_resep": "Pepes Ikan Mas Daun Pisang",
+        "nama_bahan": "Daun jeruk purut"
+      },
+      {
+        "judul_resep": "Ayam Betutu",
+        "nama_bahan": "Daun jeruk purut"
+      },
+      {
+        "judul_resep": "Rendang Jamur Champignon",
+        "nama_bahan": "Daun jeruk purut"
+      },
+      {
+        "judul_resep": "Kolak Pisang",
+        "nama_bahan": "Daun pandan"
+      },
+      {
+        "judul_resep": "Nasi Kuning Manado",
+        "nama_bahan": "Daun pandan"
+      },
+      {
+        "judul_resep": "Sayur Asem Sunda",
+        "nama_bahan": "Daun melinjo"
+      },
+      {
+        "judul_resep": "Papeda Kuah Kuning",
+        "nama_bahan": "Daun kemangi"
+      },
+      {
+        "judul_resep": "Nasi Liwet Beras Merah",
+        "nama_bahan": "Daun kemangi"
+      }
+    ],
+    "ordering": null,
+    "notes": "Dua JOIN; LIKE '%Daun%' biasanya menjangkau banyak bahan (daun kunyit, daun salam, dsb.)."
+  },
+  "RES-J2-03": {
+    "id": "RES-J2-03",
+    "db": "resep",
+    "category": "Join + Filter",
+    "question_id": "Sebutkan kode dan nama masakan khas Padang yang bisa dimasak dalam 90 menit atau kurang, sertakan judul resep dan lama memasaknya.",
+    "question_en": "List the code and name of Padang specialty dishes that can be cooked in 90 minutes or less, including the recipe title and cooking time.",
+    "solution_sql": "SELECT m.kode_masakan, m.nama_masakan, r.judul_resep, r.waktu_masak\nFROM masakan AS m\nJOIN resep AS r ON m.kode_masakan = r.kode_masakan\nWHERE m.asal_daerah = 'Padang' AND r.waktu_masak <= 90;",
+    "expected_rows": [
+      {
+        "kode_masakan": "M001",
+        "nama_masakan": "Rendang",
+        "judul_resep": "Rendang Kering Cepat",
+        "waktu_masak": 90
+      },
+      {
+        "kode_masakan": "M001",
+        "nama_masakan": "Rendang",
+        "judul_resep": "Rendang Jamur Champignon",
+        "waktu_masak": 90
+      },
+      {
+        "kode_masakan": "M034",
+        "nama_masakan": "Sate Padang",
+        "judul_resep": "Sate Padang Daging Kambing",
+        "waktu_masak": 70
+      }
+    ],
+    "ordering": null,
+    "notes": "Empat kolom wajib: kode_masakan, nama_masakan, judul_resep, waktu_masak. Durasi diperlebar (≤ 90 menit) supaya hasil tidak kosong; urutan baris tidak dinilai."
+  },
+  "RES-J2-04": {
+    "id": "RES-J2-04",
+    "db": "resep",
+    "category": "Join + Filter",
+    "question_id": "Tampilkan ID resep, judul resep, dan nama bahan yang disajikan dalam satuan 'lembar'.",
+    "question_en": "Display recipe ID, recipe title, and ingredient name that are served in 'sheet' units.",
+    "solution_sql": "SELECT r.id_resep, r.judul_resep, b.nama_bahan\nFROM resep AS r\nJOIN resep_bahan AS rb ON r.id_resep = rb.id_resep\nJOIN bahan AS b ON rb.id_bahan = b.id_bahan\nWHERE b.satuan_default = 'lembar';",
+    "expected_rows": [
+      {
+        "id_resep": 37,
+        "judul_resep": "Ikan Kuah Pala Banda",
+        "nama_bahan": "Daun kunyit"
+      },
+      {
+        "id_resep": 1,
+        "judul_resep": "Rendang Padang Asli",
+        "nama_bahan": "Daun salam"
+      },
+      {
+        "id_resep": 2,
+        "judul_resep": "Rendang Kering Cepat",
+        "nama_bahan": "Daun salam"
+      },
+      {
+        "id_resep": 7,
+        "judul_resep": "Soto Betawi Kuah Susu",
+        "nama_bahan": "Daun salam"
+      },
+      {
+        "id_resep": 9,
+        "judul_resep": "Pepes Ikan Mas Daun Pisang",
+        "nama_bahan": "Daun salam"
+      },
+      {
+        "id_resep": 10,
+        "judul_resep": "Rawon Surabaya",
+        "nama_bahan": "Daun salam"
+      },
+      {
+        "id_resep": 14,
+        "judul_resep": "Kare Rajungan Madura",
+        "nama_bahan": "Daun salam"
+      },
+      {
+        "id_resep": 15,
+        "judul_resep": "Gudeg Jogja",
+        "nama_bahan": "Daun salam"
+      },
+      {
+        "id_resep": 17,
+        "judul_resep": "Coto Makassar",
+        "nama_bahan": "Daun salam"
+      },
+      {
+        "id_resep": 18,
+        "judul_resep": "Opor Ayam Lebaran",
+        "nama_bahan": "Daun salam"
+      },
+      {
+        "id_resep": 21,
+        "judul_resep": "Nasi Kuning Manado",
+        "nama_bahan": "Daun salam"
+      },
+      {
+        "id_resep": 22,
+        "judul_resep": "Sayur Asem Sunda",
+        "nama_bahan": "Daun salam"
+      },
+      {
+        "id_resep": 26,
+        "judul_resep": "Laksa Betawi",
+        "nama_bahan": "Daun salam"
+      },
+      {
+        "id_resep": 29,
+        "judul_resep": "Ayam Betutu",
+        "nama_bahan": "Daun salam"
+      },
+      {
+        "id_resep": 34,
+        "judul_resep": "Gudeg Manggar",
+        "nama_bahan": "Daun salam"
+      },
+      {
+        "id_resep": 39,
+        "judul_resep": "Nasi Liwet Beras Merah",
+        "nama_bahan": "Daun salam"
+      },
+      {
+        "id_resep": 40,
+        "judul_resep": "Rendang Jamur Champignon",
+        "nama_bahan": "Daun salam"
+      },
+      {
+        "id_resep": 1,
+        "judul_resep": "Rendang Padang Asli",
+        "nama_bahan": "Daun jeruk purut"
+      },
+      {
+        "id_resep": 2,
+        "judul_resep": "Rendang Kering Cepat",
+        "nama_bahan": "Daun jeruk purut"
+      },
+      {
+        "id_resep": 9,
+        "judul_resep": "Pepes Ikan Mas Daun Pisang",
+        "nama_bahan": "Daun jeruk purut"
+      },
+      {
+        "id_resep": 29,
+        "judul_resep": "Ayam Betutu",
+        "nama_bahan": "Daun jeruk purut"
+      },
+      {
+        "id_resep": 40,
+        "judul_resep": "Rendang Jamur Champignon",
+        "nama_bahan": "Daun jeruk purut"
+      },
+      {
+        "id_resep": 20,
+        "judul_resep": "Kolak Pisang",
+        "nama_bahan": "Daun pandan"
+      },
+      {
+        "id_resep": 21,
+        "judul_resep": "Nasi Kuning Manado",
+        "nama_bahan": "Daun pandan"
+      }
+    ],
+    "ordering": null,
+    "notes": "Tiga tabel; filter hanya pada satuan bahan."
+  },
+  "RES-J2-05": {
+    "id": "RES-J2-05",
+    "db": "resep",
+    "category": "Join + Filter",
+    "question_id": "Masakan apa saja secara unik yang menggunakan santan sebagai salah satu bahannya? Tampilkan nama masakan dan nama bahannya.",
+    "question_en": "What unique dishes use coconut milk as one of their ingredients? Display the dish name and ingredient name.",
+    "solution_sql": "SELECT DISTINCT m.nama_masakan, b.nama_bahan\nFROM masakan AS m\nJOIN resep AS r ON m.kode_masakan = r.kode_masakan\nJOIN resep_bahan AS rb ON r.id_resep = rb.id_resep\nJOIN bahan AS b ON rb.id_bahan = b.id_bahan\nWHERE b.nama_bahan LIKE '%Santan%';",
+    "expected_rows": [
+      {
+        "nama_masakan": "Rendang",
+        "nama_bahan": "Santan kental"
+      },
+      {
+        "nama_masakan": "Soto Betawi",
+        "nama_bahan": "Santan kental"
+      },
+      {
+        "nama_masakan": "Mie Aceh",
+        "nama_bahan": "Santan kental"
+      },
+      {
+        "nama_masakan": "Kare Rajungan",
+        "nama_bahan": "Santan kental"
+      },
+      {
+        "nama_masakan": "Gudeg",
+        "nama_bahan": "Santan kental"
+      },
+      {
+        "nama_masakan": "Opor Ayam",
+        "nama_bahan": "Santan kental"
+      },
+      {
+        "nama_masakan": "Kolak Pisang",
+        "nama_bahan": "Santan kental"
+      },
+      {
+        "nama_masakan": "Nasi Kuning Manado",
+        "nama_bahan": "Santan kental"
+      },
+      {
+        "nama_masakan": "Laksa Betawi",
+        "nama_bahan": "Santan kental"
+      },
+      {
+        "nama_masakan": "Gudeg Manggar",
+        "nama_bahan": "Santan kental"
+      },
+      {
+        "nama_masakan": "Nasi Liwet",
+        "nama_bahan": "Santan kental"
+      }
+    ],
+    "ordering": null,
+    "notes": "Empat tabel digabung; filter pada nama bahan yang mengandung kata 'Santan'. Gunakan DISTINCT agar kombinasi masakan–bahan tidak duplikat."
+  }
+}

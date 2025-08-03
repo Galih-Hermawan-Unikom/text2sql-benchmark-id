@@ -1,0 +1,218 @@
+{
+  "RES-A3-01": {
+    "id": "RES-A3-01",
+    "db": "resep",
+    "category": "Aggregation",
+    "question_id": "Berapa jumlah resep yang tersedia untuk tiap kategori masakan? Tampilkan kategori masakan dan total resepnya.",
+    "question_en": "How many recipes are available for each dish category? Show dish category and total recipes.",
+    "solution_sql": "SELECT m.kategori, COUNT(r.id_resep) AS total_resep\nFROM masakan AS m\nJOIN resep AS r ON m.kode_masakan = r.kode_masakan\nGROUP BY m.kategori;",
+    "expected_rows": [
+      {
+        "kategori": "Daging",
+        "total_resep": 9
+      },
+      {
+        "kategori": "Ayam",
+        "total_resep": 4
+      },
+      {
+        "kategori": "Sayuran",
+        "total_resep": 9
+      },
+      {
+        "kategori": "Nasi",
+        "total_resep": 4
+      },
+      {
+        "kategori": "Seafood",
+        "total_resep": 8
+      },
+      {
+        "kategori": "Mie",
+        "total_resep": 4
+      },
+      {
+        "kategori": "Minuman",
+        "total_resep": 1
+      },
+      {
+        "kategori": "Dessert",
+        "total_resep": 1
+      }
+    ],
+    "ordering": null,
+    "notes": "Satu JOIN; fungsi COUNT dan GROUP BY kategori."
+  },
+  "RES-A3-02": {
+    "id": "RES-A3-02",
+    "db": "resep",
+    "category": "Aggregation",
+    "question_id": "Hitung rata-rata waktu memasak untuk setiap tingkat kesulitan resep. Tampilkan tingkat kesulitan dan rata-ratanya (dalam menit).",
+    "question_en": "Calculate the average cooking time for each recipe difficulty level. Show difficulty level and average time (in minutes).",
+    "solution_sql": "SELECT r.tingkat_kesulitan, AVG(r.waktu_masak) AS rata_waktu\nFROM resep AS r\nGROUP BY r.tingkat_kesulitan;",
+    "expected_rows": [
+      {
+        "tingkat_kesulitan": "sulit",
+        "rata_waktu": 210.0
+      },
+      {
+        "tingkat_kesulitan": "sedang",
+        "rata_waktu": 93.1579
+      },
+      {
+        "tingkat_kesulitan": "mudah",
+        "rata_waktu": 36.0556
+      }
+    ],
+    "ordering": null,
+    "notes": "Tidak perlu JOIN; gunakan AVG dan GROUP BY tingkat_kesulitan."
+  },
+  "RES-A3-03": {
+    "id": "RES-A3-03",
+    "db": "resep",
+    "category": "Aggregation",
+    "question_id": "Tampilkan lima bahan yang paling sering dipakai di semua resep—urutkan dari yang terbanyak. Sertakan nama bahan dan berapa kali dipakai.",
+    "question_en": "Show the five most frequently used ingredients across all recipes—ordered from most to least. Include ingredient name and usage count.",
+    "solution_sql": "SELECT b.nama_bahan, COUNT(rb.id_resep) AS frekuensi\nFROM bahan AS b\nJOIN resep_bahan AS rb ON b.id_bahan = rb.id_bahan\nGROUP BY b.id_bahan, b.nama_bahan\nORDER BY frekuensi DESC\nLIMIT 5;",
+    "expected_rows": [
+      {
+        "nama_bahan": "Garam dapur",
+        "frekuensi": 37
+      },
+      {
+        "nama_bahan": "Bawang putih",
+        "frekuensi": 32
+      },
+      {
+        "nama_bahan": "Bawang merah",
+        "frekuensi": 28
+      },
+      {
+        "nama_bahan": "Serai (sereh)",
+        "frekuensi": 17
+      },
+      {
+        "nama_bahan": "Daun salam",
+        "frekuensi": 16
+      }
+    ],
+    "ordering": "desc",
+    "notes": "JOIN bahan ↔ resep_bahan; ORDER BY frekuensi menurun & batasi 5 teratas."
+  },
+  "RES-A3-04": {
+    "id": "RES-A3-04",
+    "db": "resep",
+    "category": "Aggregation",
+    "question_id": "Untuk setiap daerah asal, berapa banyak bahan unik yang digunakan di seluruh masakan daerah tersebut? Tampilkan nama daerah dan jumlah bahan uniknya.",
+    "question_en": "For each region of origin, how many unique ingredients are used across all dishes from that region? Show region name and count of unique ingredients.",
+    "solution_sql": "SELECT m.asal_daerah, COUNT(DISTINCT rb.id_bahan) AS jumlah_bahan\nFROM masakan AS m\nJOIN resep AS r ON m.kode_masakan = r.kode_masakan\nJOIN resep_bahan AS rb ON r.id_resep = rb.id_resep\nGROUP BY m.asal_daerah;",
+    "expected_rows": [
+      {
+        "asal_daerah": "Aceh",
+        "jumlah_bahan": 10
+      },
+      {
+        "asal_daerah": "Bali",
+        "jumlah_bahan": 17
+      },
+      {
+        "asal_daerah": "Betawi",
+        "jumlah_bahan": 30
+      },
+      {
+        "asal_daerah": "Cirebon",
+        "jumlah_bahan": 9
+      },
+      {
+        "asal_daerah": "Jakarta",
+        "jumlah_bahan": 10
+      },
+      {
+        "asal_daerah": "Jawa",
+        "jumlah_bahan": 5
+      },
+      {
+        "asal_daerah": "Jawa Tengah",
+        "jumlah_bahan": 14
+      },
+      {
+        "asal_daerah": "Jawa Timur",
+        "jumlah_bahan": 18
+      },
+      {
+        "asal_daerah": "Lombok",
+        "jumlah_bahan": 7
+      },
+      {
+        "asal_daerah": "Madura",
+        "jumlah_bahan": 8
+      },
+      {
+        "asal_daerah": "Makassar",
+        "jumlah_bahan": 8
+      },
+      {
+        "asal_daerah": "Maluku",
+        "jumlah_bahan": 9
+      },
+      {
+        "asal_daerah": "Manado",
+        "jumlah_bahan": 14
+      },
+      {
+        "asal_daerah": "Padang",
+        "jumlah_bahan": 18
+      },
+      {
+        "asal_daerah": "Palembang",
+        "jumlah_bahan": 6
+      },
+      {
+        "asal_daerah": "Papua",
+        "jumlah_bahan": 9
+      },
+      {
+        "asal_daerah": "Solo",
+        "jumlah_bahan": 9
+      },
+      {
+        "asal_daerah": "Sunda",
+        "jumlah_bahan": 23
+      },
+      {
+        "asal_daerah": "Surabaya",
+        "jumlah_bahan": 9
+      },
+      {
+        "asal_daerah": "Tionghoa-Jawa",
+        "jumlah_bahan": 8
+      },
+      {
+        "asal_daerah": "Yogyakarta",
+        "jumlah_bahan": 10
+      }
+    ],
+    "ordering": null,
+    "notes": "Gunakan COUNT DISTINCT agar satu bahan tak dihitung ganda dalam daerah sama."
+  },
+  "RES-A3-05": {
+    "id": "RES-A3-05",
+    "db": "resep",
+    "category": "Aggregation",
+    "question_id": "Hitung jumlah masakan aktif dan tidak aktif. Tampilkan status_aktif (0 atau 1) beserta total masakannya.",
+    "question_en": "Count the number of active and inactive dishes. Show status_aktif (0 or 1) along with total dishes.",
+    "solution_sql": "SELECT m.status_aktif, COUNT(*) AS total_masakan\nFROM masakan AS m\nGROUP BY m.status_aktif;",
+    "expected_rows": [
+      {
+        "status_aktif": 1,
+        "total_masakan": 36
+      },
+      {
+        "status_aktif": 0,
+        "total_masakan": 4
+      }
+    ],
+    "ordering": null,
+    "notes": "Agregasi sederhana tanpa JOIN; membandingkan dua status."
+  }
+}

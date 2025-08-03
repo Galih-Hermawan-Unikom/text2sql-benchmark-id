@@ -1,0 +1,124 @@
+{
+  "SAK-S6-01": {
+    "id": "SAK-S6-01",
+    "db": "sakila",
+    "category": "Superlative",
+    "question_id": "Siapa pelanggan dengan total nilai pembayaran terbesar? Sertakan nama depan, nama belakang, dan total pembayarannya.",
+    "question_en": "Who is the customer with the highest total payment amount? Include first name, last name, and total payment.",
+    "solution_sql": "SELECT c.first_name,c.last_name,SUM(p.amount) AS total_payment FROM customer c JOIN payment p ON c.customer_id=p.customer_id GROUP BY c.customer_id,c.first_name,c.last_name HAVING SUM(p.amount)=(SELECT MAX(tp) FROM (SELECT SUM(amount) AS tp FROM payment GROUP BY customer_id) t);",
+    "expected_rows": [
+      {
+        "first_name": "KARL",
+        "last_name": "SEAL",
+        "total_payment": 221.55
+      }
+    ],
+    "ordering": null,
+    "notes": "Tiga kolom: first_name, last_name, total_payment. Jika terdapat beberapa item dengan nilai maksimum yang sama, semua baris tersebut harus muncul."
+  },
+  "SAK-S6-02": {
+    "id": "SAK-S6-02",
+    "db": "sakila",
+    "category": "Superlative",
+    "question_id": "Film apa yang memiliki durasi terlama? Sertakan judul dan durasinya.",
+    "question_en": "Which film has the longest duration? Include title and duration.",
+    "solution_sql": "SELECT title,length FROM film HAVING length=(SELECT MAX(length) FROM film);",
+    "expected_rows": [
+      {
+        "title": "CHICAGO NORTH",
+        "length": 185
+      },
+      {
+        "title": "CONTROL ANTHEM",
+        "length": 185
+      },
+      {
+        "title": "DARN FORRESTER",
+        "length": 185
+      },
+      {
+        "title": "GANGS PRIDE",
+        "length": 185
+      },
+      {
+        "title": "HOME PITY",
+        "length": 185
+      },
+      {
+        "title": "MUSCLE BRIGHT",
+        "length": 185
+      },
+      {
+        "title": "POND SEATTLE",
+        "length": 185
+      },
+      {
+        "title": "SOLDIERS EVOLUTION",
+        "length": 185
+      },
+      {
+        "title": "SWEET BROTHERHOOD",
+        "length": 185
+      },
+      {
+        "title": "WORST BANGER",
+        "length": 185
+      }
+    ],
+    "ordering": null,
+    "notes": "Dua kolom: title dan length. Jika terdapat beberapa item dengan nilai maksimum yang sama, semua baris tersebut harus muncul."
+  },
+  "SAK-S6-03": {
+    "id": "SAK-S6-03",
+    "db": "sakila",
+    "category": "Superlative",
+    "question_id": "Kota mana yang memiliki jumlah pelanggan terbanyak? Sertakan nama kota dan jumlah pelanggannya.",
+    "question_en": "Which city has the most customers? Include city name and customer count.",
+    "solution_sql": "SELECT ci.city,COUNT(*) AS customer_count FROM customer c JOIN address a ON c.address_id=a.address_id JOIN city ci ON a.city_id=ci.city_id GROUP BY ci.city HAVING COUNT(*)=(SELECT MAX(cnt) FROM (SELECT COUNT(*) AS cnt FROM customer c2 JOIN address a2 ON c2.address_id=a2.address_id JOIN city ci2 ON a2.city_id=ci2.city_id GROUP BY ci2.city) x);",
+    "expected_rows": [
+      {
+        "city": "London",
+        "customer_count": 2
+      },
+      {
+        "city": "Aurora",
+        "customer_count": 2
+      }
+    ],
+    "ordering": null,
+    "notes": "Dua kolom: city dan customer_count. Jika terdapat beberapa item dengan nilai maksimum yang sama, semua baris tersebut harus muncul."
+  },
+  "SAK-S6-04": {
+    "id": "SAK-S6-04",
+    "db": "sakila",
+    "category": "Superlative",
+    "question_id": "Siapa pelanggan yang paling sering menyewa film? Sertakan nama depan, nama belakang, dan jumlah sewanya.",
+    "question_en": "Who is the customer who rents films most frequently? Include first name, last name, and rental count.",
+    "solution_sql": "SELECT c.first_name,c.last_name,COUNT(r.rental_id) AS rental_count FROM customer c JOIN rental r ON c.customer_id=r.customer_id GROUP BY c.customer_id,c.first_name,c.last_name HAVING COUNT(r.rental_id) = (SELECT MAX(cnt) FROM (SELECT COUNT(*) AS cnt FROM rental GROUP BY customer_id) AS t);",
+    "expected_rows": [
+      {
+        "first_name": "ELEANOR",
+        "last_name": "HUNT",
+        "rental_count": 46
+      }
+    ],
+    "ordering": null,
+    "notes": "Tiga kolom: first_name, last_name, rental_count. Jika terdapat beberapa item dengan nilai maksimum yang sama, semua baris tersebut harus muncul."
+  },
+  "SAK-S6-05": {
+    "id": "SAK-S6-05",
+    "db": "sakila",
+    "category": "Superlative",
+    "question_id": "Pada tahun 2005, bulan apa yang mencatat total pembayaran terbesar? Sertakan nomor bulan (1–12) dan total pembayarannya.",
+    "question_en": "In 2005, which month recorded the highest total payments? Include month number (1-12) and total payment amount.",
+    "solution_sql": "SELECT MONTH(payment_date) AS month_num,SUM(amount) AS total_payment FROM payment WHERE YEAR(payment_date)=2005 GROUP BY MONTH(payment_date) HAVING SUM(amount)=(SELECT MAX(tp) FROM (SELECT SUM(amount) AS tp FROM payment WHERE YEAR(payment_date)=2005 GROUP BY MONTH(payment_date)) m);",
+    "expected_rows": [
+      {
+        "month_num": 7,
+        "total_payment": 28373.89
+      }
+    ],
+    "ordering": null,
+    "notes": "Dua kolom: month_num dan total_payment. Jika terdapat beberapa item dengan nilai maksimum yang sama, semua baris tersebut harus muncul."
+  }
+}

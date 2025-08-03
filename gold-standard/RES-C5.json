@@ -1,0 +1,470 @@
+{
+  "RES-C5-01": {
+    "id": "RES-C5-01",
+    "db": "resep",
+    "category": "Comparative",
+    "question_id": "Resep apa saja yang durasi memasaknya lebih lama daripada rata-rata durasi semua resep? Tampilkan judul resep dan lamanya memasak.",
+    "question_en": "Which recipes have cooking duration longer than the average duration of all recipes? Show recipe title and cooking time.",
+    "solution_sql": "SELECT judul_resep, waktu_masak\nFROM resep\nWHERE waktu_masak > (\n  SELECT AVG(waktu_masak) FROM resep\n);",
+    "expected_rows": [
+      {
+        "judul_resep": "Rendang Padang Asli",
+        "waktu_masak": 240
+      },
+      {
+        "judul_resep": "Rendang Kering Cepat",
+        "waktu_masak": 90
+      },
+      {
+        "judul_resep": "Soto Betawi Kuah Susu",
+        "waktu_masak": 120
+      },
+      {
+        "judul_resep": "Rawon Surabaya",
+        "waktu_masak": 180
+      },
+      {
+        "judul_resep": "Gudeg Jogja",
+        "waktu_masak": 240
+      },
+      {
+        "judul_resep": "Coto Makassar",
+        "waktu_masak": 150
+      },
+      {
+        "judul_resep": "Nasi Kuning Manado",
+        "waktu_masak": 90
+      },
+      {
+        "judul_resep": "Bakso Malang Komplet",
+        "waktu_masak": 120
+      },
+      {
+        "judul_resep": "Pempek Kapal Selam",
+        "waktu_masak": 90
+      },
+      {
+        "judul_resep": "Sop Buntut",
+        "waktu_masak": 150
+      },
+      {
+        "judul_resep": "Ayam Betutu",
+        "waktu_masak": 150
+      },
+      {
+        "judul_resep": "Mi Kocok Bandung",
+        "waktu_masak": 90
+      },
+      {
+        "judul_resep": "Gudeg Manggar",
+        "waktu_masak": 180
+      },
+      {
+        "judul_resep": "Semur Jengkol Betawi",
+        "waktu_masak": 120
+      },
+      {
+        "judul_resep": "Rendang Jamur Champignon",
+        "waktu_masak": 90
+      }
+    ],
+    "ordering": null,
+    "notes": "Perbandingan nilai baris dengan rata-rata global melalui sub-query tunggal."
+  },
+  "RES-C5-02": {
+    "id": "RES-C5-02",
+    "db": "resep",
+    "category": "Comparative",
+    "question_id": "Masakan mana saja yang tingkat kepedasannya di atas rata-rata semua masakan? Sertakan kode masakan, nama masakan, dan level pedasnya.",
+    "question_en": "Which dishes have spiciness level above the average of all dishes? Include dish code, dish name, and spice level.",
+    "solution_sql": "SELECT kode_masakan, nama_masakan, level_pedas\nFROM masakan\nWHERE level_pedas > (\n  SELECT AVG(level_pedas) FROM masakan\n);",
+    "expected_rows": [
+      {
+        "kode_masakan": "M001",
+        "nama_masakan": "Rendang",
+        "level_pedas": 4
+      },
+      {
+        "kode_masakan": "M002",
+        "nama_masakan": "Sate Ayam Madura",
+        "level_pedas": 3
+      },
+      {
+        "kode_masakan": "M004",
+        "nama_masakan": "Nasi Goreng Kampung",
+        "level_pedas": 3
+      },
+      {
+        "kode_masakan": "M006",
+        "nama_masakan": "Ayam Taliwang",
+        "level_pedas": 5
+      },
+      {
+        "kode_masakan": "M010",
+        "nama_masakan": "Mie Aceh",
+        "level_pedas": 4
+      },
+      {
+        "kode_masakan": "M011",
+        "nama_masakan": "Kare Rajungan",
+        "level_pedas": 3
+      },
+      {
+        "kode_masakan": "M014",
+        "nama_masakan": "Coto Makassar",
+        "level_pedas": 3
+      },
+      {
+        "kode_masakan": "M020",
+        "nama_masakan": "Sambal Roa",
+        "level_pedas": 5
+      },
+      {
+        "kode_masakan": "M022",
+        "nama_masakan": "Pempek Kapal Selam",
+        "level_pedas": 3
+      },
+      {
+        "kode_masakan": "M024",
+        "nama_masakan": "Ikan Bakar Rica",
+        "level_pedas": 4
+      },
+      {
+        "kode_masakan": "M026",
+        "nama_masakan": "Ayam Betutu",
+        "level_pedas": 4
+      },
+      {
+        "kode_masakan": "M028",
+        "nama_masakan": "Sambal Matah",
+        "level_pedas": 5
+      },
+      {
+        "kode_masakan": "M030",
+        "nama_masakan": "Tahu Gejrot",
+        "level_pedas": 3
+      },
+      {
+        "kode_masakan": "M034",
+        "nama_masakan": "Sate Padang",
+        "level_pedas": 4
+      },
+      {
+        "kode_masakan": "M035",
+        "nama_masakan": "Semur Jengkol",
+        "level_pedas": 3
+      },
+      {
+        "kode_masakan": "M039",
+        "nama_masakan": "Plecing Kangkung",
+        "level_pedas": 4
+      }
+    ],
+    "ordering": null,
+    "notes": "Membandingkan kolom numerik `level_pedas` dengan rata-rata keseluruhan."
+  },
+  "RES-C5-03": {
+    "id": "RES-C5-03",
+    "db": "resep",
+    "category": "Comparative",
+    "question_id": "Bahan apa saja yang muncul lebih sering dibanding rata-rata frekuensi kemunculan semua bahan? Tampilkan nama bahan dan jumlah kemunculannya.",
+    "question_en": "Which ingredients appear more frequently than the average frequency of all ingredients? Show ingredient name and occurrence count.",
+    "solution_sql": "SELECT b.nama_bahan, COUNT(rb.id_resep) AS frekuensi\nFROM bahan AS b\nJOIN resep_bahan AS rb ON b.id_bahan = rb.id_bahan\nGROUP BY b.id_bahan, b.nama_bahan\nHAVING COUNT(rb.id_resep) > (\n  SELECT AVG(cnt)\n  FROM (\n    SELECT COUNT(*) AS cnt\n    FROM resep_bahan\n    GROUP BY id_bahan\n  ) AS sub\n);",
+    "expected_rows": [
+      {
+        "nama_bahan": "Daging sapi",
+        "frekuensi": 8
+      },
+      {
+        "nama_bahan": "Santan kental",
+        "frekuensi": 13
+      },
+      {
+        "nama_bahan": "Mi telur",
+        "frekuensi": 4
+      },
+      {
+        "nama_bahan": "Bawang merah",
+        "frekuensi": 28
+      },
+      {
+        "nama_bahan": "Bawang putih",
+        "frekuensi": 32
+      },
+      {
+        "nama_bahan": "Serai (sereh)",
+        "frekuensi": 17
+      },
+      {
+        "nama_bahan": "Lengkuas",
+        "frekuensi": 10
+      },
+      {
+        "nama_bahan": "Kunyit",
+        "frekuensi": 9
+      },
+      {
+        "nama_bahan": "Daun salam",
+        "frekuensi": 16
+      },
+      {
+        "nama_bahan": "Daun jeruk purut",
+        "frekuensi": 5
+      },
+      {
+        "nama_bahan": "Cabe merah besar",
+        "frekuensi": 15
+      },
+      {
+        "nama_bahan": "Cabe rawit merah",
+        "frekuensi": 13
+      },
+      {
+        "nama_bahan": "Garam dapur",
+        "frekuensi": 37
+      },
+      {
+        "nama_bahan": "Gula merah",
+        "frekuensi": 7
+      },
+      {
+        "nama_bahan": "Kecap manis",
+        "frekuensi": 6
+      },
+      {
+        "nama_bahan": "Minyak goreng sawit",
+        "frekuensi": 4
+      },
+      {
+        "nama_bahan": "Minyak kelapa",
+        "frekuensi": 4
+      },
+      {
+        "nama_bahan": "Air",
+        "frekuensi": 11
+      }
+    ],
+    "ordering": null,
+    "notes": "Perbandingan antar-kelompok: `HAVING` menilai frekuensi tiap bahan vs. rata-rata global."
+  },
+  "RES-C5-04": {
+    "id": "RES-C5-04",
+    "db": "resep",
+    "category": "Comparative",
+    "question_id": "Daerah asal mana yang memiliki jumlah masakan di bawah rata-rata jumlah masakan per daerah? Tampilkan nama daerah dan total masakannya.",
+    "question_en": "Which regions have a number of dishes below the average number of dishes per region? Show region name and total dishes.",
+    "solution_sql": "SELECT asal_daerah, COUNT(*) AS total_masakan\nFROM masakan\nGROUP BY asal_daerah\nHAVING COUNT(*) < (\n  SELECT AVG(jml)\n  FROM (\n    SELECT COUNT(*) AS jml\n    FROM masakan\n    GROUP BY asal_daerah\n  ) AS sub\n);",
+    "expected_rows": [
+      {
+        "asal_daerah": "Tionghoa-Jawa",
+        "total_masakan": 1
+      },
+      {
+        "asal_daerah": "Aceh",
+        "total_masakan": 1
+      },
+      {
+        "asal_daerah": "Madura",
+        "total_masakan": 1
+      },
+      {
+        "asal_daerah": "Makassar",
+        "total_masakan": 1
+      },
+      {
+        "asal_daerah": "Jawa",
+        "total_masakan": 1
+      },
+      {
+        "asal_daerah": "Palembang",
+        "total_masakan": 1
+      },
+      {
+        "asal_daerah": "Jakarta",
+        "total_masakan": 1
+      },
+      {
+        "asal_daerah": "Surabaya",
+        "total_masakan": 1
+      },
+      {
+        "asal_daerah": "Cirebon",
+        "total_masakan": 1
+      },
+      {
+        "asal_daerah": "Maluku",
+        "total_masakan": 1
+      },
+      {
+        "asal_daerah": "Papua",
+        "total_masakan": 1
+      }
+    ],
+    "ordering": null,
+    "notes": "`HAVING` membandingkan hitungan per daerah dengan rata-rata hitungan seluruh daerah."
+  },
+  "RES-C5-05": {
+    "id": "RES-C5-05",
+    "db": "resep",
+    "category": "Comparative",
+    "question_id": "Resep mana yang durasi memasaknya lebih singkat daripada resep 'Rendang'? Tampilkan judul resep dan durasinya.",
+    "question_en": "Which recipes have cooking duration shorter than the 'Rendang' recipe? Show recipe title and duration.",
+    "solution_sql": "SELECT r.judul_resep, r.waktu_masak\nFROM resep AS r\nJOIN masakan AS m ON r.kode_masakan = m.kode_masakan\nWHERE r.waktu_masak < (\n  SELECT r2.waktu_masak\n  FROM resep AS r2\n  JOIN masakan AS m2 ON r2.kode_masakan = m2.kode_masakan\n  WHERE m2.nama_masakan = 'Rendang'\n  LIMIT 1\n);",
+    "expected_rows": [
+      {
+        "judul_resep": "Rendang Kering Cepat",
+        "waktu_masak": 90
+      },
+      {
+        "judul_resep": "Sate Ayam Madura",
+        "waktu_masak": 40
+      },
+      {
+        "judul_resep": "Gado-Gado Betawi",
+        "waktu_masak": 25
+      },
+      {
+        "judul_resep": "Nasi Goreng Kampung",
+        "waktu_masak": 15
+      },
+      {
+        "judul_resep": "Nasi Goreng Kampung Super Pedas",
+        "waktu_masak": 17
+      },
+      {
+        "judul_resep": "Soto Betawi Kuah Susu",
+        "waktu_masak": 120
+      },
+      {
+        "judul_resep": "Ayam Taliwang Bakar",
+        "waktu_masak": 45
+      },
+      {
+        "judul_resep": "Pepes Ikan Mas Daun Pisang",
+        "waktu_masak": 40
+      },
+      {
+        "judul_resep": "Rawon Surabaya",
+        "waktu_masak": 180
+      },
+      {
+        "judul_resep": "Capcay Kuah",
+        "waktu_masak": 20
+      },
+      {
+        "judul_resep": "Mi Aceh Kari Kuah",
+        "waktu_masak": 25
+      },
+      {
+        "judul_resep": "Mi Aceh Goreng",
+        "waktu_masak": 22
+      },
+      {
+        "judul_resep": "Kare Rajungan Madura",
+        "waktu_masak": 35
+      },
+      {
+        "judul_resep": "Sate Lilit Bali",
+        "waktu_masak": 35
+      },
+      {
+        "judul_resep": "Coto Makassar",
+        "waktu_masak": 150
+      },
+      {
+        "judul_resep": "Opor Ayam Lebaran",
+        "waktu_masak": 60
+      },
+      {
+        "judul_resep": "Es Cendol Tradisional",
+        "waktu_masak": 30
+      },
+      {
+        "judul_resep": "Kolak Pisang",
+        "waktu_masak": 25
+      },
+      {
+        "judul_resep": "Nasi Kuning Manado",
+        "waktu_masak": 90
+      },
+      {
+        "judul_resep": "Sayur Asem Sunda",
+        "waktu_masak": 40
+      },
+      {
+        "judul_resep": "Sambal Roa Manado",
+        "waktu_masak": 60
+      },
+      {
+        "judul_resep": "Bakso Malang Komplet",
+        "waktu_masak": 120
+      },
+      {
+        "judul_resep": "Pempek Kapal Selam",
+        "waktu_masak": 90
+      },
+      {
+        "judul_resep": "Laksa Betawi",
+        "waktu_masak": 60
+      },
+      {
+        "judul_resep": "Ikan Bakar Rica",
+        "waktu_masak": 30
+      },
+      {
+        "judul_resep": "Sop Buntut",
+        "waktu_masak": 150
+      },
+      {
+        "judul_resep": "Ayam Betutu",
+        "waktu_masak": 150
+      },
+      {
+        "judul_resep": "Lontong Balap",
+        "waktu_masak": 70
+      },
+      {
+        "judul_resep": "Sambal Matah Bali",
+        "waktu_masak": 10
+      },
+      {
+        "judul_resep": "Tahu Gejrot Cirebon",
+        "waktu_masak": 15
+      },
+      {
+        "judul_resep": "Mi Kocok Bandung",
+        "waktu_masak": 90
+      },
+      {
+        "judul_resep": "Gudeg Manggar",
+        "waktu_masak": 180
+      },
+      {
+        "judul_resep": "Sate Padang Daging Kambing",
+        "waktu_masak": 70
+      },
+      {
+        "judul_resep": "Semur Jengkol Betawi",
+        "waktu_masak": 120
+      },
+      {
+        "judul_resep": "Ikan Kuah Pala Banda",
+        "waktu_masak": 40
+      },
+      {
+        "judul_resep": "Papeda Kuah Kuning",
+        "waktu_masak": 45
+      },
+      {
+        "judul_resep": "Nasi Liwet Beras Merah",
+        "waktu_masak": 75
+      },
+      {
+        "judul_resep": "Rendang Jamur Champignon",
+        "waktu_masak": 90
+      }
+    ],
+    "ordering": null,
+    "notes": "Membandingkan durasi resep terhadap nilai spesifik yang diperoleh lewat sub-query."
+  }
+}

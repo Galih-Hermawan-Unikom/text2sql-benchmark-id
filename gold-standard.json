@@ -1,0 +1,5215 @@
+[
+  {
+    "id": "RES-A3-01",
+    "db": "resep",
+    "category": "Aggregation",
+    "question_id": "Berapa jumlah resep yang tersedia untuk tiap kategori masakan? Tampilkan kategori masakan dan total resepnya.",
+    "question_en": "How many recipes are available for each dish category? Show dish category and total recipes.",
+    "solution_sql": "SELECT m.kategori, COUNT(r.id_resep) AS total_resep\nFROM masakan AS m\nJOIN resep AS r ON m.kode_masakan = r.kode_masakan\nGROUP BY m.kategori;",
+    "expected_rows": [
+      {
+        "kategori": "Daging",
+        "total_resep": 9
+      },
+      {
+        "kategori": "Ayam",
+        "total_resep": 4
+      },
+      {
+        "kategori": "Sayuran",
+        "total_resep": 9
+      },
+      {
+        "kategori": "Nasi",
+        "total_resep": 4
+      },
+      {
+        "kategori": "Seafood",
+        "total_resep": 8
+      },
+      {
+        "kategori": "Mie",
+        "total_resep": 4
+      },
+      {
+        "kategori": "Minuman",
+        "total_resep": 1
+      },
+      {
+        "kategori": "Dessert",
+        "total_resep": 1
+      }
+    ],
+    "ordering": null,
+    "notes": "Satu JOIN; fungsi COUNT dan GROUP BY kategori."
+  },
+  {
+    "id": "RES-A3-02",
+    "db": "resep",
+    "category": "Aggregation",
+    "question_id": "Hitung rata-rata waktu memasak untuk setiap tingkat kesulitan resep. Tampilkan tingkat kesulitan dan rata-ratanya (dalam menit).",
+    "question_en": "Calculate the average cooking time for each recipe difficulty level. Show difficulty level and average time (in minutes).",
+    "solution_sql": "SELECT r.tingkat_kesulitan, AVG(r.waktu_masak) AS rata_waktu\nFROM resep AS r\nGROUP BY r.tingkat_kesulitan;",
+    "expected_rows": [
+      {
+        "tingkat_kesulitan": "sulit",
+        "rata_waktu": 210.0
+      },
+      {
+        "tingkat_kesulitan": "sedang",
+        "rata_waktu": 93.1579
+      },
+      {
+        "tingkat_kesulitan": "mudah",
+        "rata_waktu": 36.0556
+      }
+    ],
+    "ordering": null,
+    "notes": "Tidak perlu JOIN; gunakan AVG dan GROUP BY tingkat_kesulitan."
+  },
+  {
+    "id": "RES-A3-03",
+    "db": "resep",
+    "category": "Aggregation",
+    "question_id": "Tampilkan lima bahan yang paling sering dipakai di semua resep—urutkan dari yang terbanyak. Sertakan nama bahan dan berapa kali dipakai.",
+    "question_en": "Show the five most frequently used ingredients across all recipes—ordered from most to least. Include ingredient name and usage count.",
+    "solution_sql": "SELECT b.nama_bahan, COUNT(rb.id_resep) AS frekuensi\nFROM bahan AS b\nJOIN resep_bahan AS rb ON b.id_bahan = rb.id_bahan\nGROUP BY b.id_bahan, b.nama_bahan\nORDER BY frekuensi DESC\nLIMIT 5;",
+    "expected_rows": [
+      {
+        "nama_bahan": "Garam dapur",
+        "frekuensi": 37
+      },
+      {
+        "nama_bahan": "Bawang putih",
+        "frekuensi": 32
+      },
+      {
+        "nama_bahan": "Bawang merah",
+        "frekuensi": 28
+      },
+      {
+        "nama_bahan": "Serai (sereh)",
+        "frekuensi": 17
+      },
+      {
+        "nama_bahan": "Daun salam",
+        "frekuensi": 16
+      }
+    ],
+    "ordering": "desc",
+    "notes": "JOIN bahan ↔ resep_bahan; ORDER BY frekuensi menurun & batasi 5 teratas."
+  },
+  {
+    "id": "RES-A3-04",
+    "db": "resep",
+    "category": "Aggregation",
+    "question_id": "Untuk setiap daerah asal, berapa banyak bahan unik yang digunakan di seluruh masakan daerah tersebut? Tampilkan nama daerah dan jumlah bahan uniknya.",
+    "question_en": "For each region of origin, how many unique ingredients are used across all dishes from that region? Show region name and count of unique ingredients.",
+    "solution_sql": "SELECT m.asal_daerah, COUNT(DISTINCT rb.id_bahan) AS jumlah_bahan\nFROM masakan AS m\nJOIN resep AS r ON m.kode_masakan = r.kode_masakan\nJOIN resep_bahan AS rb ON r.id_resep = rb.id_resep\nGROUP BY m.asal_daerah;",
+    "expected_rows": [
+      {
+        "asal_daerah": "Aceh",
+        "jumlah_bahan": 10
+      },
+      {
+        "asal_daerah": "Bali",
+        "jumlah_bahan": 17
+      },
+      {
+        "asal_daerah": "Betawi",
+        "jumlah_bahan": 30
+      },
+      {
+        "asal_daerah": "Cirebon",
+        "jumlah_bahan": 9
+      },
+      {
+        "asal_daerah": "Jakarta",
+        "jumlah_bahan": 10
+      },
+      {
+        "asal_daerah": "Jawa",
+        "jumlah_bahan": 5
+      },
+      {
+        "asal_daerah": "Jawa Tengah",
+        "jumlah_bahan": 14
+      },
+      {
+        "asal_daerah": "Jawa Timur",
+        "jumlah_bahan": 18
+      },
+      {
+        "asal_daerah": "Lombok",
+        "jumlah_bahan": 7
+      },
+      {
+        "asal_daerah": "Madura",
+        "jumlah_bahan": 8
+      },
+      {
+        "asal_daerah": "Makassar",
+        "jumlah_bahan": 8
+      },
+      {
+        "asal_daerah": "Maluku",
+        "jumlah_bahan": 9
+      },
+      {
+        "asal_daerah": "Manado",
+        "jumlah_bahan": 14
+      },
+      {
+        "asal_daerah": "Padang",
+        "jumlah_bahan": 18
+      },
+      {
+        "asal_daerah": "Palembang",
+        "jumlah_bahan": 6
+      },
+      {
+        "asal_daerah": "Papua",
+        "jumlah_bahan": 9
+      },
+      {
+        "asal_daerah": "Solo",
+        "jumlah_bahan": 9
+      },
+      {
+        "asal_daerah": "Sunda",
+        "jumlah_bahan": 23
+      },
+      {
+        "asal_daerah": "Surabaya",
+        "jumlah_bahan": 9
+      },
+      {
+        "asal_daerah": "Tionghoa-Jawa",
+        "jumlah_bahan": 8
+      },
+      {
+        "asal_daerah": "Yogyakarta",
+        "jumlah_bahan": 10
+      }
+    ],
+    "ordering": null,
+    "notes": "Gunakan COUNT DISTINCT agar satu bahan tak dihitung ganda dalam daerah sama."
+  },
+  {
+    "id": "RES-A3-05",
+    "db": "resep",
+    "category": "Aggregation",
+    "question_id": "Hitung jumlah masakan aktif dan tidak aktif. Tampilkan status_aktif (0 atau 1) beserta total masakannya.",
+    "question_en": "Count the number of active and inactive dishes. Show status_aktif (0 or 1) along with total dishes.",
+    "solution_sql": "SELECT m.status_aktif, COUNT(*) AS total_masakan\nFROM masakan AS m\nGROUP BY m.status_aktif;",
+    "expected_rows": [
+      {
+        "status_aktif": 1,
+        "total_masakan": 36
+      },
+      {
+        "status_aktif": 0,
+        "total_masakan": 4
+      }
+    ],
+    "ordering": null,
+    "notes": "Agregasi sederhana tanpa JOIN; membandingkan dua status."
+  },
+  {
+    "id": "RES-C5-01",
+    "db": "resep",
+    "category": "Comparative",
+    "question_id": "Resep apa saja yang durasi memasaknya lebih lama daripada rata-rata durasi semua resep? Tampilkan judul resep dan lamanya memasak.",
+    "question_en": "Which recipes have cooking duration longer than the average duration of all recipes? Show recipe title and cooking time.",
+    "solution_sql": "SELECT judul_resep, waktu_masak\nFROM resep\nWHERE waktu_masak > (\n  SELECT AVG(waktu_masak) FROM resep\n);",
+    "expected_rows": [
+      {
+        "judul_resep": "Rendang Padang Asli",
+        "waktu_masak": 240
+      },
+      {
+        "judul_resep": "Rendang Kering Cepat",
+        "waktu_masak": 90
+      },
+      {
+        "judul_resep": "Soto Betawi Kuah Susu",
+        "waktu_masak": 120
+      },
+      {
+        "judul_resep": "Rawon Surabaya",
+        "waktu_masak": 180
+      },
+      {
+        "judul_resep": "Gudeg Jogja",
+        "waktu_masak": 240
+      },
+      {
+        "judul_resep": "Coto Makassar",
+        "waktu_masak": 150
+      },
+      {
+        "judul_resep": "Nasi Kuning Manado",
+        "waktu_masak": 90
+      },
+      {
+        "judul_resep": "Bakso Malang Komplet",
+        "waktu_masak": 120
+      },
+      {
+        "judul_resep": "Pempek Kapal Selam",
+        "waktu_masak": 90
+      },
+      {
+        "judul_resep": "Sop Buntut",
+        "waktu_masak": 150
+      },
+      {
+        "judul_resep": "Ayam Betutu",
+        "waktu_masak": 150
+      },
+      {
+        "judul_resep": "Mi Kocok Bandung",
+        "waktu_masak": 90
+      },
+      {
+        "judul_resep": "Gudeg Manggar",
+        "waktu_masak": 180
+      },
+      {
+        "judul_resep": "Semur Jengkol Betawi",
+        "waktu_masak": 120
+      },
+      {
+        "judul_resep": "Rendang Jamur Champignon",
+        "waktu_masak": 90
+      }
+    ],
+    "ordering": null,
+    "notes": "Perbandingan nilai baris dengan rata-rata global melalui sub-query tunggal."
+  },
+  {
+    "id": "RES-C5-02",
+    "db": "resep",
+    "category": "Comparative",
+    "question_id": "Masakan mana saja yang tingkat kepedasannya di atas rata-rata semua masakan? Sertakan kode masakan, nama masakan, dan level pedasnya.",
+    "question_en": "Which dishes have spiciness level above the average of all dishes? Include dish code, dish name, and spice level.",
+    "solution_sql": "SELECT kode_masakan, nama_masakan, level_pedas\nFROM masakan\nWHERE level_pedas > (\n  SELECT AVG(level_pedas) FROM masakan\n);",
+    "expected_rows": [
+      {
+        "kode_masakan": "M001",
+        "nama_masakan": "Rendang",
+        "level_pedas": 4
+      },
+      {
+        "kode_masakan": "M002",
+        "nama_masakan": "Sate Ayam Madura",
+        "level_pedas": 3
+      },
+      {
+        "kode_masakan": "M004",
+        "nama_masakan": "Nasi Goreng Kampung",
+        "level_pedas": 3
+      },
+      {
+        "kode_masakan": "M006",
+        "nama_masakan": "Ayam Taliwang",
+        "level_pedas": 5
+      },
+      {
+        "kode_masakan": "M010",
+        "nama_masakan": "Mie Aceh",
+        "level_pedas": 4
+      },
+      {
+        "kode_masakan": "M011",
+        "nama_masakan": "Kare Rajungan",
+        "level_pedas": 3
+      },
+      {
+        "kode_masakan": "M014",
+        "nama_masakan": "Coto Makassar",
+        "level_pedas": 3
+      },
+      {
+        "kode_masakan": "M020",
+        "nama_masakan": "Sambal Roa",
+        "level_pedas": 5
+      },
+      {
+        "kode_masakan": "M022",
+        "nama_masakan": "Pempek Kapal Selam",
+        "level_pedas": 3
+      },
+      {
+        "kode_masakan": "M024",
+        "nama_masakan": "Ikan Bakar Rica",
+        "level_pedas": 4
+      },
+      {
+        "kode_masakan": "M026",
+        "nama_masakan": "Ayam Betutu",
+        "level_pedas": 4
+      },
+      {
+        "kode_masakan": "M028",
+        "nama_masakan": "Sambal Matah",
+        "level_pedas": 5
+      },
+      {
+        "kode_masakan": "M030",
+        "nama_masakan": "Tahu Gejrot",
+        "level_pedas": 3
+      },
+      {
+        "kode_masakan": "M034",
+        "nama_masakan": "Sate Padang",
+        "level_pedas": 4
+      },
+      {
+        "kode_masakan": "M035",
+        "nama_masakan": "Semur Jengkol",
+        "level_pedas": 3
+      },
+      {
+        "kode_masakan": "M039",
+        "nama_masakan": "Plecing Kangkung",
+        "level_pedas": 4
+      }
+    ],
+    "ordering": null,
+    "notes": "Membandingkan kolom numerik `level_pedas` dengan rata-rata keseluruhan."
+  },
+  {
+    "id": "RES-C5-03",
+    "db": "resep",
+    "category": "Comparative",
+    "question_id": "Bahan apa saja yang muncul lebih sering dibanding rata-rata frekuensi kemunculan semua bahan? Tampilkan nama bahan dan jumlah kemunculannya.",
+    "question_en": "Which ingredients appear more frequently than the average frequency of all ingredients? Show ingredient name and occurrence count.",
+    "solution_sql": "SELECT b.nama_bahan, COUNT(rb.id_resep) AS frekuensi\nFROM bahan AS b\nJOIN resep_bahan AS rb ON b.id_bahan = rb.id_bahan\nGROUP BY b.id_bahan, b.nama_bahan\nHAVING COUNT(rb.id_resep) > (\n  SELECT AVG(cnt)\n  FROM (\n    SELECT COUNT(*) AS cnt\n    FROM resep_bahan\n    GROUP BY id_bahan\n  ) AS sub\n);",
+    "expected_rows": [
+      {
+        "nama_bahan": "Daging sapi",
+        "frekuensi": 8
+      },
+      {
+        "nama_bahan": "Santan kental",
+        "frekuensi": 13
+      },
+      {
+        "nama_bahan": "Mi telur",
+        "frekuensi": 4
+      },
+      {
+        "nama_bahan": "Bawang merah",
+        "frekuensi": 28
+      },
+      {
+        "nama_bahan": "Bawang putih",
+        "frekuensi": 32
+      },
+      {
+        "nama_bahan": "Serai (sereh)",
+        "frekuensi": 17
+      },
+      {
+        "nama_bahan": "Lengkuas",
+        "frekuensi": 10
+      },
+      {
+        "nama_bahan": "Kunyit",
+        "frekuensi": 9
+      },
+      {
+        "nama_bahan": "Daun salam",
+        "frekuensi": 16
+      },
+      {
+        "nama_bahan": "Daun jeruk purut",
+        "frekuensi": 5
+      },
+      {
+        "nama_bahan": "Cabe merah besar",
+        "frekuensi": 15
+      },
+      {
+        "nama_bahan": "Cabe rawit merah",
+        "frekuensi": 13
+      },
+      {
+        "nama_bahan": "Garam dapur",
+        "frekuensi": 37
+      },
+      {
+        "nama_bahan": "Gula merah",
+        "frekuensi": 7
+      },
+      {
+        "nama_bahan": "Kecap manis",
+        "frekuensi": 6
+      },
+      {
+        "nama_bahan": "Minyak goreng sawit",
+        "frekuensi": 4
+      },
+      {
+        "nama_bahan": "Minyak kelapa",
+        "frekuensi": 4
+      },
+      {
+        "nama_bahan": "Air",
+        "frekuensi": 11
+      }
+    ],
+    "ordering": null,
+    "notes": "Perbandingan antar-kelompok: `HAVING` menilai frekuensi tiap bahan vs. rata-rata global."
+  },
+  {
+    "id": "RES-C5-04",
+    "db": "resep",
+    "category": "Comparative",
+    "question_id": "Daerah asal mana yang memiliki jumlah masakan di bawah rata-rata jumlah masakan per daerah? Tampilkan nama daerah dan total masakannya.",
+    "question_en": "Which regions have a number of dishes below the average number of dishes per region? Show region name and total dishes.",
+    "solution_sql": "SELECT asal_daerah, COUNT(*) AS total_masakan\nFROM masakan\nGROUP BY asal_daerah\nHAVING COUNT(*) < (\n  SELECT AVG(jml)\n  FROM (\n    SELECT COUNT(*) AS jml\n    FROM masakan\n    GROUP BY asal_daerah\n  ) AS sub\n);",
+    "expected_rows": [
+      {
+        "asal_daerah": "Tionghoa-Jawa",
+        "total_masakan": 1
+      },
+      {
+        "asal_daerah": "Aceh",
+        "total_masakan": 1
+      },
+      {
+        "asal_daerah": "Madura",
+        "total_masakan": 1
+      },
+      {
+        "asal_daerah": "Makassar",
+        "total_masakan": 1
+      },
+      {
+        "asal_daerah": "Jawa",
+        "total_masakan": 1
+      },
+      {
+        "asal_daerah": "Palembang",
+        "total_masakan": 1
+      },
+      {
+        "asal_daerah": "Jakarta",
+        "total_masakan": 1
+      },
+      {
+        "asal_daerah": "Surabaya",
+        "total_masakan": 1
+      },
+      {
+        "asal_daerah": "Cirebon",
+        "total_masakan": 1
+      },
+      {
+        "asal_daerah": "Maluku",
+        "total_masakan": 1
+      },
+      {
+        "asal_daerah": "Papua",
+        "total_masakan": 1
+      }
+    ],
+    "ordering": null,
+    "notes": "`HAVING` membandingkan hitungan per daerah dengan rata-rata hitungan seluruh daerah."
+  },
+  {
+    "id": "RES-C5-05",
+    "db": "resep",
+    "category": "Comparative",
+    "question_id": "Resep mana yang durasi memasaknya lebih singkat daripada resep 'Rendang'? Tampilkan judul resep dan durasinya.",
+    "question_en": "Which recipes have cooking duration shorter than the 'Rendang' recipe? Show recipe title and duration.",
+    "solution_sql": "SELECT r.judul_resep, r.waktu_masak\nFROM resep AS r\nJOIN masakan AS m ON r.kode_masakan = m.kode_masakan\nWHERE r.waktu_masak < (\n  SELECT r2.waktu_masak\n  FROM resep AS r2\n  JOIN masakan AS m2 ON r2.kode_masakan = m2.kode_masakan\n  WHERE m2.nama_masakan = 'Rendang'\n  LIMIT 1\n);",
+    "expected_rows": [
+      {
+        "judul_resep": "Rendang Kering Cepat",
+        "waktu_masak": 90
+      },
+      {
+        "judul_resep": "Sate Ayam Madura",
+        "waktu_masak": 40
+      },
+      {
+        "judul_resep": "Gado-Gado Betawi",
+        "waktu_masak": 25
+      },
+      {
+        "judul_resep": "Nasi Goreng Kampung",
+        "waktu_masak": 15
+      },
+      {
+        "judul_resep": "Nasi Goreng Kampung Super Pedas",
+        "waktu_masak": 17
+      },
+      {
+        "judul_resep": "Soto Betawi Kuah Susu",
+        "waktu_masak": 120
+      },
+      {
+        "judul_resep": "Ayam Taliwang Bakar",
+        "waktu_masak": 45
+      },
+      {
+        "judul_resep": "Pepes Ikan Mas Daun Pisang",
+        "waktu_masak": 40
+      },
+      {
+        "judul_resep": "Rawon Surabaya",
+        "waktu_masak": 180
+      },
+      {
+        "judul_resep": "Capcay Kuah",
+        "waktu_masak": 20
+      },
+      {
+        "judul_resep": "Mi Aceh Kari Kuah",
+        "waktu_masak": 25
+      },
+      {
+        "judul_resep": "Mi Aceh Goreng",
+        "waktu_masak": 22
+      },
+      {
+        "judul_resep": "Kare Rajungan Madura",
+        "waktu_masak": 35
+      },
+      {
+        "judul_resep": "Sate Lilit Bali",
+        "waktu_masak": 35
+      },
+      {
+        "judul_resep": "Coto Makassar",
+        "waktu_masak": 150
+      },
+      {
+        "judul_resep": "Opor Ayam Lebaran",
+        "waktu_masak": 60
+      },
+      {
+        "judul_resep": "Es Cendol Tradisional",
+        "waktu_masak": 30
+      },
+      {
+        "judul_resep": "Kolak Pisang",
+        "waktu_masak": 25
+      },
+      {
+        "judul_resep": "Nasi Kuning Manado",
+        "waktu_masak": 90
+      },
+      {
+        "judul_resep": "Sayur Asem Sunda",
+        "waktu_masak": 40
+      },
+      {
+        "judul_resep": "Sambal Roa Manado",
+        "waktu_masak": 60
+      },
+      {
+        "judul_resep": "Bakso Malang Komplet",
+        "waktu_masak": 120
+      },
+      {
+        "judul_resep": "Pempek Kapal Selam",
+        "waktu_masak": 90
+      },
+      {
+        "judul_resep": "Laksa Betawi",
+        "waktu_masak": 60
+      },
+      {
+        "judul_resep": "Ikan Bakar Rica",
+        "waktu_masak": 30
+      },
+      {
+        "judul_resep": "Sop Buntut",
+        "waktu_masak": 150
+      },
+      {
+        "judul_resep": "Ayam Betutu",
+        "waktu_masak": 150
+      },
+      {
+        "judul_resep": "Lontong Balap",
+        "waktu_masak": 70
+      },
+      {
+        "judul_resep": "Sambal Matah Bali",
+        "waktu_masak": 10
+      },
+      {
+        "judul_resep": "Tahu Gejrot Cirebon",
+        "waktu_masak": 15
+      },
+      {
+        "judul_resep": "Mi Kocok Bandung",
+        "waktu_masak": 90
+      },
+      {
+        "judul_resep": "Gudeg Manggar",
+        "waktu_masak": 180
+      },
+      {
+        "judul_resep": "Sate Padang Daging Kambing",
+        "waktu_masak": 70
+      },
+      {
+        "judul_resep": "Semur Jengkol Betawi",
+        "waktu_masak": 120
+      },
+      {
+        "judul_resep": "Ikan Kuah Pala Banda",
+        "waktu_masak": 40
+      },
+      {
+        "judul_resep": "Papeda Kuah Kuning",
+        "waktu_masak": 45
+      },
+      {
+        "judul_resep": "Nasi Liwet Beras Merah",
+        "waktu_masak": 75
+      },
+      {
+        "judul_resep": "Rendang Jamur Champignon",
+        "waktu_masak": 90
+      }
+    ],
+    "ordering": null,
+    "notes": "Membandingkan durasi resep terhadap nilai spesifik yang diperoleh lewat sub-query."
+  },
+  {
+    "id": "RES-J2-01",
+    "db": "resep",
+    "category": "Join + Filter",
+    "question_id": "Tampilkan daftar resep dessert yang masih aktif—sertakan ID resep, judul resep, dan nama masakan.",
+    "question_en": "Display a list of active dessert recipes—include recipe ID, recipe title, and dish name.",
+    "solution_sql": "SELECT r.id_resep, r.judul_resep, m.nama_masakan\nFROM resep AS r\nJOIN masakan AS m ON r.kode_masakan = m.kode_masakan\nWHERE m.kategori = 'Dessert' AND m.status_aktif = 1;",
+    "expected_rows": [
+      {
+        "id_resep": 20,
+        "judul_resep": "Kolak Pisang",
+        "nama_masakan": "Kolak Pisang"
+      }
+    ],
+    "ordering": null,
+    "notes": "Satu JOIN (resep ↔ masakan); filter pada kategori Dessert dan status aktif."
+  },
+  {
+    "id": "RES-J2-02",
+    "db": "resep",
+    "category": "Join + Filter",
+    "question_id": "Resep apa saja yang memakai bahan daun? Cantumkan judul resep dan nama bahannya.",
+    "question_en": "What recipes use leaf ingredients? List the recipe title and ingredient name.",
+    "solution_sql": "SELECT DISTINCT r.judul_resep, b.nama_bahan\nFROM resep AS r\nJOIN resep_bahan AS rb ON r.id_resep = rb.id_resep\nJOIN bahan AS b ON rb.id_bahan = b.id_bahan\nWHERE b.nama_bahan LIKE '%Daun%';",
+    "expected_rows": [
+      {
+        "judul_resep": "Sop Buntut",
+        "nama_bahan": "Daun bawang"
+      },
+      {
+        "judul_resep": "Ikan Kuah Pala Banda",
+        "nama_bahan": "Daun kunyit"
+      },
+      {
+        "judul_resep": "Rendang Padang Asli",
+        "nama_bahan": "Daun salam"
+      },
+      {
+        "judul_resep": "Rendang Kering Cepat",
+        "nama_bahan": "Daun salam"
+      },
+      {
+        "judul_resep": "Soto Betawi Kuah Susu",
+        "nama_bahan": "Daun salam"
+      },
+      {
+        "judul_resep": "Pepes Ikan Mas Daun Pisang",
+        "nama_bahan": "Daun salam"
+      },
+      {
+        "judul_resep": "Rawon Surabaya",
+        "nama_bahan": "Daun salam"
+      },
+      {
+        "judul_resep": "Kare Rajungan Madura",
+        "nama_bahan": "Daun salam"
+      },
+      {
+        "judul_resep": "Gudeg Jogja",
+        "nama_bahan": "Daun salam"
+      },
+      {
+        "judul_resep": "Coto Makassar",
+        "nama_bahan": "Daun salam"
+      },
+      {
+        "judul_resep": "Opor Ayam Lebaran",
+        "nama_bahan": "Daun salam"
+      },
+      {
+        "judul_resep": "Nasi Kuning Manado",
+        "nama_bahan": "Daun salam"
+      },
+      {
+        "judul_resep": "Sayur Asem Sunda",
+        "nama_bahan": "Daun salam"
+      },
+      {
+        "judul_resep": "Laksa Betawi",
+        "nama_bahan": "Daun salam"
+      },
+      {
+        "judul_resep": "Ayam Betutu",
+        "nama_bahan": "Daun salam"
+      },
+      {
+        "judul_resep": "Gudeg Manggar",
+        "nama_bahan": "Daun salam"
+      },
+      {
+        "judul_resep": "Nasi Liwet Beras Merah",
+        "nama_bahan": "Daun salam"
+      },
+      {
+        "judul_resep": "Rendang Jamur Champignon",
+        "nama_bahan": "Daun salam"
+      },
+      {
+        "judul_resep": "Rendang Padang Asli",
+        "nama_bahan": "Daun jeruk purut"
+      },
+      {
+        "judul_resep": "Rendang Kering Cepat",
+        "nama_bahan": "Daun jeruk purut"
+      },
+      {
+        "judul_resep": "Pepes Ikan Mas Daun Pisang",
+        "nama_bahan": "Daun jeruk purut"
+      },
+      {
+        "judul_resep": "Ayam Betutu",
+        "nama_bahan": "Daun jeruk purut"
+      },
+      {
+        "judul_resep": "Rendang Jamur Champignon",
+        "nama_bahan": "Daun jeruk purut"
+      },
+      {
+        "judul_resep": "Kolak Pisang",
+        "nama_bahan": "Daun pandan"
+      },
+      {
+        "judul_resep": "Nasi Kuning Manado",
+        "nama_bahan": "Daun pandan"
+      },
+      {
+        "judul_resep": "Sayur Asem Sunda",
+        "nama_bahan": "Daun melinjo"
+      },
+      {
+        "judul_resep": "Papeda Kuah Kuning",
+        "nama_bahan": "Daun kemangi"
+      },
+      {
+        "judul_resep": "Nasi Liwet Beras Merah",
+        "nama_bahan": "Daun kemangi"
+      }
+    ],
+    "ordering": null,
+    "notes": "Dua JOIN; LIKE '%Daun%' biasanya menjangkau banyak bahan (daun kunyit, daun salam, dsb.)."
+  },
+  {
+    "id": "RES-J2-03",
+    "db": "resep",
+    "category": "Join + Filter",
+    "question_id": "Sebutkan kode dan nama masakan khas Padang yang bisa dimasak dalam 90 menit atau kurang, sertakan judul resep dan lama memasaknya.",
+    "question_en": "List the code and name of Padang specialty dishes that can be cooked in 90 minutes or less, including the recipe title and cooking time.",
+    "solution_sql": "SELECT m.kode_masakan, m.nama_masakan, r.judul_resep, r.waktu_masak\nFROM masakan AS m\nJOIN resep AS r ON m.kode_masakan = r.kode_masakan\nWHERE m.asal_daerah = 'Padang' AND r.waktu_masak <= 90;",
+    "expected_rows": [
+      {
+        "kode_masakan": "M001",
+        "nama_masakan": "Rendang",
+        "judul_resep": "Rendang Kering Cepat",
+        "waktu_masak": 90
+      },
+      {
+        "kode_masakan": "M001",
+        "nama_masakan": "Rendang",
+        "judul_resep": "Rendang Jamur Champignon",
+        "waktu_masak": 90
+      },
+      {
+        "kode_masakan": "M034",
+        "nama_masakan": "Sate Padang",
+        "judul_resep": "Sate Padang Daging Kambing",
+        "waktu_masak": 70
+      }
+    ],
+    "ordering": null,
+    "notes": "Empat kolom wajib: kode_masakan, nama_masakan, judul_resep, waktu_masak. Durasi diperlebar (≤ 90 menit) supaya hasil tidak kosong; urutan baris tidak dinilai."
+  },
+  {
+    "id": "RES-J2-04",
+    "db": "resep",
+    "category": "Join + Filter",
+    "question_id": "Tampilkan ID resep, judul resep, dan nama bahan yang disajikan dalam satuan 'lembar'.",
+    "question_en": "Display recipe ID, recipe title, and ingredient name that are served in 'sheet' units.",
+    "solution_sql": "SELECT r.id_resep, r.judul_resep, b.nama_bahan\nFROM resep AS r\nJOIN resep_bahan AS rb ON r.id_resep = rb.id_resep\nJOIN bahan AS b ON rb.id_bahan = b.id_bahan\nWHERE b.satuan_default = 'lembar';",
+    "expected_rows": [
+      {
+        "id_resep": 37,
+        "judul_resep": "Ikan Kuah Pala Banda",
+        "nama_bahan": "Daun kunyit"
+      },
+      {
+        "id_resep": 1,
+        "judul_resep": "Rendang Padang Asli",
+        "nama_bahan": "Daun salam"
+      },
+      {
+        "id_resep": 2,
+        "judul_resep": "Rendang Kering Cepat",
+        "nama_bahan": "Daun salam"
+      },
+      {
+        "id_resep": 7,
+        "judul_resep": "Soto Betawi Kuah Susu",
+        "nama_bahan": "Daun salam"
+      },
+      {
+        "id_resep": 9,
+        "judul_resep": "Pepes Ikan Mas Daun Pisang",
+        "nama_bahan": "Daun salam"
+      },
+      {
+        "id_resep": 10,
+        "judul_resep": "Rawon Surabaya",
+        "nama_bahan": "Daun salam"
+      },
+      {
+        "id_resep": 14,
+        "judul_resep": "Kare Rajungan Madura",
+        "nama_bahan": "Daun salam"
+      },
+      {
+        "id_resep": 15,
+        "judul_resep": "Gudeg Jogja",
+        "nama_bahan": "Daun salam"
+      },
+      {
+        "id_resep": 17,
+        "judul_resep": "Coto Makassar",
+        "nama_bahan": "Daun salam"
+      },
+      {
+        "id_resep": 18,
+        "judul_resep": "Opor Ayam Lebaran",
+        "nama_bahan": "Daun salam"
+      },
+      {
+        "id_resep": 21,
+        "judul_resep": "Nasi Kuning Manado",
+        "nama_bahan": "Daun salam"
+      },
+      {
+        "id_resep": 22,
+        "judul_resep": "Sayur Asem Sunda",
+        "nama_bahan": "Daun salam"
+      },
+      {
+        "id_resep": 26,
+        "judul_resep": "Laksa Betawi",
+        "nama_bahan": "Daun salam"
+      },
+      {
+        "id_resep": 29,
+        "judul_resep": "Ayam Betutu",
+        "nama_bahan": "Daun salam"
+      },
+      {
+        "id_resep": 34,
+        "judul_resep": "Gudeg Manggar",
+        "nama_bahan": "Daun salam"
+      },
+      {
+        "id_resep": 39,
+        "judul_resep": "Nasi Liwet Beras Merah",
+        "nama_bahan": "Daun salam"
+      },
+      {
+        "id_resep": 40,
+        "judul_resep": "Rendang Jamur Champignon",
+        "nama_bahan": "Daun salam"
+      },
+      {
+        "id_resep": 1,
+        "judul_resep": "Rendang Padang Asli",
+        "nama_bahan": "Daun jeruk purut"
+      },
+      {
+        "id_resep": 2,
+        "judul_resep": "Rendang Kering Cepat",
+        "nama_bahan": "Daun jeruk purut"
+      },
+      {
+        "id_resep": 9,
+        "judul_resep": "Pepes Ikan Mas Daun Pisang",
+        "nama_bahan": "Daun jeruk purut"
+      },
+      {
+        "id_resep": 29,
+        "judul_resep": "Ayam Betutu",
+        "nama_bahan": "Daun jeruk purut"
+      },
+      {
+        "id_resep": 40,
+        "judul_resep": "Rendang Jamur Champignon",
+        "nama_bahan": "Daun jeruk purut"
+      },
+      {
+        "id_resep": 20,
+        "judul_resep": "Kolak Pisang",
+        "nama_bahan": "Daun pandan"
+      },
+      {
+        "id_resep": 21,
+        "judul_resep": "Nasi Kuning Manado",
+        "nama_bahan": "Daun pandan"
+      }
+    ],
+    "ordering": null,
+    "notes": "Tiga tabel; filter hanya pada satuan bahan."
+  },
+  {
+    "id": "RES-J2-05",
+    "db": "resep",
+    "category": "Join + Filter",
+    "question_id": "Masakan apa saja secara unik yang menggunakan santan sebagai salah satu bahannya? Tampilkan nama masakan dan nama bahannya.",
+    "question_en": "What unique dishes use coconut milk as one of their ingredients? Display the dish name and ingredient name.",
+    "solution_sql": "SELECT DISTINCT m.nama_masakan, b.nama_bahan\nFROM masakan AS m\nJOIN resep AS r ON m.kode_masakan = r.kode_masakan\nJOIN resep_bahan AS rb ON r.id_resep = rb.id_resep\nJOIN bahan AS b ON rb.id_bahan = b.id_bahan\nWHERE b.nama_bahan LIKE '%Santan%';",
+    "expected_rows": [
+      {
+        "nama_masakan": "Rendang",
+        "nama_bahan": "Santan kental"
+      },
+      {
+        "nama_masakan": "Soto Betawi",
+        "nama_bahan": "Santan kental"
+      },
+      {
+        "nama_masakan": "Mie Aceh",
+        "nama_bahan": "Santan kental"
+      },
+      {
+        "nama_masakan": "Kare Rajungan",
+        "nama_bahan": "Santan kental"
+      },
+      {
+        "nama_masakan": "Gudeg",
+        "nama_bahan": "Santan kental"
+      },
+      {
+        "nama_masakan": "Opor Ayam",
+        "nama_bahan": "Santan kental"
+      },
+      {
+        "nama_masakan": "Kolak Pisang",
+        "nama_bahan": "Santan kental"
+      },
+      {
+        "nama_masakan": "Nasi Kuning Manado",
+        "nama_bahan": "Santan kental"
+      },
+      {
+        "nama_masakan": "Laksa Betawi",
+        "nama_bahan": "Santan kental"
+      },
+      {
+        "nama_masakan": "Gudeg Manggar",
+        "nama_bahan": "Santan kental"
+      },
+      {
+        "nama_masakan": "Nasi Liwet",
+        "nama_bahan": "Santan kental"
+      }
+    ],
+    "ordering": null,
+    "notes": "Empat tabel digabung; filter pada nama bahan yang mengandung kata 'Santan'. Gunakan DISTINCT agar kombinasi masakan–bahan tidak duplikat."
+  },
+  {
+    "id": "RES-L1-01",
+    "db": "resep",
+    "category": "Lookup / Filter",
+    "question_id": "Tampilkan semua bahan pada kategori Rempah, sertakan id dan nama bahannya.",
+    "question_en": "Display all ingredients in the Spice category, include their id and ingredient name.",
+    "solution_sql": "SELECT id_bahan, nama_bahan FROM bahan WHERE kategori_bahan = 'Rempah';",
+    "expected_rows": [
+      {
+        "id_bahan": 60,
+        "nama_bahan": "Bawang merah"
+      },
+      {
+        "id_bahan": 61,
+        "nama_bahan": "Bawang putih"
+      },
+      {
+        "id_bahan": 64,
+        "nama_bahan": "Serai (sereh)"
+      },
+      {
+        "id_bahan": 65,
+        "nama_bahan": "Lengkuas"
+      },
+      {
+        "id_bahan": 66,
+        "nama_bahan": "Jahe"
+      },
+      {
+        "id_bahan": 67,
+        "nama_bahan": "Kunyit"
+      },
+      {
+        "id_bahan": 68,
+        "nama_bahan": "Daun kunyit"
+      },
+      {
+        "id_bahan": 69,
+        "nama_bahan": "Daun salam"
+      },
+      {
+        "id_bahan": 70,
+        "nama_bahan": "Daun jeruk purut"
+      },
+      {
+        "id_bahan": 71,
+        "nama_bahan": "Ketumbar bubuk"
+      },
+      {
+        "id_bahan": 72,
+        "nama_bahan": "Jinten bubuk"
+      },
+      {
+        "id_bahan": 73,
+        "nama_bahan": "Kayu manis batang"
+      },
+      {
+        "id_bahan": 74,
+        "nama_bahan": "Cengkeh"
+      },
+      {
+        "id_bahan": 75,
+        "nama_bahan": "Pala bubuk"
+      },
+      {
+        "id_bahan": 76,
+        "nama_bahan": "Kapulaga"
+      },
+      {
+        "id_bahan": 77,
+        "nama_bahan": "Lada putih bubuk"
+      },
+      {
+        "id_bahan": 78,
+        "nama_bahan": "Cabe merah besar"
+      },
+      {
+        "id_bahan": 79,
+        "nama_bahan": "Cabe hijau besar"
+      },
+      {
+        "id_bahan": 80,
+        "nama_bahan": "Cabe rawit merah"
+      },
+      {
+        "id_bahan": 81,
+        "nama_bahan": "Cabe giling halus"
+      },
+      {
+        "id_bahan": 82,
+        "nama_bahan": "Kemiri sangrai"
+      },
+      {
+        "id_bahan": 83,
+        "nama_bahan": "Kencur"
+      },
+      {
+        "id_bahan": 111,
+        "nama_bahan": "Kluwek"
+      },
+      {
+        "id_bahan": 118,
+        "nama_bahan": "Daun pandan"
+      }
+    ],
+    "ordering": null,
+    "notes": "Hasil wajib memuat dua kolom (id_bahan, nama_bahan); urutan baris tidak dipermasalahkan."
+  },
+  {
+    "id": "RES-L1-02",
+    "db": "resep",
+    "category": "Lookup / Filter",
+    "question_id": "Daftar masakan asal kota Padang dengan tingkatan pedas lebih besar atau sama dengan 3; sertakan kode dan nama masakan, serta tingkatan pedasnya.",
+    "question_en": "List dishes from Padang city with spice level greater than or equal to 3; include dish code, dish name, and spice level.",
+    "solution_sql": "SELECT kode_masakan, nama_masakan, level_pedas FROM masakan WHERE asal_daerah = 'Padang' AND level_pedas >= 3;",
+    "expected_rows": [
+      {
+        "kode_masakan": "M001",
+        "nama_masakan": "Rendang",
+        "level_pedas": 4
+      },
+      {
+        "kode_masakan": "M034",
+        "nama_masakan": "Sate Padang",
+        "level_pedas": 4
+      }
+    ],
+    "ordering": null,
+    "notes": "Kembalikan tiga kolom sesuai permintaan; tidak perlu pengurutan khusus."
+  },
+  {
+    "id": "RES-L1-03",
+    "db": "resep",
+    "category": "Lookup / Filter",
+    "question_id": "Tampilkan resep dengan lama waktu masak antara 30 dan 45 menit; sertakan id, judul, dan waktu masak resep.",
+    "question_en": "Display recipes with cooking time between 30 and 45 minutes; include recipe id, title, and cooking time.",
+    "solution_sql": "SELECT id_resep, judul_resep, waktu_masak FROM resep WHERE waktu_masak BETWEEN 30 AND 45;",
+    "expected_rows": [
+      {
+        "id_resep": 3,
+        "judul_resep": "Sate Ayam Madura",
+        "waktu_masak": 40
+      },
+      {
+        "id_resep": 8,
+        "judul_resep": "Ayam Taliwang Bakar",
+        "waktu_masak": 45
+      },
+      {
+        "id_resep": 9,
+        "judul_resep": "Pepes Ikan Mas Daun Pisang",
+        "waktu_masak": 40
+      },
+      {
+        "id_resep": 14,
+        "judul_resep": "Kare Rajungan Madura",
+        "waktu_masak": 35
+      },
+      {
+        "id_resep": 16,
+        "judul_resep": "Sate Lilit Bali",
+        "waktu_masak": 35
+      },
+      {
+        "id_resep": 19,
+        "judul_resep": "Es Cendol Tradisional",
+        "waktu_masak": 30
+      },
+      {
+        "id_resep": 22,
+        "judul_resep": "Sayur Asem Sunda",
+        "waktu_masak": 40
+      },
+      {
+        "id_resep": 27,
+        "judul_resep": "Ikan Bakar Rica",
+        "waktu_masak": 30
+      },
+      {
+        "id_resep": 37,
+        "judul_resep": "Ikan Kuah Pala Banda",
+        "waktu_masak": 40
+      },
+      {
+        "id_resep": 38,
+        "judul_resep": "Papeda Kuah Kuning",
+        "waktu_masak": 45
+      }
+    ],
+    "ordering": null,
+    "notes": "Gunakan BETWEEN (inklusif) dan tampilkan tiga kolom sebagaimana diminta."
+  },
+  {
+    "id": "RES-L1-04",
+    "db": "resep",
+    "category": "Lookup / Filter",
+    "question_id": "Tampilkan masakan yang statusnya nonaktif; sertakan kode dan nama masakan.",
+    "question_en": "Display dishes with inactive status; include dish code and dish name.",
+    "solution_sql": "SELECT kode_masakan, nama_masakan FROM masakan WHERE status_aktif = 0;",
+    "expected_rows": [
+      {
+        "kode_masakan": "M029",
+        "nama_masakan": "Kerak Telor"
+      },
+      {
+        "kode_masakan": "M031",
+        "nama_masakan": "Karedok"
+      },
+      {
+        "kode_masakan": "M039",
+        "nama_masakan": "Plecing Kangkung"
+      },
+      {
+        "kode_masakan": "M040",
+        "nama_masakan": "Serabi Notosuman"
+      }
+    ],
+    "ordering": null,
+    "notes": "Cukup dua kolom: kode_masakan dan nama_masakan; urutan baris bebas."
+  },
+  {
+    "id": "RES-L1-05",
+    "db": "resep",
+    "category": "Lookup / Filter",
+    "question_id": "Tampilkan bahan yang memiliki satuan bukan 'gram' atau 'ml'; sertakan id, nama bahan, dan satuannya.",
+    "question_en": "Display ingredients that have units other than 'gram' or 'ml'; include id, ingredient name, and their units.",
+    "solution_sql": "SELECT id_bahan, nama_bahan, satuan_default FROM bahan WHERE satuan_default NOT IN ('gram', 'ml');",
+    "expected_rows": [
+      {
+        "id_bahan": 11,
+        "nama_bahan": "Telur ayam",
+        "satuan_default": "butir"
+      },
+      {
+        "id_bahan": 12,
+        "nama_bahan": "Telur bebek",
+        "satuan_default": "butir"
+      },
+      {
+        "id_bahan": 13,
+        "nama_bahan": "Telur puyuh",
+        "satuan_default": "butir"
+      },
+      {
+        "id_bahan": 35,
+        "nama_bahan": "Ketupat nasi",
+        "satuan_default": "buah"
+      },
+      {
+        "id_bahan": 36,
+        "nama_bahan": "Lontong",
+        "satuan_default": "buah"
+      },
+      {
+        "id_bahan": 64,
+        "nama_bahan": "Serai (sereh)",
+        "satuan_default": "batang"
+      },
+      {
+        "id_bahan": 68,
+        "nama_bahan": "Daun kunyit",
+        "satuan_default": "lembar"
+      },
+      {
+        "id_bahan": 69,
+        "nama_bahan": "Daun salam",
+        "satuan_default": "lembar"
+      },
+      {
+        "id_bahan": 70,
+        "nama_bahan": "Daun jeruk purut",
+        "satuan_default": "lembar"
+      },
+      {
+        "id_bahan": 82,
+        "nama_bahan": "Kemiri sangrai",
+        "satuan_default": "butir"
+      },
+      {
+        "id_bahan": 117,
+        "nama_bahan": "Pisang uli",
+        "satuan_default": "buah"
+      },
+      {
+        "id_bahan": 118,
+        "nama_bahan": "Daun pandan",
+        "satuan_default": "lembar"
+      }
+    ],
+    "ordering": null,
+    "notes": "Laporkan id_bahan, nama_bahan, serta satuan_default—singkirkan bahan bersatuan gram atau ml."
+  },
+  {
+    "id": "RES-N4-01",
+    "db": "resep",
+    "category": "Nested / Subquery",
+    "question_id": "Sebutkan nama masakan yang memakai lebih banyak bahan daripada rata-rata jumlah bahan semua masakan.",
+    "question_en": "List the dish names that use more ingredients than the average number of ingredients across all dishes.",
+    "solution_sql": "SELECT m.nama_masakan\nFROM masakan AS m\nJOIN resep AS r ON m.kode_masakan = r.kode_masakan\nJOIN resep_bahan AS rb ON r.id_resep = rb.id_resep\nGROUP BY m.kode_masakan, m.nama_masakan\nHAVING COUNT(rb.id_bahan) > (\n  SELECT AVG(jml)\n  FROM (\n    SELECT COUNT(*) AS jml\n    FROM resep_bahan\n    GROUP BY id_resep\n  ) AS sub\n);",
+    "expected_rows": [
+      {
+        "nama_masakan": "Rendang"
+      },
+      {
+        "nama_masakan": "Sate Ayam Madura"
+      },
+      {
+        "nama_masakan": "Gado-Gado"
+      },
+      {
+        "nama_masakan": "Nasi Goreng Kampung"
+      },
+      {
+        "nama_masakan": "Soto Betawi"
+      },
+      {
+        "nama_masakan": "Pepes Ikan Mas"
+      },
+      {
+        "nama_masakan": "Rawon"
+      },
+      {
+        "nama_masakan": "Mie Aceh"
+      },
+      {
+        "nama_masakan": "Sayur Asem"
+      },
+      {
+        "nama_masakan": "Laksa Betawi"
+      },
+      {
+        "nama_masakan": "Sop Buntut"
+      },
+      {
+        "nama_masakan": "Ayam Betutu"
+      },
+      {
+        "nama_masakan": "Lontong Balap"
+      },
+      {
+        "nama_masakan": "Tahu Gejrot"
+      },
+      {
+        "nama_masakan": "Mi Kocok Bandung"
+      },
+      {
+        "nama_masakan": "Sate Padang"
+      },
+      {
+        "nama_masakan": "Semur Jengkol"
+      },
+      {
+        "nama_masakan": "Ikan Kuah Pala Banda"
+      },
+      {
+        "nama_masakan": "Papeda Ikan Kuah Kuning"
+      },
+      {
+        "nama_masakan": "Nasi Liwet"
+      }
+    ],
+    "ordering": null,
+    "notes": "Sub-query bersarang di HAVING untuk membandingkan dengan rata-rata global."
+  },
+  {
+    "id": "RES-N4-02",
+    "db": "resep",
+    "category": "Nested / Subquery",
+    "question_id": "Tampilkan judul resep yang durasi memasaknya lebih lama daripada rata-rata durasi di kategori masakan yang sama.",
+    "question_en": "Show recipe titles that have cooking duration longer than the average duration in the same dish category.",
+    "solution_sql": "SELECT r.judul_resep\nFROM resep AS r\nJOIN masakan AS m ON r.kode_masakan = m.kode_masakan\nWHERE r.waktu_masak > (\n  SELECT AVG(r2.waktu_masak)\n  FROM resep AS r2\n  JOIN masakan AS m2 ON r2.kode_masakan = m2.kode_masakan\n  WHERE m2.kategori = m.kategori\n);",
+    "expected_rows": [
+      {
+        "judul_resep": "Rendang Padang Asli"
+      },
+      {
+        "judul_resep": "Rawon Surabaya"
+      },
+      {
+        "judul_resep": "Gudeg Jogja"
+      },
+      {
+        "judul_resep": "Coto Makassar"
+      },
+      {
+        "judul_resep": "Nasi Kuning Manado"
+      },
+      {
+        "judul_resep": "Sambal Roa Manado"
+      },
+      {
+        "judul_resep": "Pempek Kapal Selam"
+      },
+      {
+        "judul_resep": "Laksa Betawi"
+      },
+      {
+        "judul_resep": "Sop Buntut"
+      },
+      {
+        "judul_resep": "Ayam Betutu"
+      },
+      {
+        "judul_resep": "Mi Kocok Bandung"
+      },
+      {
+        "judul_resep": "Gudeg Manggar"
+      },
+      {
+        "judul_resep": "Semur Jengkol Betawi"
+      },
+      {
+        "judul_resep": "Nasi Liwet Beras Merah"
+      }
+    ],
+    "ordering": null,
+    "notes": "Sub-query terkorelasi pada kolom kategori masakan."
+  },
+  {
+    "id": "RES-N4-03",
+    "db": "resep",
+    "category": "Nested / Subquery",
+    "question_id": "Masakan asal mana yang menggunakan setidaknya satu bahan yang tidak pernah dipakai masakan asal 'Bali'? Tampilkan nama daerahnya saja.",
+    "question_en": "Which regions' dishes use at least one ingredient that is never used in 'Bali' region dishes? Show only the region names.",
+    "solution_sql": "SELECT DISTINCT m.asal_daerah\nFROM masakan AS m\nJOIN resep AS r ON m.kode_masakan = r.kode_masakan\nJOIN resep_bahan AS rb ON r.id_resep = rb.id_resep\nWHERE rb.id_bahan NOT IN (\n  SELECT rb2.id_bahan\n  FROM masakan AS m2\n  JOIN resep AS r2 ON m2.kode_masakan = r2.kode_masakan\n  JOIN resep_bahan AS rb2 ON r2.id_resep = rb2.id_resep\n  WHERE m2.asal_daerah = 'Bali'\n);",
+    "expected_rows": [
+      {
+        "asal_daerah": "Padang"
+      },
+      {
+        "asal_daerah": "Jawa Timur"
+      },
+      {
+        "asal_daerah": "Betawi"
+      },
+      {
+        "asal_daerah": "Jawa Tengah"
+      },
+      {
+        "asal_daerah": "Lombok"
+      },
+      {
+        "asal_daerah": "Sunda"
+      },
+      {
+        "asal_daerah": "Tionghoa-Jawa"
+      },
+      {
+        "asal_daerah": "Aceh"
+      },
+      {
+        "asal_daerah": "Madura"
+      },
+      {
+        "asal_daerah": "Yogyakarta"
+      },
+      {
+        "asal_daerah": "Makassar"
+      },
+      {
+        "asal_daerah": "Jawa"
+      },
+      {
+        "asal_daerah": "Manado"
+      },
+      {
+        "asal_daerah": "Palembang"
+      },
+      {
+        "asal_daerah": "Jakarta"
+      },
+      {
+        "asal_daerah": "Surabaya"
+      },
+      {
+        "asal_daerah": "Cirebon"
+      },
+      {
+        "asal_daerah": "Maluku"
+      },
+      {
+        "asal_daerah": "Papua"
+      },
+      {
+        "asal_daerah": "Solo"
+      }
+    ],
+    "ordering": null,
+    "notes": "Menunjukkan penggunaan sub-query NOT IN untuk membandingkan set bahan antar daerah."
+  },
+  {
+    "id": "RES-N4-04",
+    "db": "resep",
+    "category": "Nested / Subquery",
+    "question_id": "Sebutkan bahan apa saja yang sama sekali belum pernah dipakai di masakan mana pun. Tampilkan nama bahannya saja.",
+    "question_en": "List which ingredients have never been used in any dish. Show only the ingredient names.",
+    "solution_sql": "SELECT b.nama_bahan\nFROM bahan AS b\nWHERE b.id_bahan NOT IN (\n  SELECT DISTINCT rb.id_bahan\n  FROM resep_bahan AS rb\n);",
+    "expected_rows": [
+      {
+        "nama_bahan": "Cumi-cumi"
+      },
+      {
+        "nama_bahan": "Telur bebek"
+      },
+      {
+        "nama_bahan": "Telur puyuh"
+      },
+      {
+        "nama_bahan": "Mentega"
+      },
+      {
+        "nama_bahan": "Margarin"
+      },
+      {
+        "nama_bahan": "Susu kental manis"
+      },
+      {
+        "nama_bahan": "Keju cheddar"
+      },
+      {
+        "nama_bahan": "Keju mozarella"
+      },
+      {
+        "nama_bahan": "Minyak sapi (ghee)"
+      },
+      {
+        "nama_bahan": "Beras hitam"
+      },
+      {
+        "nama_bahan": "Beras ketan"
+      },
+      {
+        "nama_bahan": "Mi instan"
+      },
+      {
+        "nama_bahan": "Tepung terigu"
+      },
+      {
+        "nama_bahan": "Ketupat nasi"
+      },
+      {
+        "nama_bahan": "Ubi jalar"
+      },
+      {
+        "nama_bahan": "Terong ungu"
+      },
+      {
+        "nama_bahan": "Okra"
+      },
+      {
+        "nama_bahan": "Sawi putih"
+      },
+      {
+        "nama_bahan": "Selada hijau"
+      },
+      {
+        "nama_bahan": "Daun singkong"
+      },
+      {
+        "nama_bahan": "Pepaya muda"
+      },
+      {
+        "nama_bahan": "Petai"
+      },
+      {
+        "nama_bahan": "Jamur kuping"
+      },
+      {
+        "nama_bahan": "Jinten bubuk"
+      },
+      {
+        "nama_bahan": "Kapulaga"
+      },
+      {
+        "nama_bahan": "Cabe giling halus"
+      },
+      {
+        "nama_bahan": "Garam Himalaya"
+      },
+      {
+        "nama_bahan": "Gula palem"
+      },
+      {
+        "nama_bahan": "Kecap ikan"
+      },
+      {
+        "nama_bahan": "Saos sambal"
+      },
+      {
+        "nama_bahan": "Minyak zaitun"
+      },
+      {
+        "nama_bahan": "Madu"
+      },
+      {
+        "nama_bahan": "Sambal terasi siap saji"
+      },
+      {
+        "nama_bahan": "Baking powder"
+      },
+      {
+        "nama_bahan": "Ragi instan"
+      },
+      {
+        "nama_bahan": "Cokelat bubuk"
+      },
+      {
+        "nama_bahan": "Vanili bubuk"
+      },
+      {
+        "nama_bahan": "Kerupuk udang mentah"
+      },
+      {
+        "nama_bahan": "Kerupuk aci mentah"
+      }
+    ],
+    "ordering": null,
+    "notes": "Sub-query pada klausa NOT IN menghasilkan daftar semua id_bahan yang sudah dipakai; query utama memilih sisanya (bahan 'yatim')—tidak dapat dipecahkan hanya dengan GROUP BY biasa tanpa sub-query."
+  },
+  {
+    "id": "RES-N4-05",
+    "db": "resep",
+    "category": "Nested / Subquery",
+    "question_id": "Berapa banyak resep yang tidak menggunakan bahan apa pun yang mengandung kata 'Cabe'? Tampilkan jumlahnya saja.",
+    "question_en": "How many recipes do not use any ingredient containing the word 'Cabe'? Show only the count.",
+    "solution_sql": "SELECT COUNT(*) AS resep_tanpa_cabe\nFROM resep AS r\nWHERE r.id_resep NOT IN (\n  SELECT DISTINCT rb.id_resep\n  FROM resep_bahan AS rb\n  JOIN bahan AS b ON rb.id_bahan = b.id_bahan\n  WHERE b.nama_bahan LIKE '%Cabe%'\n);",
+    "expected_rows": [
+      {
+        "resep_tanpa_cabe": 17
+      }
+    ],
+    "ordering": null,
+    "notes": "Sub-query mengumpulkan semua resep yang memakai bahan dengan kata 'Cabe'; klausa NOT IN menghitung sisanya. Ganti LIKE dengan ekspresi case-insensitive (mis. LOWER(...)) bila diperlukan."
+  },
+  {
+    "id": "RES-S6-01",
+    "db": "resep",
+    "category": "Superlative",
+    "question_id": "Daftar semua resep yang membutuhkan waktu memasak paling lama—sertakan judul resep dan lamanya memasak.",
+    "question_en": "List all recipes that require the longest cooking time—include recipe title and cooking duration.",
+    "solution_sql": "SELECT judul_resep, waktu_masak\nFROM resep\nWHERE waktu_masak = (SELECT MAX(waktu_masak) FROM resep);",
+    "expected_rows": [
+      {
+        "judul_resep": "Rendang Padang Asli",
+        "waktu_masak": 240
+      },
+      {
+        "judul_resep": "Gudeg Jogja",
+        "waktu_masak": 240
+      }
+    ],
+    "ordering": null,
+    "notes": "Gunakan sub-query MAX agar semua resep berdurasi maksimum (jika ada nilai kembar) ikut muncul; tidak memakai LIMIT."
+  },
+  {
+    "id": "RES-S6-02",
+    "db": "resep",
+    "category": "Superlative",
+    "question_id": "Bahan apa saja yang paling sering muncul di seluruh resep? Tampilkan nama bahan dan total kemunculannya.",
+    "question_en": "Which ingredient(s) appear most frequently in all recipes? Show the ingredient name and occurrence count.",
+    "solution_sql": "SELECT b.nama_bahan, COUNT(rb.id_resep) AS frekuensi\nFROM bahan b\nJOIN resep_bahan rb ON b.id_bahan = rb.id_bahan\nGROUP BY b.id_bahan, b.nama_bahan\nHAVING COUNT(rb.id_resep) = (\n  SELECT MAX(cnt)\n  FROM (\n    SELECT COUNT(*) AS cnt\n    FROM resep_bahan\n    GROUP BY id_bahan\n  ) AS t\n);",
+    "expected_rows": [
+      {
+        "nama_bahan": "Garam dapur",
+        "frekuensi": 37
+      }
+    ],
+    "ordering": null,
+    "notes": "HAVING membandingkan setiap bahan dengan frekuensi maksimum global sehingga semua bahan terpopuler tampil."
+  },
+  {
+    "id": "RES-S6-03",
+    "db": "resep",
+    "category": "Superlative",
+    "question_id": "Daerah asal mana yang memiliki jumlah masakan terbanyak? Tampilkan nama daerah dan total masakannya (semua daerah dengan jumlah maksimum).",
+    "question_en": "Which region has the most dishes? Show the region name and total dishes (all regions with maximum count).",
+    "solution_sql": "SELECT asal_daerah, COUNT(*) AS total_masakan\nFROM masakan\nGROUP BY asal_daerah\nHAVING COUNT(*) = (\n  SELECT MAX(jml)\n  FROM (\n    SELECT COUNT(*) AS jml\n    FROM masakan\n    GROUP BY asal_daerah\n  ) AS t\n);",
+    "expected_rows": [
+      {
+        "asal_daerah": "Betawi",
+        "total_masakan": 5
+      },
+      {
+        "asal_daerah": "Sunda",
+        "total_masakan": 5
+      }
+    ],
+    "ordering": null,
+    "notes": "Menjamin setiap daerah dengan jumlah tertinggi ikut tercantum—tanpa LIMIT."
+  },
+  {
+    "id": "RES-S6-04",
+    "db": "resep",
+    "category": "Superlative",
+    "question_id": "Resep mana saja yang menggunakan jumlah bahan paling banyak? Sertakan judul resep dan jumlah bahannya.",
+    "question_en": "Which recipe(s) use the most ingredients? Include recipe title and ingredient count.",
+    "solution_sql": "SELECT r.judul_resep, COUNT(rb.id_bahan) AS jumlah_bahan\nFROM resep r\nJOIN resep_bahan rb ON r.id_resep = rb.id_resep\nGROUP BY r.id_resep, r.judul_resep\nHAVING COUNT(rb.id_bahan) = (\n  SELECT MAX(cnt)\n  FROM (\n    SELECT COUNT(*) AS cnt\n    FROM resep_bahan\n    GROUP BY id_resep\n  ) AS t\n);",
+    "expected_rows": [
+      {
+        "judul_resep": "Ayam Betutu",
+        "jumlah_bahan": 15
+      }
+    ],
+    "ordering": null,
+    "notes": "Semua resep dengan jumlah bahan maksimum ditampilkan—tanpa LIMIT."
+  },
+  {
+    "id": "RES-S6-05",
+    "db": "resep",
+    "category": "Superlative",
+    "question_id": "Masakan apa saja yang memiliki tingkat kepedasan tertinggi? Tampilkan kode masakan, nama masakan, dan level pedasnya.",
+    "question_en": "Which dish(es) have the highest spiciness level? Show dish code, dish name, and spice level.",
+    "solution_sql": "SELECT kode_masakan, nama_masakan, level_pedas\nFROM masakan\nWHERE level_pedas = (SELECT MAX(level_pedas) FROM masakan);",
+    "expected_rows": [
+      {
+        "kode_masakan": "M006",
+        "nama_masakan": "Ayam Taliwang",
+        "level_pedas": 5
+      },
+      {
+        "kode_masakan": "M020",
+        "nama_masakan": "Sambal Roa",
+        "level_pedas": 5
+      },
+      {
+        "kode_masakan": "M028",
+        "nama_masakan": "Sambal Matah",
+        "level_pedas": 5
+      }
+    ],
+    "ordering": null,
+    "notes": "Menggunakan sub-query MAX untuk mengikutsertakan setiap masakan berskala pedas tertinggi."
+  },
+  {
+    "id": "SAK-A3-01",
+    "db": "sakila",
+    "category": "Aggregation",
+    "question_id": "Hitung berapa banyak film pada setiap rating.",
+    "question_en": "Count how many films are in each rating category.",
+    "solution_sql": "SELECT rating, COUNT(*) AS film_count\nFROM film\nGROUP BY rating;",
+    "expected_rows": [
+      {
+        "rating": "PG",
+        "film_count": 194
+      },
+      {
+        "rating": "G",
+        "film_count": 178
+      },
+      {
+        "rating": "NC-17",
+        "film_count": 210
+      },
+      {
+        "rating": "PG-13",
+        "film_count": 223
+      },
+      {
+        "rating": "R",
+        "film_count": 195
+      }
+    ],
+    "ordering": null,
+    "notes": "Dua kolom: rating dan film_count. Urutan baris tidak dinilai."
+  },
+  {
+    "id": "SAK-A3-02",
+    "db": "sakila",
+    "category": "Aggregation",
+    "question_id": "Tampilkan rata-rata durasi film untuk setiap kategori film.",
+    "question_en": "Display the average film duration for each film category.",
+    "solution_sql": "SELECT cat.name AS category, AVG(f.length) AS avg_length\nFROM category AS cat\nJOIN film_category AS fc ON cat.category_id = fc.category_id\nJOIN film AS f           ON fc.film_id     = f.film_id\nGROUP BY cat.name;",
+    "expected_rows": [
+      {
+        "category": "Action",
+        "avg_length": 111.6094
+      },
+      {
+        "category": "Animation",
+        "avg_length": 111.0152
+      },
+      {
+        "category": "Children",
+        "avg_length": 109.8
+      },
+      {
+        "category": "Classics",
+        "avg_length": 111.6667
+      },
+      {
+        "category": "Comedy",
+        "avg_length": 115.8276
+      },
+      {
+        "category": "Documentary",
+        "avg_length": 108.75
+      },
+      {
+        "category": "Drama",
+        "avg_length": 120.8387
+      },
+      {
+        "category": "Family",
+        "avg_length": 114.7826
+      },
+      {
+        "category": "Foreign",
+        "avg_length": 121.6986
+      },
+      {
+        "category": "Games",
+        "avg_length": 127.8361
+      },
+      {
+        "category": "Horror",
+        "avg_length": 112.4821
+      },
+      {
+        "category": "Music",
+        "avg_length": 113.6471
+      },
+      {
+        "category": "New",
+        "avg_length": 111.127
+      },
+      {
+        "category": "Sci-Fi",
+        "avg_length": 108.1967
+      },
+      {
+        "category": "Sports",
+        "avg_length": 128.2027
+      },
+      {
+        "category": "Travel",
+        "avg_length": 113.3158
+      }
+    ],
+    "ordering": null,
+    "notes": "Dua kolom: category dan avg_length. Nilai rata-rata ditampilkan dalam satuan menit; urutan baris bebas."
+  },
+  {
+    "id": "SAK-A3-03",
+    "db": "sakila",
+    "category": "Aggregation",
+    "question_id": "Hitung total nilai pembayaran per bulan pada tahun 2006.",
+    "question_en": "Calculate total payment amount per month in 2006.",
+    "solution_sql": "SELECT MONTH(payment_date) AS bulan, SUM(amount) AS total_pembayaran\nFROM payment\nWHERE YEAR(payment_date) = 2006\nGROUP BY MONTH(payment_date);",
+    "expected_rows": [
+      {
+        "bulan": 2,
+        "total_pembayaran": 514.18
+      }
+    ],
+    "ordering": null,
+    "notes": "Dua kolom: bulan (1–12) dan total_pembayaran. Urutan baris sebaiknya terurut naik namun tidak diwajibkan."
+  },
+  {
+    "id": "SAK-A3-04",
+    "db": "sakila",
+    "category": "Aggregation",
+    "question_id": "Tampilkan setiap toko beserta total nilai pembayaran yang diterima sepanjang tahun 2006.",
+    "question_en": "Display each store along with the total payment amount received throughout 2006.",
+    "solution_sql": "SELECT s.store_id, SUM(p.amount) AS total_sales_2006\nFROM payment AS p\nJOIN staff   AS s ON p.staff_id = s.staff_id\nWHERE YEAR(p.payment_date) = 2006\nGROUP BY s.store_id;",
+    "expected_rows": [
+      {
+        "store_id": 1,
+        "total_sales_2006": 234.09
+      },
+      {
+        "store_id": 2,
+        "total_sales_2006": 280.09
+      }
+    ],
+    "ordering": null,
+    "notes": "Dua kolom: store_id dan total_sales_2006. Nilai total dalam dolar; urutan baris tidak dinilai."
+  },
+  {
+    "id": "SAK-A3-05",
+    "db": "sakila",
+    "category": "Aggregation",
+    "question_id": "Tampilkan nama aktor dan jumlah film yang mereka bintangi, urutkan dari yang terbanyak.",
+    "question_en": "Display actor names and the number of films they starred in, ordered from highest to lowest.",
+    "solution_sql": "SELECT a.first_name, a.last_name, COUNT(*) AS film_count\nFROM actor AS a\nJOIN film_actor AS fa ON a.actor_id = fa.actor_id\nGROUP BY a.actor_id, a.first_name, a.last_name\nORDER BY film_count DESC;",
+    "expected_rows": [
+      {
+        "first_name": "GINA",
+        "last_name": "DEGENERES",
+        "film_count": 42
+      },
+      {
+        "first_name": "WALTER",
+        "last_name": "TORN",
+        "film_count": 41
+      },
+      {
+        "first_name": "MARY",
+        "last_name": "KEITEL",
+        "film_count": 40
+      },
+      {
+        "first_name": "MATTHEW",
+        "last_name": "CARREY",
+        "film_count": 39
+      },
+      {
+        "first_name": "SANDRA",
+        "last_name": "KILMER",
+        "film_count": 37
+      },
+      {
+        "first_name": "SCARLETT",
+        "last_name": "DAMON",
+        "film_count": 36
+      },
+      {
+        "first_name": "UMA",
+        "last_name": "WOOD",
+        "film_count": 35
+      },
+      {
+        "first_name": "VAL",
+        "last_name": "BOLGER",
+        "film_count": 35
+      },
+      {
+        "first_name": "HENRY",
+        "last_name": "BERRY",
+        "film_count": 35
+      },
+      {
+        "first_name": "GROUCHO",
+        "last_name": "DUNST",
+        "film_count": 35
+      },
+      {
+        "first_name": "ANGELA",
+        "last_name": "WITHERSPOON",
+        "film_count": 35
+      },
+      {
+        "first_name": "VIVIEN",
+        "last_name": "BASINGER",
+        "film_count": 35
+      },
+      {
+        "first_name": "ANGELA",
+        "last_name": "HUDSON",
+        "film_count": 34
+      },
+      {
+        "first_name": "KIRSTEN",
+        "last_name": "AKROYD",
+        "film_count": 34
+      },
+      {
+        "first_name": "SIDNEY",
+        "last_name": "CROWE",
+        "film_count": 34
+      },
+      {
+        "first_name": "WARREN",
+        "last_name": "NOLTE",
+        "film_count": 34
+      },
+      {
+        "first_name": "JAYNE",
+        "last_name": "NOLTE",
+        "film_count": 34
+      },
+      {
+        "first_name": "RIP",
+        "last_name": "CRAWFORD",
+        "film_count": 33
+      },
+      {
+        "first_name": "JULIA",
+        "last_name": "MCQUEEN",
+        "film_count": 33
+      },
+      {
+        "first_name": "BEN",
+        "last_name": "WILLIS",
+        "film_count": 33
+      },
+      {
+        "first_name": "SEAN",
+        "last_name": "GUINESS",
+        "film_count": 33
+      },
+      {
+        "first_name": "KENNETH",
+        "last_name": "TORN",
+        "film_count": 33
+      },
+      {
+        "first_name": "SUSAN",
+        "last_name": "DAVIS",
+        "film_count": 33
+      },
+      {
+        "first_name": "CAMERON",
+        "last_name": "ZELLWEGER",
+        "film_count": 33
+      },
+      {
+        "first_name": "RENEE",
+        "last_name": "TRACY",
+        "film_count": 33
+      },
+      {
+        "first_name": "KEVIN",
+        "last_name": "GARLAND",
+        "film_count": 33
+      },
+      {
+        "first_name": "EWAN",
+        "last_name": "GOODING",
+        "film_count": 33
+      },
+      {
+        "first_name": "ALBERT",
+        "last_name": "JOHANSSON",
+        "film_count": 33
+      },
+      {
+        "first_name": "RENEE",
+        "last_name": "BALL",
+        "film_count": 33
+      },
+      {
+        "first_name": "REESE",
+        "last_name": "WEST",
+        "film_count": 33
+      },
+      {
+        "first_name": "HELEN",
+        "last_name": "VOIGHT",
+        "film_count": 32
+      },
+      {
+        "first_name": "REESE",
+        "last_name": "KILMER",
+        "film_count": 32
+      },
+      {
+        "first_name": "NATALIE",
+        "last_name": "HOPKINS",
+        "film_count": 32
+      },
+      {
+        "first_name": "CHRISTIAN",
+        "last_name": "AKROYD",
+        "film_count": 32
+      },
+      {
+        "first_name": "WARREN",
+        "last_name": "JACKMAN",
+        "film_count": 32
+      },
+      {
+        "first_name": "JULIANNE",
+        "last_name": "DENCH",
+        "film_count": 32
+      },
+      {
+        "first_name": "ED",
+        "last_name": "MANSFIELD",
+        "film_count": 32
+      },
+      {
+        "first_name": "WHOOPI",
+        "last_name": "HURT",
+        "film_count": 32
+      },
+      {
+        "first_name": "GRETA",
+        "last_name": "MALDEN",
+        "film_count": 32
+      },
+      {
+        "first_name": "HARVEY",
+        "last_name": "HOPE",
+        "film_count": 32
+      },
+      {
+        "first_name": "KARL",
+        "last_name": "BERRY",
+        "film_count": 31
+      },
+      {
+        "first_name": "WOODY",
+        "last_name": "HOFFMAN",
+        "film_count": 31
+      },
+      {
+        "first_name": "MARY",
+        "last_name": "TANDY",
+        "film_count": 31
+      },
+      {
+        "first_name": "ANGELINA",
+        "last_name": "ASTAIRE",
+        "film_count": 31
+      },
+      {
+        "first_name": "WOODY",
+        "last_name": "JOLIE",
+        "film_count": 31
+      },
+      {
+        "first_name": "JAMES",
+        "last_name": "PITT",
+        "film_count": 31
+      },
+      {
+        "first_name": "MINNIE",
+        "last_name": "ZELLWEGER",
+        "film_count": 31
+      },
+      {
+        "first_name": "DARYL",
+        "last_name": "WAHLBERG",
+        "film_count": 31
+      },
+      {
+        "first_name": "PENELOPE",
+        "last_name": "CRONYN",
+        "film_count": 31
+      },
+      {
+        "first_name": "ALBERT",
+        "last_name": "NOLTE",
+        "film_count": 31
+      },
+      {
+        "first_name": "JADA",
+        "last_name": "RYDER",
+        "film_count": 31
+      },
+      {
+        "first_name": "RIVER",
+        "last_name": "DEAN",
+        "film_count": 31
+      },
+      {
+        "first_name": "FAY",
+        "last_name": "WINSLET",
+        "film_count": 31
+      },
+      {
+        "first_name": "RUSSELL",
+        "last_name": "TEMPLE",
+        "film_count": 31
+      },
+      {
+        "first_name": "IAN",
+        "last_name": "TANDY",
+        "film_count": 31
+      },
+      {
+        "first_name": "WILL",
+        "last_name": "WILSON",
+        "film_count": 31
+      },
+      {
+        "first_name": "GRACE",
+        "last_name": "MOSTEL",
+        "film_count": 30
+      },
+      {
+        "first_name": "VIVIEN",
+        "last_name": "BERGEN",
+        "film_count": 30
+      },
+      {
+        "first_name": "LUCILLE",
+        "last_name": "TRACY",
+        "film_count": 30
+      },
+      {
+        "first_name": "NICK",
+        "last_name": "STALLONE",
+        "film_count": 30
+      },
+      {
+        "first_name": "MENA",
+        "last_name": "TEMPLE",
+        "film_count": 30
+      },
+      {
+        "first_name": "JUDE",
+        "last_name": "CRUISE",
+        "film_count": 30
+      },
+      {
+        "first_name": "RAY",
+        "last_name": "JOHANSSON",
+        "film_count": 30
+      },
+      {
+        "first_name": "RIP",
+        "last_name": "WINSLET",
+        "film_count": 30
+      },
+      {
+        "first_name": "MATTHEW",
+        "last_name": "LEIGH",
+        "film_count": 30
+      },
+      {
+        "first_name": "CATE",
+        "last_name": "MCQUEEN",
+        "film_count": 30
+      },
+      {
+        "first_name": "DARYL",
+        "last_name": "CRAWFORD",
+        "film_count": 30
+      },
+      {
+        "first_name": "RICHARD",
+        "last_name": "PENN",
+        "film_count": 30
+      },
+      {
+        "first_name": "MICHAEL",
+        "last_name": "BOLGER",
+        "film_count": 30
+      },
+      {
+        "first_name": "ROCK",
+        "last_name": "DUKAKIS",
+        "film_count": 30
+      },
+      {
+        "first_name": "GREGORY",
+        "last_name": "GOODING",
+        "film_count": 30
+      },
+      {
+        "first_name": "BELA",
+        "last_name": "WALKEN",
+        "film_count": 30
+      },
+      {
+        "first_name": "JOHNNY",
+        "last_name": "LOLLOBRIGIDA",
+        "film_count": 29
+      },
+      {
+        "first_name": "ALEC",
+        "last_name": "WAYNE",
+        "film_count": 29
+      },
+      {
+        "first_name": "BURT",
+        "last_name": "DUKAKIS",
+        "film_count": 29
+      },
+      {
+        "first_name": "JOHNNY",
+        "last_name": "CAGE",
+        "film_count": 29
+      },
+      {
+        "first_name": "JODIE",
+        "last_name": "DEGENERES",
+        "film_count": 29
+      },
+      {
+        "first_name": "JAYNE",
+        "last_name": "NEESON",
+        "film_count": 29
+      },
+      {
+        "first_name": "KENNETH",
+        "last_name": "HOFFMAN",
+        "film_count": 29
+      },
+      {
+        "first_name": "JON",
+        "last_name": "CHASE",
+        "film_count": 29
+      },
+      {
+        "first_name": "ED",
+        "last_name": "GUINESS",
+        "film_count": 29
+      },
+      {
+        "first_name": "HUMPHREY",
+        "last_name": "GARLAND",
+        "film_count": 29
+      },
+      {
+        "first_name": "JOHN",
+        "last_name": "SUVARI",
+        "film_count": 29
+      },
+      {
+        "first_name": "CUBA",
+        "last_name": "OLIVIER",
+        "film_count": 28
+      },
+      {
+        "first_name": "GOLDIE",
+        "last_name": "BRODY",
+        "film_count": 28
+      },
+      {
+        "first_name": "DAN",
+        "last_name": "HARRIS",
+        "film_count": 28
+      },
+      {
+        "first_name": "MILLA",
+        "last_name": "KEITEL",
+        "film_count": 28
+      },
+      {
+        "first_name": "MAE",
+        "last_name": "HOFFMAN",
+        "film_count": 28
+      },
+      {
+        "first_name": "RALPH",
+        "last_name": "CRUZ",
+        "film_count": 28
+      },
+      {
+        "first_name": "HARRISON",
+        "last_name": "BALE",
+        "film_count": 28
+      },
+      {
+        "first_name": "CATE",
+        "last_name": "HARRIS",
+        "film_count": 28
+      },
+      {
+        "first_name": "KIM",
+        "last_name": "ALLEN",
+        "film_count": 28
+      },
+      {
+        "first_name": "MERYL",
+        "last_name": "GIBSON",
+        "film_count": 28
+      },
+      {
+        "first_name": "OLYMPIA",
+        "last_name": "PFEIFFER",
+        "film_count": 28
+      },
+      {
+        "first_name": "FRED",
+        "last_name": "COSTNER",
+        "film_count": 27
+      },
+      {
+        "first_name": "KIRSTEN",
+        "last_name": "PALTROW",
+        "film_count": 27
+      },
+      {
+        "first_name": "TOM",
+        "last_name": "MIRANDA",
+        "film_count": 27
+      },
+      {
+        "first_name": "ANNE",
+        "last_name": "CRONYN",
+        "film_count": 27
+      },
+      {
+        "first_name": "DUSTIN",
+        "last_name": "TAUTOU",
+        "film_count": 27
+      },
+      {
+        "first_name": "GREG",
+        "last_name": "CHAPLIN",
+        "film_count": 27
+      },
+      {
+        "first_name": "MEG",
+        "last_name": "HAWKE",
+        "film_count": 27
+      },
+      {
+        "first_name": "CHRIS",
+        "last_name": "BRIDGES",
+        "film_count": 27
+      },
+      {
+        "first_name": "MORGAN",
+        "last_name": "HOPKINS",
+        "film_count": 27
+      },
+      {
+        "first_name": "PENELOPE",
+        "last_name": "MONROE",
+        "film_count": 27
+      },
+      {
+        "first_name": "GRETA",
+        "last_name": "KEITEL",
+        "film_count": 27
+      },
+      {
+        "first_name": "MORGAN",
+        "last_name": "WILLIAMS",
+        "film_count": 27
+      },
+      {
+        "first_name": "ALAN",
+        "last_name": "DREYFUSS",
+        "film_count": 27
+      },
+      {
+        "first_name": "WILLIAM",
+        "last_name": "HACKMAN",
+        "film_count": 27
+      },
+      {
+        "first_name": "GENE",
+        "last_name": "MCKELLEN",
+        "film_count": 27
+      },
+      {
+        "first_name": "AUDREY",
+        "last_name": "BAILEY",
+        "film_count": 27
+      },
+      {
+        "first_name": "JAYNE",
+        "last_name": "SILVERSTONE",
+        "film_count": 27
+      },
+      {
+        "first_name": "ELVIS",
+        "last_name": "MARX",
+        "film_count": 26
+      },
+      {
+        "first_name": "KIRK",
+        "last_name": "JOVOVICH",
+        "film_count": 26
+      },
+      {
+        "first_name": "FRANCES",
+        "last_name": "DAY-LEWIS",
+        "film_count": 26
+      },
+      {
+        "first_name": "CARMEN",
+        "last_name": "HUNT",
+        "film_count": 26
+      },
+      {
+        "first_name": "SEAN",
+        "last_name": "WILLIAMS",
+        "film_count": 26
+      },
+      {
+        "first_name": "GARY",
+        "last_name": "PENN",
+        "film_count": 26
+      },
+      {
+        "first_name": "GROUCHO",
+        "last_name": "SINATRA",
+        "film_count": 26
+      },
+      {
+        "first_name": "JIM",
+        "last_name": "MOSTEL",
+        "film_count": 26
+      },
+      {
+        "first_name": "SCARLETT",
+        "last_name": "BENING",
+        "film_count": 26
+      },
+      {
+        "first_name": "GEOFFREY",
+        "last_name": "HESTON",
+        "film_count": 26
+      },
+      {
+        "first_name": "LAURA",
+        "last_name": "BRODY",
+        "film_count": 26
+      },
+      {
+        "first_name": "HUMPHREY",
+        "last_name": "WILLIS",
+        "film_count": 26
+      },
+      {
+        "first_name": "AL",
+        "last_name": "GARLAND",
+        "film_count": 26
+      },
+      {
+        "first_name": "LAURENCE",
+        "last_name": "BULLOCK",
+        "film_count": 26
+      },
+      {
+        "first_name": "NICK",
+        "last_name": "WAHLBERG",
+        "film_count": 25
+      },
+      {
+        "first_name": "JOE",
+        "last_name": "SWANK",
+        "film_count": 25
+      },
+      {
+        "first_name": "ZERO",
+        "last_name": "CAGE",
+        "film_count": 25
+      },
+      {
+        "first_name": "BOB",
+        "last_name": "FAWCETT",
+        "film_count": 25
+      },
+      {
+        "first_name": "AUDREY",
+        "last_name": "OLIVIER",
+        "film_count": 25
+      },
+      {
+        "first_name": "TOM",
+        "last_name": "MCKELLEN",
+        "film_count": 25
+      },
+      {
+        "first_name": "GARY",
+        "last_name": "PHOENIX",
+        "film_count": 25
+      },
+      {
+        "first_name": "PENELOPE",
+        "last_name": "PINKETT",
+        "film_count": 25
+      },
+      {
+        "first_name": "CHRISTIAN",
+        "last_name": "NEESON",
+        "film_count": 25
+      },
+      {
+        "first_name": "ELLEN",
+        "last_name": "PRESLEY",
+        "film_count": 25
+      },
+      {
+        "first_name": "RUSSELL",
+        "last_name": "BACALL",
+        "film_count": 25
+      },
+      {
+        "first_name": "MORGAN",
+        "last_name": "MCDORMAND",
+        "film_count": 25
+      },
+      {
+        "first_name": "CUBA",
+        "last_name": "ALLEN",
+        "film_count": 25
+      },
+      {
+        "first_name": "LIZA",
+        "last_name": "BERGMAN",
+        "film_count": 25
+      },
+      {
+        "first_name": "SALMA",
+        "last_name": "NOLTE",
+        "film_count": 25
+      },
+      {
+        "first_name": "JANE",
+        "last_name": "JACKMAN",
+        "film_count": 25
+      },
+      {
+        "first_name": "OPRAH",
+        "last_name": "KILMER",
+        "film_count": 25
+      },
+      {
+        "first_name": "GROUCHO",
+        "last_name": "WILLIAMS",
+        "film_count": 25
+      },
+      {
+        "first_name": "JEFF",
+        "last_name": "SILVERSTONE",
+        "film_count": 25
+      },
+      {
+        "first_name": "CAMERON",
+        "last_name": "STREEP",
+        "film_count": 24
+      },
+      {
+        "first_name": "MILLA",
+        "last_name": "PECK",
+        "film_count": 24
+      },
+      {
+        "first_name": "PARKER",
+        "last_name": "GOLDBERG",
+        "film_count": 24
+      },
+      {
+        "first_name": "JULIA",
+        "last_name": "BARRYMORE",
+        "film_count": 24
+      },
+      {
+        "first_name": "BURT",
+        "last_name": "POSEY",
+        "film_count": 24
+      },
+      {
+        "first_name": "CARY",
+        "last_name": "MCCONAUGHEY",
+        "film_count": 24
+      },
+      {
+        "first_name": "CHARLIZE",
+        "last_name": "DENCH",
+        "film_count": 24
+      },
+      {
+        "first_name": "SPENCER",
+        "last_name": "DEPP",
+        "film_count": 24
+      },
+      {
+        "first_name": "DAN",
+        "last_name": "STREEP",
+        "film_count": 24
+      },
+      {
+        "first_name": "LUCILLE",
+        "last_name": "DEE",
+        "film_count": 24
+      },
+      {
+        "first_name": "MENA",
+        "last_name": "HOPPER",
+        "film_count": 24
+      },
+      {
+        "first_name": "MICHAEL",
+        "last_name": "BENING",
+        "film_count": 24
+      },
+      {
+        "first_name": "DEBBIE",
+        "last_name": "AKROYD",
+        "film_count": 24
+      },
+      {
+        "first_name": "CUBA",
+        "last_name": "BIRCH",
+        "film_count": 24
+      },
+      {
+        "first_name": "TIM",
+        "last_name": "HACKMAN",
+        "film_count": 23
+      },
+      {
+        "first_name": "JESSICA",
+        "last_name": "BAILEY",
+        "film_count": 23
+      },
+      {
+        "first_name": "MICHELLE",
+        "last_name": "MCCONAUGHEY",
+        "film_count": 23
+      },
+      {
+        "first_name": "GENE",
+        "last_name": "WILLIS",
+        "film_count": 23
+      },
+      {
+        "first_name": "FRANCES",
+        "last_name": "TOMEI",
+        "film_count": 23
+      },
+      {
+        "first_name": "BEN",
+        "last_name": "HARRIS",
+        "film_count": 23
+      },
+      {
+        "first_name": "LISA",
+        "last_name": "MONROE",
+        "film_count": 23
+      },
+      {
+        "first_name": "BURT",
+        "last_name": "TEMPLE",
+        "film_count": 23
+      },
+      {
+        "first_name": "ED",
+        "last_name": "CHASE",
+        "film_count": 22
+      },
+      {
+        "first_name": "JENNIFER",
+        "last_name": "DAVIS",
+        "film_count": 22
+      },
+      {
+        "first_name": "CHRISTIAN",
+        "last_name": "GABLE",
+        "film_count": 22
+      },
+      {
+        "first_name": "DAN",
+        "last_name": "TORN",
+        "film_count": 22
+      },
+      {
+        "first_name": "SYLVESTER",
+        "last_name": "DERN",
+        "film_count": 22
+      },
+      {
+        "first_name": "ADAM",
+        "last_name": "HOPPER",
+        "film_count": 22
+      },
+      {
+        "first_name": "GENE",
+        "last_name": "HOPKINS",
+        "film_count": 22
+      },
+      {
+        "first_name": "FAY",
+        "last_name": "WOOD",
+        "film_count": 22
+      },
+      {
+        "first_name": "NICK",
+        "last_name": "DEGENERES",
+        "film_count": 22
+      },
+      {
+        "first_name": "MERYL",
+        "last_name": "ALLEN",
+        "film_count": 22
+      },
+      {
+        "first_name": "KEVIN",
+        "last_name": "BLOOM",
+        "film_count": 21
+      },
+      {
+        "first_name": "KENNETH",
+        "last_name": "PALTROW",
+        "film_count": 21
+      },
+      {
+        "first_name": "SPENCER",
+        "last_name": "PECK",
+        "film_count": 21
+      },
+      {
+        "first_name": "SUSAN",
+        "last_name": "DAVIS",
+        "film_count": 21
+      },
+      {
+        "first_name": "CHRISTOPHER",
+        "last_name": "WEST",
+        "film_count": 21
+      },
+      {
+        "first_name": "BETTE",
+        "last_name": "NICHOLSON",
+        "film_count": 20
+      },
+      {
+        "first_name": "MATTHEW",
+        "last_name": "JOHANSSON",
+        "film_count": 20
+      },
+      {
+        "first_name": "FAY",
+        "last_name": "KILMER",
+        "film_count": 20
+      },
+      {
+        "first_name": "KENNETH",
+        "last_name": "PESCI",
+        "film_count": 20
+      },
+      {
+        "first_name": "CHRISTOPHER",
+        "last_name": "BERRY",
+        "film_count": 20
+      },
+      {
+        "first_name": "RITA",
+        "last_name": "REYNOLDS",
+        "film_count": 20
+      },
+      {
+        "first_name": "MINNIE",
+        "last_name": "KILMER",
+        "film_count": 20
+      },
+      {
+        "first_name": "CHRIS",
+        "last_name": "DEPP",
+        "film_count": 20
+      },
+      {
+        "first_name": "THORA",
+        "last_name": "TEMPLE",
+        "film_count": 20
+      },
+      {
+        "first_name": "PENELOPE",
+        "last_name": "GUINESS",
+        "film_count": 19
+      },
+      {
+        "first_name": "SANDRA",
+        "last_name": "PECK",
+        "film_count": 19
+      },
+      {
+        "first_name": "CAMERON",
+        "last_name": "WRAY",
+        "film_count": 19
+      },
+      {
+        "first_name": "RUSSELL",
+        "last_name": "CLOSE",
+        "film_count": 19
+      },
+      {
+        "first_name": "SISSY",
+        "last_name": "SOBIESKI",
+        "film_count": 18
+      },
+      {
+        "first_name": "ADAM",
+        "last_name": "GRANT",
+        "film_count": 18
+      },
+      {
+        "first_name": "JULIA",
+        "last_name": "ZELLWEGER",
+        "film_count": 16
+      },
+      {
+        "first_name": "JUDY",
+        "last_name": "DEAN",
+        "film_count": 15
+      },
+      {
+        "first_name": "JULIA",
+        "last_name": "FAWCETT",
+        "film_count": 15
+      },
+      {
+        "first_name": "EMILY",
+        "last_name": "DEE",
+        "film_count": 14
+      }
+    ],
+    "ordering": "desc",
+    "notes": "Tiga kolom: first_name, last_name, film_count. Urutan baris dinilai karena diminta terurut menurun berdasarkan film_count."
+  },
+  {
+    "id": "SAK-C5-01",
+    "db": "sakila",
+    "category": "Comparative",
+    "question_id": "Tampilkan film ber-rating 'R' yang dirilis pada 2006 dengan durasi di atas rata-rata durasi semua film 'R' tahun 2006; sertakan judul, tahun rilis, dan durasinya.",
+    "question_en": "Display 'R' rated films released in 2006 with duration above the average duration of all 'R' films in 2006; include title, release year, and duration.",
+    "solution_sql": "SELECT title, release_year, length FROM film WHERE release_year = 2006 AND rating = 'R' AND length > (SELECT AVG(length) FROM film WHERE release_year = 2006 AND rating = 'R');",
+    "expected_rows": [
+      {
+        "title": "AMERICAN CIRCUS",
+        "release_year": 2006,
+        "length": 129
+      },
+      {
+        "title": "ANALYZE HOOSIERS",
+        "release_year": 2006,
+        "length": 181
+      },
+      {
+        "title": "APOCALYPSE FLAMINGOS",
+        "release_year": 2006,
+        "length": 119
+      },
+      {
+        "title": "ARMY FLINTSTONES",
+        "release_year": 2006,
+        "length": 148
+      },
+      {
+        "title": "BADMAN DAWN",
+        "release_year": 2006,
+        "length": 162
+      },
+      {
+        "title": "BEAR GRACELAND",
+        "release_year": 2006,
+        "length": 160
+      },
+      {
+        "title": "BOOGIE AMELIE",
+        "release_year": 2006,
+        "length": 121
+      },
+      {
+        "title": "BROOKLYN DESERT",
+        "release_year": 2006,
+        "length": 161
+      },
+      {
+        "title": "CAMPUS REMEMBER",
+        "release_year": 2006,
+        "length": 167
+      },
+      {
+        "title": "CAUSE DATE",
+        "release_year": 2006,
+        "length": 179
+      },
+      {
+        "title": "CHOCOLATE DUCK",
+        "release_year": 2006,
+        "length": 132
+      },
+      {
+        "title": "CLONES PINOCCHIO",
+        "release_year": 2006,
+        "length": 124
+      },
+      {
+        "title": "CONNECTICUT TRAMP",
+        "release_year": 2006,
+        "length": 172
+      },
+      {
+        "title": "DOUBLE WRATH",
+        "release_year": 2006,
+        "length": 177
+      },
+      {
+        "title": "DOUBTFIRE LABYRINTH",
+        "release_year": 2006,
+        "length": 154
+      },
+      {
+        "title": "DROP WATERFRONT",
+        "release_year": 2006,
+        "length": 178
+      },
+      {
+        "title": "DURHAM PANKY",
+        "release_year": 2006,
+        "length": 154
+      },
+      {
+        "title": "ENTRAPMENT SATISFACTION",
+        "release_year": 2006,
+        "length": 176
+      },
+      {
+        "title": "ESCAPE METROPOLIS",
+        "release_year": 2006,
+        "length": 167
+      },
+      {
+        "title": "EXPRESS LONELY",
+        "release_year": 2006,
+        "length": 178
+      },
+      {
+        "title": "FAMILY SWEET",
+        "release_year": 2006,
+        "length": 155
+      },
+      {
+        "title": "FEVER EMPIRE",
+        "release_year": 2006,
+        "length": 158
+      },
+      {
+        "title": "FINDING ANACONDA",
+        "release_year": 2006,
+        "length": 156
+      },
+      {
+        "title": "FIRE WOLVES",
+        "release_year": 2006,
+        "length": 173
+      },
+      {
+        "title": "FISH OPUS",
+        "release_year": 2006,
+        "length": 125
+      },
+      {
+        "title": "FLIGHT LIES",
+        "release_year": 2006,
+        "length": 179
+      },
+      {
+        "title": "FREAKY POCUS",
+        "release_year": 2006,
+        "length": 126
+      },
+      {
+        "title": "GALAXY SWEETHEARTS",
+        "release_year": 2006,
+        "length": 128
+      },
+      {
+        "title": "GILMORE BOILED",
+        "release_year": 2006,
+        "length": 163
+      },
+      {
+        "title": "GOLD RIVER",
+        "release_year": 2006,
+        "length": 154
+      },
+      {
+        "title": "GOLDMINE TYCOON",
+        "release_year": 2006,
+        "length": 153
+      },
+      {
+        "title": "GRACELAND DYNAMITE",
+        "release_year": 2006,
+        "length": 140
+      },
+      {
+        "title": "GREEDY ROOTS",
+        "release_year": 2006,
+        "length": 166
+      },
+      {
+        "title": "GRINCH MASSAGE",
+        "release_year": 2006,
+        "length": 150
+      },
+      {
+        "title": "HAMLET WISDOM",
+        "release_year": 2006,
+        "length": 146
+      },
+      {
+        "title": "HAUNTING PIANIST",
+        "release_year": 2006,
+        "length": 181
+      },
+      {
+        "title": "HOLOCAUST HIGHBALL",
+        "release_year": 2006,
+        "length": 149
+      },
+      {
+        "title": "HOME PITY",
+        "release_year": 2006,
+        "length": 185
+      },
+      {
+        "title": "HORROR REIGN",
+        "release_year": 2006,
+        "length": 139
+      },
+      {
+        "title": "ICE CROSSING",
+        "release_year": 2006,
+        "length": 131
+      },
+      {
+        "title": "ILLUSION AMELIE",
+        "release_year": 2006,
+        "length": 122
+      },
+      {
+        "title": "KILLER INNOCENT",
+        "release_year": 2006,
+        "length": 161
+      },
+      {
+        "title": "KISSING DOLLS",
+        "release_year": 2006,
+        "length": 141
+      },
+      {
+        "title": "KRAMER CHOCOLATE",
+        "release_year": 2006,
+        "length": 171
+      },
+      {
+        "title": "LIGHTS DEER",
+        "release_year": 2006,
+        "length": 174
+      },
+      {
+        "title": "LOATHING LEGALLY",
+        "release_year": 2006,
+        "length": 140
+      },
+      {
+        "title": "LOCK REAR",
+        "release_year": 2006,
+        "length": 120
+      },
+      {
+        "title": "LOSE INCH",
+        "release_year": 2006,
+        "length": 137
+      },
+      {
+        "title": "LOVE SUICIDES",
+        "release_year": 2006,
+        "length": 181
+      },
+      {
+        "title": "MADISON TRAP",
+        "release_year": 2006,
+        "length": 147
+      },
+      {
+        "title": "MASSACRE USUAL",
+        "release_year": 2006,
+        "length": 165
+      },
+      {
+        "title": "MUSIC BOONDOCK",
+        "release_year": 2006,
+        "length": 129
+      },
+      {
+        "title": "NEIGHBORS CHARADE",
+        "release_year": 2006,
+        "length": 161
+      },
+      {
+        "title": "PAJAMA JAWBREAKER",
+        "release_year": 2006,
+        "length": 126
+      },
+      {
+        "title": "QUEST MUSSOLINI",
+        "release_year": 2006,
+        "length": 177
+      },
+      {
+        "title": "RAGE GAMES",
+        "release_year": 2006,
+        "length": 120
+      },
+      {
+        "title": "RAGING AIRPLANE",
+        "release_year": 2006,
+        "length": 154
+      },
+      {
+        "title": "REQUIEM TYCOON",
+        "release_year": 2006,
+        "length": 167
+      },
+      {
+        "title": "ROAD ROXANNE",
+        "release_year": 2006,
+        "length": 158
+      },
+      {
+        "title": "ROBBERY BRIGHT",
+        "release_year": 2006,
+        "length": 134
+      },
+      {
+        "title": "ROXANNE REBEL",
+        "release_year": 2006,
+        "length": 171
+      },
+      {
+        "title": "RULES HUMAN",
+        "release_year": 2006,
+        "length": 153
+      },
+      {
+        "title": "RUN PACIFIC",
+        "release_year": 2006,
+        "length": 145
+      },
+      {
+        "title": "SATURN NAME",
+        "release_year": 2006,
+        "length": 182
+      },
+      {
+        "title": "SEVEN SWARM",
+        "release_year": 2006,
+        "length": 127
+      },
+      {
+        "title": "SHRUNK DIVINE",
+        "release_year": 2006,
+        "length": 139
+      },
+      {
+        "title": "SLACKER LIAISONS",
+        "release_year": 2006,
+        "length": 179
+      },
+      {
+        "title": "SMOOCHY CONTROL",
+        "release_year": 2006,
+        "length": 184
+      },
+      {
+        "title": "SOLDIERS EVOLUTION",
+        "release_year": 2006,
+        "length": 185
+      },
+      {
+        "title": "SOUP WISDOM",
+        "release_year": 2006,
+        "length": 169
+      },
+      {
+        "title": "SOUTH WAIT",
+        "release_year": 2006,
+        "length": 143
+      },
+      {
+        "title": "SPIRIT FLINTSTONES",
+        "release_year": 2006,
+        "length": 149
+      },
+      {
+        "title": "SPLENDOR PATTON",
+        "release_year": 2006,
+        "length": 134
+      },
+      {
+        "title": "STORY SIDE",
+        "release_year": 2006,
+        "length": 163
+      },
+      {
+        "title": "STRAIGHT HOURS",
+        "release_year": 2006,
+        "length": 151
+      },
+      {
+        "title": "STRANGERS GRAFFITI",
+        "release_year": 2006,
+        "length": 119
+      },
+      {
+        "title": "SUBMARINE BED",
+        "release_year": 2006,
+        "length": 127
+      },
+      {
+        "title": "SUN CONFESSIONS",
+        "release_year": 2006,
+        "length": 141
+      },
+      {
+        "title": "SWEET BROTHERHOOD",
+        "release_year": 2006,
+        "length": 185
+      },
+      {
+        "title": "TIGHTS DAWN",
+        "release_year": 2006,
+        "length": 172
+      },
+      {
+        "title": "TOMORROW HUSTLER",
+        "release_year": 2006,
+        "length": 142
+      },
+      {
+        "title": "TOWN ARK",
+        "release_year": 2006,
+        "length": 136
+      },
+      {
+        "title": "TUXEDO MILE",
+        "release_year": 2006,
+        "length": 152
+      },
+      {
+        "title": "UNITED PILOT",
+        "release_year": 2006,
+        "length": 164
+      },
+      {
+        "title": "VACATION BOONDOCK",
+        "release_year": 2006,
+        "length": 145
+      },
+      {
+        "title": "VANISHED GARDEN",
+        "release_year": 2006,
+        "length": 142
+      },
+      {
+        "title": "VELVET TERMINATOR",
+        "release_year": 2006,
+        "length": 173
+      },
+      {
+        "title": "VIRGINIAN PLUTO",
+        "release_year": 2006,
+        "length": 164
+      },
+      {
+        "title": "WASH HEAVENLY",
+        "release_year": 2006,
+        "length": 161
+      },
+      {
+        "title": "WEEKEND PERSONAL",
+        "release_year": 2006,
+        "length": 134
+      },
+      {
+        "title": "WILD APOLLO",
+        "release_year": 2006,
+        "length": 181
+      },
+      {
+        "title": "WILLOW TRACY",
+        "release_year": 2006,
+        "length": 137
+      },
+      {
+        "title": "WOMEN DORADO",
+        "release_year": 2006,
+        "length": 126
+      },
+      {
+        "title": "WORKER TARZAN",
+        "release_year": 2006,
+        "length": 139
+      }
+    ],
+    "ordering": null,
+    "notes": "Tiga kolom: title, release_year, length. Rating & tahun dibatasi agar baris ≤ 50."
+  },
+  {
+    "id": "SAK-C5-02",
+    "db": "sakila",
+    "category": "Comparative",
+    "question_id": "Tampilkan pelanggan yang jumlah sewanya berada di bawah (rata-rata jumlah sewa per pelanggan minus satu simpangan baku); sertakan nama dan total sewanya.",
+    "question_en": "Display customers whose rental count is below (average rental count per customer minus one standard deviation); include name and total rentals.",
+    "solution_sql": "SELECT sub.first_name, sub.last_name, sub.rental_count FROM (SELECT c.customer_id, c.first_name, c.last_name, COUNT(r.rental_id) AS rental_count FROM customer c JOIN rental r ON c.customer_id=r.customer_id GROUP BY c.customer_id, c.first_name, c.last_name) AS sub JOIN (SELECT AVG(cnt) AS avg_cnt, STDDEV(cnt) AS std_cnt FROM (SELECT COUNT(*) AS cnt FROM rental GROUP BY customer_id) AS t) AS stats ON 1=1 WHERE sub.rental_count < stats.avg_cnt - stats.std_cnt;",
+    "expected_rows": [
+      {
+        "first_name": "DONNA",
+        "last_name": "THOMPSON",
+        "rental_count": 21
+      },
+      {
+        "first_name": "ANNA",
+        "last_name": "HILL",
+        "rental_count": 21
+      },
+      {
+        "first_name": "ANN",
+        "last_name": "EVANS",
+        "rental_count": 17
+      },
+      {
+        "first_name": "KATHERINE",
+        "last_name": "RIVERA",
+        "rental_count": 14
+      },
+      {
+        "first_name": "CHRISTINA",
+        "last_name": "RAMIREZ",
+        "rental_count": 18
+      },
+      {
+        "first_name": "BONNIE",
+        "last_name": "HUGHES",
+        "rental_count": 21
+      },
+      {
+        "first_name": "NORMA",
+        "last_name": "GONZALES",
+        "rental_count": 21
+      },
+      {
+        "first_name": "PAULA",
+        "last_name": "BRYANT",
+        "rental_count": 18
+      },
+      {
+        "first_name": "ANNIE",
+        "last_name": "RUSSELL",
+        "rental_count": 18
+      },
+      {
+        "first_name": "TIFFANY",
+        "last_name": "JORDAN",
+        "rental_count": 14
+      },
+      {
+        "first_name": "EDITH",
+        "last_name": "MCDONALD",
+        "rental_count": 19
+      },
+      {
+        "first_name": "KIM",
+        "last_name": "CRUZ",
+        "rental_count": 21
+      },
+      {
+        "first_name": "SHEILA",
+        "last_name": "WELLS",
+        "rental_count": 18
+      },
+      {
+        "first_name": "ANITA",
+        "last_name": "MORALES",
+        "rental_count": 15
+      },
+      {
+        "first_name": "EVA",
+        "last_name": "RAMOS",
+        "rental_count": 18
+      },
+      {
+        "first_name": "ALICIA",
+        "last_name": "MILLS",
+        "rental_count": 21
+      },
+      {
+        "first_name": "JILL",
+        "last_name": "HAWKINS",
+        "rental_count": 21
+      },
+      {
+        "first_name": "LAUREN",
+        "last_name": "HUDSON",
+        "rental_count": 20
+      },
+      {
+        "first_name": "JOANN",
+        "last_name": "GARDNER",
+        "rental_count": 16
+      },
+      {
+        "first_name": "LORRAINE",
+        "last_name": "STEPHENS",
+        "rental_count": 21
+      },
+      {
+        "first_name": "YVONNE",
+        "last_name": "WATKINS",
+        "rental_count": 21
+      },
+      {
+        "first_name": "JEANETTE",
+        "last_name": "GREENE",
+        "rental_count": 20
+      },
+      {
+        "first_name": "KRISTEN",
+        "last_name": "CHAVEZ",
+        "rental_count": 18
+      },
+      {
+        "first_name": "VANESSA",
+        "last_name": "SIMS",
+        "rental_count": 19
+      },
+      {
+        "first_name": "TARA",
+        "last_name": "RYAN",
+        "rental_count": 20
+      },
+      {
+        "first_name": "EILEEN",
+        "last_name": "CARR",
+        "rental_count": 18
+      },
+      {
+        "first_name": "WILMA",
+        "last_name": "RICHARDS",
+        "rental_count": 20
+      },
+      {
+        "first_name": "VERA",
+        "last_name": "MCCOY",
+        "rental_count": 18
+      },
+      {
+        "first_name": "DELORES",
+        "last_name": "HANSEN",
+        "rental_count": 21
+      },
+      {
+        "first_name": "MELINDA",
+        "last_name": "FERNANDEZ",
+        "rental_count": 17
+      },
+      {
+        "first_name": "MAUREEN",
+        "last_name": "LITTLE",
+        "rental_count": 21
+      },
+      {
+        "first_name": "NELLIE",
+        "last_name": "GARRETT",
+        "rental_count": 21
+      },
+      {
+        "first_name": "CAROLINE",
+        "last_name": "BOWMAN",
+        "rental_count": 15
+      },
+      {
+        "first_name": "JO",
+        "last_name": "FOWLER",
+        "rental_count": 20
+      },
+      {
+        "first_name": "IRMA",
+        "last_name": "PEARSON",
+        "rental_count": 18
+      },
+      {
+        "first_name": "PENNY",
+        "last_name": "NEAL",
+        "rental_count": 18
+      },
+      {
+        "first_name": "KAY",
+        "last_name": "CALDWELL",
+        "rental_count": 20
+      },
+      {
+        "first_name": "LEONA",
+        "last_name": "OBRIEN",
+        "rental_count": 14
+      },
+      {
+        "first_name": "ROBERT",
+        "last_name": "BAUGHMAN",
+        "rental_count": 21
+      },
+      {
+        "first_name": "DANIEL",
+        "last_name": "CABRAL",
+        "rental_count": 20
+      },
+      {
+        "first_name": "KENNETH",
+        "last_name": "GOODEN",
+        "rental_count": 17
+      },
+      {
+        "first_name": "BRIAN",
+        "last_name": "WYMAN",
+        "rental_count": 12
+      },
+      {
+        "first_name": "ANTHONY",
+        "last_name": "SCHWAB",
+        "rental_count": 20
+      },
+      {
+        "first_name": "HENRY",
+        "last_name": "BILLINGSLEY",
+        "rental_count": 18
+      },
+      {
+        "first_name": "JONATHAN",
+        "last_name": "SCARBOROUGH",
+        "rental_count": 18
+      },
+      {
+        "first_name": "TERRY",
+        "last_name": "GRISSOM",
+        "rental_count": 20
+      },
+      {
+        "first_name": "SAMUEL",
+        "last_name": "MARLOW",
+        "rental_count": 21
+      },
+      {
+        "first_name": "WAYNE",
+        "last_name": "TRUONG",
+        "rental_count": 19
+      },
+      {
+        "first_name": "EUGENE",
+        "last_name": "CULPEPPER",
+        "rental_count": 19
+      },
+      {
+        "first_name": "JOHNNY",
+        "last_name": "TURPIN",
+        "rental_count": 19
+      },
+      {
+        "first_name": "ANTONIO",
+        "last_name": "MEEK",
+        "rental_count": 16
+      },
+      {
+        "first_name": "DANNY",
+        "last_name": "ISOM",
+        "rental_count": 21
+      },
+      {
+        "first_name": "TONY",
+        "last_name": "CARRANZA",
+        "rental_count": 21
+      },
+      {
+        "first_name": "LUIS",
+        "last_name": "YANEZ",
+        "rental_count": 20
+      },
+      {
+        "first_name": "ALLEN",
+        "last_name": "BUTTERFIELD",
+        "rental_count": 21
+      },
+      {
+        "first_name": "MARVIN",
+        "last_name": "YEE",
+        "rental_count": 21
+      },
+      {
+        "first_name": "JACOB",
+        "last_name": "LANCE",
+        "rental_count": 21
+      },
+      {
+        "first_name": "HERBERT",
+        "last_name": "KRUGER",
+        "rental_count": 20
+      },
+      {
+        "first_name": "FREDERICK",
+        "last_name": "ISBELL",
+        "rental_count": 21
+      },
+      {
+        "first_name": "OSCAR",
+        "last_name": "AQUINO",
+        "rental_count": 20
+      },
+      {
+        "first_name": "LLOYD",
+        "last_name": "DOWD",
+        "rental_count": 19
+      },
+      {
+        "first_name": "JEROME",
+        "last_name": "KENYON",
+        "rental_count": 16
+      },
+      {
+        "first_name": "FLOYD",
+        "last_name": "GANDY",
+        "rental_count": 17
+      },
+      {
+        "first_name": "LEWIS",
+        "last_name": "LYMAN",
+        "rental_count": 19
+      },
+      {
+        "first_name": "VERNON",
+        "last_name": "CHAPA",
+        "rental_count": 18
+      },
+      {
+        "first_name": "RICARDO",
+        "last_name": "MEADOR",
+        "rental_count": 21
+      },
+      {
+        "first_name": "LESTER",
+        "last_name": "KRAUS",
+        "rental_count": 16
+      },
+      {
+        "first_name": "TYLER",
+        "last_name": "WREN",
+        "rental_count": 21
+      },
+      {
+        "first_name": "RUBEN",
+        "last_name": "GEARY",
+        "rental_count": 21
+      },
+      {
+        "first_name": "RAFAEL",
+        "last_name": "ABNEY",
+        "rental_count": 21
+      },
+      {
+        "first_name": "RAUL",
+        "last_name": "FORTIER",
+        "rental_count": 20
+      },
+      {
+        "first_name": "JARED",
+        "last_name": "ELY",
+        "rental_count": 19
+      },
+      {
+        "first_name": "ADRIAN",
+        "last_name": "CLARY",
+        "rental_count": 19
+      },
+      {
+        "first_name": "LONNIE",
+        "last_name": "TIRADO",
+        "rental_count": 18
+      },
+      {
+        "first_name": "JULIO",
+        "last_name": "NOLAND",
+        "rental_count": 21
+      },
+      {
+        "first_name": "ALLAN",
+        "last_name": "CORNISH",
+        "rental_count": 19
+      },
+      {
+        "first_name": "NELSON",
+        "last_name": "CHRISTENSON",
+        "rental_count": 20
+      },
+      {
+        "first_name": "HUGH",
+        "last_name": "WALDROP",
+        "rental_count": 21
+      },
+      {
+        "first_name": "DWIGHT",
+        "last_name": "LOMBARDI",
+        "rental_count": 17
+      },
+      {
+        "first_name": "ARMANDO",
+        "last_name": "GRUBER",
+        "rental_count": 21
+      },
+      {
+        "first_name": "ALFREDO",
+        "last_name": "MCADAMS",
+        "rental_count": 20
+      },
+      {
+        "first_name": "ALBERTO",
+        "last_name": "HENNING",
+        "rental_count": 21
+      },
+      {
+        "first_name": "KIRK",
+        "last_name": "STCLAIR",
+        "rental_count": 19
+      },
+      {
+        "first_name": "AUSTIN",
+        "last_name": "CINTRON",
+        "rental_count": 19
+      }
+    ],
+    "ordering": null,
+    "notes": "Tiga kolom: first_name, last_name, rental_count. Memakai AVG–STDDEV untuk menjaga baris di kisaran belasan."
+  },
+  {
+    "id": "SAK-C5-03",
+    "db": "sakila",
+    "category": "Comparative",
+    "question_id": "Di antara film 'PG-13', tampilkan yang biaya sewanya lebih tinggi dari rata-rata biaya sewa film 'PG-13' **dengan durasi > 120 menit** di kategori yang sama; sertakan judul, kategori, dan rental_rate.",
+    "question_en": "Among 'PG-13' films, display those with rental rates higher than the average rental rate of 'PG-13' films **with duration > 120 minutes** in the same category; include title, category, and rental_rate.",
+    "solution_sql": "SELECT f.title, cat.name AS category, f.rental_rate FROM film f JOIN film_category fc ON f.film_id = fc.film_id JOIN category cat ON fc.category_id = cat.category_id WHERE f.rating = 'PG-13' AND f.length > 120 AND f.rental_rate > (SELECT AVG(f2.rental_rate) FROM film f2 JOIN film_category fc2 ON f2.film_id=fc2.film_id WHERE fc2.category_id = fc.category_id AND f2.rating='PG-13' AND f2.length > 120);",
+    "expected_rows": [
+      {
+        "title": "BINGO TALENTED",
+        "category": "Sci-Fi",
+        "rental_rate": 2.99
+      },
+      {
+        "title": "BREAKING HOME",
+        "category": "New",
+        "rental_rate": 2.99
+      },
+      {
+        "title": "CASPER DRAGONFLY",
+        "category": "Children",
+        "rental_rate": 4.99
+      },
+      {
+        "title": "CHICAGO NORTH",
+        "category": "Games",
+        "rental_rate": 4.99
+      },
+      {
+        "title": "DARLING BREAKING",
+        "category": "Games",
+        "rental_rate": 4.99
+      },
+      {
+        "title": "ELEPHANT TROJAN",
+        "category": "Horror",
+        "rental_rate": 4.99
+      },
+      {
+        "title": "EXPECATIONS NATURAL",
+        "category": "Travel",
+        "rental_rate": 4.99
+      },
+      {
+        "title": "EYES DRIVING",
+        "category": "Sci-Fi",
+        "rental_rate": 2.99
+      },
+      {
+        "title": "FLINTSTONES HAPPINESS",
+        "category": "Comedy",
+        "rental_rate": 4.99
+      },
+      {
+        "title": "FRONTIER CABIN",
+        "category": "New",
+        "rental_rate": 4.99
+      },
+      {
+        "title": "GROUNDHOG UNCUT",
+        "category": "Comedy",
+        "rental_rate": 4.99
+      },
+      {
+        "title": "HARRY IDAHO",
+        "category": "Drama",
+        "rental_rate": 4.99
+      },
+      {
+        "title": "HOTEL HAPPINESS",
+        "category": "Foreign",
+        "rental_rate": 4.99
+      },
+      {
+        "title": "HUNCHBACK IMPOSSIBLE",
+        "category": "Drama",
+        "rental_rate": 4.99
+      },
+      {
+        "title": "IDAHO LOVE",
+        "category": "New",
+        "rental_rate": 2.99
+      },
+      {
+        "title": "INNOCENT USUAL",
+        "category": "Foreign",
+        "rental_rate": 4.99
+      },
+      {
+        "title": "JINGLE SAGEBRUSH",
+        "category": "Classics",
+        "rental_rate": 4.99
+      },
+      {
+        "title": "KISS GLORY",
+        "category": "Foreign",
+        "rental_rate": 4.99
+      },
+      {
+        "title": "LAMBS CINCINATTI",
+        "category": "Games",
+        "rental_rate": 4.99
+      },
+      {
+        "title": "MALTESE HOPE",
+        "category": "Games",
+        "rental_rate": 4.99
+      },
+      {
+        "title": "MILLION ACE",
+        "category": "Classics",
+        "rental_rate": 4.99
+      },
+      {
+        "title": "MINDS TRUMAN",
+        "category": "Action",
+        "rental_rate": 4.99
+      },
+      {
+        "title": "MINE TITANS",
+        "category": "New",
+        "rental_rate": 4.99
+      },
+      {
+        "title": "MISSION ZOOLANDER",
+        "category": "Animation",
+        "rental_rate": 4.99
+      },
+      {
+        "title": "MOONSHINE CABIN",
+        "category": "Games",
+        "rental_rate": 4.99
+      },
+      {
+        "title": "NAME DETECTIVE",
+        "category": "Games",
+        "rental_rate": 4.99
+      },
+      {
+        "title": "OUTLAW HANKY",
+        "category": "Travel",
+        "rental_rate": 4.99
+      },
+      {
+        "title": "PAST SUICIDES",
+        "category": "Foreign",
+        "rental_rate": 4.99
+      },
+      {
+        "title": "PAYCHECK WAIT",
+        "category": "Drama",
+        "rental_rate": 4.99
+      },
+      {
+        "title": "PHILADELPHIA WIFE",
+        "category": "Sports",
+        "rental_rate": 4.99
+      },
+      {
+        "title": "PITTSBURGH HUNCHBACK",
+        "category": "Family",
+        "rental_rate": 4.99
+      },
+      {
+        "title": "PLATOON INSTINCT",
+        "category": "New",
+        "rental_rate": 4.99
+      },
+      {
+        "title": "POSEIDON FOREVER",
+        "category": "Sports",
+        "rental_rate": 4.99
+      },
+      {
+        "title": "REDS POCUS",
+        "category": "Music",
+        "rental_rate": 4.99
+      },
+      {
+        "title": "RIGHT CRANES",
+        "category": "Classics",
+        "rental_rate": 4.99
+      },
+      {
+        "title": "ROCKY WAR",
+        "category": "Drama",
+        "rental_rate": 4.99
+      },
+      {
+        "title": "ROSES TREASURE",
+        "category": "Sports",
+        "rental_rate": 4.99
+      },
+      {
+        "title": "SCHOOL JACKET",
+        "category": "Foreign",
+        "rental_rate": 4.99
+      },
+      {
+        "title": "SHOW LORD",
+        "category": "Documentary",
+        "rental_rate": 4.99
+      },
+      {
+        "title": "SISTER FREDDY",
+        "category": "Children",
+        "rental_rate": 4.99
+      },
+      {
+        "title": "SLEEPING SUSPECTS",
+        "category": "Horror",
+        "rental_rate": 4.99
+      },
+      {
+        "title": "SPEED SUIT",
+        "category": "Travel",
+        "rental_rate": 4.99
+      },
+      {
+        "title": "SUNRISE LEAGUE",
+        "category": "Animation",
+        "rental_rate": 4.99
+      },
+      {
+        "title": "THIEF PELICAN",
+        "category": "Animation",
+        "rental_rate": 4.99
+      },
+      {
+        "title": "TOURIST PELICAN",
+        "category": "Sports",
+        "rental_rate": 4.99
+      },
+      {
+        "title": "TRAINSPOTTING STRANGERS",
+        "category": "Comedy",
+        "rental_rate": 4.99
+      },
+      {
+        "title": "UNCUT SUICIDES",
+        "category": "Music",
+        "rental_rate": 2.99
+      },
+      {
+        "title": "USUAL UNTOUCHABLES",
+        "category": "Foreign",
+        "rental_rate": 4.99
+      },
+      {
+        "title": "VIRGIN DAISY",
+        "category": "Drama",
+        "rental_rate": 4.99
+      },
+      {
+        "title": "WRONG BEHAVIOR",
+        "category": "Children",
+        "rental_rate": 2.99
+      }
+    ],
+    "ordering": null,
+    "notes": "Tiga kolom. Tambahan syarat durasi menekan jumlah baris ke ± 40."
+  },
+  {
+    "id": "SAK-C5-04",
+    "db": "sakila",
+    "category": "Comparative",
+    "question_id": "Tampilkan kategori film yang rata-rata durasinya lebih pendek daripada rata-rata durasi semua film; sertakan nama kategori dan rata-rata durasinya.",
+    "question_en": "Display film categories with average duration shorter than the overall average duration of all films; include category name and average duration.",
+    "solution_sql": "SELECT cat.name AS category, AVG(f.length) AS avg_length FROM category cat JOIN film_category fc ON cat.category_id = fc.category_id JOIN film f ON fc.film_id = f.film_id GROUP BY cat.category_id, cat.name HAVING AVG(f.length) < (SELECT AVG(length) FROM film);",
+    "expected_rows": [
+      {
+        "category": "Action",
+        "avg_length": 111.6094
+      },
+      {
+        "category": "Animation",
+        "avg_length": 111.0152
+      },
+      {
+        "category": "Children",
+        "avg_length": 109.8
+      },
+      {
+        "category": "Classics",
+        "avg_length": 111.6667
+      },
+      {
+        "category": "Documentary",
+        "avg_length": 108.75
+      },
+      {
+        "category": "Family",
+        "avg_length": 114.7826
+      },
+      {
+        "category": "Horror",
+        "avg_length": 112.4821
+      },
+      {
+        "category": "Music",
+        "avg_length": 113.6471
+      },
+      {
+        "category": "New",
+        "avg_length": 111.127
+      },
+      {
+        "category": "Sci-Fi",
+        "avg_length": 108.1967
+      },
+      {
+        "category": "Travel",
+        "avg_length": 113.3158
+      }
+    ],
+    "ordering": null,
+    "notes": "Tidak diubah – sudah 11 baris."
+  },
+  {
+    "id": "SAK-C5-05",
+    "db": "sakila",
+    "category": "Comparative",
+    "question_id": "Tampilkan staf yang jumlah transaksi pembayarannya lebih sedikit daripada rata-rata jumlah transaksi per staf; sertakan nama depan, nama belakang, dan jumlah transaksinya.",
+    "question_en": "Display staff members whose payment transaction count is less than the average transaction count per staff; include first name, last name, and transaction count.",
+    "solution_sql": "SELECT s.first_name, s.last_name, COUNT(p.payment_id) AS payment_count FROM staff s JOIN payment p ON s.staff_id = p.staff_id GROUP BY s.staff_id, s.first_name, s.last_name HAVING COUNT(*) < (SELECT AVG(cnt) FROM (SELECT COUNT(*) AS cnt FROM payment GROUP BY staff_id) AS sub);",
+    "expected_rows": [
+      {
+        "first_name": "Jon",
+        "last_name": "Stephens",
+        "payment_count": 7992
+      }
+    ],
+    "ordering": null,
+    "notes": "Tiga kolom: first_name, last_name, payment_count. Karena hanya ada dua staf, salah satunya akan berada di bawah rata-rata sehingga hasil akhir biasanya 1 baris; urutan baris tidak dinilai."
+  },
+  {
+    "id": "SAK-J2-01",
+    "db": "sakila",
+    "category": "Join + Filter",
+    "question_id": "Tampilkan nama depan, nama belakang, dan kota tempat tinggal semua pelanggan yang pernah menyewa film dengan kategori animasi pada tahun 2006.",
+    "question_en": "Display the first name, last name, and city of residence of all customers who have rented animation category films in 2006.",
+    "solution_sql": "SELECT DISTINCT c.first_name, c.last_name, ci.city\nFROM customer AS c\nJOIN address  AS a  ON c.address_id = a.address_id\nJOIN city     AS ci ON a.city_id    = ci.city_id\nJOIN rental   AS r  ON c.customer_id = r.customer_id\nJOIN inventory AS i ON r.inventory_id = i.inventory_id\nJOIN film_category AS fc ON i.film_id = fc.film_id\nJOIN category AS cat     ON fc.category_id = cat.category_id\nWHERE cat.name = 'Animation' AND YEAR(r.`rental_date`)='2006';",
+    "expected_rows": [
+      {
+        "first_name": "ANGELA",
+        "last_name": "HERNANDEZ",
+        "city": "Shimonoseki"
+      },
+      {
+        "first_name": "PEGGY",
+        "last_name": "MYERS",
+        "city": "Abha"
+      },
+      {
+        "first_name": "FLORENCE",
+        "last_name": "WOODS",
+        "city": "Merlo"
+      },
+      {
+        "first_name": "JUDITH",
+        "last_name": "COX",
+        "city": "Daxian"
+      },
+      {
+        "first_name": "WANDA",
+        "last_name": "PATTERSON",
+        "city": "Sincelejo"
+      },
+      {
+        "first_name": "ELMER",
+        "last_name": "NOE",
+        "city": "Battambang"
+      },
+      {
+        "first_name": "LEONARD",
+        "last_name": "SCHOFIELD",
+        "city": "Tandil"
+      },
+      {
+        "first_name": "GWENDOLYN",
+        "last_name": "MAY",
+        "city": "Higashiosaka"
+      },
+      {
+        "first_name": "MARION",
+        "last_name": "SNYDER",
+        "city": "Santa Brbara dOeste"
+      },
+      {
+        "first_name": "LAWRENCE",
+        "last_name": "LAWTON",
+        "city": "Yaound"
+      },
+      {
+        "first_name": "MELANIE",
+        "last_name": "ARMSTRONG",
+        "city": "Bayugan"
+      },
+      {
+        "first_name": "MARILYN",
+        "last_name": "ROSS",
+        "city": "Ife"
+      },
+      {
+        "first_name": "JOSHUA",
+        "last_name": "MARK",
+        "city": "Rampur"
+      },
+      {
+        "first_name": "HEATHER",
+        "last_name": "MORRIS",
+        "city": "Nagareyama"
+      },
+      {
+        "first_name": "DAISY",
+        "last_name": "BATES",
+        "city": "Kolpino"
+      },
+      {
+        "first_name": "ALICIA",
+        "last_name": "MILLS",
+        "city": "Nagaon"
+      },
+      {
+        "first_name": "CATHY",
+        "last_name": "SPENCER",
+        "city": "Kakamigahara"
+      },
+      {
+        "first_name": "WENDY",
+        "last_name": "HARRISON",
+        "city": "Nezahualcyotl"
+      },
+      {
+        "first_name": "CASSANDRA",
+        "last_name": "WALTERS",
+        "city": "Salinas"
+      },
+      {
+        "first_name": "MORRIS",
+        "last_name": "MCCARTER",
+        "city": "Fengshan"
+      },
+      {
+        "first_name": "JUSTIN",
+        "last_name": "NGO",
+        "city": "Santo Andr"
+      }
+    ],
+    "ordering": null,
+    "notes": "Hasil wajib memuat tiga kolom: first_name, last_name, city. Gunakan DISTINCT agar tiap pelanggan muncul sekali; urutan baris tidak dinilai."
+  },
+  {
+    "id": "SAK-J2-02",
+    "db": "sakila",
+    "category": "Join + Filter",
+    "question_id": "Daftar judul film beserta nama bahasa untuk semua film berdurasi lebih dari 184 menit.",
+    "question_en": "List film titles along with language names for all films with duration longer than 184 minutes.",
+    "solution_sql": "SELECT f.title, l.name AS language\nFROM film AS f\nJOIN language AS l ON f.language_id = l.language_id\nWHERE f.length > 184;",
+    "expected_rows": [
+      {
+        "title": "CHICAGO NORTH",
+        "language": "English"
+      },
+      {
+        "title": "CONTROL ANTHEM",
+        "language": "English"
+      },
+      {
+        "title": "DARN FORRESTER",
+        "language": "English"
+      },
+      {
+        "title": "GANGS PRIDE",
+        "language": "English"
+      },
+      {
+        "title": "HOME PITY",
+        "language": "English"
+      },
+      {
+        "title": "MUSCLE BRIGHT",
+        "language": "English"
+      },
+      {
+        "title": "POND SEATTLE",
+        "language": "English"
+      },
+      {
+        "title": "SOLDIERS EVOLUTION",
+        "language": "English"
+      },
+      {
+        "title": "SWEET BROTHERHOOD",
+        "language": "English"
+      },
+      {
+        "title": "WORST BANGER",
+        "language": "English"
+      }
+    ],
+    "ordering": null,
+    "notes": "Dua kolom: title dan language. Tidak perlu DISTINCT; satu baris per film."
+  },
+  {
+    "id": "SAK-J2-03",
+    "db": "sakila",
+    "category": "Join + Filter",
+    "question_id": "Tampilkan nama aktor dan judul film yang dirilis tahun 2006 dengan rating 'PG'. Di mana judul filmnya mengandung kata pilot.",
+    "question_en": "Display actor names and film titles released in 2006 with 'PG' rating, where the film title contains the word 'pilot'.",
+    "solution_sql": "SELECT a.first_name, a.last_name, f.title\nFROM actor AS a\nJOIN film_actor AS fa ON a.actor_id = fa.actor_id\nJOIN film AS f        ON fa.film_id = f.film_id\nWHERE f.release_year = 2006 AND f.rating = 'PG' AND title LIKE '%pilot%';",
+    "expected_rows": [
+      {
+        "first_name": "JULIA",
+        "last_name": "MCQUEEN",
+        "title": "PILOT HOOSIERS"
+      },
+      {
+        "first_name": "WOODY",
+        "last_name": "HOFFMAN",
+        "title": "PILOT HOOSIERS"
+      },
+      {
+        "first_name": "HENRY",
+        "last_name": "BERRY",
+        "title": "PILOT HOOSIERS"
+      },
+      {
+        "first_name": "SPENCER",
+        "last_name": "PECK",
+        "title": "PILOT HOOSIERS"
+      },
+      {
+        "first_name": "CAMERON",
+        "last_name": "ZELLWEGER",
+        "title": "PILOT HOOSIERS"
+      },
+      {
+        "first_name": "DEBBIE",
+        "last_name": "AKROYD",
+        "title": "PILOT HOOSIERS"
+      },
+      {
+        "first_name": "AUDREY",
+        "last_name": "BAILEY",
+        "title": "PILOT HOOSIERS"
+      },
+      {
+        "first_name": "ZERO",
+        "last_name": "CAGE",
+        "title": "TOOTSIE PILOT"
+      },
+      {
+        "first_name": "NICK",
+        "last_name": "STALLONE",
+        "title": "TOOTSIE PILOT"
+      },
+      {
+        "first_name": "GENE",
+        "last_name": "HOPKINS",
+        "title": "TOOTSIE PILOT"
+      },
+      {
+        "first_name": "VIVIEN",
+        "last_name": "BASINGER",
+        "title": "TOOTSIE PILOT"
+      },
+      {
+        "first_name": "CUBA",
+        "last_name": "BIRCH",
+        "title": "TOOTSIE PILOT"
+      }
+    ],
+    "ordering": null,
+    "notes": "Tiga kolom: first_name, last_name, title. Boleh muncul banyak baris per aktor jika bermain di beberapa film."
+  },
+  {
+    "id": "SAK-J2-04",
+    "db": "sakila",
+    "category": "Join + Filter",
+    "question_id": "Daftar nama depan dan belakang pelanggan beserta tanggal sewanya untuk setiap transaksi dengan pembayaran di atas 11 dolar. Jangan tampilkan baris duplikat.",
+    "question_en": "List each customer’s first and last name together with the rental date for every transaction whose payment exceeded 11 dollars. Do not include duplicate rows.",
+    "solution_sql": "SELECT DISTINCT c.first_name, c.last_name, r.rental_date\nFROM customer AS c\nJOIN rental  AS r ON c.customer_id = r.customer_id\nJOIN payment AS p ON r.rental_id   = p.rental_id\nWHERE p.amount > 11;",
+    "expected_rows": [
+      {
+        "first_name": "KAREN",
+        "last_name": "JACKSON",
+        "rental_date": "2005-07-29T22:37:41"
+      },
+      {
+        "first_name": "VICTORIA",
+        "last_name": "GIBSON",
+        "rental_date": "2005-08-21T23:34:00"
+      },
+      {
+        "first_name": "VANESSA",
+        "last_name": "SIMS",
+        "rental_date": "2005-08-23T22:19:33"
+      },
+      {
+        "first_name": "ALMA",
+        "last_name": "AUSTIN",
+        "rental_date": "2005-05-25T18:18:19"
+      },
+      {
+        "first_name": "ROSEMARY",
+        "last_name": "SCHMIDT",
+        "rental_date": "2005-08-22T23:48:56"
+      },
+      {
+        "first_name": "TANYA",
+        "last_name": "GILBERT",
+        "rental_date": "2005-08-02T22:18:13"
+      },
+      {
+        "first_name": "RICHARD",
+        "last_name": "MCCRARY",
+        "rental_date": "2005-06-17T23:51:21"
+      },
+      {
+        "first_name": "NICHOLAS",
+        "last_name": "BARFIELD",
+        "rental_date": "2005-08-21T23:28:58"
+      },
+      {
+        "first_name": "KENT",
+        "last_name": "ARSENAULT",
+        "rental_date": "2005-07-07T20:45:51"
+      },
+      {
+        "first_name": "TERRANCE",
+        "last_name": "ROUSH",
+        "rental_date": "2005-07-06T22:58:31"
+      }
+    ],
+    "ordering": null,
+    "notes": "Tiga kolom: first_name, last_name, rental_date. Gunakan DISTINCT (atau GROUP BY) agar kombinasi pelanggan–tanggal muncul satu kali saja; urutan baris tidak dinilai."
+  },
+  {
+    "id": "SAK-J2-05",
+    "db": "sakila",
+    "category": "Join + Filter",
+    "question_id": "Tampilkan judul film, kategori film, dan nama lengkap penyewanya untuk transaksi pada 16 Agustus 2005.",
+    "question_en": "List the film title, its category, and the renter’s full name for transactions on 16 August 2005.",
+    "solution_sql": "SELECT DISTINCT f.title AS film_title, cat.name AS category_name, CONCAT(c.first_name, ' ', c.last_name) AS customer_name FROM rental r JOIN customer c ON r.customer_id = c.customer_id JOIN inventory i ON r.inventory_id = i.inventory_id JOIN film f ON i.film_id = f.film_id JOIN film_category fc ON f.film_id = fc.film_id JOIN category cat ON fc.category_id = cat.category_id WHERE DATE(r.rental_date) = '2005-08-16';",
+    "expected_rows": [
+      {
+        "film_title": "BRIDE INTRIGUE",
+        "category_name": "Action",
+        "customer_name": "NANCY THOMAS"
+      },
+      {
+        "film_title": "FOOL MOCKINGBIRD",
+        "category_name": "Action",
+        "customer_name": "KARL SEAL"
+      },
+      {
+        "film_title": "INSECTS STONE",
+        "category_name": "Animation",
+        "customer_name": "JUAN FRALEY"
+      },
+      {
+        "film_title": "INTENTIONS EMPIRE",
+        "category_name": "Animation",
+        "customer_name": "SARAH LEWIS"
+      },
+      {
+        "film_title": "EMPIRE MALKOVICH",
+        "category_name": "Children",
+        "customer_name": "STELLA MORENO"
+      },
+      {
+        "film_title": "ROBBERS JOON",
+        "category_name": "Children",
+        "customer_name": "REBECCA SCOTT"
+      },
+      {
+        "film_title": "UPTOWN YOUNG",
+        "category_name": "Children",
+        "customer_name": "TRACEY BARRETT"
+      },
+      {
+        "film_title": "REQUIEM TYCOON",
+        "category_name": "Classics",
+        "customer_name": "DALE RATCLIFF"
+      },
+      {
+        "film_title": "PARADISE SABRINA",
+        "category_name": "Comedy",
+        "customer_name": "BRYAN HARDISON"
+      },
+      {
+        "film_title": "SWEDEN SHINING",
+        "category_name": "Comedy",
+        "customer_name": "SALVADOR TEEL"
+      },
+      {
+        "film_title": "MOVIE SHAKESPEARE",
+        "category_name": "Family",
+        "customer_name": "PRISCILLA LOWE"
+      },
+      {
+        "film_title": "INNOCENT USUAL",
+        "category_name": "Foreign",
+        "customer_name": "JIMMY SCHRADER"
+      },
+      {
+        "film_title": "HAUNTING PIANIST",
+        "category_name": "Games",
+        "customer_name": "RUBY WASHINGTON"
+      },
+      {
+        "film_title": "WIND PHANTOM",
+        "category_name": "Games",
+        "customer_name": "LISA ANDERSON"
+      },
+      {
+        "film_title": "EGYPT TENENBAUMS",
+        "category_name": "Horror",
+        "customer_name": "LOUIS LEONE"
+      },
+      {
+        "film_title": "FREDDY STORM",
+        "category_name": "Horror",
+        "customer_name": "JAIME NETTLES"
+      },
+      {
+        "film_title": "UNDEFEATED DALMATIONS",
+        "category_name": "Horror",
+        "customer_name": "ALFRED CASILLAS"
+      },
+      {
+        "film_title": "BUTTERFLY CHOCOLAT",
+        "category_name": "New",
+        "customer_name": "MAURICE CRAWLEY"
+      },
+      {
+        "film_title": "MONEY HAROLD",
+        "category_name": "New",
+        "customer_name": "RUTH MARTINEZ"
+      },
+      {
+        "film_title": "TROOPERS METAL",
+        "category_name": "New",
+        "customer_name": "MARCIA DEAN"
+      },
+      {
+        "film_title": "DISTURBING SCARFACE",
+        "category_name": "Sci-Fi",
+        "customer_name": "DIANNE SHELTON"
+      },
+      {
+        "film_title": "STEERS ARMAGEDDON",
+        "category_name": "Sports",
+        "customer_name": "BERNICE WILLIS"
+      },
+      {
+        "film_title": "WINDOW SIDE",
+        "category_name": "Travel",
+        "customer_name": "MARC OUTLAW"
+      }
+    ],
+    "ordering": null,
+    "notes": "Hasil memuat tiga kolom: film_title, category_name, customer_name. DISTINCT mencegah duplikasi kombinasi yang sama. Urutan baris tidak dinilai."
+  },
+  {
+    "id": "SAK-L1-01",
+    "db": "sakila",
+    "category": "Lookup / Filter",
+    "question_id": "Daftar film berdurasi lebih dari 180 menit dengan rating 'R'; sertakan judul dan durasi setiap film.",
+    "question_en": "List films with duration longer than 180 minutes and 'R' rating; include title and duration of each film.",
+    "solution_sql": "SELECT title, length FROM film WHERE length > 180 AND rating = 'R';",
+    "expected_rows": [
+      {
+        "title": "ANALYZE HOOSIERS",
+        "length": 181
+      },
+      {
+        "title": "HAUNTING PIANIST",
+        "length": 181
+      },
+      {
+        "title": "HOME PITY",
+        "length": 185
+      },
+      {
+        "title": "LOVE SUICIDES",
+        "length": 181
+      },
+      {
+        "title": "SATURN NAME",
+        "length": 182
+      },
+      {
+        "title": "SMOOCHY CONTROL",
+        "length": 184
+      },
+      {
+        "title": "SOLDIERS EVOLUTION",
+        "length": 185
+      },
+      {
+        "title": "SWEET BROTHERHOOD",
+        "length": 185
+      },
+      {
+        "title": "WILD APOLLO",
+        "length": 181
+      }
+    ],
+    "ordering": null,
+    "notes": "Hasil wajib memuat dua kolom: title dan length. Urutan baris tidak dinilai."
+  },
+  {
+    "id": "SAK-L1-02",
+    "db": "sakila",
+    "category": "Lookup / Filter",
+    "question_id": "Tampilkan daftar aktor yang nama belakangnya diawali huruf 'A'.",
+    "question_en": "Display a list of actors whose last names start with the letter 'A'.",
+    "solution_sql": "SELECT first_name, last_name FROM actor WHERE last_name LIKE 'A%';",
+    "expected_rows": [
+      {
+        "first_name": "CHRISTIAN",
+        "last_name": "AKROYD"
+      },
+      {
+        "first_name": "KIRSTEN",
+        "last_name": "AKROYD"
+      },
+      {
+        "first_name": "DEBBIE",
+        "last_name": "AKROYD"
+      },
+      {
+        "first_name": "CUBA",
+        "last_name": "ALLEN"
+      },
+      {
+        "first_name": "KIM",
+        "last_name": "ALLEN"
+      },
+      {
+        "first_name": "MERYL",
+        "last_name": "ALLEN"
+      },
+      {
+        "first_name": "ANGELINA",
+        "last_name": "ASTAIRE"
+      }
+    ],
+    "ordering": null,
+    "notes": "Kembalikan dua kolom: first_name dan last_name. Huruf besar/kecil mengikuti data asli; urutan baris bebas."
+  },
+  {
+    "id": "SAK-L1-03",
+    "db": "sakila",
+    "category": "Lookup / Filter",
+    "question_id": "Tampilkan transaksi pembayaran bernilai antara 11 hingga 12 dolar, sertakan ID pembayaran, jumlah, dan tanggal pembayarannya.",
+    "question_en": "Display payment transactions valued between 11 and 12 dollars, include payment ID, amount, and payment date.",
+    "solution_sql": "SELECT payment_id, amount, payment_date FROM payment WHERE amount BETWEEN 11 AND 12;",
+    "expected_rows": [
+      {
+        "payment_id": 342,
+        "amount": 11.99,
+        "payment_date": "2005-07-29T22:37:41"
+      },
+      {
+        "payment_id": 3146,
+        "amount": 11.99,
+        "payment_date": "2005-08-21T23:34:00"
+      },
+      {
+        "payment_id": 5280,
+        "amount": 11.99,
+        "payment_date": "2005-08-23T22:19:33"
+      },
+      {
+        "payment_id": 5281,
+        "amount": 11.99,
+        "payment_date": "2005-05-25T18:18:19"
+      },
+      {
+        "payment_id": 5550,
+        "amount": 11.99,
+        "payment_date": "2005-08-22T23:48:56"
+      },
+      {
+        "payment_id": 6409,
+        "amount": 11.99,
+        "payment_date": "2005-08-02T22:18:13"
+      },
+      {
+        "payment_id": 8272,
+        "amount": 11.99,
+        "payment_date": "2005-06-17T23:51:21"
+      },
+      {
+        "payment_id": 9803,
+        "amount": 11.99,
+        "payment_date": "2005-08-21T23:28:58"
+      },
+      {
+        "payment_id": 15821,
+        "amount": 11.99,
+        "payment_date": "2005-07-07T20:45:51"
+      },
+      {
+        "payment_id": 15850,
+        "amount": 11.99,
+        "payment_date": "2005-07-06T22:58:31"
+      }
+    ],
+    "ordering": null,
+    "notes": "Tiga kolom: payment_id, amount, payment_date. Gunakan BETWEEN agar batas 11 dan 12 inklusif."
+  },
+  {
+    "id": "SAK-L1-04",
+    "db": "sakila",
+    "category": "Lookup / Filter",
+    "question_id": "Tampilkan ID dan nama kategori film yang diperbarui pada atau setelah 15 Februari 2006.",
+    "question_en": "Display the IDs and names of film categories that were updated on or after February 15, 2006.",
+    "solution_sql": "SELECT category_id, name FROM category WHERE last_update >= '2006-02-15';",
+    "expected_rows": [
+      {
+        "category_id": 1,
+        "name": "Action"
+      },
+      {
+        "category_id": 2,
+        "name": "Animation"
+      },
+      {
+        "category_id": 3,
+        "name": "Children"
+      },
+      {
+        "category_id": 4,
+        "name": "Classics"
+      },
+      {
+        "category_id": 5,
+        "name": "Comedy"
+      },
+      {
+        "category_id": 6,
+        "name": "Documentary"
+      },
+      {
+        "category_id": 7,
+        "name": "Drama"
+      },
+      {
+        "category_id": 8,
+        "name": "Family"
+      },
+      {
+        "category_id": 9,
+        "name": "Foreign"
+      },
+      {
+        "category_id": 10,
+        "name": "Games"
+      },
+      {
+        "category_id": 11,
+        "name": "Horror"
+      },
+      {
+        "category_id": 12,
+        "name": "Music"
+      },
+      {
+        "category_id": 13,
+        "name": "New"
+      },
+      {
+        "category_id": 14,
+        "name": "Sci-Fi"
+      },
+      {
+        "category_id": 15,
+        "name": "Sports"
+      },
+      {
+        "category_id": 16,
+        "name": "Travel"
+      }
+    ],
+    "ordering": null,
+    "notes": "Dua kolom: category_id dan name. Gunakan operator >= pada kolom last_update; urutan baris tidak diperiksa."
+  },
+  {
+    "id": "SAK-L1-05",
+    "db": "sakila",
+    "category": "Lookup / Filter",
+    "question_id": "Tampilkan semua nama bahasa yang tersedia selain Inggris dan Italia.",
+    "question_en": "Display the names of all available languages except English and Italian.",
+    "solution_sql": "SELECT name FROM language WHERE name NOT IN ('English', 'Italian');",
+    "expected_rows": [
+      {
+        "name": "Japanese"
+      },
+      {
+        "name": "Mandarin"
+      },
+      {
+        "name": "French"
+      },
+      {
+        "name": "German"
+      }
+    ],
+    "ordering": null,
+    "notes": "Satu kolom: name. Pastikan 'English' dan 'Italian' tidak ada dalam hasil. Urutan baris tidak dinilai."
+  },
+  {
+    "id": "SAK-N4-01",
+    "db": "sakila",
+    "category": "Nested / Subquery",
+    "question_id": "Tampilkan **nama lengkap** (gabungan nama depan dan belakang) aktor serta jumlah filmnya yang membintangi film lebih banyak daripada Matthew Carrey, lalu urutkan dari jumlah film terbanyak.",
+    "question_en": "Display each actor’s **full name** (concatenate first and last name) and their film count for actors who have appeared in more films than Matthew Carrey, ordered by film count in descending order.",
+    "solution_sql": "SELECT CONCAT_WS(' ', a.first_name, a.last_name) AS full_name, COUNT(fa.film_id) AS number_of_films FROM actor a JOIN film_actor fa ON a.actor_id = fa.actor_id GROUP BY a.actor_id HAVING COUNT(fa.film_id) > (SELECT COUNT(*) FROM film_actor fa2 JOIN actor a2 ON fa2.actor_id = a2.actor_id WHERE a2.first_name = 'MATTHEW' AND a2.last_name = 'CARREY') ORDER BY number_of_films DESC;",
+    "expected_rows": [
+      {
+        "full_name": "GINA DEGENERES",
+        "number_of_films": 42
+      },
+      {
+        "full_name": "WALTER TORN",
+        "number_of_films": 41
+      },
+      {
+        "full_name": "MARY KEITEL",
+        "number_of_films": 40
+      }
+    ],
+    "ordering": "desc",
+    "notes": "Gunakan CONCAT_WS(' ', first_name, last_name) AS full_name. Dua kolom wajib: full_name dan number_of_films. Urutkan menurun berdasarkan number_of_films."
+  },
+  {
+    "id": "SAK-N4-02",
+    "db": "sakila",
+    "category": "Nested / Subquery",
+    "question_id": "Tampilkan bahasa yang tidak memiliki satu pun film berating 'R'.",
+    "question_en": "Display languages that do not have any 'R' rated films.",
+    "solution_sql": "SELECT l.name AS language\nFROM language AS l\nWHERE NOT EXISTS (\n    SELECT 1\n    FROM film AS f\n    WHERE f.language_id = l.language_id\n      AND f.rating = 'R'\n);",
+    "expected_rows": [
+      {
+        "language": "Italian"
+      },
+      {
+        "language": "Japanese"
+      },
+      {
+        "language": "Mandarin"
+      },
+      {
+        "language": "French"
+      },
+      {
+        "language": "German"
+      }
+    ],
+    "ordering": null,
+    "notes": "Satu kolom: language. Sub-query NOT EXISTS memastikan bahasa yang dipilih sama sekali tidak mempunyai film dengan rating 'R'. Urutan baris tidak dinilai."
+  },
+  {
+    "id": "SAK-N4-03",
+    "db": "sakila",
+    "category": "Nested / Subquery",
+    "question_id": "Tampilkan staf yang total nilai pembayarannya melebihi rata-rata total pembayaran per staf; sertakan nama staf dan total pembayarannya.",
+    "question_en": "Display staff whose total payment amount exceeds the average total payment per staff; include staff name and total payment.",
+    "solution_sql": "SELECT s.first_name, s.last_name, SUM(p.amount) AS total_sales\nFROM staff AS s\nJOIN payment AS p ON s.staff_id = p.staff_id\nGROUP BY s.staff_id, s.first_name, s.last_name\nHAVING SUM(p.amount) > (\n    SELECT AVG(total)\n    FROM (\n        SELECT SUM(amount) AS total\n        FROM payment\n        GROUP BY staff_id\n    ) AS t\n);",
+    "expected_rows": [
+      {
+        "first_name": "Jon",
+        "last_name": "Stephens",
+        "total_sales": 33927.04
+      }
+    ],
+    "ordering": null,
+    "notes": "Tiga kolom: first_name, last_name, total_sales. Sub-query bertingkat di HAVING menghitung rata-rata total pembayaran tiap staf; hasil akhir diperkirakan hanya 1 baris (staf dengan penjualan tertinggi). Urutan baris tidak dinilai."
+  },
+  {
+    "id": "SAK-N4-04",
+    "db": "sakila",
+    "category": "Nested / Subquery",
+    "question_id": "Tampilkan film yang belum pernah disewa oleh pelanggan mana pun.",
+    "question_en": "Display films that have never been rented by any customer.",
+    "solution_sql": "SELECT title\nFROM film\nWHERE film_id NOT IN (\n    SELECT DISTINCT i.film_id\n    FROM inventory AS i\n    JOIN rental AS r ON i.inventory_id = r.inventory_id\n);",
+    "expected_rows": [
+      {
+        "title": "ALICE FANTASIA"
+      },
+      {
+        "title": "APOLLO TEEN"
+      },
+      {
+        "title": "ARGONAUTS TOWN"
+      },
+      {
+        "title": "ARK RIDGEMONT"
+      },
+      {
+        "title": "ARSENIC INDEPENDENCE"
+      },
+      {
+        "title": "BOONDOCK BALLROOM"
+      },
+      {
+        "title": "BUTCH PANTHER"
+      },
+      {
+        "title": "CATCH AMISTAD"
+      },
+      {
+        "title": "CHINATOWN GLADIATOR"
+      },
+      {
+        "title": "CHOCOLATE DUCK"
+      },
+      {
+        "title": "COMMANDMENTS EXPRESS"
+      },
+      {
+        "title": "CROSSING DIVORCE"
+      },
+      {
+        "title": "CROWDS TELEMARK"
+      },
+      {
+        "title": "CRYSTAL BREAKING"
+      },
+      {
+        "title": "DAZED PUNK"
+      },
+      {
+        "title": "DELIVERANCE MULHOLLAND"
+      },
+      {
+        "title": "FIREHOUSE VIETNAM"
+      },
+      {
+        "title": "FLOATS GARDEN"
+      },
+      {
+        "title": "FRANKENSTEIN STRANGER"
+      },
+      {
+        "title": "GLADIATOR WESTWARD"
+      },
+      {
+        "title": "GUMP DATE"
+      },
+      {
+        "title": "HATE HANDICAP"
+      },
+      {
+        "title": "HOCUS FRIDA"
+      },
+      {
+        "title": "KENTUCKIAN GIANT"
+      },
+      {
+        "title": "KILL BROTHERHOOD"
+      },
+      {
+        "title": "MUPPET MILE"
+      },
+      {
+        "title": "ORDER BETRAYED"
+      },
+      {
+        "title": "PEARL DESTINY"
+      },
+      {
+        "title": "PERDITION FARGO"
+      },
+      {
+        "title": "PSYCHO SHRUNK"
+      },
+      {
+        "title": "RAIDERS ANTITRUST"
+      },
+      {
+        "title": "RAINBOW SHOCK"
+      },
+      {
+        "title": "ROOF CHAMPION"
+      },
+      {
+        "title": "SISTER FREDDY"
+      },
+      {
+        "title": "SKY MIRACLE"
+      },
+      {
+        "title": "SUICIDES SILENCE"
+      },
+      {
+        "title": "TADPOLE PARK"
+      },
+      {
+        "title": "TREASURE COMMAND"
+      },
+      {
+        "title": "VILLAIN DESPERATE"
+      },
+      {
+        "title": "VOLUME HOUSE"
+      },
+      {
+        "title": "WAKE JAWS"
+      },
+      {
+        "title": "WALLS ARTIST"
+      }
+    ],
+    "ordering": null,
+    "notes": "Satu kolom: title. Sub-query di NOT IN mengambil semua film yang sudah pernah disewa."
+  },
+  {
+    "id": "SAK-N4-05",
+    "db": "sakila",
+    "category": "Nested / Subquery",
+    "question_id": "Tampilkan pelanggan dari Indonesia yang pernah menyewa film kategori 'Action' tetapi belum pernah menyewa film kategori 'Animation'; sertakan nama depan dan nama belakang mereka.",
+    "question_en": "Display customers from Indonesia who have rented 'Action' category films but have never rented 'Animation' category films; include their first and last names.",
+    "solution_sql": "SELECT c.first_name, c.last_name FROM customer AS c JOIN address AS a ON c.address_id = a.address_id JOIN city AS ci ON a.city_id = ci.city_id JOIN country AS co ON ci.country_id = co.country_id WHERE co.country = 'Indonesia' AND EXISTS (SELECT 1 FROM rental AS r JOIN inventory AS i ON r.inventory_id = i.inventory_id JOIN film_category AS fc ON i.film_id = fc.film_id JOIN category AS cat ON fc.category_id = cat.category_id WHERE r.customer_id = c.customer_id AND cat.name = 'Action') AND NOT EXISTS (SELECT 1 FROM rental AS r JOIN inventory AS i ON r.inventory_id = i.inventory_id JOIN film_category AS fc ON i.film_id = fc.film_id JOIN category AS cat ON fc.category_id = cat.category_id WHERE r.customer_id = c.customer_id AND cat.name = 'Animation');",
+    "expected_rows": [
+      {
+        "first_name": "STEVE",
+        "last_name": "MACKENZIE"
+      },
+      {
+        "first_name": "JAY",
+        "last_name": "ROBB"
+      },
+      {
+        "first_name": "LLOYD",
+        "last_name": "DOWD"
+      }
+    ],
+    "ordering": null,
+    "notes": "Dua kolom: first_name dan last_name. Pelanggan harus berasal dari Indonesia serta pernah menyewa film 'Action' namun belum pernah menyewa film 'Animation'. Urutan baris tidak dinilai."
+  },
+  {
+    "id": "SAK-S6-01",
+    "db": "sakila",
+    "category": "Superlative",
+    "question_id": "Siapa pelanggan dengan total nilai pembayaran terbesar? Sertakan nama depan, nama belakang, dan total pembayarannya.",
+    "question_en": "Who is the customer with the highest total payment amount? Include first name, last name, and total payment.",
+    "solution_sql": "SELECT c.first_name,c.last_name,SUM(p.amount) AS total_payment FROM customer c JOIN payment p ON c.customer_id=p.customer_id GROUP BY c.customer_id,c.first_name,c.last_name HAVING SUM(p.amount)=(SELECT MAX(tp) FROM (SELECT SUM(amount) AS tp FROM payment GROUP BY customer_id) t);",
+    "expected_rows": [
+      {
+        "first_name": "KARL",
+        "last_name": "SEAL",
+        "total_payment": 221.55
+      }
+    ],
+    "ordering": null,
+    "notes": "Tiga kolom: first_name, last_name, total_payment. Jika terdapat beberapa item dengan nilai maksimum yang sama, semua baris tersebut harus muncul."
+  },
+  {
+    "id": "SAK-S6-02",
+    "db": "sakila",
+    "category": "Superlative",
+    "question_id": "Film apa yang memiliki durasi terlama? Sertakan judul dan durasinya.",
+    "question_en": "Which film has the longest duration? Include title and duration.",
+    "solution_sql": "SELECT title,length FROM film HAVING length=(SELECT MAX(length) FROM film);",
+    "expected_rows": [
+      {
+        "title": "CHICAGO NORTH",
+        "length": 185
+      },
+      {
+        "title": "CONTROL ANTHEM",
+        "length": 185
+      },
+      {
+        "title": "DARN FORRESTER",
+        "length": 185
+      },
+      {
+        "title": "GANGS PRIDE",
+        "length": 185
+      },
+      {
+        "title": "HOME PITY",
+        "length": 185
+      },
+      {
+        "title": "MUSCLE BRIGHT",
+        "length": 185
+      },
+      {
+        "title": "POND SEATTLE",
+        "length": 185
+      },
+      {
+        "title": "SOLDIERS EVOLUTION",
+        "length": 185
+      },
+      {
+        "title": "SWEET BROTHERHOOD",
+        "length": 185
+      },
+      {
+        "title": "WORST BANGER",
+        "length": 185
+      }
+    ],
+    "ordering": null,
+    "notes": "Dua kolom: title dan length. Jika terdapat beberapa item dengan nilai maksimum yang sama, semua baris tersebut harus muncul."
+  },
+  {
+    "id": "SAK-S6-03",
+    "db": "sakila",
+    "category": "Superlative",
+    "question_id": "Kota mana yang memiliki jumlah pelanggan terbanyak? Sertakan nama kota dan jumlah pelanggannya.",
+    "question_en": "Which city has the most customers? Include city name and customer count.",
+    "solution_sql": "SELECT ci.city,COUNT(*) AS customer_count FROM customer c JOIN address a ON c.address_id=a.address_id JOIN city ci ON a.city_id=ci.city_id GROUP BY ci.city HAVING COUNT(*)=(SELECT MAX(cnt) FROM (SELECT COUNT(*) AS cnt FROM customer c2 JOIN address a2 ON c2.address_id=a2.address_id JOIN city ci2 ON a2.city_id=ci2.city_id GROUP BY ci2.city) x);",
+    "expected_rows": [
+      {
+        "city": "London",
+        "customer_count": 2
+      },
+      {
+        "city": "Aurora",
+        "customer_count": 2
+      }
+    ],
+    "ordering": null,
+    "notes": "Dua kolom: city dan customer_count. Jika terdapat beberapa item dengan nilai maksimum yang sama, semua baris tersebut harus muncul."
+  },
+  {
+    "id": "SAK-S6-04",
+    "db": "sakila",
+    "category": "Superlative",
+    "question_id": "Siapa pelanggan yang paling sering menyewa film? Sertakan nama depan, nama belakang, dan jumlah sewanya.",
+    "question_en": "Who is the customer who rents films most frequently? Include first name, last name, and rental count.",
+    "solution_sql": "SELECT c.first_name,c.last_name,COUNT(r.rental_id) AS rental_count FROM customer c JOIN rental r ON c.customer_id=r.customer_id GROUP BY c.customer_id,c.first_name,c.last_name HAVING COUNT(r.rental_id) = (SELECT MAX(cnt) FROM (SELECT COUNT(*) AS cnt FROM rental GROUP BY customer_id) AS t);",
+    "expected_rows": [
+      {
+        "first_name": "ELEANOR",
+        "last_name": "HUNT",
+        "rental_count": 46
+      }
+    ],
+    "ordering": null,
+    "notes": "Tiga kolom: first_name, last_name, rental_count. Jika terdapat beberapa item dengan nilai maksimum yang sama, semua baris tersebut harus muncul."
+  },
+  {
+    "id": "SAK-S6-05",
+    "db": "sakila",
+    "category": "Superlative",
+    "question_id": "Pada tahun 2005, bulan apa yang mencatat total pembayaran terbesar? Sertakan nomor bulan (1–12) dan total pembayarannya.",
+    "question_en": "In 2005, which month recorded the highest total payments? Include month number (1-12) and total payment amount.",
+    "solution_sql": "SELECT MONTH(payment_date) AS month_num,SUM(amount) AS total_payment FROM payment WHERE YEAR(payment_date)=2005 GROUP BY MONTH(payment_date) HAVING SUM(amount)=(SELECT MAX(tp) FROM (SELECT SUM(amount) AS tp FROM payment WHERE YEAR(payment_date)=2005 GROUP BY MONTH(payment_date)) m);",
+    "expected_rows": [
+      {
+        "month_num": 7,
+        "total_payment": 28373.89
+      }
+    ],
+    "ordering": null,
+    "notes": "Dua kolom: month_num dan total_payment. Jika terdapat beberapa item dengan nilai maksimum yang sama, semua baris tersebut harus muncul."
+  }
+]

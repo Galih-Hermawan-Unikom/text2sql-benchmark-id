@@ -1,0 +1,432 @@
+{
+  "SAK-J2-01": {
+    "id": "SAK-J2-01",
+    "db": "sakila",
+    "category": "Join + Filter",
+    "question_id": "Tampilkan nama depan, nama belakang, dan kota tempat tinggal semua pelanggan yang pernah menyewa film dengan kategori animasi pada tahun 2006.",
+    "question_en": "Display the first name, last name, and city of residence of all customers who have rented animation category films in 2006.",
+    "solution_sql": "SELECT DISTINCT c.first_name, c.last_name, ci.city\nFROM customer AS c\nJOIN address  AS a  ON c.address_id = a.address_id\nJOIN city     AS ci ON a.city_id    = ci.city_id\nJOIN rental   AS r  ON c.customer_id = r.customer_id\nJOIN inventory AS i ON r.inventory_id = i.inventory_id\nJOIN film_category AS fc ON i.film_id = fc.film_id\nJOIN category AS cat     ON fc.category_id = cat.category_id\nWHERE cat.name = 'Animation' AND YEAR(r.`rental_date`)='2006';",
+    "expected_rows": [
+      {
+        "first_name": "ANGELA",
+        "last_name": "HERNANDEZ",
+        "city": "Shimonoseki"
+      },
+      {
+        "first_name": "PEGGY",
+        "last_name": "MYERS",
+        "city": "Abha"
+      },
+      {
+        "first_name": "FLORENCE",
+        "last_name": "WOODS",
+        "city": "Merlo"
+      },
+      {
+        "first_name": "JUDITH",
+        "last_name": "COX",
+        "city": "Daxian"
+      },
+      {
+        "first_name": "WANDA",
+        "last_name": "PATTERSON",
+        "city": "Sincelejo"
+      },
+      {
+        "first_name": "ELMER",
+        "last_name": "NOE",
+        "city": "Battambang"
+      },
+      {
+        "first_name": "LEONARD",
+        "last_name": "SCHOFIELD",
+        "city": "Tandil"
+      },
+      {
+        "first_name": "GWENDOLYN",
+        "last_name": "MAY",
+        "city": "Higashiosaka"
+      },
+      {
+        "first_name": "MARION",
+        "last_name": "SNYDER",
+        "city": "Santa Brbara dOeste"
+      },
+      {
+        "first_name": "LAWRENCE",
+        "last_name": "LAWTON",
+        "city": "Yaound"
+      },
+      {
+        "first_name": "MELANIE",
+        "last_name": "ARMSTRONG",
+        "city": "Bayugan"
+      },
+      {
+        "first_name": "MARILYN",
+        "last_name": "ROSS",
+        "city": "Ife"
+      },
+      {
+        "first_name": "JOSHUA",
+        "last_name": "MARK",
+        "city": "Rampur"
+      },
+      {
+        "first_name": "HEATHER",
+        "last_name": "MORRIS",
+        "city": "Nagareyama"
+      },
+      {
+        "first_name": "DAISY",
+        "last_name": "BATES",
+        "city": "Kolpino"
+      },
+      {
+        "first_name": "ALICIA",
+        "last_name": "MILLS",
+        "city": "Nagaon"
+      },
+      {
+        "first_name": "CATHY",
+        "last_name": "SPENCER",
+        "city": "Kakamigahara"
+      },
+      {
+        "first_name": "WENDY",
+        "last_name": "HARRISON",
+        "city": "Nezahualcyotl"
+      },
+      {
+        "first_name": "CASSANDRA",
+        "last_name": "WALTERS",
+        "city": "Salinas"
+      },
+      {
+        "first_name": "MORRIS",
+        "last_name": "MCCARTER",
+        "city": "Fengshan"
+      },
+      {
+        "first_name": "JUSTIN",
+        "last_name": "NGO",
+        "city": "Santo Andr"
+      }
+    ],
+    "ordering": null,
+    "notes": "Hasil wajib memuat tiga kolom: first_name, last_name, city. Gunakan DISTINCT agar tiap pelanggan muncul sekali; urutan baris tidak dinilai."
+  },
+  "SAK-J2-02": {
+    "id": "SAK-J2-02",
+    "db": "sakila",
+    "category": "Join + Filter",
+    "question_id": "Daftar judul film beserta nama bahasa untuk semua film berdurasi lebih dari 184 menit.",
+    "question_en": "List film titles along with language names for all films with duration longer than 184 minutes.",
+    "solution_sql": "SELECT f.title, l.name AS language\nFROM film AS f\nJOIN language AS l ON f.language_id = l.language_id\nWHERE f.length > 184;",
+    "expected_rows": [
+      {
+        "title": "CHICAGO NORTH",
+        "language": "English"
+      },
+      {
+        "title": "CONTROL ANTHEM",
+        "language": "English"
+      },
+      {
+        "title": "DARN FORRESTER",
+        "language": "English"
+      },
+      {
+        "title": "GANGS PRIDE",
+        "language": "English"
+      },
+      {
+        "title": "HOME PITY",
+        "language": "English"
+      },
+      {
+        "title": "MUSCLE BRIGHT",
+        "language": "English"
+      },
+      {
+        "title": "POND SEATTLE",
+        "language": "English"
+      },
+      {
+        "title": "SOLDIERS EVOLUTION",
+        "language": "English"
+      },
+      {
+        "title": "SWEET BROTHERHOOD",
+        "language": "English"
+      },
+      {
+        "title": "WORST BANGER",
+        "language": "English"
+      }
+    ],
+    "ordering": null,
+    "notes": "Dua kolom: title dan language. Tidak perlu DISTINCT; satu baris per film."
+  },
+  "SAK-J2-03": {
+    "id": "SAK-J2-03",
+    "db": "sakila",
+    "category": "Join + Filter",
+    "question_id": "Tampilkan nama aktor dan judul film yang dirilis tahun 2006 dengan rating 'PG'. Di mana judul filmnya mengandung kata pilot.",
+    "question_en": "Display actor names and film titles released in 2006 with 'PG' rating, where the film title contains the word 'pilot'.",
+    "solution_sql": "SELECT a.first_name, a.last_name, f.title\nFROM actor AS a\nJOIN film_actor AS fa ON a.actor_id = fa.actor_id\nJOIN film AS f        ON fa.film_id = f.film_id\nWHERE f.release_year = 2006 AND f.rating = 'PG' AND title LIKE '%pilot%';",
+    "expected_rows": [
+      {
+        "first_name": "JULIA",
+        "last_name": "MCQUEEN",
+        "title": "PILOT HOOSIERS"
+      },
+      {
+        "first_name": "WOODY",
+        "last_name": "HOFFMAN",
+        "title": "PILOT HOOSIERS"
+      },
+      {
+        "first_name": "HENRY",
+        "last_name": "BERRY",
+        "title": "PILOT HOOSIERS"
+      },
+      {
+        "first_name": "SPENCER",
+        "last_name": "PECK",
+        "title": "PILOT HOOSIERS"
+      },
+      {
+        "first_name": "CAMERON",
+        "last_name": "ZELLWEGER",
+        "title": "PILOT HOOSIERS"
+      },
+      {
+        "first_name": "DEBBIE",
+        "last_name": "AKROYD",
+        "title": "PILOT HOOSIERS"
+      },
+      {
+        "first_name": "AUDREY",
+        "last_name": "BAILEY",
+        "title": "PILOT HOOSIERS"
+      },
+      {
+        "first_name": "ZERO",
+        "last_name": "CAGE",
+        "title": "TOOTSIE PILOT"
+      },
+      {
+        "first_name": "NICK",
+        "last_name": "STALLONE",
+        "title": "TOOTSIE PILOT"
+      },
+      {
+        "first_name": "GENE",
+        "last_name": "HOPKINS",
+        "title": "TOOTSIE PILOT"
+      },
+      {
+        "first_name": "VIVIEN",
+        "last_name": "BASINGER",
+        "title": "TOOTSIE PILOT"
+      },
+      {
+        "first_name": "CUBA",
+        "last_name": "BIRCH",
+        "title": "TOOTSIE PILOT"
+      }
+    ],
+    "ordering": null,
+    "notes": "Tiga kolom: first_name, last_name, title. Boleh muncul banyak baris per aktor jika bermain di beberapa film."
+  },
+  "SAK-J2-04": {
+    "id": "SAK-J2-04",
+    "db": "sakila",
+    "category": "Join + Filter",
+    "question_id": "Daftar nama depan dan belakang pelanggan beserta tanggal sewanya untuk setiap transaksi dengan pembayaran di atas 11 dolar. Jangan tampilkan baris duplikat.",
+    "question_en": "List each customer’s first and last name together with the rental date for every transaction whose payment exceeded 11 dollars. Do not include duplicate rows.",
+    "solution_sql": "SELECT DISTINCT c.first_name, c.last_name, r.rental_date\nFROM customer AS c\nJOIN rental  AS r ON c.customer_id = r.customer_id\nJOIN payment AS p ON r.rental_id   = p.rental_id\nWHERE p.amount > 11;",
+    "expected_rows": [
+      {
+        "first_name": "KAREN",
+        "last_name": "JACKSON",
+        "rental_date": "2005-07-29T22:37:41"
+      },
+      {
+        "first_name": "VICTORIA",
+        "last_name": "GIBSON",
+        "rental_date": "2005-08-21T23:34:00"
+      },
+      {
+        "first_name": "VANESSA",
+        "last_name": "SIMS",
+        "rental_date": "2005-08-23T22:19:33"
+      },
+      {
+        "first_name": "ALMA",
+        "last_name": "AUSTIN",
+        "rental_date": "2005-05-25T18:18:19"
+      },
+      {
+        "first_name": "ROSEMARY",
+        "last_name": "SCHMIDT",
+        "rental_date": "2005-08-22T23:48:56"
+      },
+      {
+        "first_name": "TANYA",
+        "last_name": "GILBERT",
+        "rental_date": "2005-08-02T22:18:13"
+      },
+      {
+        "first_name": "RICHARD",
+        "last_name": "MCCRARY",
+        "rental_date": "2005-06-17T23:51:21"
+      },
+      {
+        "first_name": "NICHOLAS",
+        "last_name": "BARFIELD",
+        "rental_date": "2005-08-21T23:28:58"
+      },
+      {
+        "first_name": "KENT",
+        "last_name": "ARSENAULT",
+        "rental_date": "2005-07-07T20:45:51"
+      },
+      {
+        "first_name": "TERRANCE",
+        "last_name": "ROUSH",
+        "rental_date": "2005-07-06T22:58:31"
+      }
+    ],
+    "ordering": null,
+    "notes": "Tiga kolom: first_name, last_name, rental_date. Gunakan DISTINCT (atau GROUP BY) agar kombinasi pelanggan–tanggal muncul satu kali saja; urutan baris tidak dinilai."
+  },
+  "SAK-J2-05": {
+    "id": "SAK-J2-05",
+    "db": "sakila",
+    "category": "Join + Filter",
+    "question_id": "Tampilkan judul film, kategori film, dan nama lengkap penyewanya untuk transaksi pada 16 Agustus 2005.",
+    "question_en": "List the film title, its category, and the renter’s full name for transactions on 16 August 2005.",
+    "solution_sql": "SELECT DISTINCT f.title AS film_title, cat.name AS category_name, CONCAT(c.first_name, ' ', c.last_name) AS customer_name FROM rental r JOIN customer c ON r.customer_id = c.customer_id JOIN inventory i ON r.inventory_id = i.inventory_id JOIN film f ON i.film_id = f.film_id JOIN film_category fc ON f.film_id = fc.film_id JOIN category cat ON fc.category_id = cat.category_id WHERE DATE(r.rental_date) = '2005-08-16';",
+    "expected_rows": [
+      {
+        "film_title": "BRIDE INTRIGUE",
+        "category_name": "Action",
+        "customer_name": "NANCY THOMAS"
+      },
+      {
+        "film_title": "FOOL MOCKINGBIRD",
+        "category_name": "Action",
+        "customer_name": "KARL SEAL"
+      },
+      {
+        "film_title": "INSECTS STONE",
+        "category_name": "Animation",
+        "customer_name": "JUAN FRALEY"
+      },
+      {
+        "film_title": "INTENTIONS EMPIRE",
+        "category_name": "Animation",
+        "customer_name": "SARAH LEWIS"
+      },
+      {
+        "film_title": "EMPIRE MALKOVICH",
+        "category_name": "Children",
+        "customer_name": "STELLA MORENO"
+      },
+      {
+        "film_title": "ROBBERS JOON",
+        "category_name": "Children",
+        "customer_name": "REBECCA SCOTT"
+      },
+      {
+        "film_title": "UPTOWN YOUNG",
+        "category_name": "Children",
+        "customer_name": "TRACEY BARRETT"
+      },
+      {
+        "film_title": "REQUIEM TYCOON",
+        "category_name": "Classics",
+        "customer_name": "DALE RATCLIFF"
+      },
+      {
+        "film_title": "PARADISE SABRINA",
+        "category_name": "Comedy",
+        "customer_name": "BRYAN HARDISON"
+      },
+      {
+        "film_title": "SWEDEN SHINING",
+        "category_name": "Comedy",
+        "customer_name": "SALVADOR TEEL"
+      },
+      {
+        "film_title": "MOVIE SHAKESPEARE",
+        "category_name": "Family",
+        "customer_name": "PRISCILLA LOWE"
+      },
+      {
+        "film_title": "INNOCENT USUAL",
+        "category_name": "Foreign",
+        "customer_name": "JIMMY SCHRADER"
+      },
+      {
+        "film_title": "HAUNTING PIANIST",
+        "category_name": "Games",
+        "customer_name": "RUBY WASHINGTON"
+      },
+      {
+        "film_title": "WIND PHANTOM",
+        "category_name": "Games",
+        "customer_name": "LISA ANDERSON"
+      },
+      {
+        "film_title": "EGYPT TENENBAUMS",
+        "category_name": "Horror",
+        "customer_name": "LOUIS LEONE"
+      },
+      {
+        "film_title": "FREDDY STORM",
+        "category_name": "Horror",
+        "customer_name": "JAIME NETTLES"
+      },
+      {
+        "film_title": "UNDEFEATED DALMATIONS",
+        "category_name": "Horror",
+        "customer_name": "ALFRED CASILLAS"
+      },
+      {
+        "film_title": "BUTTERFLY CHOCOLAT",
+        "category_name": "New",
+        "customer_name": "MAURICE CRAWLEY"
+      },
+      {
+        "film_title": "MONEY HAROLD",
+        "category_name": "New",
+        "customer_name": "RUTH MARTINEZ"
+      },
+      {
+        "film_title": "TROOPERS METAL",
+        "category_name": "New",
+        "customer_name": "MARCIA DEAN"
+      },
+      {
+        "film_title": "DISTURBING SCARFACE",
+        "category_name": "Sci-Fi",
+        "customer_name": "DIANNE SHELTON"
+      },
+      {
+        "film_title": "STEERS ARMAGEDDON",
+        "category_name": "Sports",
+        "customer_name": "BERNICE WILLIS"
+      },
+      {
+        "film_title": "WINDOW SIDE",
+        "category_name": "Travel",
+        "customer_name": "MARC OUTLAW"
+      }
+    ],
+    "ordering": null,
+    "notes": "Hasil memuat tiga kolom: film_title, category_name, customer_name. DISTINCT mencegah duplikasi kombinasi yang sama. Urutan baris tidak dinilai."
+  }
+}

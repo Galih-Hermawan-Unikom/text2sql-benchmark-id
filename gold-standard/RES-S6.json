@@ -1,0 +1,101 @@
+{
+  "RES-S6-01": {
+    "id": "RES-S6-01",
+    "db": "resep",
+    "category": "Superlative",
+    "question_id": "Daftar semua resep yang membutuhkan waktu memasak paling lama—sertakan judul resep dan lamanya memasak.",
+    "question_en": "List all recipes that require the longest cooking time—include recipe title and cooking duration.",
+    "solution_sql": "SELECT judul_resep, waktu_masak\nFROM resep\nWHERE waktu_masak = (SELECT MAX(waktu_masak) FROM resep);",
+    "expected_rows": [
+      {
+        "judul_resep": "Rendang Padang Asli",
+        "waktu_masak": 240
+      },
+      {
+        "judul_resep": "Gudeg Jogja",
+        "waktu_masak": 240
+      }
+    ],
+    "ordering": null,
+    "notes": "Gunakan sub-query MAX agar semua resep berdurasi maksimum (jika ada nilai kembar) ikut muncul; tidak memakai LIMIT."
+  },
+  "RES-S6-02": {
+    "id": "RES-S6-02",
+    "db": "resep",
+    "category": "Superlative",
+    "question_id": "Bahan apa saja yang paling sering muncul di seluruh resep? Tampilkan nama bahan dan total kemunculannya.",
+    "question_en": "Which ingredient(s) appear most frequently in all recipes? Show the ingredient name and occurrence count.",
+    "solution_sql": "SELECT b.nama_bahan, COUNT(rb.id_resep) AS frekuensi\nFROM bahan b\nJOIN resep_bahan rb ON b.id_bahan = rb.id_bahan\nGROUP BY b.id_bahan, b.nama_bahan\nHAVING COUNT(rb.id_resep) = (\n  SELECT MAX(cnt)\n  FROM (\n    SELECT COUNT(*) AS cnt\n    FROM resep_bahan\n    GROUP BY id_bahan\n  ) AS t\n);",
+    "expected_rows": [
+      {
+        "nama_bahan": "Garam dapur",
+        "frekuensi": 37
+      }
+    ],
+    "ordering": null,
+    "notes": "HAVING membandingkan setiap bahan dengan frekuensi maksimum global sehingga semua bahan terpopuler tampil."
+  },
+  "RES-S6-03": {
+    "id": "RES-S6-03",
+    "db": "resep",
+    "category": "Superlative",
+    "question_id": "Daerah asal mana yang memiliki jumlah masakan terbanyak? Tampilkan nama daerah dan total masakannya (semua daerah dengan jumlah maksimum).",
+    "question_en": "Which region has the most dishes? Show the region name and total dishes (all regions with maximum count).",
+    "solution_sql": "SELECT asal_daerah, COUNT(*) AS total_masakan\nFROM masakan\nGROUP BY asal_daerah\nHAVING COUNT(*) = (\n  SELECT MAX(jml)\n  FROM (\n    SELECT COUNT(*) AS jml\n    FROM masakan\n    GROUP BY asal_daerah\n  ) AS t\n);",
+    "expected_rows": [
+      {
+        "asal_daerah": "Betawi",
+        "total_masakan": 5
+      },
+      {
+        "asal_daerah": "Sunda",
+        "total_masakan": 5
+      }
+    ],
+    "ordering": null,
+    "notes": "Menjamin setiap daerah dengan jumlah tertinggi ikut tercantum—tanpa LIMIT."
+  },
+  "RES-S6-04": {
+    "id": "RES-S6-04",
+    "db": "resep",
+    "category": "Superlative",
+    "question_id": "Resep mana saja yang menggunakan jumlah bahan paling banyak? Sertakan judul resep dan jumlah bahannya.",
+    "question_en": "Which recipe(s) use the most ingredients? Include recipe title and ingredient count.",
+    "solution_sql": "SELECT r.judul_resep, COUNT(rb.id_bahan) AS jumlah_bahan\nFROM resep r\nJOIN resep_bahan rb ON r.id_resep = rb.id_resep\nGROUP BY r.id_resep, r.judul_resep\nHAVING COUNT(rb.id_bahan) = (\n  SELECT MAX(cnt)\n  FROM (\n    SELECT COUNT(*) AS cnt\n    FROM resep_bahan\n    GROUP BY id_resep\n  ) AS t\n);",
+    "expected_rows": [
+      {
+        "judul_resep": "Ayam Betutu",
+        "jumlah_bahan": 15
+      }
+    ],
+    "ordering": null,
+    "notes": "Semua resep dengan jumlah bahan maksimum ditampilkan—tanpa LIMIT."
+  },
+  "RES-S6-05": {
+    "id": "RES-S6-05",
+    "db": "resep",
+    "category": "Superlative",
+    "question_id": "Masakan apa saja yang memiliki tingkat kepedasan tertinggi? Tampilkan kode masakan, nama masakan, dan level pedasnya.",
+    "question_en": "Which dish(es) have the highest spiciness level? Show dish code, dish name, and spice level.",
+    "solution_sql": "SELECT kode_masakan, nama_masakan, level_pedas\nFROM masakan\nWHERE level_pedas = (SELECT MAX(level_pedas) FROM masakan);",
+    "expected_rows": [
+      {
+        "kode_masakan": "M006",
+        "nama_masakan": "Ayam Taliwang",
+        "level_pedas": 5
+      },
+      {
+        "kode_masakan": "M020",
+        "nama_masakan": "Sambal Roa",
+        "level_pedas": 5
+      },
+      {
+        "kode_masakan": "M028",
+        "nama_masakan": "Sambal Matah",
+        "level_pedas": 5
+      }
+    ],
+    "ordering": null,
+    "notes": "Menggunakan sub-query MAX untuk mengikutsertakan setiap masakan berskala pedas tertinggi."
+  }
+}

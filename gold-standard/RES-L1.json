@@ -1,0 +1,294 @@
+{
+  "RES-L1-01": {
+    "id": "RES-L1-01",
+    "db": "resep",
+    "category": "Lookup / Filter",
+    "question_id": "Tampilkan semua bahan pada kategori Rempah, sertakan id dan nama bahannya.",
+    "question_en": "Display all ingredients in the Spice category, include their id and ingredient name.",
+    "solution_sql": "SELECT id_bahan, nama_bahan FROM bahan WHERE kategori_bahan = 'Rempah';",
+    "expected_rows": [
+      {
+        "id_bahan": 60,
+        "nama_bahan": "Bawang merah"
+      },
+      {
+        "id_bahan": 61,
+        "nama_bahan": "Bawang putih"
+      },
+      {
+        "id_bahan": 64,
+        "nama_bahan": "Serai (sereh)"
+      },
+      {
+        "id_bahan": 65,
+        "nama_bahan": "Lengkuas"
+      },
+      {
+        "id_bahan": 66,
+        "nama_bahan": "Jahe"
+      },
+      {
+        "id_bahan": 67,
+        "nama_bahan": "Kunyit"
+      },
+      {
+        "id_bahan": 68,
+        "nama_bahan": "Daun kunyit"
+      },
+      {
+        "id_bahan": 69,
+        "nama_bahan": "Daun salam"
+      },
+      {
+        "id_bahan": 70,
+        "nama_bahan": "Daun jeruk purut"
+      },
+      {
+        "id_bahan": 71,
+        "nama_bahan": "Ketumbar bubuk"
+      },
+      {
+        "id_bahan": 72,
+        "nama_bahan": "Jinten bubuk"
+      },
+      {
+        "id_bahan": 73,
+        "nama_bahan": "Kayu manis batang"
+      },
+      {
+        "id_bahan": 74,
+        "nama_bahan": "Cengkeh"
+      },
+      {
+        "id_bahan": 75,
+        "nama_bahan": "Pala bubuk"
+      },
+      {
+        "id_bahan": 76,
+        "nama_bahan": "Kapulaga"
+      },
+      {
+        "id_bahan": 77,
+        "nama_bahan": "Lada putih bubuk"
+      },
+      {
+        "id_bahan": 78,
+        "nama_bahan": "Cabe merah besar"
+      },
+      {
+        "id_bahan": 79,
+        "nama_bahan": "Cabe hijau besar"
+      },
+      {
+        "id_bahan": 80,
+        "nama_bahan": "Cabe rawit merah"
+      },
+      {
+        "id_bahan": 81,
+        "nama_bahan": "Cabe giling halus"
+      },
+      {
+        "id_bahan": 82,
+        "nama_bahan": "Kemiri sangrai"
+      },
+      {
+        "id_bahan": 83,
+        "nama_bahan": "Kencur"
+      },
+      {
+        "id_bahan": 111,
+        "nama_bahan": "Kluwek"
+      },
+      {
+        "id_bahan": 118,
+        "nama_bahan": "Daun pandan"
+      }
+    ],
+    "ordering": null,
+    "notes": "Hasil wajib memuat dua kolom (id_bahan, nama_bahan); urutan baris tidak dipermasalahkan."
+  },
+  "RES-L1-02": {
+    "id": "RES-L1-02",
+    "db": "resep",
+    "category": "Lookup / Filter",
+    "question_id": "Daftar masakan asal kota Padang dengan tingkatan pedas lebih besar atau sama dengan 3; sertakan kode dan nama masakan, serta tingkatan pedasnya.",
+    "question_en": "List dishes from Padang city with spice level greater than or equal to 3; include dish code, dish name, and spice level.",
+    "solution_sql": "SELECT kode_masakan, nama_masakan, level_pedas FROM masakan WHERE asal_daerah = 'Padang' AND level_pedas >= 3;",
+    "expected_rows": [
+      {
+        "kode_masakan": "M001",
+        "nama_masakan": "Rendang",
+        "level_pedas": 4
+      },
+      {
+        "kode_masakan": "M034",
+        "nama_masakan": "Sate Padang",
+        "level_pedas": 4
+      }
+    ],
+    "ordering": null,
+    "notes": "Kembalikan tiga kolom sesuai permintaan; tidak perlu pengurutan khusus."
+  },
+  "RES-L1-03": {
+    "id": "RES-L1-03",
+    "db": "resep",
+    "category": "Lookup / Filter",
+    "question_id": "Tampilkan resep dengan lama waktu masak antara 30 dan 45 menit; sertakan id, judul, dan waktu masak resep.",
+    "question_en": "Display recipes with cooking time between 30 and 45 minutes; include recipe id, title, and cooking time.",
+    "solution_sql": "SELECT id_resep, judul_resep, waktu_masak FROM resep WHERE waktu_masak BETWEEN 30 AND 45;",
+    "expected_rows": [
+      {
+        "id_resep": 3,
+        "judul_resep": "Sate Ayam Madura",
+        "waktu_masak": 40
+      },
+      {
+        "id_resep": 8,
+        "judul_resep": "Ayam Taliwang Bakar",
+        "waktu_masak": 45
+      },
+      {
+        "id_resep": 9,
+        "judul_resep": "Pepes Ikan Mas Daun Pisang",
+        "waktu_masak": 40
+      },
+      {
+        "id_resep": 14,
+        "judul_resep": "Kare Rajungan Madura",
+        "waktu_masak": 35
+      },
+      {
+        "id_resep": 16,
+        "judul_resep": "Sate Lilit Bali",
+        "waktu_masak": 35
+      },
+      {
+        "id_resep": 19,
+        "judul_resep": "Es Cendol Tradisional",
+        "waktu_masak": 30
+      },
+      {
+        "id_resep": 22,
+        "judul_resep": "Sayur Asem Sunda",
+        "waktu_masak": 40
+      },
+      {
+        "id_resep": 27,
+        "judul_resep": "Ikan Bakar Rica",
+        "waktu_masak": 30
+      },
+      {
+        "id_resep": 37,
+        "judul_resep": "Ikan Kuah Pala Banda",
+        "waktu_masak": 40
+      },
+      {
+        "id_resep": 38,
+        "judul_resep": "Papeda Kuah Kuning",
+        "waktu_masak": 45
+      }
+    ],
+    "ordering": null,
+    "notes": "Gunakan BETWEEN (inklusif) dan tampilkan tiga kolom sebagaimana diminta."
+  },
+  "RES-L1-04": {
+    "id": "RES-L1-04",
+    "db": "resep",
+    "category": "Lookup / Filter",
+    "question_id": "Tampilkan masakan yang statusnya nonaktif; sertakan kode dan nama masakan.",
+    "question_en": "Display dishes with inactive status; include dish code and dish name.",
+    "solution_sql": "SELECT kode_masakan, nama_masakan FROM masakan WHERE status_aktif = 0;",
+    "expected_rows": [
+      {
+        "kode_masakan": "M029",
+        "nama_masakan": "Kerak Telor"
+      },
+      {
+        "kode_masakan": "M031",
+        "nama_masakan": "Karedok"
+      },
+      {
+        "kode_masakan": "M039",
+        "nama_masakan": "Plecing Kangkung"
+      },
+      {
+        "kode_masakan": "M040",
+        "nama_masakan": "Serabi Notosuman"
+      }
+    ],
+    "ordering": null,
+    "notes": "Cukup dua kolom: kode_masakan dan nama_masakan; urutan baris bebas."
+  },
+  "RES-L1-05": {
+    "id": "RES-L1-05",
+    "db": "resep",
+    "category": "Lookup / Filter",
+    "question_id": "Tampilkan bahan yang memiliki satuan bukan 'gram' atau 'ml'; sertakan id, nama bahan, dan satuannya.",
+    "question_en": "Display ingredients that have units other than 'gram' or 'ml'; include id, ingredient name, and their units.",
+    "solution_sql": "SELECT id_bahan, nama_bahan, satuan_default FROM bahan WHERE satuan_default NOT IN ('gram', 'ml');",
+    "expected_rows": [
+      {
+        "id_bahan": 11,
+        "nama_bahan": "Telur ayam",
+        "satuan_default": "butir"
+      },
+      {
+        "id_bahan": 12,
+        "nama_bahan": "Telur bebek",
+        "satuan_default": "butir"
+      },
+      {
+        "id_bahan": 13,
+        "nama_bahan": "Telur puyuh",
+        "satuan_default": "butir"
+      },
+      {
+        "id_bahan": 35,
+        "nama_bahan": "Ketupat nasi",
+        "satuan_default": "buah"
+      },
+      {
+        "id_bahan": 36,
+        "nama_bahan": "Lontong",
+        "satuan_default": "buah"
+      },
+      {
+        "id_bahan": 64,
+        "nama_bahan": "Serai (sereh)",
+        "satuan_default": "batang"
+      },
+      {
+        "id_bahan": 68,
+        "nama_bahan": "Daun kunyit",
+        "satuan_default": "lembar"
+      },
+      {
+        "id_bahan": 69,
+        "nama_bahan": "Daun salam",
+        "satuan_default": "lembar"
+      },
+      {
+        "id_bahan": 70,
+        "nama_bahan": "Daun jeruk purut",
+        "satuan_default": "lembar"
+      },
+      {
+        "id_bahan": 82,
+        "nama_bahan": "Kemiri sangrai",
+        "satuan_default": "butir"
+      },
+      {
+        "id_bahan": 117,
+        "nama_bahan": "Pisang uli",
+        "satuan_default": "buah"
+      },
+      {
+        "id_bahan": 118,
+        "nama_bahan": "Daun pandan",
+        "satuan_default": "lembar"
+      }
+    ],
+    "ordering": null,
+    "notes": "Laporkan id_bahan, nama_bahan, serta satuan_default—singkirkan bahan bersatuan gram atau ml."
+  }
+}

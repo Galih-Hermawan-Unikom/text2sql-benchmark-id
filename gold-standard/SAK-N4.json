@@ -1,0 +1,232 @@
+{
+  "SAK-N4-01": {
+    "id": "SAK-N4-01",
+    "db": "sakila",
+    "category": "Nested / Subquery",
+    "question_id": "Tampilkan **nama lengkap** (gabungan nama depan dan belakang) aktor serta jumlah filmnya yang membintangi film lebih banyak daripada Matthew Carrey, lalu urutkan dari jumlah film terbanyak.",
+    "question_en": "Display each actor’s **full name** (concatenate first and last name) and their film count for actors who have appeared in more films than Matthew Carrey, ordered by film count in descending order.",
+    "solution_sql": "SELECT CONCAT_WS(' ', a.first_name, a.last_name) AS full_name, COUNT(fa.film_id) AS number_of_films FROM actor a JOIN film_actor fa ON a.actor_id = fa.actor_id GROUP BY a.actor_id HAVING COUNT(fa.film_id) > (SELECT COUNT(*) FROM film_actor fa2 JOIN actor a2 ON fa2.actor_id = a2.actor_id WHERE a2.first_name = 'MATTHEW' AND a2.last_name = 'CARREY') ORDER BY number_of_films DESC;",
+    "expected_rows": [
+      {
+        "full_name": "GINA DEGENERES",
+        "number_of_films": 42
+      },
+      {
+        "full_name": "WALTER TORN",
+        "number_of_films": 41
+      },
+      {
+        "full_name": "MARY KEITEL",
+        "number_of_films": 40
+      }
+    ],
+    "ordering": "desc",
+    "notes": "Gunakan CONCAT_WS(' ', first_name, last_name) AS full_name. Dua kolom wajib: full_name dan number_of_films. Urutkan menurun berdasarkan number_of_films."
+  },
+  "SAK-N4-02": {
+    "id": "SAK-N4-02",
+    "db": "sakila",
+    "category": "Nested / Subquery",
+    "question_id": "Tampilkan bahasa yang tidak memiliki satu pun film berating 'R'.",
+    "question_en": "Display languages that do not have any 'R' rated films.",
+    "solution_sql": "SELECT l.name AS language\nFROM language AS l\nWHERE NOT EXISTS (\n    SELECT 1\n    FROM film AS f\n    WHERE f.language_id = l.language_id\n      AND f.rating = 'R'\n);",
+    "expected_rows": [
+      {
+        "language": "Italian"
+      },
+      {
+        "language": "Japanese"
+      },
+      {
+        "language": "Mandarin"
+      },
+      {
+        "language": "French"
+      },
+      {
+        "language": "German"
+      }
+    ],
+    "ordering": null,
+    "notes": "Satu kolom: language. Sub-query NOT EXISTS memastikan bahasa yang dipilih sama sekali tidak mempunyai film dengan rating 'R'. Urutan baris tidak dinilai."
+  },
+  "SAK-N4-03": {
+    "id": "SAK-N4-03",
+    "db": "sakila",
+    "category": "Nested / Subquery",
+    "question_id": "Tampilkan staf yang total nilai pembayarannya melebihi rata-rata total pembayaran per staf; sertakan nama staf dan total pembayarannya.",
+    "question_en": "Display staff whose total payment amount exceeds the average total payment per staff; include staff name and total payment.",
+    "solution_sql": "SELECT s.first_name, s.last_name, SUM(p.amount) AS total_sales\nFROM staff AS s\nJOIN payment AS p ON s.staff_id = p.staff_id\nGROUP BY s.staff_id, s.first_name, s.last_name\nHAVING SUM(p.amount) > (\n    SELECT AVG(total)\n    FROM (\n        SELECT SUM(amount) AS total\n        FROM payment\n        GROUP BY staff_id\n    ) AS t\n);",
+    "expected_rows": [
+      {
+        "first_name": "Jon",
+        "last_name": "Stephens",
+        "total_sales": 33927.04
+      }
+    ],
+    "ordering": null,
+    "notes": "Tiga kolom: first_name, last_name, total_sales. Sub-query bertingkat di HAVING menghitung rata-rata total pembayaran tiap staf; hasil akhir diperkirakan hanya 1 baris (staf dengan penjualan tertinggi). Urutan baris tidak dinilai."
+  },
+  "SAK-N4-04": {
+    "id": "SAK-N4-04",
+    "db": "sakila",
+    "category": "Nested / Subquery",
+    "question_id": "Tampilkan film yang belum pernah disewa oleh pelanggan mana pun.",
+    "question_en": "Display films that have never been rented by any customer.",
+    "solution_sql": "SELECT title\nFROM film\nWHERE film_id NOT IN (\n    SELECT DISTINCT i.film_id\n    FROM inventory AS i\n    JOIN rental AS r ON i.inventory_id = r.inventory_id\n);",
+    "expected_rows": [
+      {
+        "title": "ALICE FANTASIA"
+      },
+      {
+        "title": "APOLLO TEEN"
+      },
+      {
+        "title": "ARGONAUTS TOWN"
+      },
+      {
+        "title": "ARK RIDGEMONT"
+      },
+      {
+        "title": "ARSENIC INDEPENDENCE"
+      },
+      {
+        "title": "BOONDOCK BALLROOM"
+      },
+      {
+        "title": "BUTCH PANTHER"
+      },
+      {
+        "title": "CATCH AMISTAD"
+      },
+      {
+        "title": "CHINATOWN GLADIATOR"
+      },
+      {
+        "title": "CHOCOLATE DUCK"
+      },
+      {
+        "title": "COMMANDMENTS EXPRESS"
+      },
+      {
+        "title": "CROSSING DIVORCE"
+      },
+      {
+        "title": "CROWDS TELEMARK"
+      },
+      {
+        "title": "CRYSTAL BREAKING"
+      },
+      {
+        "title": "DAZED PUNK"
+      },
+      {
+        "title": "DELIVERANCE MULHOLLAND"
+      },
+      {
+        "title": "FIREHOUSE VIETNAM"
+      },
+      {
+        "title": "FLOATS GARDEN"
+      },
+      {
+        "title": "FRANKENSTEIN STRANGER"
+      },
+      {
+        "title": "GLADIATOR WESTWARD"
+      },
+      {
+        "title": "GUMP DATE"
+      },
+      {
+        "title": "HATE HANDICAP"
+      },
+      {
+        "title": "HOCUS FRIDA"
+      },
+      {
+        "title": "KENTUCKIAN GIANT"
+      },
+      {
+        "title": "KILL BROTHERHOOD"
+      },
+      {
+        "title": "MUPPET MILE"
+      },
+      {
+        "title": "ORDER BETRAYED"
+      },
+      {
+        "title": "PEARL DESTINY"
+      },
+      {
+        "title": "PERDITION FARGO"
+      },
+      {
+        "title": "PSYCHO SHRUNK"
+      },
+      {
+        "title": "RAIDERS ANTITRUST"
+      },
+      {
+        "title": "RAINBOW SHOCK"
+      },
+      {
+        "title": "ROOF CHAMPION"
+      },
+      {
+        "title": "SISTER FREDDY"
+      },
+      {
+        "title": "SKY MIRACLE"
+      },
+      {
+        "title": "SUICIDES SILENCE"
+      },
+      {
+        "title": "TADPOLE PARK"
+      },
+      {
+        "title": "TREASURE COMMAND"
+      },
+      {
+        "title": "VILLAIN DESPERATE"
+      },
+      {
+        "title": "VOLUME HOUSE"
+      },
+      {
+        "title": "WAKE JAWS"
+      },
+      {
+        "title": "WALLS ARTIST"
+      }
+    ],
+    "ordering": null,
+    "notes": "Satu kolom: title. Sub-query di NOT IN mengambil semua film yang sudah pernah disewa."
+  },
+  "SAK-N4-05": {
+    "id": "SAK-N4-05",
+    "db": "sakila",
+    "category": "Nested / Subquery",
+    "question_id": "Tampilkan pelanggan dari Indonesia yang pernah menyewa film kategori 'Action' tetapi belum pernah menyewa film kategori 'Animation'; sertakan nama depan dan nama belakang mereka.",
+    "question_en": "Display customers from Indonesia who have rented 'Action' category films but have never rented 'Animation' category films; include their first and last names.",
+    "solution_sql": "SELECT c.first_name, c.last_name FROM customer AS c JOIN address AS a ON c.address_id = a.address_id JOIN city AS ci ON a.city_id = ci.city_id JOIN country AS co ON ci.country_id = co.country_id WHERE co.country = 'Indonesia' AND EXISTS (SELECT 1 FROM rental AS r JOIN inventory AS i ON r.inventory_id = i.inventory_id JOIN film_category AS fc ON i.film_id = fc.film_id JOIN category AS cat ON fc.category_id = cat.category_id WHERE r.customer_id = c.customer_id AND cat.name = 'Action') AND NOT EXISTS (SELECT 1 FROM rental AS r JOIN inventory AS i ON r.inventory_id = i.inventory_id JOIN film_category AS fc ON i.film_id = fc.film_id JOIN category AS cat ON fc.category_id = cat.category_id WHERE r.customer_id = c.customer_id AND cat.name = 'Animation');",
+    "expected_rows": [
+      {
+        "first_name": "STEVE",
+        "last_name": "MACKENZIE"
+      },
+      {
+        "first_name": "JAY",
+        "last_name": "ROBB"
+      },
+      {
+        "first_name": "LLOYD",
+        "last_name": "DOWD"
+      }
+    ],
+    "ordering": null,
+    "notes": "Dua kolom: first_name dan last_name. Pelanggan harus berasal dari Indonesia serta pernah menyewa film 'Action' namun belum pernah menyewa film 'Animation'. Urutan baris tidak dinilai."
+  }
+}

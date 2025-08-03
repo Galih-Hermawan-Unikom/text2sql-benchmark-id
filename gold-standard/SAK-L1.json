@@ -1,0 +1,252 @@
+{
+  "SAK-L1-01": {
+    "id": "SAK-L1-01",
+    "db": "sakila",
+    "category": "Lookup / Filter",
+    "question_id": "Daftar film berdurasi lebih dari 180 menit dengan rating 'R'; sertakan judul dan durasi setiap film.",
+    "question_en": "List films with duration longer than 180 minutes and 'R' rating; include title and duration of each film.",
+    "solution_sql": "SELECT title, length FROM film WHERE length > 180 AND rating = 'R';",
+    "expected_rows": [
+      {
+        "title": "ANALYZE HOOSIERS",
+        "length": 181
+      },
+      {
+        "title": "HAUNTING PIANIST",
+        "length": 181
+      },
+      {
+        "title": "HOME PITY",
+        "length": 185
+      },
+      {
+        "title": "LOVE SUICIDES",
+        "length": 181
+      },
+      {
+        "title": "SATURN NAME",
+        "length": 182
+      },
+      {
+        "title": "SMOOCHY CONTROL",
+        "length": 184
+      },
+      {
+        "title": "SOLDIERS EVOLUTION",
+        "length": 185
+      },
+      {
+        "title": "SWEET BROTHERHOOD",
+        "length": 185
+      },
+      {
+        "title": "WILD APOLLO",
+        "length": 181
+      }
+    ],
+    "ordering": null,
+    "notes": "Hasil wajib memuat dua kolom: title dan length. Urutan baris tidak dinilai."
+  },
+  "SAK-L1-02": {
+    "id": "SAK-L1-02",
+    "db": "sakila",
+    "category": "Lookup / Filter",
+    "question_id": "Tampilkan daftar aktor yang nama belakangnya diawali huruf 'A'.",
+    "question_en": "Display a list of actors whose last names start with the letter 'A'.",
+    "solution_sql": "SELECT first_name, last_name FROM actor WHERE last_name LIKE 'A%';",
+    "expected_rows": [
+      {
+        "first_name": "CHRISTIAN",
+        "last_name": "AKROYD"
+      },
+      {
+        "first_name": "KIRSTEN",
+        "last_name": "AKROYD"
+      },
+      {
+        "first_name": "DEBBIE",
+        "last_name": "AKROYD"
+      },
+      {
+        "first_name": "CUBA",
+        "last_name": "ALLEN"
+      },
+      {
+        "first_name": "KIM",
+        "last_name": "ALLEN"
+      },
+      {
+        "first_name": "MERYL",
+        "last_name": "ALLEN"
+      },
+      {
+        "first_name": "ANGELINA",
+        "last_name": "ASTAIRE"
+      }
+    ],
+    "ordering": null,
+    "notes": "Kembalikan dua kolom: first_name dan last_name. Huruf besar/kecil mengikuti data asli; urutan baris bebas."
+  },
+  "SAK-L1-03": {
+    "id": "SAK-L1-03",
+    "db": "sakila",
+    "category": "Lookup / Filter",
+    "question_id": "Tampilkan transaksi pembayaran bernilai antara 11 hingga 12 dolar, sertakan ID pembayaran, jumlah, dan tanggal pembayarannya.",
+    "question_en": "Display payment transactions valued between 11 and 12 dollars, include payment ID, amount, and payment date.",
+    "solution_sql": "SELECT payment_id, amount, payment_date FROM payment WHERE amount BETWEEN 11 AND 12;",
+    "expected_rows": [
+      {
+        "payment_id": 342,
+        "amount": 11.99,
+        "payment_date": "2005-07-29T22:37:41"
+      },
+      {
+        "payment_id": 3146,
+        "amount": 11.99,
+        "payment_date": "2005-08-21T23:34:00"
+      },
+      {
+        "payment_id": 5280,
+        "amount": 11.99,
+        "payment_date": "2005-08-23T22:19:33"
+      },
+      {
+        "payment_id": 5281,
+        "amount": 11.99,
+        "payment_date": "2005-05-25T18:18:19"
+      },
+      {
+        "payment_id": 5550,
+        "amount": 11.99,
+        "payment_date": "2005-08-22T23:48:56"
+      },
+      {
+        "payment_id": 6409,
+        "amount": 11.99,
+        "payment_date": "2005-08-02T22:18:13"
+      },
+      {
+        "payment_id": 8272,
+        "amount": 11.99,
+        "payment_date": "2005-06-17T23:51:21"
+      },
+      {
+        "payment_id": 9803,
+        "amount": 11.99,
+        "payment_date": "2005-08-21T23:28:58"
+      },
+      {
+        "payment_id": 15821,
+        "amount": 11.99,
+        "payment_date": "2005-07-07T20:45:51"
+      },
+      {
+        "payment_id": 15850,
+        "amount": 11.99,
+        "payment_date": "2005-07-06T22:58:31"
+      }
+    ],
+    "ordering": null,
+    "notes": "Tiga kolom: payment_id, amount, payment_date. Gunakan BETWEEN agar batas 11 dan 12 inklusif."
+  },
+  "SAK-L1-04": {
+    "id": "SAK-L1-04",
+    "db": "sakila",
+    "category": "Lookup / Filter",
+    "question_id": "Tampilkan ID dan nama kategori film yang diperbarui pada atau setelah 15 Februari 2006.",
+    "question_en": "Display the IDs and names of film categories that were updated on or after February 15, 2006.",
+    "solution_sql": "SELECT category_id, name FROM category WHERE last_update >= '2006-02-15';",
+    "expected_rows": [
+      {
+        "category_id": 1,
+        "name": "Action"
+      },
+      {
+        "category_id": 2,
+        "name": "Animation"
+      },
+      {
+        "category_id": 3,
+        "name": "Children"
+      },
+      {
+        "category_id": 4,
+        "name": "Classics"
+      },
+      {
+        "category_id": 5,
+        "name": "Comedy"
+      },
+      {
+        "category_id": 6,
+        "name": "Documentary"
+      },
+      {
+        "category_id": 7,
+        "name": "Drama"
+      },
+      {
+        "category_id": 8,
+        "name": "Family"
+      },
+      {
+        "category_id": 9,
+        "name": "Foreign"
+      },
+      {
+        "category_id": 10,
+        "name": "Games"
+      },
+      {
+        "category_id": 11,
+        "name": "Horror"
+      },
+      {
+        "category_id": 12,
+        "name": "Music"
+      },
+      {
+        "category_id": 13,
+        "name": "New"
+      },
+      {
+        "category_id": 14,
+        "name": "Sci-Fi"
+      },
+      {
+        "category_id": 15,
+        "name": "Sports"
+      },
+      {
+        "category_id": 16,
+        "name": "Travel"
+      }
+    ],
+    "ordering": null,
+    "notes": "Dua kolom: category_id dan name. Gunakan operator >= pada kolom last_update; urutan baris tidak diperiksa."
+  },
+  "SAK-L1-05": {
+    "id": "SAK-L1-05",
+    "db": "sakila",
+    "category": "Lookup / Filter",
+    "question_id": "Tampilkan semua nama bahasa yang tersedia selain Inggris dan Italia.",
+    "question_en": "Display the names of all available languages except English and Italian.",
+    "solution_sql": "SELECT name FROM language WHERE name NOT IN ('English', 'Italian');",
+    "expected_rows": [
+      {
+        "name": "Japanese"
+      },
+      {
+        "name": "Mandarin"
+      },
+      {
+        "name": "French"
+      },
+      {
+        "name": "German"
+      }
+    ],
+    "ordering": null,
+    "notes": "Satu kolom: name. Pastikan 'English' dan 'Italian' tidak ada dalam hasil. Urutan baris tidak dinilai."
+  }
+}

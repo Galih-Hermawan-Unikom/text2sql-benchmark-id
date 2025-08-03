@@ -1,0 +1,344 @@
+{
+  "RES-N4-01": {
+    "id": "RES-N4-01",
+    "db": "resep",
+    "category": "Nested / Subquery",
+    "question_id": "Sebutkan nama masakan yang memakai lebih banyak bahan daripada rata-rata jumlah bahan semua masakan.",
+    "question_en": "List the dish names that use more ingredients than the average number of ingredients across all dishes.",
+    "solution_sql": "SELECT m.nama_masakan\nFROM masakan AS m\nJOIN resep AS r ON m.kode_masakan = r.kode_masakan\nJOIN resep_bahan AS rb ON r.id_resep = rb.id_resep\nGROUP BY m.kode_masakan, m.nama_masakan\nHAVING COUNT(rb.id_bahan) > (\n  SELECT AVG(jml)\n  FROM (\n    SELECT COUNT(*) AS jml\n    FROM resep_bahan\n    GROUP BY id_resep\n  ) AS sub\n);",
+    "expected_rows": [
+      {
+        "nama_masakan": "Rendang"
+      },
+      {
+        "nama_masakan": "Sate Ayam Madura"
+      },
+      {
+        "nama_masakan": "Gado-Gado"
+      },
+      {
+        "nama_masakan": "Nasi Goreng Kampung"
+      },
+      {
+        "nama_masakan": "Soto Betawi"
+      },
+      {
+        "nama_masakan": "Pepes Ikan Mas"
+      },
+      {
+        "nama_masakan": "Rawon"
+      },
+      {
+        "nama_masakan": "Mie Aceh"
+      },
+      {
+        "nama_masakan": "Sayur Asem"
+      },
+      {
+        "nama_masakan": "Laksa Betawi"
+      },
+      {
+        "nama_masakan": "Sop Buntut"
+      },
+      {
+        "nama_masakan": "Ayam Betutu"
+      },
+      {
+        "nama_masakan": "Lontong Balap"
+      },
+      {
+        "nama_masakan": "Tahu Gejrot"
+      },
+      {
+        "nama_masakan": "Mi Kocok Bandung"
+      },
+      {
+        "nama_masakan": "Sate Padang"
+      },
+      {
+        "nama_masakan": "Semur Jengkol"
+      },
+      {
+        "nama_masakan": "Ikan Kuah Pala Banda"
+      },
+      {
+        "nama_masakan": "Papeda Ikan Kuah Kuning"
+      },
+      {
+        "nama_masakan": "Nasi Liwet"
+      }
+    ],
+    "ordering": null,
+    "notes": "Sub-query bersarang di HAVING untuk membandingkan dengan rata-rata global."
+  },
+  "RES-N4-02": {
+    "id": "RES-N4-02",
+    "db": "resep",
+    "category": "Nested / Subquery",
+    "question_id": "Tampilkan judul resep yang durasi memasaknya lebih lama daripada rata-rata durasi di kategori masakan yang sama.",
+    "question_en": "Show recipe titles that have cooking duration longer than the average duration in the same dish category.",
+    "solution_sql": "SELECT r.judul_resep\nFROM resep AS r\nJOIN masakan AS m ON r.kode_masakan = m.kode_masakan\nWHERE r.waktu_masak > (\n  SELECT AVG(r2.waktu_masak)\n  FROM resep AS r2\n  JOIN masakan AS m2 ON r2.kode_masakan = m2.kode_masakan\n  WHERE m2.kategori = m.kategori\n);",
+    "expected_rows": [
+      {
+        "judul_resep": "Rendang Padang Asli"
+      },
+      {
+        "judul_resep": "Rawon Surabaya"
+      },
+      {
+        "judul_resep": "Gudeg Jogja"
+      },
+      {
+        "judul_resep": "Coto Makassar"
+      },
+      {
+        "judul_resep": "Nasi Kuning Manado"
+      },
+      {
+        "judul_resep": "Sambal Roa Manado"
+      },
+      {
+        "judul_resep": "Pempek Kapal Selam"
+      },
+      {
+        "judul_resep": "Laksa Betawi"
+      },
+      {
+        "judul_resep": "Sop Buntut"
+      },
+      {
+        "judul_resep": "Ayam Betutu"
+      },
+      {
+        "judul_resep": "Mi Kocok Bandung"
+      },
+      {
+        "judul_resep": "Gudeg Manggar"
+      },
+      {
+        "judul_resep": "Semur Jengkol Betawi"
+      },
+      {
+        "judul_resep": "Nasi Liwet Beras Merah"
+      }
+    ],
+    "ordering": null,
+    "notes": "Sub-query terkorelasi pada kolom kategori masakan."
+  },
+  "RES-N4-03": {
+    "id": "RES-N4-03",
+    "db": "resep",
+    "category": "Nested / Subquery",
+    "question_id": "Masakan asal mana yang menggunakan setidaknya satu bahan yang tidak pernah dipakai masakan asal 'Bali'? Tampilkan nama daerahnya saja.",
+    "question_en": "Which regions' dishes use at least one ingredient that is never used in 'Bali' region dishes? Show only the region names.",
+    "solution_sql": "SELECT DISTINCT m.asal_daerah\nFROM masakan AS m\nJOIN resep AS r ON m.kode_masakan = r.kode_masakan\nJOIN resep_bahan AS rb ON r.id_resep = rb.id_resep\nWHERE rb.id_bahan NOT IN (\n  SELECT rb2.id_bahan\n  FROM masakan AS m2\n  JOIN resep AS r2 ON m2.kode_masakan = r2.kode_masakan\n  JOIN resep_bahan AS rb2 ON r2.id_resep = rb2.id_resep\n  WHERE m2.asal_daerah = 'Bali'\n);",
+    "expected_rows": [
+      {
+        "asal_daerah": "Padang"
+      },
+      {
+        "asal_daerah": "Jawa Timur"
+      },
+      {
+        "asal_daerah": "Betawi"
+      },
+      {
+        "asal_daerah": "Jawa Tengah"
+      },
+      {
+        "asal_daerah": "Lombok"
+      },
+      {
+        "asal_daerah": "Sunda"
+      },
+      {
+        "asal_daerah": "Tionghoa-Jawa"
+      },
+      {
+        "asal_daerah": "Aceh"
+      },
+      {
+        "asal_daerah": "Madura"
+      },
+      {
+        "asal_daerah": "Yogyakarta"
+      },
+      {
+        "asal_daerah": "Makassar"
+      },
+      {
+        "asal_daerah": "Jawa"
+      },
+      {
+        "asal_daerah": "Manado"
+      },
+      {
+        "asal_daerah": "Palembang"
+      },
+      {
+        "asal_daerah": "Jakarta"
+      },
+      {
+        "asal_daerah": "Surabaya"
+      },
+      {
+        "asal_daerah": "Cirebon"
+      },
+      {
+        "asal_daerah": "Maluku"
+      },
+      {
+        "asal_daerah": "Papua"
+      },
+      {
+        "asal_daerah": "Solo"
+      }
+    ],
+    "ordering": null,
+    "notes": "Menunjukkan penggunaan sub-query NOT IN untuk membandingkan set bahan antar daerah."
+  },
+  "RES-N4-04": {
+    "id": "RES-N4-04",
+    "db": "resep",
+    "category": "Nested / Subquery",
+    "question_id": "Sebutkan bahan apa saja yang sama sekali belum pernah dipakai di masakan mana pun. Tampilkan nama bahannya saja.",
+    "question_en": "List which ingredients have never been used in any dish. Show only the ingredient names.",
+    "solution_sql": "SELECT b.nama_bahan\nFROM bahan AS b\nWHERE b.id_bahan NOT IN (\n  SELECT DISTINCT rb.id_bahan\n  FROM resep_bahan AS rb\n);",
+    "expected_rows": [
+      {
+        "nama_bahan": "Cumi-cumi"
+      },
+      {
+        "nama_bahan": "Telur bebek"
+      },
+      {
+        "nama_bahan": "Telur puyuh"
+      },
+      {
+        "nama_bahan": "Mentega"
+      },
+      {
+        "nama_bahan": "Margarin"
+      },
+      {
+        "nama_bahan": "Susu kental manis"
+      },
+      {
+        "nama_bahan": "Keju cheddar"
+      },
+      {
+        "nama_bahan": "Keju mozarella"
+      },
+      {
+        "nama_bahan": "Minyak sapi (ghee)"
+      },
+      {
+        "nama_bahan": "Beras hitam"
+      },
+      {
+        "nama_bahan": "Beras ketan"
+      },
+      {
+        "nama_bahan": "Mi instan"
+      },
+      {
+        "nama_bahan": "Tepung terigu"
+      },
+      {
+        "nama_bahan": "Ketupat nasi"
+      },
+      {
+        "nama_bahan": "Ubi jalar"
+      },
+      {
+        "nama_bahan": "Terong ungu"
+      },
+      {
+        "nama_bahan": "Okra"
+      },
+      {
+        "nama_bahan": "Sawi putih"
+      },
+      {
+        "nama_bahan": "Selada hijau"
+      },
+      {
+        "nama_bahan": "Daun singkong"
+      },
+      {
+        "nama_bahan": "Pepaya muda"
+      },
+      {
+        "nama_bahan": "Petai"
+      },
+      {
+        "nama_bahan": "Jamur kuping"
+      },
+      {
+        "nama_bahan": "Jinten bubuk"
+      },
+      {
+        "nama_bahan": "Kapulaga"
+      },
+      {
+        "nama_bahan": "Cabe giling halus"
+      },
+      {
+        "nama_bahan": "Garam Himalaya"
+      },
+      {
+        "nama_bahan": "Gula palem"
+      },
+      {
+        "nama_bahan": "Kecap ikan"
+      },
+      {
+        "nama_bahan": "Saos sambal"
+      },
+      {
+        "nama_bahan": "Minyak zaitun"
+      },
+      {
+        "nama_bahan": "Madu"
+      },
+      {
+        "nama_bahan": "Sambal terasi siap saji"
+      },
+      {
+        "nama_bahan": "Baking powder"
+      },
+      {
+        "nama_bahan": "Ragi instan"
+      },
+      {
+        "nama_bahan": "Cokelat bubuk"
+      },
+      {
+        "nama_bahan": "Vanili bubuk"
+      },
+      {
+        "nama_bahan": "Kerupuk udang mentah"
+      },
+      {
+        "nama_bahan": "Kerupuk aci mentah"
+      }
+    ],
+    "ordering": null,
+    "notes": "Sub-query pada klausa NOT IN menghasilkan daftar semua id_bahan yang sudah dipakai; query utama memilih sisanya (bahan 'yatim')—tidak dapat dipecahkan hanya dengan GROUP BY biasa tanpa sub-query."
+  },
+  "RES-N4-05": {
+    "id": "RES-N4-05",
+    "db": "resep",
+    "category": "Nested / Subquery",
+    "question_id": "Berapa banyak resep yang tidak menggunakan bahan apa pun yang mengandung kata 'Cabe'? Tampilkan jumlahnya saja.",
+    "question_en": "How many recipes do not use any ingredient containing the word 'Cabe'? Show only the count.",
+    "solution_sql": "SELECT COUNT(*) AS resep_tanpa_cabe\nFROM resep AS r\nWHERE r.id_resep NOT IN (\n  SELECT DISTINCT rb.id_resep\n  FROM resep_bahan AS rb\n  JOIN bahan AS b ON rb.id_bahan = b.id_bahan\n  WHERE b.nama_bahan LIKE '%Cabe%'\n);",
+    "expected_rows": [
+      {
+        "resep_tanpa_cabe": 17
+      }
+    ],
+    "ordering": null,
+    "notes": "Sub-query mengumpulkan semua resep yang memakai bahan dengan kata 'Cabe'; klausa NOT IN menghitung sisanya. Ganti LIKE dengan ekspresi case-insensitive (mis. LOWER(...)) bila diperlukan."
+  }
+}

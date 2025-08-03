@@ -1,0 +1,1251 @@
+{
+  "SAK-C5-01": {
+    "id": "SAK-C5-01",
+    "db": "sakila",
+    "category": "Comparative",
+    "question_id": "Tampilkan film ber-rating 'R' yang dirilis pada 2006 dengan durasi di atas rata-rata durasi semua film 'R' tahun 2006; sertakan judul, tahun rilis, dan durasinya.",
+    "question_en": "Display 'R' rated films released in 2006 with duration above the average duration of all 'R' films in 2006; include title, release year, and duration.",
+    "solution_sql": "SELECT title, release_year, length FROM film WHERE release_year = 2006 AND rating = 'R' AND length > (SELECT AVG(length) FROM film WHERE release_year = 2006 AND rating = 'R');",
+    "expected_rows": [
+      {
+        "title": "AMERICAN CIRCUS",
+        "release_year": 2006,
+        "length": 129
+      },
+      {
+        "title": "ANALYZE HOOSIERS",
+        "release_year": 2006,
+        "length": 181
+      },
+      {
+        "title": "APOCALYPSE FLAMINGOS",
+        "release_year": 2006,
+        "length": 119
+      },
+      {
+        "title": "ARMY FLINTSTONES",
+        "release_year": 2006,
+        "length": 148
+      },
+      {
+        "title": "BADMAN DAWN",
+        "release_year": 2006,
+        "length": 162
+      },
+      {
+        "title": "BEAR GRACELAND",
+        "release_year": 2006,
+        "length": 160
+      },
+      {
+        "title": "BOOGIE AMELIE",
+        "release_year": 2006,
+        "length": 121
+      },
+      {
+        "title": "BROOKLYN DESERT",
+        "release_year": 2006,
+        "length": 161
+      },
+      {
+        "title": "CAMPUS REMEMBER",
+        "release_year": 2006,
+        "length": 167
+      },
+      {
+        "title": "CAUSE DATE",
+        "release_year": 2006,
+        "length": 179
+      },
+      {
+        "title": "CHOCOLATE DUCK",
+        "release_year": 2006,
+        "length": 132
+      },
+      {
+        "title": "CLONES PINOCCHIO",
+        "release_year": 2006,
+        "length": 124
+      },
+      {
+        "title": "CONNECTICUT TRAMP",
+        "release_year": 2006,
+        "length": 172
+      },
+      {
+        "title": "DOUBLE WRATH",
+        "release_year": 2006,
+        "length": 177
+      },
+      {
+        "title": "DOUBTFIRE LABYRINTH",
+        "release_year": 2006,
+        "length": 154
+      },
+      {
+        "title": "DROP WATERFRONT",
+        "release_year": 2006,
+        "length": 178
+      },
+      {
+        "title": "DURHAM PANKY",
+        "release_year": 2006,
+        "length": 154
+      },
+      {
+        "title": "ENTRAPMENT SATISFACTION",
+        "release_year": 2006,
+        "length": 176
+      },
+      {
+        "title": "ESCAPE METROPOLIS",
+        "release_year": 2006,
+        "length": 167
+      },
+      {
+        "title": "EXPRESS LONELY",
+        "release_year": 2006,
+        "length": 178
+      },
+      {
+        "title": "FAMILY SWEET",
+        "release_year": 2006,
+        "length": 155
+      },
+      {
+        "title": "FEVER EMPIRE",
+        "release_year": 2006,
+        "length": 158
+      },
+      {
+        "title": "FINDING ANACONDA",
+        "release_year": 2006,
+        "length": 156
+      },
+      {
+        "title": "FIRE WOLVES",
+        "release_year": 2006,
+        "length": 173
+      },
+      {
+        "title": "FISH OPUS",
+        "release_year": 2006,
+        "length": 125
+      },
+      {
+        "title": "FLIGHT LIES",
+        "release_year": 2006,
+        "length": 179
+      },
+      {
+        "title": "FREAKY POCUS",
+        "release_year": 2006,
+        "length": 126
+      },
+      {
+        "title": "GALAXY SWEETHEARTS",
+        "release_year": 2006,
+        "length": 128
+      },
+      {
+        "title": "GILMORE BOILED",
+        "release_year": 2006,
+        "length": 163
+      },
+      {
+        "title": "GOLD RIVER",
+        "release_year": 2006,
+        "length": 154
+      },
+      {
+        "title": "GOLDMINE TYCOON",
+        "release_year": 2006,
+        "length": 153
+      },
+      {
+        "title": "GRACELAND DYNAMITE",
+        "release_year": 2006,
+        "length": 140
+      },
+      {
+        "title": "GREEDY ROOTS",
+        "release_year": 2006,
+        "length": 166
+      },
+      {
+        "title": "GRINCH MASSAGE",
+        "release_year": 2006,
+        "length": 150
+      },
+      {
+        "title": "HAMLET WISDOM",
+        "release_year": 2006,
+        "length": 146
+      },
+      {
+        "title": "HAUNTING PIANIST",
+        "release_year": 2006,
+        "length": 181
+      },
+      {
+        "title": "HOLOCAUST HIGHBALL",
+        "release_year": 2006,
+        "length": 149
+      },
+      {
+        "title": "HOME PITY",
+        "release_year": 2006,
+        "length": 185
+      },
+      {
+        "title": "HORROR REIGN",
+        "release_year": 2006,
+        "length": 139
+      },
+      {
+        "title": "ICE CROSSING",
+        "release_year": 2006,
+        "length": 131
+      },
+      {
+        "title": "ILLUSION AMELIE",
+        "release_year": 2006,
+        "length": 122
+      },
+      {
+        "title": "KILLER INNOCENT",
+        "release_year": 2006,
+        "length": 161
+      },
+      {
+        "title": "KISSING DOLLS",
+        "release_year": 2006,
+        "length": 141
+      },
+      {
+        "title": "KRAMER CHOCOLATE",
+        "release_year": 2006,
+        "length": 171
+      },
+      {
+        "title": "LIGHTS DEER",
+        "release_year": 2006,
+        "length": 174
+      },
+      {
+        "title": "LOATHING LEGALLY",
+        "release_year": 2006,
+        "length": 140
+      },
+      {
+        "title": "LOCK REAR",
+        "release_year": 2006,
+        "length": 120
+      },
+      {
+        "title": "LOSE INCH",
+        "release_year": 2006,
+        "length": 137
+      },
+      {
+        "title": "LOVE SUICIDES",
+        "release_year": 2006,
+        "length": 181
+      },
+      {
+        "title": "MADISON TRAP",
+        "release_year": 2006,
+        "length": 147
+      },
+      {
+        "title": "MASSACRE USUAL",
+        "release_year": 2006,
+        "length": 165
+      },
+      {
+        "title": "MUSIC BOONDOCK",
+        "release_year": 2006,
+        "length": 129
+      },
+      {
+        "title": "NEIGHBORS CHARADE",
+        "release_year": 2006,
+        "length": 161
+      },
+      {
+        "title": "PAJAMA JAWBREAKER",
+        "release_year": 2006,
+        "length": 126
+      },
+      {
+        "title": "QUEST MUSSOLINI",
+        "release_year": 2006,
+        "length": 177
+      },
+      {
+        "title": "RAGE GAMES",
+        "release_year": 2006,
+        "length": 120
+      },
+      {
+        "title": "RAGING AIRPLANE",
+        "release_year": 2006,
+        "length": 154
+      },
+      {
+        "title": "REQUIEM TYCOON",
+        "release_year": 2006,
+        "length": 167
+      },
+      {
+        "title": "ROAD ROXANNE",
+        "release_year": 2006,
+        "length": 158
+      },
+      {
+        "title": "ROBBERY BRIGHT",
+        "release_year": 2006,
+        "length": 134
+      },
+      {
+        "title": "ROXANNE REBEL",
+        "release_year": 2006,
+        "length": 171
+      },
+      {
+        "title": "RULES HUMAN",
+        "release_year": 2006,
+        "length": 153
+      },
+      {
+        "title": "RUN PACIFIC",
+        "release_year": 2006,
+        "length": 145
+      },
+      {
+        "title": "SATURN NAME",
+        "release_year": 2006,
+        "length": 182
+      },
+      {
+        "title": "SEVEN SWARM",
+        "release_year": 2006,
+        "length": 127
+      },
+      {
+        "title": "SHRUNK DIVINE",
+        "release_year": 2006,
+        "length": 139
+      },
+      {
+        "title": "SLACKER LIAISONS",
+        "release_year": 2006,
+        "length": 179
+      },
+      {
+        "title": "SMOOCHY CONTROL",
+        "release_year": 2006,
+        "length": 184
+      },
+      {
+        "title": "SOLDIERS EVOLUTION",
+        "release_year": 2006,
+        "length": 185
+      },
+      {
+        "title": "SOUP WISDOM",
+        "release_year": 2006,
+        "length": 169
+      },
+      {
+        "title": "SOUTH WAIT",
+        "release_year": 2006,
+        "length": 143
+      },
+      {
+        "title": "SPIRIT FLINTSTONES",
+        "release_year": 2006,
+        "length": 149
+      },
+      {
+        "title": "SPLENDOR PATTON",
+        "release_year": 2006,
+        "length": 134
+      },
+      {
+        "title": "STORY SIDE",
+        "release_year": 2006,
+        "length": 163
+      },
+      {
+        "title": "STRAIGHT HOURS",
+        "release_year": 2006,
+        "length": 151
+      },
+      {
+        "title": "STRANGERS GRAFFITI",
+        "release_year": 2006,
+        "length": 119
+      },
+      {
+        "title": "SUBMARINE BED",
+        "release_year": 2006,
+        "length": 127
+      },
+      {
+        "title": "SUN CONFESSIONS",
+        "release_year": 2006,
+        "length": 141
+      },
+      {
+        "title": "SWEET BROTHERHOOD",
+        "release_year": 2006,
+        "length": 185
+      },
+      {
+        "title": "TIGHTS DAWN",
+        "release_year": 2006,
+        "length": 172
+      },
+      {
+        "title": "TOMORROW HUSTLER",
+        "release_year": 2006,
+        "length": 142
+      },
+      {
+        "title": "TOWN ARK",
+        "release_year": 2006,
+        "length": 136
+      },
+      {
+        "title": "TUXEDO MILE",
+        "release_year": 2006,
+        "length": 152
+      },
+      {
+        "title": "UNITED PILOT",
+        "release_year": 2006,
+        "length": 164
+      },
+      {
+        "title": "VACATION BOONDOCK",
+        "release_year": 2006,
+        "length": 145
+      },
+      {
+        "title": "VANISHED GARDEN",
+        "release_year": 2006,
+        "length": 142
+      },
+      {
+        "title": "VELVET TERMINATOR",
+        "release_year": 2006,
+        "length": 173
+      },
+      {
+        "title": "VIRGINIAN PLUTO",
+        "release_year": 2006,
+        "length": 164
+      },
+      {
+        "title": "WASH HEAVENLY",
+        "release_year": 2006,
+        "length": 161
+      },
+      {
+        "title": "WEEKEND PERSONAL",
+        "release_year": 2006,
+        "length": 134
+      },
+      {
+        "title": "WILD APOLLO",
+        "release_year": 2006,
+        "length": 181
+      },
+      {
+        "title": "WILLOW TRACY",
+        "release_year": 2006,
+        "length": 137
+      },
+      {
+        "title": "WOMEN DORADO",
+        "release_year": 2006,
+        "length": 126
+      },
+      {
+        "title": "WORKER TARZAN",
+        "release_year": 2006,
+        "length": 139
+      }
+    ],
+    "ordering": null,
+    "notes": "Tiga kolom: title, release_year, length. Rating & tahun dibatasi agar baris ≤ 50."
+  },
+  "SAK-C5-02": {
+    "id": "SAK-C5-02",
+    "db": "sakila",
+    "category": "Comparative",
+    "question_id": "Tampilkan pelanggan yang jumlah sewanya berada di bawah (rata-rata jumlah sewa per pelanggan minus satu simpangan baku); sertakan nama dan total sewanya.",
+    "question_en": "Display customers whose rental count is below (average rental count per customer minus one standard deviation); include name and total rentals.",
+    "solution_sql": "SELECT sub.first_name, sub.last_name, sub.rental_count FROM (SELECT c.customer_id, c.first_name, c.last_name, COUNT(r.rental_id) AS rental_count FROM customer c JOIN rental r ON c.customer_id=r.customer_id GROUP BY c.customer_id, c.first_name, c.last_name) AS sub JOIN (SELECT AVG(cnt) AS avg_cnt, STDDEV(cnt) AS std_cnt FROM (SELECT COUNT(*) AS cnt FROM rental GROUP BY customer_id) AS t) AS stats ON 1=1 WHERE sub.rental_count < stats.avg_cnt - stats.std_cnt;",
+    "expected_rows": [
+      {
+        "first_name": "DONNA",
+        "last_name": "THOMPSON",
+        "rental_count": 21
+      },
+      {
+        "first_name": "ANNA",
+        "last_name": "HILL",
+        "rental_count": 21
+      },
+      {
+        "first_name": "ANN",
+        "last_name": "EVANS",
+        "rental_count": 17
+      },
+      {
+        "first_name": "KATHERINE",
+        "last_name": "RIVERA",
+        "rental_count": 14
+      },
+      {
+        "first_name": "CHRISTINA",
+        "last_name": "RAMIREZ",
+        "rental_count": 18
+      },
+      {
+        "first_name": "BONNIE",
+        "last_name": "HUGHES",
+        "rental_count": 21
+      },
+      {
+        "first_name": "NORMA",
+        "last_name": "GONZALES",
+        "rental_count": 21
+      },
+      {
+        "first_name": "PAULA",
+        "last_name": "BRYANT",
+        "rental_count": 18
+      },
+      {
+        "first_name": "ANNIE",
+        "last_name": "RUSSELL",
+        "rental_count": 18
+      },
+      {
+        "first_name": "TIFFANY",
+        "last_name": "JORDAN",
+        "rental_count": 14
+      },
+      {
+        "first_name": "EDITH",
+        "last_name": "MCDONALD",
+        "rental_count": 19
+      },
+      {
+        "first_name": "KIM",
+        "last_name": "CRUZ",
+        "rental_count": 21
+      },
+      {
+        "first_name": "SHEILA",
+        "last_name": "WELLS",
+        "rental_count": 18
+      },
+      {
+        "first_name": "ANITA",
+        "last_name": "MORALES",
+        "rental_count": 15
+      },
+      {
+        "first_name": "EVA",
+        "last_name": "RAMOS",
+        "rental_count": 18
+      },
+      {
+        "first_name": "ALICIA",
+        "last_name": "MILLS",
+        "rental_count": 21
+      },
+      {
+        "first_name": "JILL",
+        "last_name": "HAWKINS",
+        "rental_count": 21
+      },
+      {
+        "first_name": "LAUREN",
+        "last_name": "HUDSON",
+        "rental_count": 20
+      },
+      {
+        "first_name": "JOANN",
+        "last_name": "GARDNER",
+        "rental_count": 16
+      },
+      {
+        "first_name": "LORRAINE",
+        "last_name": "STEPHENS",
+        "rental_count": 21
+      },
+      {
+        "first_name": "YVONNE",
+        "last_name": "WATKINS",
+        "rental_count": 21
+      },
+      {
+        "first_name": "JEANETTE",
+        "last_name": "GREENE",
+        "rental_count": 20
+      },
+      {
+        "first_name": "KRISTEN",
+        "last_name": "CHAVEZ",
+        "rental_count": 18
+      },
+      {
+        "first_name": "VANESSA",
+        "last_name": "SIMS",
+        "rental_count": 19
+      },
+      {
+        "first_name": "TARA",
+        "last_name": "RYAN",
+        "rental_count": 20
+      },
+      {
+        "first_name": "EILEEN",
+        "last_name": "CARR",
+        "rental_count": 18
+      },
+      {
+        "first_name": "WILMA",
+        "last_name": "RICHARDS",
+        "rental_count": 20
+      },
+      {
+        "first_name": "VERA",
+        "last_name": "MCCOY",
+        "rental_count": 18
+      },
+      {
+        "first_name": "DELORES",
+        "last_name": "HANSEN",
+        "rental_count": 21
+      },
+      {
+        "first_name": "MELINDA",
+        "last_name": "FERNANDEZ",
+        "rental_count": 17
+      },
+      {
+        "first_name": "MAUREEN",
+        "last_name": "LITTLE",
+        "rental_count": 21
+      },
+      {
+        "first_name": "NELLIE",
+        "last_name": "GARRETT",
+        "rental_count": 21
+      },
+      {
+        "first_name": "CAROLINE",
+        "last_name": "BOWMAN",
+        "rental_count": 15
+      },
+      {
+        "first_name": "JO",
+        "last_name": "FOWLER",
+        "rental_count": 20
+      },
+      {
+        "first_name": "IRMA",
+        "last_name": "PEARSON",
+        "rental_count": 18
+      },
+      {
+        "first_name": "PENNY",
+        "last_name": "NEAL",
+        "rental_count": 18
+      },
+      {
+        "first_name": "KAY",
+        "last_name": "CALDWELL",
+        "rental_count": 20
+      },
+      {
+        "first_name": "LEONA",
+        "last_name": "OBRIEN",
+        "rental_count": 14
+      },
+      {
+        "first_name": "ROBERT",
+        "last_name": "BAUGHMAN",
+        "rental_count": 21
+      },
+      {
+        "first_name": "DANIEL",
+        "last_name": "CABRAL",
+        "rental_count": 20
+      },
+      {
+        "first_name": "KENNETH",
+        "last_name": "GOODEN",
+        "rental_count": 17
+      },
+      {
+        "first_name": "BRIAN",
+        "last_name": "WYMAN",
+        "rental_count": 12
+      },
+      {
+        "first_name": "ANTHONY",
+        "last_name": "SCHWAB",
+        "rental_count": 20
+      },
+      {
+        "first_name": "HENRY",
+        "last_name": "BILLINGSLEY",
+        "rental_count": 18
+      },
+      {
+        "first_name": "JONATHAN",
+        "last_name": "SCARBOROUGH",
+        "rental_count": 18
+      },
+      {
+        "first_name": "TERRY",
+        "last_name": "GRISSOM",
+        "rental_count": 20
+      },
+      {
+        "first_name": "SAMUEL",
+        "last_name": "MARLOW",
+        "rental_count": 21
+      },
+      {
+        "first_name": "WAYNE",
+        "last_name": "TRUONG",
+        "rental_count": 19
+      },
+      {
+        "first_name": "EUGENE",
+        "last_name": "CULPEPPER",
+        "rental_count": 19
+      },
+      {
+        "first_name": "JOHNNY",
+        "last_name": "TURPIN",
+        "rental_count": 19
+      },
+      {
+        "first_name": "ANTONIO",
+        "last_name": "MEEK",
+        "rental_count": 16
+      },
+      {
+        "first_name": "DANNY",
+        "last_name": "ISOM",
+        "rental_count": 21
+      },
+      {
+        "first_name": "TONY",
+        "last_name": "CARRANZA",
+        "rental_count": 21
+      },
+      {
+        "first_name": "LUIS",
+        "last_name": "YANEZ",
+        "rental_count": 20
+      },
+      {
+        "first_name": "ALLEN",
+        "last_name": "BUTTERFIELD",
+        "rental_count": 21
+      },
+      {
+        "first_name": "MARVIN",
+        "last_name": "YEE",
+        "rental_count": 21
+      },
+      {
+        "first_name": "JACOB",
+        "last_name": "LANCE",
+        "rental_count": 21
+      },
+      {
+        "first_name": "HERBERT",
+        "last_name": "KRUGER",
+        "rental_count": 20
+      },
+      {
+        "first_name": "FREDERICK",
+        "last_name": "ISBELL",
+        "rental_count": 21
+      },
+      {
+        "first_name": "OSCAR",
+        "last_name": "AQUINO",
+        "rental_count": 20
+      },
+      {
+        "first_name": "LLOYD",
+        "last_name": "DOWD",
+        "rental_count": 19
+      },
+      {
+        "first_name": "JEROME",
+        "last_name": "KENYON",
+        "rental_count": 16
+      },
+      {
+        "first_name": "FLOYD",
+        "last_name": "GANDY",
+        "rental_count": 17
+      },
+      {
+        "first_name": "LEWIS",
+        "last_name": "LYMAN",
+        "rental_count": 19
+      },
+      {
+        "first_name": "VERNON",
+        "last_name": "CHAPA",
+        "rental_count": 18
+      },
+      {
+        "first_name": "RICARDO",
+        "last_name": "MEADOR",
+        "rental_count": 21
+      },
+      {
+        "first_name": "LESTER",
+        "last_name": "KRAUS",
+        "rental_count": 16
+      },
+      {
+        "first_name": "TYLER",
+        "last_name": "WREN",
+        "rental_count": 21
+      },
+      {
+        "first_name": "RUBEN",
+        "last_name": "GEARY",
+        "rental_count": 21
+      },
+      {
+        "first_name": "RAFAEL",
+        "last_name": "ABNEY",
+        "rental_count": 21
+      },
+      {
+        "first_name": "RAUL",
+        "last_name": "FORTIER",
+        "rental_count": 20
+      },
+      {
+        "first_name": "JARED",
+        "last_name": "ELY",
+        "rental_count": 19
+      },
+      {
+        "first_name": "ADRIAN",
+        "last_name": "CLARY",
+        "rental_count": 19
+      },
+      {
+        "first_name": "LONNIE",
+        "last_name": "TIRADO",
+        "rental_count": 18
+      },
+      {
+        "first_name": "JULIO",
+        "last_name": "NOLAND",
+        "rental_count": 21
+      },
+      {
+        "first_name": "ALLAN",
+        "last_name": "CORNISH",
+        "rental_count": 19
+      },
+      {
+        "first_name": "NELSON",
+        "last_name": "CHRISTENSON",
+        "rental_count": 20
+      },
+      {
+        "first_name": "HUGH",
+        "last_name": "WALDROP",
+        "rental_count": 21
+      },
+      {
+        "first_name": "DWIGHT",
+        "last_name": "LOMBARDI",
+        "rental_count": 17
+      },
+      {
+        "first_name": "ARMANDO",
+        "last_name": "GRUBER",
+        "rental_count": 21
+      },
+      {
+        "first_name": "ALFREDO",
+        "last_name": "MCADAMS",
+        "rental_count": 20
+      },
+      {
+        "first_name": "ALBERTO",
+        "last_name": "HENNING",
+        "rental_count": 21
+      },
+      {
+        "first_name": "KIRK",
+        "last_name": "STCLAIR",
+        "rental_count": 19
+      },
+      {
+        "first_name": "AUSTIN",
+        "last_name": "CINTRON",
+        "rental_count": 19
+      }
+    ],
+    "ordering": null,
+    "notes": "Tiga kolom: first_name, last_name, rental_count. Memakai AVG–STDDEV untuk menjaga baris di kisaran belasan."
+  },
+  "SAK-C5-03": {
+    "id": "SAK-C5-03",
+    "db": "sakila",
+    "category": "Comparative",
+    "question_id": "Di antara film 'PG-13', tampilkan yang biaya sewanya lebih tinggi dari rata-rata biaya sewa film 'PG-13' **dengan durasi > 120 menit** di kategori yang sama; sertakan judul, kategori, dan rental_rate.",
+    "question_en": "Among 'PG-13' films, display those with rental rates higher than the average rental rate of 'PG-13' films **with duration > 120 minutes** in the same category; include title, category, and rental_rate.",
+    "solution_sql": "SELECT f.title, cat.name AS category, f.rental_rate FROM film f JOIN film_category fc ON f.film_id = fc.film_id JOIN category cat ON fc.category_id = cat.category_id WHERE f.rating = 'PG-13' AND f.length > 120 AND f.rental_rate > (SELECT AVG(f2.rental_rate) FROM film f2 JOIN film_category fc2 ON f2.film_id=fc2.film_id WHERE fc2.category_id = fc.category_id AND f2.rating='PG-13' AND f2.length > 120);",
+    "expected_rows": [
+      {
+        "title": "BINGO TALENTED",
+        "category": "Sci-Fi",
+        "rental_rate": 2.99
+      },
+      {
+        "title": "BREAKING HOME",
+        "category": "New",
+        "rental_rate": 2.99
+      },
+      {
+        "title": "CASPER DRAGONFLY",
+        "category": "Children",
+        "rental_rate": 4.99
+      },
+      {
+        "title": "CHICAGO NORTH",
+        "category": "Games",
+        "rental_rate": 4.99
+      },
+      {
+        "title": "DARLING BREAKING",
+        "category": "Games",
+        "rental_rate": 4.99
+      },
+      {
+        "title": "ELEPHANT TROJAN",
+        "category": "Horror",
+        "rental_rate": 4.99
+      },
+      {
+        "title": "EXPECATIONS NATURAL",
+        "category": "Travel",
+        "rental_rate": 4.99
+      },
+      {
+        "title": "EYES DRIVING",
+        "category": "Sci-Fi",
+        "rental_rate": 2.99
+      },
+      {
+        "title": "FLINTSTONES HAPPINESS",
+        "category": "Comedy",
+        "rental_rate": 4.99
+      },
+      {
+        "title": "FRONTIER CABIN",
+        "category": "New",
+        "rental_rate": 4.99
+      },
+      {
+        "title": "GROUNDHOG UNCUT",
+        "category": "Comedy",
+        "rental_rate": 4.99
+      },
+      {
+        "title": "HARRY IDAHO",
+        "category": "Drama",
+        "rental_rate": 4.99
+      },
+      {
+        "title": "HOTEL HAPPINESS",
+        "category": "Foreign",
+        "rental_rate": 4.99
+      },
+      {
+        "title": "HUNCHBACK IMPOSSIBLE",
+        "category": "Drama",
+        "rental_rate": 4.99
+      },
+      {
+        "title": "IDAHO LOVE",
+        "category": "New",
+        "rental_rate": 2.99
+      },
+      {
+        "title": "INNOCENT USUAL",
+        "category": "Foreign",
+        "rental_rate": 4.99
+      },
+      {
+        "title": "JINGLE SAGEBRUSH",
+        "category": "Classics",
+        "rental_rate": 4.99
+      },
+      {
+        "title": "KISS GLORY",
+        "category": "Foreign",
+        "rental_rate": 4.99
+      },
+      {
+        "title": "LAMBS CINCINATTI",
+        "category": "Games",
+        "rental_rate": 4.99
+      },
+      {
+        "title": "MALTESE HOPE",
+        "category": "Games",
+        "rental_rate": 4.99
+      },
+      {
+        "title": "MILLION ACE",
+        "category": "Classics",
+        "rental_rate": 4.99
+      },
+      {
+        "title": "MINDS TRUMAN",
+        "category": "Action",
+        "rental_rate": 4.99
+      },
+      {
+        "title": "MINE TITANS",
+        "category": "New",
+        "rental_rate": 4.99
+      },
+      {
+        "title": "MISSION ZOOLANDER",
+        "category": "Animation",
+        "rental_rate": 4.99
+      },
+      {
+        "title": "MOONSHINE CABIN",
+        "category": "Games",
+        "rental_rate": 4.99
+      },
+      {
+        "title": "NAME DETECTIVE",
+        "category": "Games",
+        "rental_rate": 4.99
+      },
+      {
+        "title": "OUTLAW HANKY",
+        "category": "Travel",
+        "rental_rate": 4.99
+      },
+      {
+        "title": "PAST SUICIDES",
+        "category": "Foreign",
+        "rental_rate": 4.99
+      },
+      {
+        "title": "PAYCHECK WAIT",
+        "category": "Drama",
+        "rental_rate": 4.99
+      },
+      {
+        "title": "PHILADELPHIA WIFE",
+        "category": "Sports",
+        "rental_rate": 4.99
+      },
+      {
+        "title": "PITTSBURGH HUNCHBACK",
+        "category": "Family",
+        "rental_rate": 4.99
+      },
+      {
+        "title": "PLATOON INSTINCT",
+        "category": "New",
+        "rental_rate": 4.99
+      },
+      {
+        "title": "POSEIDON FOREVER",
+        "category": "Sports",
+        "rental_rate": 4.99
+      },
+      {
+        "title": "REDS POCUS",
+        "category": "Music",
+        "rental_rate": 4.99
+      },
+      {
+        "title": "RIGHT CRANES",
+        "category": "Classics",
+        "rental_rate": 4.99
+      },
+      {
+        "title": "ROCKY WAR",
+        "category": "Drama",
+        "rental_rate": 4.99
+      },
+      {
+        "title": "ROSES TREASURE",
+        "category": "Sports",
+        "rental_rate": 4.99
+      },
+      {
+        "title": "SCHOOL JACKET",
+        "category": "Foreign",
+        "rental_rate": 4.99
+      },
+      {
+        "title": "SHOW LORD",
+        "category": "Documentary",
+        "rental_rate": 4.99
+      },
+      {
+        "title": "SISTER FREDDY",
+        "category": "Children",
+        "rental_rate": 4.99
+      },
+      {
+        "title": "SLEEPING SUSPECTS",
+        "category": "Horror",
+        "rental_rate": 4.99
+      },
+      {
+        "title": "SPEED SUIT",
+        "category": "Travel",
+        "rental_rate": 4.99
+      },
+      {
+        "title": "SUNRISE LEAGUE",
+        "category": "Animation",
+        "rental_rate": 4.99
+      },
+      {
+        "title": "THIEF PELICAN",
+        "category": "Animation",
+        "rental_rate": 4.99
+      },
+      {
+        "title": "TOURIST PELICAN",
+        "category": "Sports",
+        "rental_rate": 4.99
+      },
+      {
+        "title": "TRAINSPOTTING STRANGERS",
+        "category": "Comedy",
+        "rental_rate": 4.99
+      },
+      {
+        "title": "UNCUT SUICIDES",
+        "category": "Music",
+        "rental_rate": 2.99
+      },
+      {
+        "title": "USUAL UNTOUCHABLES",
+        "category": "Foreign",
+        "rental_rate": 4.99
+      },
+      {
+        "title": "VIRGIN DAISY",
+        "category": "Drama",
+        "rental_rate": 4.99
+      },
+      {
+        "title": "WRONG BEHAVIOR",
+        "category": "Children",
+        "rental_rate": 2.99
+      }
+    ],
+    "ordering": null,
+    "notes": "Tiga kolom. Tambahan syarat durasi menekan jumlah baris ke ± 40."
+  },
+  "SAK-C5-04": {
+    "id": "SAK-C5-04",
+    "db": "sakila",
+    "category": "Comparative",
+    "question_id": "Tampilkan kategori film yang rata-rata durasinya lebih pendek daripada rata-rata durasi semua film; sertakan nama kategori dan rata-rata durasinya.",
+    "question_en": "Display film categories with average duration shorter than the overall average duration of all films; include category name and average duration.",
+    "solution_sql": "SELECT cat.name AS category, AVG(f.length) AS avg_length FROM category cat JOIN film_category fc ON cat.category_id = fc.category_id JOIN film f ON fc.film_id = f.film_id GROUP BY cat.category_id, cat.name HAVING AVG(f.length) < (SELECT AVG(length) FROM film);",
+    "expected_rows": [
+      {
+        "category": "Action",
+        "avg_length": 111.6094
+      },
+      {
+        "category": "Animation",
+        "avg_length": 111.0152
+      },
+      {
+        "category": "Children",
+        "avg_length": 109.8
+      },
+      {
+        "category": "Classics",
+        "avg_length": 111.6667
+      },
+      {
+        "category": "Documentary",
+        "avg_length": 108.75
+      },
+      {
+        "category": "Family",
+        "avg_length": 114.7826
+      },
+      {
+        "category": "Horror",
+        "avg_length": 112.4821
+      },
+      {
+        "category": "Music",
+        "avg_length": 113.6471
+      },
+      {
+        "category": "New",
+        "avg_length": 111.127
+      },
+      {
+        "category": "Sci-Fi",
+        "avg_length": 108.1967
+      },
+      {
+        "category": "Travel",
+        "avg_length": 113.3158
+      }
+    ],
+    "ordering": null,
+    "notes": "Tidak diubah – sudah 11 baris."
+  },
+  "SAK-C5-05": {
+    "id": "SAK-C5-05",
+    "db": "sakila",
+    "category": "Comparative",
+    "question_id": "Tampilkan staf yang jumlah transaksi pembayarannya lebih sedikit daripada rata-rata jumlah transaksi per staf; sertakan nama depan, nama belakang, dan jumlah transaksinya.",
+    "question_en": "Display staff members whose payment transaction count is less than the average transaction count per staff; include first name, last name, and transaction count.",
+    "solution_sql": "SELECT s.first_name, s.last_name, COUNT(p.payment_id) AS payment_count FROM staff s JOIN payment p ON s.staff_id = p.staff_id GROUP BY s.staff_id, s.first_name, s.last_name HAVING COUNT(*) < (SELECT AVG(cnt) FROM (SELECT COUNT(*) AS cnt FROM payment GROUP BY staff_id) AS sub);",
+    "expected_rows": [
+      {
+        "first_name": "Jon",
+        "last_name": "Stephens",
+        "payment_count": 7992
+      }
+    ],
+    "ordering": null,
+    "notes": "Tiga kolom: first_name, last_name, payment_count. Karena hanya ada dua staf, salah satunya akan berada di bawah rata-rata sehingga hasil akhir biasanya 1 baris; urutan baris tidak dinilai."
+  }
+}
