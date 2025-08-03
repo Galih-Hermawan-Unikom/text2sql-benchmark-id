@@ -337,6 +337,7 @@ gemma-3n-e2b,Overall,All,52.0,0.783,159818,1556,60
     "sakila": {"avg_success": 72.5, "domain": "video_rental"}
   }
 }
+```
 
 ## 🛠️ Technical Setup & Usage
 
