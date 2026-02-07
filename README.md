@@ -2,6 +2,23 @@
 
 A lightweight, fully reproducible benchmark to evaluate large language models (LLMs) on **natural‑language‑to‑SQL** generation for two open databases—**Sakila** and **Resep**—covering six query categories and 30 scenarios. The repository bundles prompt templates, evaluation scripts, and aggregated results for Google Gemini 2.5 (Flash & Lite) and open‑source Gemma models.
 
+## 📝 Citation
+
+If you use this repository for your research or experiments, please cite our paper:
+
+```bibtex
+@article{Hermawan2026Evaluating,
+  author    = {Hermawan, Galih and Rainarli, Ednawati and Ravshanovna, Radjabova Inobat},
+  title     = {{Evaluating Gemini and Gemma Language Models for Indonesian Text-to-SQL Tasks}},
+  journal   = {Journal of Engineering Science and Technology (JESTEC), Special Issue on INCITEST 2025},
+  volume    = {21},
+  number    = {2},
+  pages     = {9--16},
+  year      = {2026},
+  url       = {https://jestec.taylors.edu.my/Special%20Issue%20INCITEST%202025/INCITEST2025_02.pdf}
+}
+```
+
 ---
 
 ## 📇 Contact & Contribution
