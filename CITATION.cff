@@ -1,0 +1,33 @@
+cff-version: 1.2.0
+title: "Text-to-SQL Benchmark Indonesia"
+message: "If you use this repository, please cite the associated paper."
+type: software
+authors:
+  - family-names: Hermawan
+    given-names: Galih
+    orcid: "https://orcid.org/0000-0002-8476-5996"
+    affiliation: "Universitas Komputer Indonesia"
+  - family-names: Rainarli
+    given-names: Ednawati
+    affiliation: "Universitas Komputer Indonesia"
+  - family-names: Ravshanovna
+    given-names: Radjabova Inobat
+repository-code: "https://github.com/Galih-Hermawan-Unikom/text2sql-benchmark-id"
+license: MIT
+preferred-citation:
+  type: article
+  title: "Evaluating Gemini and Gemma Language Models for Indonesian Text-to-SQL Tasks"
+  authors:
+    - family-names: Hermawan
+      given-names: Galih
+    - family-names: Rainarli
+      given-names: Ednawati
+    - family-names: Ravshanovna
+      given-names: Radjabova Inobat
+  journal: "Journal of Engineering Science and Technology (JESTEC), Special Issue on INCITEST 2025"
+  volume: 21
+  number: 2
+  start: 9
+  end: 16
+  year: 2026
+  url: "https://jestec.taylors.edu.my/Special%20Issue%20INCITEST%202025/INCITEST2025_02.pdf"
